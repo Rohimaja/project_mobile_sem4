@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stipres/screens/change_password_screen.dart';
 
 class ProfilPage extends StatelessWidget {
   @override
@@ -38,7 +39,7 @@ class ProfilPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.grey.withAlpha(1),
                     spreadRadius: 2,
                     blurRadius: 5,
                     offset: Offset(0, 3),
@@ -62,6 +63,14 @@ class ProfilPage extends StatelessWidget {
                 ],
               ),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChangePassword()));
+                },
+                child: Text("Change Password"))
           ],
         ),
       ),

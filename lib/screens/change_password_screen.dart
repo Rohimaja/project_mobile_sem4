@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stipres/main.dart';
 import 'package:stipres/styles/constant.dart';
 
-class UbahPassword extends StatelessWidget {
-
+class ChangePassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,17 +13,18 @@ class UbahPassword extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/Logo STIPRES.png",
+                      "assets/Logo_STIPRES.png",
                       width: 130,
                       height: 130,
                     ),
                     Image.asset(
-                      "assets/reset-password 1.png",
+                      "assets/reset_password_1.png",
                       width: 160,
                       height: 160,
                     ),
                     Text("Ubah Password",
-                        style: blackTextStyle.copyWith(fontSize: 20, fontWeight: bold)),
+                        style: blackTextStyle.copyWith(
+                            fontSize: 20, fontWeight: bold)),
                     const SizedBox(height: 10),
                     Text("Silahkan masukkan password baru",
                         style: blackTextStyle.copyWith(fontSize: 16)),
@@ -93,6 +93,6 @@ class UbahPassword extends StatelessWidget {
                       ],
                     )
                   ],
-           ))));
-}
+                ))));
+  }
 }

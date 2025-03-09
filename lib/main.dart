@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/styles/constant.dart';
-import 'package:stipres/dashboard.dart';
-import './forget_password.dart';
-import './register.dart';
+import 'package:stipres/screens/dashboard_screen.dart';
+import 'screens/forget_password_screen.dart';
+import 'screens/register_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,20 +29,20 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/Logo_STIPRES.png",
-                      width: 130,
-                      height: 130,
+                      width: 129,
+                      height: 129,
                     ),
                     Image.asset(
                       "assets/encrypted_phone_1.png",
-                      width: 160,
-                      height: 160,
+                      width: 218,
+                      height: 218,
                     ),
-                    Text("Selamat Datang!",
+                    Text("Selamat Datang di STIPRES!",
                         style: blackTextStyle.copyWith(
-                            fontSize: 20, fontWeight: bold)),
+                            fontSize: 14, fontWeight: bold)),
                     const SizedBox(height: 10),
                     Text("Silahkan login terlebih dahulu",
-                        style: blackTextStyle.copyWith(fontSize: 16)),
+                        style: blackTextStyle.copyWith(fontSize: 12)),
                     const SizedBox(height: 40),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
                         TextField(
                           decoration: InputDecoration(
                             hintText: "*******",
-                            hintStyle: blackTextStyle.copyWith(fontSize: 15),
+                            hintStyle: greyTextStyle.copyWith(fontSize: 15),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             focusedBorder: OutlineInputBorder(
@@ -80,17 +80,20 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ForgetPassword()));
-                          },
-                          child: Text(
-                            "Lupa Password?",
-                            style: linkTextStyle.copyWith(fontSize: 15),
-                            textAlign: TextAlign.right,
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ForgetPassword()));
+                            },
+                            child: Text(
+                              "Lupa Password?",
+                              style: linkTextStyle.copyWith(fontSize: 15),
+                              textAlign: TextAlign.right,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -123,11 +126,11 @@ class LoginPage extends StatelessWidget {
                             text: TextSpan(
                           children: [
                             TextSpan(
-                                text: "Belum memiliki akun? ",
+                                text: "Belum aktivasi akun? ",
                                 style: blackTextStyle.copyWith(fontSize: 15)),
                             WidgetSpan(
                                 child: GestureDetector(
-                              child: Text("Register",
+                              child: Text("Aktivasi",
                                   style: blueTextStyle.copyWith(fontSize: 15)),
                               onTap: () {
                                 Navigator.push(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/profil.dart';
+import 'package:stipres/screens/profil_screen.dart';
 
 class DashboardPage extends StatelessWidget {
   @override
