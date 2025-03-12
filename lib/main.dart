@@ -5,6 +5,7 @@ import 'package:stipres/src/auth/forget_password_screen_1.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:stipres/src/features_student/dashboard/dashboard_screen.dart';
 
+
 void main() {
   runApp(MyApp());
 }
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
+
     );
   }
 }
@@ -67,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
+
                             children: [
                               Text("Username",
                                   style: blueTextStyle.copyWith(fontSize: 12),
