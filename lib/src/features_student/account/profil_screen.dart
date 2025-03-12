@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/screens/change_password_screen.dart';
+import 'package:stipres/src/features_student/account/change_password_screen.dart';
 
 class ProfilPage extends StatelessWidget {
   @override
