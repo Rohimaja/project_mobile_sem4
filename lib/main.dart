@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/constant.dart';
-import 'package:stipres/dashboard.dart';
-
+import 'package:stipres/src/style/constant.dart';
+import 'package:stipres/src/features_student/home/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const LoginPage(),
     );
   }
@@ -87,7 +87,8 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => DashboardPage()),
+                              MaterialPageRoute(
+                                  builder: (context) => DashboardPage()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -100,7 +101,6 @@ class LoginPage extends StatelessWidget {
                           child: Text("Login",
                               style: whiteTextStyle.copyWith(fontSize: 15)),
                         ),
-
                         const SizedBox(height: 20),
                         RichText(
                           text: TextSpan(
