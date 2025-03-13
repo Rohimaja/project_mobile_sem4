@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:stipres/main.dart';
 import 'package:stipres/styles/constant.dart';
 
-class ChangePassword extends StatelessWidget {
+class AktivasiAccount3 extends StatefulWidget {
+  @override
+  State<AktivasiAccount3> createState() => _AktivasiAccount3State();
+}
+
+class _AktivasiAccount3State extends State<AktivasiAccount3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,11 +28,11 @@ class ChangePassword extends StatelessWidget {
                       children: [
                         Image.asset(
                           "assets/Logo_STIPRES.png",
-                          width: 140,
-                          height: 140,
+                          width: 130,
+                          height: 130,
                         ),
                         Image.asset(
-                          "assets/reset_password_1.png",
+                          "assets/picture_book.png",
                           width: 160,
                           height: 160,
                         ),

@@ -103,7 +103,7 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                         RichText(
                             text: TextSpan(children: [
                           TextSpan(
-                              text: "Sudah memiliki akun? ",
+                              text: "Sudah validasi akun? ",
                               style: blackTextStyle.copyWith(fontSize: 12)),
                           TextSpan(
                               text: "Login",
