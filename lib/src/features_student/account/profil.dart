@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/src/features_student/account/change_password_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,7 @@ class ProfilPage extends StatelessWidget {
             _buildHeader(),
             const SizedBox(height: 25),
             _buildProfileForm(),
-            _buildSettingsMenu(),
+            _buildSettingsMenu(context),
           ],
         ),
       ),
@@ -42,72 +43,72 @@ class ProfilPage extends StatelessWidget {
 
   // Bagian Header dengan Foto Profil
   Widget _buildHeader() {
-  return Stack(
-    clipBehavior: Clip.none, // Agar avatar tidak terpotong
-    alignment: Alignment.center,
-    children: [
-      Container(
-        width: double.infinity,
-        height: 180, // Tambahkan tinggi agar tidak terpotong
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF1E3C72), Color(0xFF2A5298)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
-          ),
-        ),
-        child: const Center(
-          child: Text(
-            "STIKES Panti Waluya Malang",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+    return Stack(
+      clipBehavior: Clip.none, // Agar avatar tidak terpotong
+      alignment: Alignment.center,
+      children: [
+        Container(
+          width: double.infinity,
+          height: 180, // Tambahkan tinggi agar tidak terpotong
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF1E3C72), Color(0xFF2A5298)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
             ),
           ),
-        ),
-      ),
-      Positioned(
-        bottom: -40, // Pastikan avatar keluar sedikit
-        child: Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.white,
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/foto_izzul.jpg', // Menggunakan gambar dari assets
-                  fit: BoxFit.cover,
-                  width: 95,
-                  height: 95,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.person, size: 50, color: Colors.grey);
-                  },
-                ),
+          child: const Center(
+            child: Text(
+              "STIKES Panti Waluya Malang",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
-
-            Positioned(
-              bottom: 5,
-              right: 5,
-              child: Container(
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
+          ),
+        ),
+        Positioned(
+          bottom: -40, // Pastikan avatar keluar sedikit
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.white,
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/foto_izzul.jpg', // Menggunakan gambar dari assets
+                    fit: BoxFit.cover,
+                    width: 95,
+                    height: 95,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.person,
+                          size: 50, color: Colors.grey);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: 5,
+                right: 5,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
   // Bagian Form Profil
   Widget _buildProfileForm() {
@@ -163,7 +164,7 @@ class ProfilPage extends StatelessWidget {
   }
 
   // Bagian Menu Pengaturan
-  Widget _buildSettingsMenu() {
+  Widget _buildSettingsMenu(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
@@ -173,9 +174,9 @@ class ProfilPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            _buildMenuItem(Icons.description, "Ketentuan Layanan"),
-            _buildMenuItem(Icons.privacy_tip, "Kebijakan Privasi"),
-            _buildMenuItem(Icons.lock, "Ganti Password"),
+            _buildMenuItem(context, Icons.description, "Ketentuan Layanan"),
+            _buildMenuItem(context, Icons.privacy_tip, "Kebijakan Privasi"),
+            _buildMenuItem(context, Icons.lock, "Ganti Password"),
           ],
         ),
       ),
@@ -183,12 +184,17 @@ class ProfilPage extends StatelessWidget {
   }
 
   // Widget ListTile untuk Menu Pengaturan
-  Widget _buildMenuItem(IconData icon, String title) {
+  Widget _buildMenuItem(BuildContext context, IconData icon, String title) {
     return ListTile(
       leading: Icon(icon, color: Colors.blue),
       title: Text(title),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {},
+      onTap: () {
+        if (title == "Ganti Password") {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ChangePassword()));
+        }
+      },
     );
   }
 }
