@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/src/features_student/account/change_password_screen.dart';
+import 'package:stipres/screens/features_student/account/change_password_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,7 +52,7 @@ class ProfilPage extends StatelessWidget {
           height: 180, // Tambahkan tinggi agar tidak terpotong
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF1E3C72), Color(0xFF2A5298)],
+              colors: [Color(0xFF1E3C72), Color.fromARGB(255, 152, 42, 141)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

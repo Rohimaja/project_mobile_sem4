@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:stipres/src/auth/forget_password_screen_3.dart';
+import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ForgetPassword2 extends StatefulWidget {

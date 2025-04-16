@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/src/auth/aktivasi_account_screen_1.dart';
-import 'package:stipres/src/auth/forget_password_screen_1.dart';
-import 'package:stipres/src/features_student/home/dashboard.dart';
+import 'package:get/get.dart';
+import 'package:stipres/controllers/login_controller.dart';
+import 'package:stipres/screens/auth/activation_account_screen_1.dart';
+import 'package:stipres/screens/auth/forget_password_screen_1.dart';
+import 'package:stipres/screens/features_student/home/dashboard.dart';
+import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
 void main() {
@@ -9,22 +12,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
 
-class _LoginPageState extends State<LoginPage> {
-  bool _passwordVisible = false;
+  final loginC = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Image.asset(
-              "assets/template_1.png",
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
+            ReusableBackground(),
             Center(
                 child: Container(
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -46,13 +43,11 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Image.asset(
                           "assets/Logo_STIPRES.png",
-                          width: 140,
-                          height: 140,
+                          width: 200,
+                          height: 200,
                         ),
-                        Image.asset(
-                          "assets/encrypted_phone_1.png",
-                          width: 218,
-                          height: 218,
+                        SizedBox(
+                          height: 20,
                         ),
                         Text("Selamat Datang di STIPRES!",
                             style: blackTextStyle.copyWith(
@@ -62,25 +57,27 @@ class _LoginPageState extends State<LoginPage> {
                             style: blackTextStyle.copyWith(fontSize: 14)),
                         const SizedBox(height: 15),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 50),
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          margin: EdgeInsets.symmetric(horizontal: 30),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text("Username",
-                                  style: blueTextStyle.copyWith(fontSize: 12),
+                                  style: blueTextStyle.copyWith(fontSize: 15),
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 5),
                               SizedBox(
-                                width: 250,
-                                height: 35,
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                height: 40,
                                 child: TextField(
+                                  style: TextStyle(fontSize: 20),
                                   cursorHeight: 18,
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: "E41231215",
                                     hintStyle:
-                                        greyTextStyle.copyWith(fontSize: 12),
+                                        greyTextStyle.copyWith(fontSize: 13),
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(5)),
                                     focusedBorder: OutlineInputBorder(
@@ -92,42 +89,50 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               const SizedBox(height: 10),
                               Text("Password",
-                                  style: blueTextStyle.copyWith(fontSize: 12),
+                                  style: blueTextStyle.copyWith(fontSize: 15),
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 5),
                               SizedBox(
-                                width: 250,
-                                height: 35,
-                                child: TextField(
-                                  cursorHeight: 18,
-                                  obscureText: !_passwordVisible,
-                                  decoration: InputDecoration(
-                                    suffixIcon: IconButton(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 0),
-                                        onPressed: () {
-                                          setState(() {
-                                            _passwordVisible =
-                                                !_passwordVisible;
-                                          });
-                                        },
-                                        icon: Icon(_passwordVisible
-                                            ? Icons.visibility
-                                            : Icons.visibility_off)),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    hintText: "*******",
-                                    hintStyle:
-                                        greyTextStyle.copyWith(fontSize: 12),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(6),
-                                        borderSide:
-                                            BorderSide(color: blueColor)),
-                                  ),
-                                ),
-                              ),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height: 40,
+                                  child: Obx(
+                                    () => TextField(
+                                      style: TextStyle(fontSize: 20),
+                                      cursorHeight: 18,
+                                      obscureText:
+                                          !loginC.isPasswordVisible.value,
+                                      decoration: InputDecoration(
+                                        suffixIcon: IconButton(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 0),
+                                            onPressed: () {
+                                              loginC.checkVisible();
+                                            },
+                                            icon: Icon(
+                                                loginC.isPasswordVisible.value
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off)),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        hintText:
+                                            (!loginC.isPasswordVisible.value)
+                                                ? "*******"
+                                                : "1234567",
+                                        hintStyle: greyTextStyle.copyWith(
+                                          fontSize: 13,
+                                        ),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            borderSide:
+                                                BorderSide(color: blueColor)),
+                                      ),
+                                    ),
+                                  )),
                               const SizedBox(height: 6),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -139,10 +144,19 @@ class _LoginPageState extends State<LoginPage> {
                                             builder: (context) =>
                                                 ForgetPassword1()));
                                   },
-                                  child: Text(
-                                    "Lupa Password?",
-                                    style: linkTextStyle.copyWith(fontSize: 11),
-                                    textAlign: TextAlign.right,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.to(ForgetPassword1());
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Text(
+                                        "Lupa Password?",
+                                        style: linkTextStyle.copyWith(
+                                            fontSize: 14),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -155,31 +169,29 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 35,
-                              width: 250,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DashboardPage()),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: blueColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  minimumSize: const Size(double.infinity, 50),
-                                ),
-                                child: Text("Login",
-                                    style: whiteTextStyle.copyWith(
-                                        fontSize: 14, fontWeight: bold)),
-                              ),
-                            ),
+                                height: 40,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                child: ReusableButton(
+                                    buttonStyle: ElevatedButton.styleFrom(
+                                        elevation: 5,
+                                        backgroundColor: blueColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        minimumSize:
+                                            const Size(double.infinity, 50)),
+                                    label: "Login",
+                                    textStyle: whiteTextStyle.copyWith(
+                                        fontSize: 17, fontWeight: bold),
+                                    onPressed: () {
+                                      Get.off(DashboardPage());
+                                    })),
                             Container(
                               margin: EdgeInsets.symmetric(
-                                  horizontal: 50, vertical: 5),
+                                  horizontal:
+                                      MediaQuery.of(context).size.width / 4.3,
+                                  vertical: 5),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -189,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                                   )),
                                   Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 15),
+                                        EdgeInsets.symmetric(horizontal: 8),
                                     child: Text("or",
                                         style: TextStyle(color: Colors.grey)),
                                   ),
@@ -202,12 +214,13 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             SizedBox(
-                                height: 35,
-                                width: 175,
+                                height: 40,
+                                width: MediaQuery.of(context).size.width * 0.43,
                                 child: Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: ElevatedButton.icon(
                                       style: ElevatedButton.styleFrom(
+                                        elevation: 5,
                                         backgroundColor: blueColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -220,7 +233,7 @@ class _LoginPageState extends State<LoginPage> {
                                       label: Text(
                                         "Login",
                                         style: whiteTextStyle.copyWith(
-                                            fontSize: 14, fontWeight: bold),
+                                            fontSize: 17, fontWeight: bold),
                                       ),
                                       icon: Image.asset(
                                         "assets/fingerprint.png",
@@ -234,22 +247,25 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 TextSpan(
                                     text: "Belum aktivasi akun? ",
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 12)),
+                                    style: blackTextStyle.copyWith(
+                                      fontSize: 14,
+                                    )),
                                 WidgetSpan(
+                                    alignment: PlaceholderAlignment.top,
                                     child: GestureDetector(
-                                  child: Text("Aktivasi",
-                                      style:
-                                          blueTextStyle.copyWith(fontSize: 12)),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AktivasiAccount1()),
-                                    );
-                                  },
-                                ))
+                                      child: Text("Aktivasi",
+                                          style: blueTextStyle.copyWith(
+                                            fontSize: 14,
+                                          )),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AktivasiAccount1()),
+                                        );
+                                      },
+                                    ))
                               ],
                             )),
                           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:stipres/src/auth/aktivasi_account_screen_3.dart';
+import 'package:stipres/screens/auth/activation_account_screen_3.dart';
 import 'package:stipres/styles/constant.dart';
 
 class AktivasiAccount2 extends StatefulWidget {

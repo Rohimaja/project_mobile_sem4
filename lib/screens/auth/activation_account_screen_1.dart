@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/src/auth/forget_password_screen_2.dart';
+import 'package:stipres/screens/auth/activation_account_screen_2.dart';
 import 'package:stipres/styles/constant.dart';
 
-class ForgetPassword1 extends StatelessWidget {
+class AktivasiAccount1 extends StatefulWidget {
+  @override
+  State<AktivasiAccount1> createState() => _AktivasiAccount1State();
+}
+
+class _AktivasiAccount1State extends State<AktivasiAccount1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,12 +31,18 @@ class ForgetPassword1 extends StatelessWidget {
                           width: 140,
                           height: 140,
                         ),
-                        Image.asset(
-                          "assets/reset_password_1.png",
-                          width: 193,
-                          height: 193,
+                        SizedBox(
+                          height: 10,
                         ),
-                        Text("Perubahan Password",
+                        Image.asset(
+                          "assets/picture_book.png",
+                          width: 178,
+                          height: 178,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Validasi Akun!",
                             style: blackTextStyle.copyWith(
                                 fontSize: 20, fontWeight: bold)),
                         const SizedBox(height: 10),
@@ -71,7 +82,7 @@ class ForgetPassword1 extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ForgetPassword2()),
+                                      builder: (context) => AktivasiAccount2()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
@@ -92,7 +103,7 @@ class ForgetPassword1 extends StatelessWidget {
                         RichText(
                             text: TextSpan(children: [
                           TextSpan(
-                              text: "Sudah memiliki akun? ",
+                              text: "Sudah validasi akun? ",
                               style: blackTextStyle.copyWith(fontSize: 12)),
                           TextSpan(
                               text: "Login",

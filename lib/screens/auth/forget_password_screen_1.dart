@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/src/auth/aktivasi_account_screen_2.dart';
+import 'package:stipres/screens/auth/forget_password_screen_2.dart';
+import 'package:stipres/screens/features_teacher/tets.dart';
 import 'package:stipres/styles/constant.dart';
 
-class AktivasiAccount1 extends StatefulWidget {
-  @override
-  State<AktivasiAccount1> createState() => _AktivasiAccount1State();
-}
-
-class _AktivasiAccount1State extends State<AktivasiAccount1> {
+class ForgetPassword1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,30 +27,27 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                           width: 140,
                           height: 140,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
                         Image.asset(
-                          "assets/picture_book.png",
-                          width: 178,
-                          height: 178,
+                          "assets/reset_password_1.png",
+                          width: 193,
+                          height: 193,
                         ),
-                        SizedBox(
-                          height: 10,
+                        const SizedBox(
+                          height: 20,
                         ),
-                        Text("Validasi Akun!",
+                        Text("Perubahan Password",
                             style: blackTextStyle.copyWith(
-                                fontSize: 20, fontWeight: bold)),
+                                fontSize: 16, fontWeight: bold)),
                         const SizedBox(height: 10),
                         Text("Silahkan masukkan alamat email anda",
-                            style: blackTextStyle.copyWith(fontSize: 16)),
-                        const SizedBox(height: 40),
+                            style: blackTextStyle.copyWith(fontSize: 14)),
+                        const SizedBox(height: 30),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text("Email",
-                                style: blueTextStyle.copyWith(fontSize: 10),
+                                style: blueTextStyle.copyWith(fontSize: 15),
                                 textAlign: TextAlign.left),
                             const SizedBox(height: 7),
                             TextField(
@@ -82,7 +75,7 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AktivasiAccount2()),
+                                      builder: (context) => ForgetPassword2()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
@@ -93,22 +86,33 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                                 minimumSize: const Size(double.infinity, 50),
                               ),
                               child: Text("Berikutnya",
-                                  style: whiteTextStyle.copyWith(fontSize: 15)),
+                                  style: whiteTextStyle.copyWith(fontSize: 17)),
                             ),
                           ],
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: "Sudah validasi akun? ",
-                              style: blackTextStyle.copyWith(fontSize: 12)),
-                          TextSpan(
-                              text: "Login",
-                              style: blueTextStyle.copyWith(fontSize: 12))
-                        ]))
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Sudah memiliki akun? ",
+                                style: blackTextStyle.copyWith(fontSize: 14)),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyApp()));
+                              },
+                              child: Text(
+                                "Login",
+                                style: linkTextStyle.copyWith(fontSize: 14),
+                                textAlign: TextAlign.right,
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     )))
           ],

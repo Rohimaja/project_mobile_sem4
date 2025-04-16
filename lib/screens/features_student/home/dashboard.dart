@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/src/features_student/account/profil.dart'; // Import halaman profil
+import 'package:stipres/screens/features_student/account/profil.dart'; // Import halaman profil
 
 void main() {
   runApp(const MyApp());

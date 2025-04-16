@@ -1,6 +1,6 @@
-# stipres
+# STIPRES (Sistem Manajemen Presensi Sekolah Tinggi Ilmu Kesehatan Panti Waluya Malang Berbasis Mobile Menggunakan Fingerprint dan Face Recognition)
 
-A new Flutter project.
+Project ini merupakan pengembangan dari stipres yang sebelumnya masih native alias menggunakan android studio.
 
 ## Getting Started
 
