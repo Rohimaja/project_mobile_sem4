@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/style/constant.dart';
 
 class AktivasiAccount1 extends StatefulWidget {
   const AktivasiAccount1({super.key});
@@ -16,12 +18,7 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Image.asset(
-              "assets/template_1.png",
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).copyWith().size.width,
-              height: MediaQuery.of(context).copyWith().size.height,
-            ),
+            ReusableBackground(),
             Center(
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -29,7 +26,7 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/Logo_STIPRES.png",
+                          "assets/images/Logo_STIPRES.png",
                           width: 140,
                           height: 140,
                         ),
@@ -37,7 +34,7 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                           height: 10,
                         ),
                         Image.asset(
-                          "assets/picture_book.png",
+                          "assets/images/picture_book.png",
                           width: 178,
                           height: 178,
                         ),
@@ -106,10 +103,18 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                             text: TextSpan(children: [
                           TextSpan(
                               text: "Sudah validasi akun? ",
-                              style: blackTextStyle.copyWith(fontSize: 12)),
-                          TextSpan(
-                              text: "Login",
-                              style: blueTextStyle.copyWith(fontSize: 12))
+                              style: blackTextStyle.copyWith(fontSize: 14)),
+                          WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: GestureDetector(
+                                child: Text(
+                                  "Login",
+                                  style: blueTextStyle.copyWith(fontSize: 14),
+                                ),
+                                onTap: () {
+                                  Get.back();
+                                },
+                              ))
                         ]))
                       ],
                     )))

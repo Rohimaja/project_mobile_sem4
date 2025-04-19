@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/main.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/style/constant.dart';
 
 class AktivasiAccount3 extends StatefulWidget {
   const AktivasiAccount3({super.key});
@@ -16,12 +18,7 @@ class _AktivasiAccount3State extends State<AktivasiAccount3> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Image.asset(
-              "assets/template_1.png",
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).copyWith().size.width,
-              height: MediaQuery.of(context).copyWith().size.height,
-            ),
+            ReusableBackground(),
             Center(
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -29,12 +26,12 @@ class _AktivasiAccount3State extends State<AktivasiAccount3> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/Logo_STIPRES.png",
+                          "assets/images/Logo_STIPRES.png",
                           width: 130,
                           height: 130,
                         ),
                         Image.asset(
-                          "assets/picture_book.png",
+                          "assets/images/picture_book.png",
                           width: 160,
                           height: 160,
                         ),
@@ -94,7 +91,7 @@ class _AktivasiAccount3State extends State<AktivasiAccount3> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MyApp()),
+                                      builder: (context) => LoginPage()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(

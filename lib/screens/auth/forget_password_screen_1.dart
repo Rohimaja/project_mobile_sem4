@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stipres/main.dart';
 import 'package:stipres/screens/auth/forget_password_screen_2.dart';
-import 'package:stipres/screens/features_teacher/tets.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/style/constant.dart';
 
 class ForgetPassword1 extends StatelessWidget {
   const ForgetPassword1({super.key});
@@ -12,12 +13,7 @@ class ForgetPassword1 extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Image.asset(
-              "assets/template_1.png",
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).copyWith().size.width,
-              height: MediaQuery.of(context).copyWith().size.height,
-            ),
+            ReusableBackground(),
             Center(
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -25,12 +21,12 @@ class ForgetPassword1 extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/Logo_STIPRES.png",
+                          "assets/images/Logo_STIPRES.png",
                           width: 140,
                           height: 140,
                         ),
                         Image.asset(
-                          "assets/reset_password_1.png",
+                          "assets/images/reset_password_1.png",
                           width: 193,
                           height: 193,
                         ),

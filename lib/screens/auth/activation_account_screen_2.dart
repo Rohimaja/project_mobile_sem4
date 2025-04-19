@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stipres/screens/auth/activation_account_screen_3.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/style/constant.dart';
 
 class AktivasiAccount2 extends StatefulWidget {
   const AktivasiAccount2({super.key});
@@ -18,12 +19,7 @@ class _AktivasiAccount2State extends State<AktivasiAccount2> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Image.asset(
-              "assets/template_1.png",
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).copyWith().size.width,
-              height: MediaQuery.of(context).copyWith().size.height,
-            ),
+            ReusableBackground(),
             Center(
                 child: Container(
                     margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -31,7 +27,7 @@ class _AktivasiAccount2State extends State<AktivasiAccount2> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/Logo_STIPRES.png",
+                          "assets/images/Logo_STIPRES.png",
                           width: 140,
                           height: 140,
                         ),
@@ -39,7 +35,7 @@ class _AktivasiAccount2State extends State<AktivasiAccount2> {
                           height: 10,
                         ),
                         Image.asset(
-                          "assets/picture_book.png",
+                          "assets/images/picture_book.png",
                           width: 178,
                           height: 178,
                         ),

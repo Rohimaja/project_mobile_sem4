@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/style/constant.dart';
 
 class ForgetPassword2 extends StatefulWidget {
   const ForgetPassword2({super.key});
@@ -18,12 +19,7 @@ class _ForgetPassword2State extends State<ForgetPassword2> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            Image.asset(
-              "assets/template_1.png",
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).copyWith().size.width,
-              height: MediaQuery.of(context).copyWith().size.height,
-            ),
+            ReusableBackground(),
             Center(
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -31,12 +27,12 @@ class _ForgetPassword2State extends State<ForgetPassword2> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/Logo_STIPRES.png",
+                          "assets/images/Logo_STIPRES.png",
                           width: 140,
                           height: 140,
                         ),
                         Image.asset(
-                          "assets/reset_password_1.png",
+                          "assets/images/reset_password_1.png",
                           width: 160,
                           height: 160,
                         ),

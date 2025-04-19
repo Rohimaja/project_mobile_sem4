@@ -121,7 +121,7 @@ class ReusableBackground extends StatelessWidget {
             child: SizedBox(
               width: getLengthVector(context),
               height: getLengthVector(context),
-              child: SvgPicture.asset("assets/Vector.svg"),
+              child: SvgPicture.asset("assets/images/Vector.svg"),
             )),
         Positioned(
             top: MediaQuery.of(context).size.height / 2.5,
@@ -130,7 +130,7 @@ class ReusableBackground extends StatelessWidget {
               width: getLengthVector(context),
               height: getLengthVector(context),
               child: SvgPicture.asset(
-                "assets/Vector_2.svg",
+                "assets/images/Vector_2.svg",
               ),
             )),
         Positioned(
@@ -140,7 +140,7 @@ class ReusableBackground extends StatelessWidget {
               width: getLengthVector(context),
               height: getLengthVector(context),
               child: SvgPicture.asset(
-                "assets/Vector_2.svg",
+                "assets/images/Vector_2.svg",
               ),
             )),
         Positioned(
@@ -149,7 +149,7 @@ class ReusableBackground extends StatelessWidget {
             child: SizedBox(
               width: getLengthVector(context),
               height: getLengthVector(context),
-              child: SvgPicture.asset("assets/Vector.svg"),
+              child: SvgPicture.asset("assets/images/Vector.svg"),
             )),
       ],
     );
