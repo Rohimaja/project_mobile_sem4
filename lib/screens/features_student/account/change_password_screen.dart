@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/main.dart';
-import 'package:stipres/screens/auth/forget_password_screen_2.dart';
-import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
-class ForgetPassword1 extends StatelessWidget {
-  const ForgetPassword1({super.key});
-
+class ChangePassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            ReusableBackground(),
+            Image.asset(
+              "assets/template_1.png",
+              fit: BoxFit.fill,
+              width: MediaQuery.of(context).copyWith().size.width,
+              height: MediaQuery.of(context).copyWith().size.height,
+            ),
             Center(
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -21,37 +22,34 @@ class ForgetPassword1 extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/images/Logo_STIPRES.png",
+                          "assets/Logo_STIPRES.png",
                           width: 140,
                           height: 140,
                         ),
                         Image.asset(
-                          "assets/images/reset_password_1.png",
-                          width: 193,
-                          height: 193,
+                          "assets/reset_password_1.png",
+                          width: 160,
+                          height: 160,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text("Perubahan Password",
+                        Text("Ubah Password",
                             style: blackTextStyle.copyWith(
-                                fontSize: 16, fontWeight: bold)),
+                                fontSize: 20, fontWeight: bold)),
                         const SizedBox(height: 10),
-                        Text("Silahkan masukkan alamat email anda",
-                            style: blackTextStyle.copyWith(fontSize: 14)),
-                        const SizedBox(height: 30),
+                        Text("Silahkan masukkan password baru",
+                            style: blackTextStyle.copyWith(fontSize: 16)),
+                        const SizedBox(height: 40),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("Email",
+                            Text("Password baru",
                                 style: blueTextStyle.copyWith(fontSize: 15),
                                 textAlign: TextAlign.left),
                             const SizedBox(height: 7),
                             TextField(
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
-                                hintText: "johndoe@gmail.com",
+                                hintText: "*",
                                 hintStyle: greyTextStyle.copyWith(fontSize: 15),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10)),
@@ -61,6 +59,22 @@ class ForgetPassword1 extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 20),
+                            Text("Konfirmasi password",
+                                style: blueTextStyle.copyWith(fontSize: 15),
+                                textAlign: TextAlign.left),
+                            const SizedBox(height: 7),
+                            TextField(
+                              keyboardType: TextInputType.visiblePassword,
+                              decoration: InputDecoration(
+                                hintText: "*",
+                                hintStyle: greyTextStyle.copyWith(fontSize: 15),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: blueColor)),
+                              ),
+                            ),
                             const SizedBox(height: 20),
                           ],
                         ),
@@ -73,7 +87,7 @@ class ForgetPassword1 extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ForgetPassword2()),
+                                      builder: (context) => MyApp()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
@@ -83,34 +97,11 @@ class ForgetPassword1 extends StatelessWidget {
                                 ),
                                 minimumSize: const Size(double.infinity, 50),
                               ),
-                              child: Text("Berikutnya",
-                                  style: whiteTextStyle.copyWith(fontSize: 17)),
+                              child: Text("Submit",
+                                  style: whiteTextStyle.copyWith(fontSize: 15)),
                             ),
                           ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Sudah memiliki akun? ",
-                                style: blackTextStyle.copyWith(fontSize: 14)),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyApp()));
-                              },
-                              child: Text(
-                                "Login",
-                                style: linkTextStyle.copyWith(fontSize: 14),
-                                textAlign: TextAlign.right,
-                              ),
-                            )
-                          ],
-                        ),
+                        )
                       ],
                     )))
           ],

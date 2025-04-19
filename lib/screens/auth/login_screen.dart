@@ -4,7 +4,7 @@ import 'package:stipres/controllers/login_controller.dart';
 import 'package:stipres/screens/auth/activation_account_screen_1.dart';
 import 'package:stipres/screens/auth/forget_password_screen_1.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/style/constant.dart';
+import 'package:stipres/styles/constant.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});

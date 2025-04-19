@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/style/constant.dart';
+import 'package:stipres/styles/constant.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({super.key});

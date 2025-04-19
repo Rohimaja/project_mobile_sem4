@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stipres/main.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/style/constant.dart';
+import 'package:stipres/styles/constant.dart';
 
 class AktivasiAccount3 extends StatefulWidget {
   const AktivasiAccount3({super.key});

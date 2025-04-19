@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/style/constant.dart';
+import 'package:stipres/styles/constant.dart';
 
 class AktivasiAccount1 extends StatefulWidget {
   const AktivasiAccount1({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/features_student/account/profile_screen.dart';
 import 'package:stipres/screens/features_student/home/dashboard.dart';
-import 'package:stipres/style/constant.dart';
-import 'package:stipres/style/icons.dart';
-import 'package:stipres/style/size.dart';
+import 'package:stipres/styles/constant.dart';
+import 'package:stipres/styles/icons.dart';
+import 'package:stipres/styles/size.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
