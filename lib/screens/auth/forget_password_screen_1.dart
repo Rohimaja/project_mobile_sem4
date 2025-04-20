@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stipres/main.dart';
 import 'package:stipres/screens/auth/forget_password_screen_2.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
@@ -70,11 +71,7 @@ class ForgetPassword1 extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ForgetPassword2()),
-                                );
+                                Get.offNamed("/auth/forget-password/step2");
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: blueColor,
@@ -98,10 +95,7 @@ class ForgetPassword1 extends StatelessWidget {
                                 style: blackTextStyle.copyWith(fontSize: 14)),
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyApp()));
+                                Get.back();
                               },
                               child: Text(
                                 "Login",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stipres/routes/app_screens.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 
 void main() {
@@ -13,7 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      // unknownRoute: GetPage(name: '/not-found', page: () => ),
+      getPages: AppScreens.screens,
+      home: LoginScreen(),
     );
   }
 }

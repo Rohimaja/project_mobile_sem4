@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
-class ForgetPassword2 extends StatefulWidget {
+class ForgetPassword2 extends StatelessWidget {
   const ForgetPassword2({super.key});
 
-  @override
-  State<ForgetPassword2> createState() => _ForgetPassword2State();
-}
-
-class _ForgetPassword2State extends State<ForgetPassword2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,11 +100,7 @@ class _ForgetPassword2State extends State<ForgetPassword2> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ForgetPassword3()),
-                                );
+                                Get.offNamed("/auth/forget-password/step3");
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: blueColor,

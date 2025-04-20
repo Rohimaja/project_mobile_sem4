@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:stipres/models/user_model.dart';
-import 'package:stipres/screens/features_student/home/base_screen.dart';
 import 'package:stipres/services/login_service.dart';
 
 class LoginController extends GetxController {
@@ -39,7 +38,7 @@ class LoginController extends GetxController {
     if (result != null) {
       user.value = result;
       Get.snackbar("Berhasil", 'Login berhasil sebagai ${result.nama}');
-      Get.off(BaseScreen());
+      Get.offAllNamed("/student/base-screen");
     } else {
       Get.snackbar("Gagal", "Login gagal");
     }

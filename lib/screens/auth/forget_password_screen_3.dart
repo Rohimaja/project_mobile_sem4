@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/main.dart';
+import 'package:get/get.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
@@ -83,11 +83,7 @@ class ForgetPassword3 extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                );
+                                Get.back();
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: blueColor,
