@@ -101,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                                         hintText:
                                             (!loginC.isPasswordVisible.value)
                                                 ? "*******"
-                                                : "1234567",
+                                                : "12345678",
                                         hintStyle: greyTextStyle.copyWith(
                                           fontSize: 13,
                                         ),
@@ -163,6 +163,9 @@ class LoginScreen extends StatelessWidget {
                                     onPressed: () {
                                       loginC.login();
                                     })),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal:
@@ -188,6 +191,9 @@ class LoginScreen extends StatelessWidget {
                                   ))
                                 ],
                               ),
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             SizedBox(
                                 height: 40,
@@ -217,7 +223,7 @@ class LoginScreen extends StatelessWidget {
                                         height: 20,
                                       ),
                                     ))),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 20),
                             RichText(
                                 text: TextSpan(
                               children: [

@@ -50,7 +50,7 @@ class ActivationAccount1 extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text("Email",
-                                  style: blueTextStyle.copyWith(fontSize: 10),
+                                  style: blueTextStyle.copyWith(fontSize: 15),
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 7),
                               TextField(
@@ -60,9 +60,9 @@ class ActivationAccount1 extends StatelessWidget {
                                   hintStyle:
                                       greyTextStyle.copyWith(fontSize: 15),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(5)),
                                   focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(6),
                                       borderSide: BorderSide(color: blueColor)),
                                 ),
                               ),

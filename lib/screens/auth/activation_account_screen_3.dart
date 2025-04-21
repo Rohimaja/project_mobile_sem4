@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stipres/controllers/activation_step3_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ActivationAccount3 extends StatelessWidget {
-  const ActivationAccount3({super.key});
+  ActivationAccount3({super.key});
+
+  final activation3C = Get.put(ActivationStep3Controller());
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +50,35 @@ class ActivationAccount3 extends StatelessWidget {
                                   style: blueTextStyle.copyWith(fontSize: 15),
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 7),
-                              TextField(
-                                keyboardType: TextInputType.visiblePassword,
-                                decoration: InputDecoration(
-                                  hintText: "*",
-                                  hintStyle:
-                                      greyTextStyle.copyWith(fontSize: 15),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(color: blueColor)),
+                              Obx(
+                                () => TextField(
+                                  obscureText:
+                                      !activation3C.isPasswordVisible.value,
+                                  controller: activation3C.passwordController,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  decoration: InputDecoration(
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          activation3C.checkVisible();
+                                        },
+                                        icon: Icon(
+                                            activation3C.isPasswordVisible.value
+                                                ? Icons.visibility
+                                                : Icons.visibility_off)),
+                                    hintText:
+                                        (!activation3C.isPasswordVisible.value)
+                                            ? "********"
+                                            : "12345678",
+                                    hintStyle:
+                                        greyTextStyle.copyWith(fontSize: 15),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide:
+                                            BorderSide(color: blueColor)),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 20),
@@ -65,17 +86,34 @@ class ActivationAccount3 extends StatelessWidget {
                                   style: blueTextStyle.copyWith(fontSize: 15),
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 7),
-                              TextField(
-                                keyboardType: TextInputType.visiblePassword,
-                                decoration: InputDecoration(
-                                  hintText: "*",
-                                  hintStyle:
-                                      greyTextStyle.copyWith(fontSize: 15),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(color: blueColor)),
+                              Obx(
+                                () => TextField(
+                                  obscureText:
+                                      !activation3C.isPasswordVisible2.value,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        (!activation3C.isPasswordVisible2.value)
+                                            ? "********"
+                                            : "12345678",
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          activation3C.checkVisible2();
+                                        },
+                                        icon: Icon(activation3C
+                                                .isPasswordVisible2.value
+                                            ? Icons.visibility
+                                            : Icons.visibility_off)),
+                                    hintStyle:
+                                        greyTextStyle.copyWith(fontSize: 15),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide:
+                                            BorderSide(color: blueColor)),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 20),
@@ -86,7 +124,7 @@ class ActivationAccount3 extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               height: 40,
                               width: MediaQuery.of(context).size.width * 0.7,
                               child: ReusableButton(
