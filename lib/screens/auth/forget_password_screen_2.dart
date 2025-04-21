@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
-class ForgetPassword2 extends StatefulWidget {
+class ForgetPassword2 extends StatelessWidget {
   const ForgetPassword2({super.key});
 
-  @override
-  State<ForgetPassword2> createState() => _ForgetPassword2State();
-}
-
-class _ForgetPassword2State extends State<ForgetPassword2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +17,7 @@ class _ForgetPassword2State extends State<ForgetPassword2> {
             ReusableBackground(),
             Center(
                 child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    margin: const EdgeInsets.symmetric(horizontal: 50),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -40,91 +35,93 @@ class _ForgetPassword2State extends State<ForgetPassword2> {
                             style: blackTextStyle.copyWith(
                                 fontSize: 20, fontWeight: bold)),
                         const SizedBox(height: 10),
-                        Text(
-                          "Silahkan masukkan nim dan kode OTP yang dikirim pada",
-                          style: blackTextStyle.copyWith(fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          "tok*****@gmail.com",
-                          style: TextStyle(fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 40),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("Kode OTP",
-                                style: blueTextStyle.copyWith(fontSize: 15),
-                                textAlign: TextAlign.left),
-                            const SizedBox(height: 7),
-                            PinCodeTextField(
-                              appContext: context,
-                              length: 4, // Jumlah kotak OTP
-                              // controller: otpController,
-                              keyboardType: TextInputType.phone,
-                              inputFormatters: [
-                                FilteringTextInputFormatter
-                                    .digitsOnly, // Hanya angka
-                              ],
-                              obscureText: false,
-                              animationType: AnimationType.fade,
-                              pinTheme: PinTheme(
-                                shape: PinCodeFieldShape.box,
-                                borderRadius: BorderRadius.circular(8),
-                                fieldHeight: 29,
-                                fieldWidth: 51,
-                                inactiveColor: Colors.grey,
-                                activeColor: blueColor,
-                                selectedColor: Colors.blueAccent,
-                              ),
-                              onCompleted: (value) {
-                                print("Kode OTP: $value");
-                              },
-                            ),
-                            const SizedBox(height: 10),
-                            RichText(
-                              text: TextSpan(
-                                text: "Belum menerima kode? ",
-                                style: blackTextStyle.copyWith(fontSize: 15),
-                                children: [
-                                  TextSpan(
-                                    text: "Kirim",
-                                    style: blueTextStyle.copyWith(fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(children: [
+                                TextSpan(
+                                  text:
+                                      "Silahkan masukkan nim dan kode OTP yang telah dikirimkan pada ",
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                TextSpan(
+                                  text: "tok*****@gmail.com",
+                                  style: TextStyle(fontSize: 16),
+                                )
+                              ])),
                         ),
                         const SizedBox(height: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ForgetPassword3()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: blueColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Kode OTP",
+                                  style: blueTextStyle.copyWith(fontSize: 15),
+                                  textAlign: TextAlign.left),
+                              const SizedBox(height: 7),
+                              PinCodeTextField(
+                                appContext: context,
+                                length: 4, // Jumlah kotak OTP
+                                // controller: otpController,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter
+                                      .digitsOnly, // Hanya angka
+                                ],
+                                obscureText: false,
+                                animationType: AnimationType.fade,
+                                pinTheme: PinTheme(
+                                  shape: PinCodeFieldShape.box,
+                                  borderRadius: BorderRadius.circular(8),
+                                  fieldHeight: 29,
+                                  fieldWidth: 51,
+                                  inactiveColor: Colors.grey,
+                                  activeColor: blueColor,
+                                  selectedColor: Colors.blueAccent,
                                 ),
-                                minimumSize: const Size(double.infinity, 50),
+                                onCompleted: (value) {
+                                  print("Kode OTP: $value");
+                                },
                               ),
-                              child: Text("Berikutnya",
-                                  style: whiteTextStyle.copyWith(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ],
-                        )
+                              const SizedBox(height: 10),
+                              RichText(
+                                text: TextSpan(
+                                  text: "Belum menerima kode? ",
+                                  style: blackTextStyle.copyWith(fontSize: 15),
+                                  children: [
+                                    TextSpan(
+                                      text: "Kirim",
+                                      style:
+                                          blueTextStyle.copyWith(fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Get.offNamed("/auth/forget-password/step3");
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 5,
+                                  backgroundColor: blueColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  minimumSize: const Size(double.infinity, 50),
+                                ),
+                                child: Text("Berikutnya",
+                                    style: whiteTextStyle.copyWith(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     )))
           ],

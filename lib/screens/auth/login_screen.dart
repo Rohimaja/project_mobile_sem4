@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stipres/controllers/login_controller.dart';
-import 'package:stipres/screens/auth/activation_account_screen_1.dart';
-import 'package:stipres/screens/auth/forget_password_screen_1.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
   final loginC = Get.put(LoginController());
 
@@ -103,7 +101,7 @@ class LoginPage extends StatelessWidget {
                                         hintText:
                                             (!loginC.isPasswordVisible.value)
                                                 ? "*******"
-                                                : "1234567",
+                                                : "12345678",
                                         hintStyle: greyTextStyle.copyWith(
                                           fontSize: 13,
                                         ),
@@ -123,12 +121,9 @@ class LoginPage extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.to(ForgetPassword1());
+                                    Get.toNamed("/auth/forget-password/step1");
                                   },
                                   child: InkWell(
-                                    onTap: () {
-                                      Get.to(ForgetPassword1());
-                                    },
                                     child: Padding(
                                       padding: EdgeInsets.all(5),
                                       child: Text(
@@ -168,6 +163,9 @@ class LoginPage extends StatelessWidget {
                                     onPressed: () {
                                       loginC.login();
                                     })),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal:
@@ -193,6 +191,9 @@ class LoginPage extends StatelessWidget {
                                   ))
                                 ],
                               ),
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             SizedBox(
                                 height: 40,
@@ -222,7 +223,7 @@ class LoginPage extends StatelessWidget {
                                         height: 20,
                                       ),
                                     ))),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 20),
                             RichText(
                                 text: TextSpan(
                               children: [
@@ -239,7 +240,7 @@ class LoginPage extends StatelessWidget {
                                             fontSize: 14,
                                           )),
                                       onTap: () {
-                                        Get.to(AktivasiAccount1());
+                                        Get.toNamed("/auth/activation/step1");
                                       },
                                     ))
                               ],
