@@ -1,10 +1,46 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
+import 'package:stipres/screens/features_student/home/materi_screen.dart';
+import 'package:stipres/screens/features_student/models/jadwal_model.dart';
+import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({super.key});
   var height, width;
+
+  final List<JadwalModel> jadwalHariIni = [
+    JadwalModel(
+      waktu: '07.00 - 10.00 WIB',
+      mataKuliah: 'Pemrograman Dasar',
+      lokasi: 'Gedung JTI Ruang 3.3',
+      durasi: '2 Jam',
+      chips: ['Presensi', 'Zoom', 'Materi'],
+    ),
+    JadwalModel(
+      waktu: '10.15 - 12.00 WIB',
+      mataKuliah: 'Struktur Data',
+      lokasi: 'Gedung JTI Ruang 2.2',
+      durasi: '1.5 Jam',
+      chips: ['Presensi', 'Materi'],
+    ),
+    JadwalModel(
+      waktu: '13.00 - 15.00 WIB',
+      mataKuliah: 'Basis Data',
+      lokasi: 'Gedung JTI Ruang 1.1',
+      durasi: '2 Jam',
+      chips: ['Presensi', 'Zoom'],
+    ),
+    JadwalModel(
+      waktu: '07.00 - 10.00 WIB',
+      mataKuliah: 'Kewirausahaan',
+      lokasi: 'Gedung JTI Ruang 3.3',
+      durasi: '2 Jam',
+      chips: ['Presensi', 'Zoom', 'Materi'],
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +188,7 @@ class DashboardPage extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 60), // Jarak agar profil tidak tertutup
+              const SizedBox(height: 40), // Jarak agar profil tidak tertutup
 
               // KONTEN PUTIH DI BAWAH
               Container(
@@ -169,13 +205,7 @@ class DashboardPage extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.symmetric(
-                          horizontal: BorderSide(
-                            color: blackColor,
-                            width: 1,
-                          ),
-                        ),
+                        color: Color.fromARGB(255, 237, 235, 251),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -207,7 +237,7 @@ class DashboardPage extends StatelessWidget {
                               Text(
                                 "lihat semua",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 94, 171),
+                                  color: Color(0xFF1E88E4),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -215,7 +245,7 @@ class DashboardPage extends StatelessWidget {
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 16,
-                                color: Color.fromARGB(255, 0, 94, 171),
+                                color: Color(0xFF1E88E4),
                               ),
                             ],
                           ),
@@ -223,51 +253,125 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 5),
 
                     // Horizontal Scroll Card
                     SizedBox(
-                      height: 160,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            CategoryCard(
-                              title: 'Kehadiran',
-                              items: 7,
-                              imagePath: 'assets/images/kehadiran.png',
-                              bgColor: Colors.green.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Materi',
-                              items: 7,
-                              imagePath: 'assets/images/materi.png',
-                              bgColor: Colors.blue.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Rekap Kehadiran',
-                              items: 4,
-                              imagePath: 'assets/images/rekap_kehadiran.png',
-                              bgColor: Colors.pink.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Kalender Akademik',
-                              items: 4,
-                              imagePath: 'assets/images/kalender_akademik.png',
-                              bgColor: Colors.yellow.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Perkuliahan Online',
-                              items: 4,
-                              imagePath: 'assets/images/zoom.png',
-                              bgColor: Colors.orange.shade100,
-                            ),
-                          ],
+                      height: 180,
+                      width: width,
+                      child: Container(
+                        color: Colors.white, // Warna latar belakang
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              // === Card dengan Navigasi + Ripple ===
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                KehadiranPage()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Kehadiran',
+                                      items: 4,
+                                      imagePath: 'icons/kehadiran.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 187, 251, 189),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 12),
+
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                KehadiranPage()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Presensi',
+                                      items: 4,
+                                      imagePath: 'icons/rekap_kehadiran.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 251, 187, 189),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                KehadiranPage()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Kalender Akademik',
+                                      items: 4,
+                                      imagePath: 'icons/kalender_akademik.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 249, 251, 187),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                KehadiranPage()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Perkuliahan Online',
+                                      items: 4,
+                                      imagePath: 'icons/zoom.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 251, 232, 187),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -277,13 +381,7 @@ class DashboardPage extends StatelessWidget {
                     // Title Jadwal Hari Ini
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.symmetric(
-                          horizontal: BorderSide(
-                            color: blackColor,
-                            width: 1,
-                          ),
-                        ),
+                        color: Color.fromARGB(255, 237, 235, 251),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -313,7 +411,7 @@ class DashboardPage extends StatelessWidget {
                               Text(
                                 "lihat semua",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 94, 171),
+                                  color: Color(0xFF1E88E4),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -321,7 +419,7 @@ class DashboardPage extends StatelessWidget {
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 16,
-                                color: Color.fromARGB(255, 0, 94, 171),
+                                color: Color(0xFF1E88E4),
                               ),
                             ],
                           ),
@@ -329,139 +427,20 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
 
-                    ListView.builder(
-                      itemCount: 3, // jumlah data jadwal
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icons/ic_clock.png',
-                                  height: 20,
-                                  width: 20,
-                                ),
-                                const SizedBox(width: 6),
-                                const Text(
-                                  "07.00 - 10.00 WIB",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              padding: const EdgeInsets.all(12),
-                              margin: const EdgeInsets.only(bottom: 16),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFFF3E0),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  // Gambar buku
-                                  Image.asset(
-                                    'assets/icons/ic_matakuliah.png', // ganti sesuai path file kamu
-                                    height: 70,
-                                    width: 70,
-                                  ),
-                                  const SizedBox(width: 15),
-                                  // Konten teks di sebelah kanan gambar
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Expanded(
-                                              child: Text(
-                                                "Pemrograman Dasar",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 4),
-                                              decoration: BoxDecoration(
-                                                color: Colors.purple,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: const Text(
-                                                "Lihat Jadwal",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/ic_location.png',
-                                              height: 16,
-                                              width: 16,
-                                            ),
-                                            const SizedBox(width: 4),
-                                            const Text("Gedung JTI Ruang 3.3"),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/ic_duration.png',
-                                              height: 16,
-                                              width: 16,
-                                            ),
-                                            const SizedBox(width: 4),
-                                            const Text("2 Jam"),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          children: const [
-                                            ChipItem(label: "Presensi"),
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 8),
-                                              child: ChipItem(label: "Zoom"),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 8),
-                                              child: ChipItem(label: "Materi"),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    ),
+                    Container(
+                      color: Colors.white, // Warna latar belakang putih
+                      padding: EdgeInsets.all(20), // Pindahkan padding ke sini
+                      child: ListView.builder(
+                        itemCount: jadwalHariIni.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return JadwalCard(jadwal: jadwalHariIni[index]);
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -512,12 +491,15 @@ class CategoryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
+          AutoSizeText(
             title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
+            maxLines: 1,
+            minFontSize: 10,
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             "$items items",
