@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stipres/controllers/activation_step3_controller.dart';
+import 'package:stipres/controllers/auth/activation_step3_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 

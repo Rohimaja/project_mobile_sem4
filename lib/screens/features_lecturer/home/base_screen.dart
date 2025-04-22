@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/screens/features_teacher/account/profile_screen.dart';
-import 'package:stipres/screens/features_teacher/home/dashboard.dart';
+import 'package:stipres/screens/features_lecturer/account/profile_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/dashboard.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';

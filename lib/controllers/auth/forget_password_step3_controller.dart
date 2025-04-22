@@ -7,6 +7,6 @@ class ForgetPasswordStep3Controller extends GetxController {
   final isPasswordVisible = false.obs;
   final isPasswordVisible2 = false.obs;
 
-  void checkVisible() => isPasswordVisible.value = !isPasswordVisible.value;
-  void checkVisible2() => isPasswordVisible2.value = !isPasswordVisible2.value;
+  void checkVisible() => isPasswordVisible.toggle();
+  void checkVisible2() => isPasswordVisible2.toggle();
 }

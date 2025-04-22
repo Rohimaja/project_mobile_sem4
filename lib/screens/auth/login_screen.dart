@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stipres/controllers/login_controller.dart';
+import 'package:stipres/controllers/auth/login_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.8,
                                 height: 40,
                                 child: TextField(
-                                  controller: loginC.noController,
+                                  controller: loginC.usernameController,
                                   style: TextStyle(fontSize: 18),
                                   cursorHeight: 18,
                                   decoration: InputDecoration(

@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/user_model.dart';
+import 'package:stipres/models/dosen_model.dart';
+import 'package:stipres/models/mahasiswa_model.dart';
 import 'package:stipres/services/api_manager.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,7 +14,7 @@ class LoginService extends GetxService {
 
   var logger = Logger(printer: PrettyPrinter(methodCount: 0));
 
-  Future<UserModel?> login(String nim, String password) async {
+  Future<Mahasiswa?> loginMahasiswa(String nim, String password) async {
     try {
       final response = await http.post(
         Uri.parse(_baseURL),
@@ -26,16 +27,18 @@ class LoginService extends GetxService {
       logger.d("Sending password: $password");
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final body = jsonDecode(response.body);
 
-        if (data['status'] == 'success') {
+        if (body['status'] == 'success') {
+          final data = body['data'];
+
           _box.write("user_nim", data['nim']);
           _box.write("user_nama", data['nama']);
           _box.write("id_prodi", data['id_prodi']);
           _box.write("semester", data['semester']);
           _box.write("role", "mahasiswa");
 
-          return UserModel.fromJson(data);
+          return Mahasiswa.fromJson(data);
         }
       }
       return null;
@@ -45,7 +48,36 @@ class LoginService extends GetxService {
     }
   }
 
-  bool isLoggedIn() {
-    return _box.hasData('user_nim');
+  Future<Dosen?> loginDosen(String email, String password) async {
+    try {
+      final response = await http.post(Uri.parse(_baseURL),
+          body: {'email': email, 'password': password, 'role': 'dosen'});
+
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+
+        if (body['status'] == 'success') {
+          final data = body['data'];
+
+          _box.write("user_nip", data['nip']);
+          _box.write("user_nama", data['nama']);
+          _box.write("email", data['email']);
+          // _box.write("prodi", data['prodi']);
+          _box.write("role", data['role']);
+
+          logger.d(body);
+
+          return Dosen.fromJson(data);
+        }
+      }
+      return null;
+    } catch (e) {
+      logger.e('Error during login: $e');
+      return null;
+    }
   }
+
+  // bool isLoggedIn() {
+  //   return _box.hasData('user_nim');
+  // }
 }

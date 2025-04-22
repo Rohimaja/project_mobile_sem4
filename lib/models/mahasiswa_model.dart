@@ -1,24 +1,22 @@
-class UserModel {
+class Mahasiswa {
   final String nim;
   final String nama;
   final int idProdi;
   final int semester;
-  // final String role;
 
-  UserModel(
+  Mahasiswa(
       {required this.nim,
       required this.nama,
       required this.idProdi,
-      // required this.role,
       required this.semester});
 
-  factory UserModel.fromJson(Map<String, dynamic> object) {
-    return UserModel(
-        nim: object['nim'],
-        nama: object['nama'],
-        idProdi: object['id_prodi'],
-        // role: object['role'],
-        semester: object['semester']);
+  factory Mahasiswa.fromJson(Map<String, dynamic> json) {
+    return Mahasiswa(
+      nim: json['nim'],
+      nama: json['nama'],
+      idProdi: json['id_prodi'],
+      semester: json['semester'],
+    );
   }
 
   Map<String, dynamic> toJson() => {
