@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
 import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
-import 'package:stipres/screens/features_student/home/materi_screen.dart';
 import 'package:stipres/screens/features_student/models/jadwal_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';
@@ -10,6 +11,8 @@ import 'package:stipres/styles/constant.dart';
 class DashboardPage extends StatelessWidget {
   DashboardPage({super.key});
   var height, width;
+
+  final dashboardC = Get.put(DashboardController());
 
   final List<JadwalModel> jadwalHariIni = [
     JadwalModel(
@@ -164,22 +167,24 @@ class DashboardPage extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Izzul Islam Ramadhan",
-                              style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                            Obx(
+                              () => Text(
+                                dashboardC.storedName.value,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              "E41231215",
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: blueColor,
-                              ),
-                            ),
+                            Obx(() => Text(
+                                  dashboardC.storedNim.value,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: blueColor,
+                                  ),
+                                )),
                           ],
                         ),
                       ],
@@ -273,12 +278,7 @@ class DashboardPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                KehadiranPage()),
-                                      );
+                                      Get.toNamed("/student/kehadiran-screen");
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
                                     child: CategoryCard(

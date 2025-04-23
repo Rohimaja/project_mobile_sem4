@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_student/account/profile_controller.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/styles/constant.dart';
@@ -8,6 +9,8 @@ import 'package:stipres/styles/constant.dart';
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
   var height, width;
+
+  final profileC = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -199,14 +202,15 @@ class ProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Izzul Islam Ramadhan",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 161, 161, 161),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          child: Obx(() => Text(
+                                profileC.storedName.value,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 161, 161, 161),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
                         ),
                       ),
                     ),
@@ -236,14 +240,15 @@ class ProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            "E41231215",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 161, 161, 161),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          child: Obx(() => Text(
+                                profileC.storedNim.value,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 161, 161, 161),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
                         ),
                       ),
                     ),
@@ -273,14 +278,15 @@ class ProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            "izzulramadhan123@gmail.com",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 161, 161, 161),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          child: Obx(() => Text(
+                                profileC.storedEmail.value,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 161, 161, 161),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
                         ),
                       ),
                     ),
@@ -310,13 +316,14 @@ class ProfilePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Teknik Informatika",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 161, 161, 161),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          child: Obx(
+                            () => Text(profileC.storedProdi.value,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 161, 161, 161),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                )),
                           ),
                         ),
                       ),

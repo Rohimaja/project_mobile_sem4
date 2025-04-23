@@ -34,6 +34,7 @@ class LoginService extends GetxService {
 
           _box.write("user_nim", data['nim']);
           _box.write("user_nama", data['nama']);
+          _box.write("user_email", data['email']);
           _box.write("id_prodi", data['id_prodi']);
           _box.write("semester", data['semester']);
           _box.write("role", "mahasiswa");
@@ -61,7 +62,7 @@ class LoginService extends GetxService {
 
           _box.write("user_nip", data['nip']);
           _box.write("user_nama", data['nama']);
-          _box.write("email", data['email']);
+          _box.write("user_email", data['email']);
           // _box.write("prodi", data['prodi']);
           _box.write("role", data['role']);
 
