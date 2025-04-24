@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class ReusableButton extends StatelessWidget {
   const ReusableButton(
@@ -145,4 +148,38 @@ class ReusableBackground extends StatelessWidget {
       ],
     );
   }
+}
+
+void showLoadingPopup() {
+  Get.dialog(Stack(
+    children: [
+      BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+        child: Container(
+          color: Colors.black.withAlpha(2),
+        ),
+      ),
+      Center(
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 16,
+              ),
+              Text("Mohon Tunggu")
+            ],
+          ),
+        ),
+      )
+    ],
+  ));
+}
+
+void hideLoadingPopup() {
+  if (Get.isDialogOpen ?? false) Get.back();
 }

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stipres/controllers/auth/forget_password_step1_controller.dart';
+import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ForgetPassword1 extends StatelessWidget {
-  const ForgetPassword1({super.key});
+  ForgetPassword1({super.key});
+
+  final emailController = TextEditingController();
+  final forgetPass1C = ForgetPasswordStep1Controller();
 
   @override
   Widget build(BuildContext context) {
@@ -51,36 +56,42 @@ class ForgetPassword1 extends StatelessWidget {
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 7),
                               TextField(
-                                keyboardType: TextInputType.visiblePassword,
-                                decoration: InputDecoration(
-                                  hintText: "johndoe@gmail.com",
-                                  hintStyle:
-                                      greyTextStyle.copyWith(fontSize: 15),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(color: blueColor)),
-                                ),
-                              ),
+                                  controller: emailController,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  decoration: InputDecoration(
+                                    hintText: "johndoe@gmail.com",
+                                    hintStyle:
+                                        greyTextStyle.copyWith(fontSize: 15),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                        borderSide:
+                                            BorderSide(color: blueColor)),
+                                  )),
                               const SizedBox(height: 20),
                               const SizedBox(height: 20),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Get.offNamed("/auth/forget-password/step2");
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 5,
-                                  backgroundColor: blueColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  minimumSize: const Size(double.infinity, 50),
-                                ),
-                                child: Text("Berikutnya",
-                                    style:
-                                        whiteTextStyle.copyWith(fontSize: 17)),
-                              ),
+                              Obx(() => forgetPass1C.isLoading.value
+                                  ? CircularProgressIndicator()
+                                  : ElevatedButton(
+                                      onPressed: () {
+                                        forgetPass1C.sendOtp(
+                                            emailController.text.trim());
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 5,
+                                        backgroundColor: blueColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        minimumSize:
+                                            const Size(double.infinity, 50),
+                                      ),
+                                      child: Text("Berikutnya",
+                                          style: whiteTextStyle.copyWith(
+                                              fontSize: 17)),
+                                    )),
                             ],
                           ),
                         ),

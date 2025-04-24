@@ -17,7 +17,7 @@ class Mahasiswa {
       nim: json['nim'],
       nama: json['nama'],
       email: json['email'],
-      idProdi: json['id_prodi'],
+      idProdi: json['prodi_id'],
       semester: json['semester'],
     );
   }

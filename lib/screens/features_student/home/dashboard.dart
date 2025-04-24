@@ -168,12 +168,17 @@ class DashboardPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Obx(
-                              () => Text(
-                                dashboardC.storedName.value,
-                                style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                              () => Container(
+                                width: MediaQuery.of(context).size.width * 0.65,
+                                margin: EdgeInsets.only(right: 10),
+                                child: Text(
+                                  dashboardC.storedName.value,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
