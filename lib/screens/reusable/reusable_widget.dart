@@ -151,35 +151,45 @@ class ReusableBackground extends StatelessWidget {
 }
 
 void showLoadingPopup() {
-  Get.dialog(Stack(
-    children: [
-      BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-        child: Container(
-          color: Colors.black.withAlpha(2),
-        ),
-      ),
-      Center(
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20)),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(
-                height: 16,
-              ),
-              Text("Mohon Tunggu")
-            ],
+  Get.dialog(
+      Stack(
+        children: [
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            child: Container(
+              color: Colors.black.withAlpha(4),
+            ),
           ),
-        ),
-      )
-    ],
-  ));
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Mohon Tunggu",
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+      barrierDismissible: false,
+      name: "loading_popup");
 }
 
 void hideLoadingPopup() {
-  if (Get.isDialogOpen ?? false) Get.back();
+  if (Get.isDialogOpen ?? false) {
+    Get.back(closeOverlays: true);
+  }
 }

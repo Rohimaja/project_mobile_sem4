@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:stipres/controllers/auth/forget_password_step2_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ForgetPassword2 extends StatelessWidget {
-  const ForgetPassword2({super.key});
+  ForgetPassword2({super.key});
+
+  final forgetPass2C = ForgetPasswordStep2Controller();
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +46,15 @@ class ForgetPassword2 extends StatelessWidget {
                                 TextSpan(
                                   text:
                                       "Silahkan masukkan nim dan kode OTP yang telah dikirimkan pada ",
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(fontSize: 14),
                                 ),
                                 TextSpan(
-                                  text: "tok*****@gmail.com",
-                                  style: TextStyle(fontSize: 16),
+                                  text: forgetPass2C.maskedEmail(),
+                                  style: blackTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: bold,
+                                      color:
+                                          const Color.fromARGB(255, 0, 177, 6)),
                                 )
                               ])),
                         ),
@@ -64,6 +71,7 @@ class ForgetPassword2 extends StatelessWidget {
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 7),
                               PinCodeTextField(
+                                controller: forgetPass2C.otpController,
                                 appContext: context,
                                 length: 4, // Jumlah kotak OTP
                                 // controller: otpController,
@@ -77,7 +85,7 @@ class ForgetPassword2 extends StatelessWidget {
                                 pinTheme: PinTheme(
                                   shape: PinCodeFieldShape.box,
                                   borderRadius: BorderRadius.circular(8),
-                                  fieldHeight: 29,
+                                  fieldHeight: 35,
                                   fieldWidth: 51,
                                   inactiveColor: Colors.grey,
                                   activeColor: blueColor,
@@ -88,24 +96,35 @@ class ForgetPassword2 extends StatelessWidget {
                                 },
                               ),
                               const SizedBox(height: 10),
-                              RichText(
-                                text: TextSpan(
+                              Obx(
+                                () => RichText(
+                                    text: TextSpan(
                                   text: "Belum menerima kode? ",
                                   style: blackTextStyle.copyWith(fontSize: 15),
                                   children: [
-                                    TextSpan(
-                                      text: "Kirim",
-                                      style:
-                                          blueTextStyle.copyWith(fontSize: 15),
-                                    ),
+                                    WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: GestureDetector(
+                                          onTap:
+                                              forgetPass2C.isButtonEnabled.value
+                                                  ? forgetPass2C.send
+                                                  : null,
+                                          child: Text(
+                                            forgetPass2C.textKirim.value,
+                                            style: blueTextStyle.copyWith(
+                                                fontSize: 15),
+                                          ),
+                                        )),
                                   ],
-                                ),
+                                )),
                               ),
                               const SizedBox(height: 20),
                               ElevatedButton(
-                                onPressed: () {
-                                  Get.offNamed("/auth/forget-password/step3");
-                                },
+                                onPressed: forgetPass2C.isLoading.value
+                                    ? null
+                                    : () async {
+                                        await forgetPass2C.checkOtp();
+                                      },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 5,
                                   backgroundColor: blueColor,

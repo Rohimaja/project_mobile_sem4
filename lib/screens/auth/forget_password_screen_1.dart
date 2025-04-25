@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stipres/controllers/auth/forget_password_step1_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ForgetPassword1 extends StatelessWidget {
@@ -71,27 +70,25 @@ class ForgetPassword1 extends StatelessWidget {
                                   )),
                               const SizedBox(height: 20),
                               const SizedBox(height: 20),
-                              Obx(() => forgetPass1C.isLoading.value
-                                  ? CircularProgressIndicator()
-                                  : ElevatedButton(
-                                      onPressed: () {
-                                        forgetPass1C.sendOtp(
+                              ElevatedButton(
+                                onPressed: forgetPass1C.isLoading.value
+                                    ? null
+                                    : () async {
+                                        await forgetPass1C.sendOtp(
                                             emailController.text.trim());
                                       },
-                                      style: ElevatedButton.styleFrom(
-                                        elevation: 5,
-                                        backgroundColor: blueColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        minimumSize:
-                                            const Size(double.infinity, 50),
-                                      ),
-                                      child: Text("Berikutnya",
-                                          style: whiteTextStyle.copyWith(
-                                              fontSize: 17)),
-                                    )),
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 5,
+                                  backgroundColor: blueColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  minimumSize: const Size(double.infinity, 50),
+                                ),
+                                child: Text("Berikutnya",
+                                    style:
+                                        whiteTextStyle.copyWith(fontSize: 17)),
+                              ),
                             ],
                           ),
                         ),

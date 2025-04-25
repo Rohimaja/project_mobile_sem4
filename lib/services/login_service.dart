@@ -83,4 +83,5 @@ class LoginService extends GetxService {
   // bool isLoggedIn() {
   //   return _box.hasData('user_nim');
   // }
+
 }
