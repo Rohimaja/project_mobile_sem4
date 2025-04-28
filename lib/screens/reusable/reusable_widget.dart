@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ReusableButton extends StatelessWidget {
+class ReusableButton extends StatelessWidget {  
   const ReusableButton(
       {super.key,
       required this.label,
       required this.onPressed,
-      required this.buttonStyle,
+      required this.buttonStyle,  
       required this.textStyle});
 
   final String label;

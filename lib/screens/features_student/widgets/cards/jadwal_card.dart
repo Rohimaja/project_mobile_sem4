@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/screens/features_student/home/dashboard.dart';
+import 'package:stipres/screens/features_student/home/dashboard_screen.dart';
 import 'package:stipres/screens/features_student/models/jadwal_model.dart';
 
 class JadwalCard extends StatelessWidget {

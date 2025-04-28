@@ -289,7 +289,7 @@ class DashboardPage extends StatelessWidget {
                                     child: CategoryCard(
                                       title: 'Kehadiran',
                                       items: 4,
-                                      imagePath: 'icons/kehadiran.png',
+                                      imagePath: 'assets/icons/kehadiran.png',
                                       bgColor: const Color.fromARGB(
                                           255, 187, 251, 189),
                                     ),
@@ -316,7 +316,8 @@ class DashboardPage extends StatelessWidget {
                                     child: CategoryCard(
                                       title: 'Presensi',
                                       items: 4,
-                                      imagePath: 'icons/rekap_kehadiran.png',
+                                      imagePath:
+                                          'assets/icons/rekap_kehadiran.png',
                                       bgColor: const Color.fromARGB(
                                           255, 251, 187, 189),
                                     ),
@@ -342,7 +343,8 @@ class DashboardPage extends StatelessWidget {
                                     child: CategoryCard(
                                       title: 'Kalender Akademik',
                                       items: 4,
-                                      imagePath: 'icons/kalender_akademik.png',
+                                      imagePath:
+                                          'assets/icons/kalender_akademik.png',
                                       bgColor: const Color.fromARGB(
                                           255, 249, 251, 187),
                                     ),
@@ -368,7 +370,7 @@ class DashboardPage extends StatelessWidget {
                                     child: CategoryCard(
                                       title: 'Perkuliahan Online',
                                       items: 4,
-                                      imagePath: 'icons/zoom.png',
+                                      imagePath: 'assets/icons/zoom.png',
                                       bgColor: const Color.fromARGB(
                                           255, 251, 232, 187),
                                     ),

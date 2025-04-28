@@ -14,7 +14,7 @@ class Dosen {
   factory Dosen.fromJson(Map<String, dynamic> json) {
     return Dosen(nip: json['nip'], nama: json['nama'], email: json['email']);
     // prodi: json['prodi']);
-  }
+  } 
 
   Map<String, dynamic> toJson() => {
         nip: 'nip',

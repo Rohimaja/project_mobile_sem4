@@ -6,8 +6,10 @@ import 'package:stipres/screens/auth/forget_password_screen_1.dart';
 import 'package:stipres/screens/auth/forget_password_screen_2.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
-import 'package:stipres/screens/features_student/home/base_screen.dart' as student;
-import 'package:stipres/screens/features_lecturer/home/base_screen.dart' as lecturer;
+import 'package:stipres/screens/features_student/home/base_screen.dart'
+    as student;
+import 'package:stipres/screens/features_lecturer/home/base_screen.dart'
+    as lecturer;
 import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
 
 class AppScreens {

@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:stipres/models/forget_password.response.dart';
 import 'package:stipres/services/api_manager.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/services/forget_password_service.dart';
@@ -33,12 +30,17 @@ class ForgetPasswordStep1Controller extends GetxController {
         return Get.offNamed("/auth/forget-password/step1");
       }
 
-      // final result = await ForgetPasswordService().sendOtp(email);
-      await ForgetPasswordService().sendOtpSv(email);
-
-      isLoading.value = false;
-      hideLoadingPopup();
-      Get.offNamed("/auth/forget-password/step2");
+      ChangePasswordFPResponse result =
+          await ForgetPasswordService().sendOtpSv(email);
+      if (result.status == "success") {
+        isLoading.value = false;
+        hideLoadingPopup();
+        Get.offNamed("/auth/forget-password/step2");
+      } else {
+        isLoading.value = false;
+        hideLoadingPopup();
+        Get.snackbar("Gagal", "Gagal mengirim otp");
+      }
     } catch (e) {
       isLoading.value = false;
       hideLoadingPopup();

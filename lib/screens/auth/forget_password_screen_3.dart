@@ -7,7 +7,7 @@ import 'package:stipres/styles/constant.dart';
 class ForgetPassword3 extends StatelessWidget {
   ForgetPassword3({super.key});
 
-  final forgetPass3C = Get.put(ForgetPasswordStep3Controller());
+  final _controller = Get.put(ForgetPasswordStep3Controller());
 
   @override
   Widget build(BuildContext context) {
@@ -53,22 +53,30 @@ class ForgetPassword3 extends StatelessWidget {
                               Obx(
                                 () => TextField(
                                   obscureText:
-                                      !forgetPass3C.isPasswordVisible.value,
-                                  controller: forgetPass3C.passwordController,
+                                      !_controller.isPasswordVisible.value,
+                                  controller: _controller.passwordController,
                                   keyboardType: TextInputType.visiblePassword,
+                                  onChanged: (value) {
+                                    _controller.startTimerPassword();
+                                  },
                                   decoration: InputDecoration(
                                     suffixIcon: IconButton(
                                         onPressed: () {
-                                          forgetPass3C.checkVisible();
+                                          _controller.checkVisible();
                                         },
                                         icon: Icon(
-                                            forgetPass3C.isPasswordVisible.value
+                                            _controller.isPasswordVisible.value
                                                 ? Icons.visibility
                                                 : Icons.visibility_off)),
                                     hintText:
-                                        (!forgetPass3C.isPasswordVisible.value)
+                                        (!_controller.isPasswordVisible.value)
                                             ? "********"
                                             : "12345678",
+                                    errorText: (_controller
+                                                .valuePassword.value ==
+                                            true)
+                                        ? _controller.passwordErrorMessage.value
+                                        : null,
                                     hintStyle:
                                         greyTextStyle.copyWith(fontSize: 15),
                                     border: OutlineInputBorder(
@@ -89,21 +97,32 @@ class ForgetPassword3 extends StatelessWidget {
                               Obx(
                                 () => TextField(
                                   obscureText:
-                                      !forgetPass3C.isPasswordVisible2.value,
+                                      !_controller.isPasswordVisible2.value,
+                                  controller:
+                                      _controller.confirmPasswordController,
                                   keyboardType: TextInputType.visiblePassword,
+                                  onChanged: (value) {
+                                    _controller.startTimerConfirmPassword();
+                                  },
                                   decoration: InputDecoration(
                                     hintText:
-                                        (!forgetPass3C.isPasswordVisible2.value)
+                                        (!_controller.isPasswordVisible2.value)
                                             ? "********"
                                             : "12345678",
+                                    errorText: (_controller
+                                                .valueConfirmPassword.value ==
+                                            true)
+                                        ? _controller
+                                            .confirmPasswordErrorMessage.value
+                                        : null,
                                     suffixIcon: IconButton(
                                         onPressed: () {
-                                          forgetPass3C.checkVisible2();
+                                          _controller.checkVisible2();
                                         },
-                                        icon: Icon(forgetPass3C
-                                                .isPasswordVisible2.value
-                                            ? Icons.visibility
-                                            : Icons.visibility_off)),
+                                        icon: Icon(
+                                            _controller.isPasswordVisible2.value
+                                                ? Icons.visibility
+                                                : Icons.visibility_off)),
                                     hintStyle:
                                         greyTextStyle.copyWith(fontSize: 15),
                                     border: OutlineInputBorder(
@@ -140,7 +159,7 @@ class ForgetPassword3 extends StatelessWidget {
                                   textStyle: whiteTextStyle.copyWith(
                                       fontSize: 17, fontWeight: bold),
                                   onPressed: () {
-                                    Get.back();
+                                    _controller.changePassword();
                                   }),
                             )
                           ],

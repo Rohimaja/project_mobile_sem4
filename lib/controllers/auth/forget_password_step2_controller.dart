@@ -98,19 +98,19 @@ class ForgetPasswordStep2Controller extends GetxController {
     logger.d(otp);
 
     if (otp.length < 4) {
+      hideLoadingPopup();
       Get.snackbar("Error", "OTP harus lengkap");
       isLoading.value = false;
-      hideLoadingPopup();
       return;
     }
 
     bool success = await forgetPasswordService.checkOtp(email, otp);
     if (success) {
       hideLoadingPopup();
-      Get.toNamed("/auth/forget-password/step3");
+      Get.toNamed("/auth/forget-password/step3", arguments: email);
     } else {
-      Get.snackbar("Gagal", "OTP salah atau kadaluwarsa");
       hideLoadingPopup();
+      Get.snackbar("Gagal", "OTP salah atau kadaluwarsa");
     }
   }
 }
