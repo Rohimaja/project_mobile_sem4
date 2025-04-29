@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/features_student/home/dashboard_screen.dart';
-import 'package:stipres/screens/features_student/models/jadwal_model.dart';
+import 'package:stipres/models/student/jadwal_model.dart';
 
 class JadwalCard extends StatelessWidget {
   final JadwalModel jadwal;
@@ -73,8 +73,7 @@ class JadwalCard extends StatelessWidget {
                           ),
                           child: const Text(
                             "Lihat Jadwal",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 12),
+                            style: TextStyle(color: Colors.white, fontSize: 12),
                           ),
                         ),
                       ],
@@ -88,7 +87,7 @@ class JadwalCard extends StatelessWidget {
                           width: 16,
                         ),
                         const SizedBox(width: 4),
-                        Text(jadwal.lokasi),
+                        Text(jadwal.lokasi ?? "-"),
                       ],
                     ),
                     const SizedBox(height: 6),
@@ -100,7 +99,7 @@ class JadwalCard extends StatelessWidget {
                           width: 16,
                         ),
                         const SizedBox(width: 4),
-                        Text(jadwal.durasi),
+                        Text(jadwal.durasiMatkul),
                       ],
                     ),
                     const SizedBox(height: 10),

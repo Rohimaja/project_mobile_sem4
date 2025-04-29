@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
 import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
-import 'package:stipres/screens/features_student/models/jadwal_model.dart';
+import 'package:stipres/models/student/jadwal_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -14,36 +14,36 @@ class DashboardPage extends StatelessWidget {
 
   final dashboardC = Get.put(DashboardController());
 
-  final List<JadwalModel> jadwalHariIni = [
-    JadwalModel(
-      waktu: '07.00 - 10.00 WIB',
-      mataKuliah: 'Pemrograman Dasar',
-      lokasi: 'Gedung JTI Ruang 3.3',
-      durasi: '2 Jam',
-      chips: ['Presensi', 'Zoom', 'Materi'],
-    ),
-    JadwalModel(
-      waktu: '10.15 - 12.00 WIB',
-      mataKuliah: 'Struktur Data',
-      lokasi: 'Gedung JTI Ruang 2.2',
-      durasi: '1.5 Jam',
-      chips: ['Presensi', 'Materi'],
-    ),
-    JadwalModel(
-      waktu: '13.00 - 15.00 WIB',
-      mataKuliah: 'Basis Data',
-      lokasi: 'Gedung JTI Ruang 1.1',
-      durasi: '2 Jam',
-      chips: ['Presensi', 'Zoom'],
-    ),
-    JadwalModel(
-      waktu: '07.00 - 10.00 WIB',
-      mataKuliah: 'Kewirausahaan',
-      lokasi: 'Gedung JTI Ruang 3.3',
-      durasi: '2 Jam',
-      chips: ['Presensi', 'Zoom', 'Materi'],
-    ),
-  ];
+  // final List<JadwalModel> jadwalHariIni = [
+  //   JadwalModel(
+  //     waktu: '07.00 - 10.00 WIB',
+  //     mataKuliah: 'Pemrograman Dasar',
+  //     lokasi: 'Gedung JTI Ruang 3.3',
+  //     durasiMatkul: '2 Jam',
+  //     chips: ['Presensi', 'Zoom', 'Materi'],
+  //   ),
+  //   JadwalModel(
+  //     waktu: '10.15 - 12.00 WIB',
+  //     mataKuliah: 'Struktur Data',
+  //     lokasi: 'Gedung JTI Ruang 2.2',
+  //     durasiMatkul: '1.5 Jam',
+  //     chips: ['Presensi', 'Materi'],
+  //   ),
+  //   JadwalModel(
+  //     waktu: '13.00 - 15.00 WIB',
+  //     mataKuliah: 'Basis Data',
+  //     lokasi: 'Gedung JTI Ruang 1.1',
+  //     durasiMatkul: '2 Jam',
+  //     chips: ['Presensi', 'Zoom'],
+  //   ),
+  //   JadwalModel(
+  //     waktu: '07.00 - 10.00 WIB',
+  //     mataKuliah: 'Kewirausahaan',
+  //     lokasi: 'Gedung JTI Ruang 3.3',
+  //     durasiMatkul: '2 Jam',
+  //     chips: ['Presensi', 'Zoom', 'Materi'],
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -437,17 +437,20 @@ class DashboardPage extends StatelessWidget {
                     SizedBox(height: 5),
 
                     Container(
-                      color: Colors.white, // Warna latar belakang putih
-                      padding: EdgeInsets.all(20), // Pindahkan padding ke sini
-                      child: ListView.builder(
-                        itemCount: jadwalHariIni.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return JadwalCard(jadwal: jadwalHariIni[index]);
-                        },
-                      ),
-                    )
+                        color: Colors.white, // Warna latar belakang putih
+                        padding:
+                            EdgeInsets.all(20), // Pindahkan padding ke sini
+                        child: Obx(() {
+                          return ListView.builder(
+                            itemCount: dashboardC.jadwalList.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return JadwalCard(
+                                  jadwal: dashboardC.jadwalList[index]);
+                            },
+                          );
+                        }))
                   ],
                 ),
               ),

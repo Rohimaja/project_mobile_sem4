@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/models/kehadiran_model.dart';
+import 'package:stipres/models/student/kehadiran_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/kehadiran_card.dart';
 import 'package:stipres/styles/constant.dart';
 

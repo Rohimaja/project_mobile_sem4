@@ -70,25 +70,30 @@ class ForgetPassword1 extends StatelessWidget {
                                   )),
                               const SizedBox(height: 20),
                               const SizedBox(height: 20),
-                              ElevatedButton(
-                                onPressed: forgetPass1C.isLoading.value
-                                    ? null
-                                    : () async {
-                                        await forgetPass1C.sendOtp(
-                                            emailController.text.trim());
-                                      },
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 5,
-                                  backgroundColor: blueColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                              Obx(
+                                () => ElevatedButton(
+                                  onPressed: (forgetPass1C.isLoading.value ||
+                                          forgetPass1C.isProcessing.value ||
+                                          forgetPass1C.isSnackbarOpen.value)
+                                      ? null
+                                      : () async {
+                                          await forgetPass1C.sendOtp(
+                                              emailController.text.trim());
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 5,
+                                    backgroundColor: blueColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
                                   ),
-                                  minimumSize: const Size(double.infinity, 50),
+                                  child: Text("Berikutnya",
+                                      style: whiteTextStyle.copyWith(
+                                          fontSize: 17)),
                                 ),
-                                child: Text("Berikutnya",
-                                    style:
-                                        whiteTextStyle.copyWith(fontSize: 17)),
-                              ),
+                              )
                             ],
                           ),
                         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/screens/features_student/models/kehadiran_model.dart';
+import 'package:stipres/models/student/kehadiran_model.dart';
 import 'package:stipres/screens/features_student/widgets/chips/kehadiran_chip.dart';
 
 class KehadiranCard extends StatelessWidget {

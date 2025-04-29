@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:stipres/models/base_response.dart';
+import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/models/forget_password.response.dart';
 import 'package:stipres/services/api_manager.dart';
 
@@ -14,7 +16,7 @@ class ForgetPasswordService extends GetxService {
 
   var logger = Logger();
 
-  Future<ChangePasswordFPResponse> sendOtpSv(String email) async {
+  Future<BaseResponse> sendOtpSv(String email) async {
     try {
       final response =
           await http.post(Uri.parse(_baseURL), body: {'email': email});
@@ -26,11 +28,9 @@ class ForgetPasswordService extends GetxService {
           _box.write("email_otp", email);
           logger.d(body);
 
-          return ChangePasswordFPResponse(
-              status: body['status'], message: body['message']);
+          return BaseResponse(status: body['status'], message: body['message']);
         } else {
-          return ChangePasswordFPResponse(
-              status: body['status'], message: body['message']);
+          return BaseResponse(status: body['status'], message: body['message']);
         }
       }
     } catch (e) {
@@ -38,8 +38,7 @@ class ForgetPasswordService extends GetxService {
       throw Exception("Failed to send OTP: $e");
     }
 
-    return ChangePasswordFPResponse(
-        status: "error", message: "Failed to send OTP");
+    return BaseResponse(status: "error", message: "Failed to send OTP");
   }
 
   Future<bool> checkOtp(String email, String otp) async {
@@ -59,8 +58,7 @@ class ForgetPasswordService extends GetxService {
     return false;
   }
 
-  Future<ChangePasswordFPResponse> changePasswordSv(
-      String email, String password) async {
+  Future<BaseResponse> changePasswordSv(String email, String password) async {
     try {
       final String newUrl = "auth/forgetPassword.php";
       final response = await http.post(Uri.parse("$global$newUrl"),
@@ -69,12 +67,12 @@ class ForgetPasswordService extends GetxService {
         final body = jsonDecode(response.body);
         logger.d(response.body);
 
-        return ChangePasswordFPResponse.fromJson(body);
+        // return BaseResponse.fromJson(body);
       }
     } catch (e) {
       logger.d("Error during change password: $e");
     }
-    return ChangePasswordFPResponse(
+    return BaseResponse(
         status: "error", message: "Terjadi kesalahan saat mengganti password");
   }
 

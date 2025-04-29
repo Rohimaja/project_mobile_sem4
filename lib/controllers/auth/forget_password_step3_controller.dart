@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/forget_password.response.dart';
 import 'package:stipres/services/forget_password_service.dart';
 
@@ -80,7 +81,7 @@ class ForgetPasswordStep3Controller extends GetxController {
       logger.d(email);
       logger.d(passwordController.text);
 
-      ChangePasswordFPResponse response = await forgetPasswordService
+      BaseResponse response = await forgetPasswordService
           .changePasswordSv(email, passwordController.text);
 
       logger.d(response.message);

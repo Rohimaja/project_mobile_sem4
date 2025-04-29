@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ReusableButton extends StatelessWidget {  
+class ReusableButton extends StatelessWidget {
   const ReusableButton(
       {super.key,
       required this.label,
       required this.onPressed,
-      required this.buttonStyle,  
+      required this.buttonStyle,
       required this.textStyle});
 
   final String label;
@@ -151,6 +151,9 @@ class ReusableBackground extends StatelessWidget {
 }
 
 void showLoadingPopup() {
+  if (Get.isDialogOpen ?? false) {
+    Get.back();
+  }
   Get.dialog(
       Stack(
         children: [
@@ -190,6 +193,6 @@ void showLoadingPopup() {
 
 void hideLoadingPopup() {
   if (Get.isDialogOpen ?? false) {
-    Get.back(closeOverlays: true);
+    Get.back();
   }
 }
