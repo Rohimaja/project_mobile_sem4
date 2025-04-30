@@ -8,6 +8,7 @@ Color yellowColor = const Color(0xFFFAFF00);
 Color blackColor = const Color(0xFF000000);
 Color greyColor = const Color(0xFFBABABA);
 Color redColor = const Color.fromARGB(255, 200, 0, 0);
+Color mainColor = const Color(0xFFEDEBFB);
 
 TextStyle blackTextStyle = GoogleFonts.poppins(color: blackColor);
 TextStyle whiteTextStyle = GoogleFonts.poppins(color: whiteColor);

@@ -3,10 +3,20 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_student/home/notification_screen.dart';
+import 'package:stipres/screens/features_student/models/profile_model.dart';
 import 'package:stipres/styles/constant.dart';
 
-class ProfilePage extends StatelessWidget {
-  ProfilePage({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({Key? key}) : super(key: key);
+
+  final Mahasiswa dataMahasiswa = Mahasiswa(
+    namaLengkap: "Izzul Islam Ramadhan",
+    nim: "E41231215",
+    email: "izzulramadhan123@gmail.com",
+    programStudi: "Teknik Informatika",
+  );
+
   var height, width;
 
   @override
@@ -33,7 +43,7 @@ class ProfilePage extends StatelessWidget {
                         bottomLeft: Radius.circular(40),
                       ),
                       image: DecorationImage(
-                        image: AssetImage('assets/images/bgheader.png'),
+                        image: AssetImage('images/bgheader.png'),
                         fit: BoxFit.cover, // agar penuh
                       ),
                     ),
@@ -43,17 +53,17 @@ class ProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/Logo_PantiWaluya.png',
+                          'images/Logo_PantiWaluya.png',
                           height: 30,
                           width: 30,
                         ),
                         const SizedBox(
-                            width: 5), // jarak kecil antara logo dan teks
+                            width: 3), // jarak kecil antara logo dan teks
                         Expanded(
                           child: Text(
-                            "STIKES PANTI WALUYA MALANG",
+                            "STIKES Panti Waluya Malang",
                             style: GoogleFonts.poppins(
-                              fontSize: 12,
+                              fontSize: 13,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                             ),
@@ -61,19 +71,34 @@ class ProfilePage extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
-                            shape: BoxShape.circle,
+                        Material(
+                          color:
+                              Colors.transparent, // biar background transparan
+                          shape: const CircleBorder(), // biar ripple bulat
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NotificationScreen()),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(100),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.3),
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.only(
+                                  top: 3, bottom: 6, left: 6, right: 6),
+                              child: const Icon(
+                                Icons.notifications_none,
+                                color: Colors.white,
+                                size: 26,
+                              ),
+                            ),
                           ),
-                          padding: const EdgeInsets.only(
-                              top: 3, bottom: 6, left: 6, right: 6),
-                          child: const Icon(
-                            Icons.notifications_none,
-                            color: Colors.white,
-                            size: 26,
-                          ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -123,7 +148,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                               child: ClipOval(
                                 child: Image.asset(
-                                  "assets/images/foto_izzul.jpg",
+                                  "images/foto_izzul.jpg",
                                   height: 90,
                                   width: 90,
                                   fit: BoxFit.cover,
@@ -138,13 +163,17 @@ class ProfilePage extends StatelessWidget {
                                 width: 32,
                                 height: 32,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF0D0063),
+                                  color: whiteColor,
                                   shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: blueColor,
+                                    width: 1,
+                                  ),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(5),
                                   child: Image.asset(
-                                    "assets/icons/ic_addpicture.png", // Pastikan path ini sesuai
+                                    "icons/ic_addpicture.png", // Pastikan path ini sesuai
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -200,7 +229,7 @@ class ProfilePage extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Izzul Islam Ramadhan",
+                            dataMahasiswa.namaLengkap,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 161, 161, 161),
                               fontSize: 15,
@@ -237,7 +266,7 @@ class ProfilePage extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "E41231215",
+                            dataMahasiswa.nim,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 161, 161, 161),
                               fontSize: 15,
@@ -274,7 +303,7 @@ class ProfilePage extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "izzulramadhan123@gmail.com",
+                            dataMahasiswa.email,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 161, 161, 161),
                               fontSize: 15,
@@ -311,7 +340,7 @@ class ProfilePage extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Teknik Informatika",
+                            dataMahasiswa.programStudi,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 161, 161, 161),
                               fontSize: 15,
@@ -372,6 +401,22 @@ class ProfilePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset('icons/ic_settings.png',
+                                    height: 30, width: 30),
+                                SizedBox(width: 10),
+                                Text("Pengaturan",
+                                    style: blackTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                    textAlign: TextAlign.center),
+                              ],
+                            ),
+                            SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,

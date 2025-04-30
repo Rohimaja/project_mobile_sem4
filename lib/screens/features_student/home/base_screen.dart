@@ -16,8 +16,8 @@ class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    DashboardPage(),
-    ProfilePage(),
+    DashboardScreen(),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
