@@ -67,7 +67,7 @@ class ForgetPasswordService extends GetxService {
         final body = jsonDecode(response.body);
         logger.d(response.body);
 
-        // return BaseResponse.fromJson(body);
+        // return BaseResponse.fromJson(body, null);
       }
     } catch (e) {
       logger.d("Error during change password: $e");
