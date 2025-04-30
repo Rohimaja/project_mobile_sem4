@@ -12,7 +12,7 @@ class DashboardController extends GetxController {
 
   Logger log = Logger();
 
-  var jadwalList = <JadwalModel>[].obs;
+  var jadwalList = <JadwalModelApi>[].obs;
 
   var errorMessage = ''.obs;
 
@@ -39,6 +39,7 @@ class DashboardController extends GetxController {
     String nim = _box.read("user_nim");
     log.d(nim);
     final result = await dashboardMahasiswaService.tampilJadwalHariIni(nim);
+    log.d(result);
 
     if (result.status == "success" && result.data != null) {
       final List<JadwalModelApi> updatedList = result.data!.map((jadwal) {
@@ -49,10 +50,11 @@ class DashboardController extends GetxController {
           jadwal.chips.remove("Materi");
           jadwal.chips.add("'Presensi', 'Zoom'");
         }
+
+        log.d(jadwal);
         return jadwal;
       }).toList();
-
-      // jadwalList.value = updatedList;
+      jadwalList.value = updatedList;
     } else {
       errorMessage.value = result.message;
     }

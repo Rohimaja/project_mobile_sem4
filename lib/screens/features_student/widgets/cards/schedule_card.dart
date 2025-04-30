@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stipres/models/student/jadwal_model.dart';
 import 'package:stipres/screens/features_student/home/lecture/lecture_content_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
 import 'package:stipres/screens/features_student/models/schedule_model.dart';
@@ -6,7 +7,7 @@ import 'package:stipres/screens/features_student/widgets/cards/course_detail_car
 import 'package:stipres/styles/constant.dart';
 
 class JadwalCard extends StatelessWidget {
-  final JadwalModel jadwal;
+  final JadwalModelApi jadwal;
 
   const JadwalCard({Key? key, required this.jadwal}) : super(key: key);
 
@@ -151,7 +152,7 @@ class JadwalCard extends StatelessWidget {
                               width: 16,
                             ),
                             const SizedBox(width: 4),
-                            Text(jadwal.lokasi),
+                            Text(jadwal.lokasi!),
                           ],
                         ),
                         const SizedBox(height: 6),
@@ -163,7 +164,7 @@ class JadwalCard extends StatelessWidget {
                               width: 16,
                             ),
                             const SizedBox(width: 4),
-                            Text(jadwal.durasi),
+                            Text(jadwal.durasiMatkul),
                           ],
                         ),
                         const SizedBox(height: 10),

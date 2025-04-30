@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,11 +12,13 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class ForgetPasswordStep2Controller extends GetxController {
   var isButtonEnabled = true.obs;
+  var isSnackbarOpen = false.obs;
 
   final otpController = TextEditingController();
   final forgetPasswordService = ForgetPasswordService();
 
   var isLoading = false.obs;
+  final delaySnackbar = 1;
 
   late StopWatchTimer resendTimer = StopWatchTimer(
       mode: StopWatchMode.countDown,
@@ -23,8 +26,6 @@ class ForgetPasswordStep2Controller extends GetxController {
 
   var textKirim = 'Kirim'.obs;
   var statusMessage = ''.obs;
-
-  // final GetStorage _box = GetStorage();
 
   final String email = GetStorage().read("email_otp");
 
@@ -77,40 +78,71 @@ class ForgetPasswordStep2Controller extends GetxController {
   Future<void> reSendOtp(String email) async {
     try {
       isLoading.value = true;
-      showLoadingPopup();
 
-      await ForgetPasswordService().sendOtpSv(email);
-      hideLoadingPopup();
-      isLoading.value = false;
-      // Get.offNamed("/auth/forget-password/step2");
-      Get.snackbar("Berhasil", "OTP baru telah dikirim ke $email");
+      showLoadingPopup();
+      final result = await ForgetPasswordService().sendOtpSv(email);
+      resetLoading();
+
+      if (result.status == "success") {
+        resetLoading();
+        isSnackbarOpen.value = true;
+        Get.snackbar("Berhasil", "OTP baru telah dikirim ke $email",
+            duration: Duration(seconds: delaySnackbar));
+        Future.delayed(Duration(seconds: 2), () {
+          isSnackbarOpen.value = false;
+        });
+      }
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      resetLoading();
+      isSnackbarOpen.value = true;
+      Get.snackbar("Error", e.toString(),
+          duration: Duration(seconds: delaySnackbar));
+      Future.delayed(Duration(seconds: 2), () {
+        isSnackbarOpen.value = false;
+      });
     }
   }
 
   Future<void> checkOtp() async {
     logger.d("checking");
     isLoading.value = true;
-    showLoadingPopup();
 
     final otp = otpController.text.trim();
     logger.d(otp);
 
     if (otp.length < 4) {
-      hideLoadingPopup();
-      Get.snackbar("Error", "OTP harus lengkap");
-      isLoading.value = false;
+      resetLoading();
+      isSnackbarOpen.value = true;
+      Get.snackbar("Error", "OTP harus lengkap",
+          duration: Duration(seconds: delaySnackbar));
+      Future.delayed(Duration(seconds: 2), () {
+        isSnackbarOpen.value = false;
+      });
       return;
     }
 
+    showLoadingPopup();
     bool success = await forgetPasswordService.checkOtp(email, otp);
+    resetLoading();
+
+    logger.d(success);
+
     if (success) {
-      hideLoadingPopup();
-      Get.toNamed("/auth/forget-password/step3", arguments: email);
+      // resetLoading();
+      Get.offNamed("/auth/forget-password/step3", arguments: email);
+      logger.d(email);
     } else {
-      hideLoadingPopup();
+      resetLoading();
+      isSnackbarOpen.value = true;
       Get.snackbar("Gagal", "OTP salah atau kadaluwarsa");
+      Future.delayed(Duration(seconds: 2), () {
+        isSnackbarOpen.value = false;
+      });
     }
+  }
+
+  void resetLoading() {
+    hideLoadingPopup();
+    isLoading.value = false;
   }
 }

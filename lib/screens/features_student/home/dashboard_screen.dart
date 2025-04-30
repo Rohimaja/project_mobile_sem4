@@ -24,10 +24,10 @@ class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
   var height, width;
 
-  final Akun dataAkun = Akun(
-    namaLengkap: "Izzul Islam Ramadhan",
-    nim: "E41231215",
-  );
+  // final Akun dataAkun = Akun(
+  //   namaLengkap: "Izzul Islam Ramadhan",
+  //   nim: "E41231215",
+  // );
 
   final dashboardC = Get.put(DashboardController());
 
@@ -472,40 +472,40 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
 
-                    Container(
-                      alignment: Alignment.center,
-                      color: mainColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: dashboardC.jadwalList.isEmpty
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 20),
-                                Image.asset(
-                                  'icons/ic_noData.png',
-                                  height: 120,
+                    Obx(() => Container(
+                          alignment: Alignment.center,
+                          color: mainColor,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: dashboardC.jadwalList.isEmpty
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(height: 20),
+                                    Image.asset(
+                                      'icons/ic_noData.png',
+                                      height: 120,
+                                    ),
+                                    SizedBox(height: 15),
+                                    Text(
+                                      'Tidak ada jadwal hari ini',
+                                      style: blackTextStyle.copyWith(
+                                          fontSize: 15,
+                                          fontFamily: 'poppins',
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                )
+                              : ListView.builder(
+                                  itemCount: dashboardC.jadwalList.length,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return JadwalCard(
+                                        jadwal: dashboardC.jadwalList[index]);
+                                  },
                                 ),
-                                SizedBox(height: 15),
-                                Text(
-                                  'Tidak ada jadwal hari ini',
-                                  style: blackTextStyle.copyWith(
-                                      fontSize: 15,
-                                      fontFamily: 'poppins',
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ],
-                            )
-                          : ListView.builder(
-                              itemCount: dashboardC.jadwalList.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return JadwalCard(
-                                    jadwal: dashboardC.jadwalList[index]);
-                              },
-                            ),
-                    ),
+                        )),
                   ],
                 ),
               ),

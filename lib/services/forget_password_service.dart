@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/basic_response.dart';
-import 'package:stipres/models/forget_password.response.dart';
 import 'package:stipres/services/api_manager.dart';
 
 class ForgetPasswordService extends GetxService {
@@ -49,8 +48,10 @@ class ForgetPasswordService extends GetxService {
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
 
-        logger.d(body);
-        return body['status'] == 'success';
+        if (body['status'] == "success") {
+          logger.d(body);
+          return true;
+        }
       }
     } catch (e) {
       logger.e("Error during checking OTP: $e");
@@ -58,7 +59,7 @@ class ForgetPasswordService extends GetxService {
     return false;
   }
 
-  Future<BaseResponse> changePasswordSv(String email, String password) async {
+  Future<BasicResponse> changePasswordSv(String email, String password) async {
     try {
       final String newUrl = "auth/forgetPassword.php";
       final response = await http.post(Uri.parse("$global$newUrl"),
@@ -67,12 +68,12 @@ class ForgetPasswordService extends GetxService {
         final body = jsonDecode(response.body);
         logger.d(response.body);
 
-        // return BaseResponse.fromJson(body, null);
+        return BasicResponse.fromJson(body);
       }
     } catch (e) {
       logger.d("Error during change password: $e");
     }
-    return BaseResponse(
+    return BasicResponse(
         status: "error", message: "Terjadi kesalahan saat mengganti password");
   }
 

@@ -144,24 +144,31 @@ class ForgetPassword3 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: ReusableButton(
-                                  label: "Submit",
-                                  buttonStyle: ElevatedButton.styleFrom(
+                                height: 40,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                child: Obx(
+                                  () => ElevatedButton(
+                                    onPressed: (_controller.isLoading.value ||
+                                            _controller.isSnackbarOpen.value)
+                                        ? null
+                                        : () async {
+                                            await _controller.changePassword();
+                                          },
+                                    style: ElevatedButton.styleFrom(
                                       elevation: 5,
                                       backgroundColor: blueColor,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       minimumSize:
-                                          const Size(double.infinity, 50)),
-                                  textStyle: whiteTextStyle.copyWith(
-                                      fontSize: 17, fontWeight: bold),
-                                  onPressed: () {
-                                    _controller.changePassword();
-                                  }),
-                            )
+                                          const Size(double.infinity, 50),
+                                    ),
+                                    child: Text("Submit",
+                                        style: whiteTextStyle.copyWith(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ))
                           ],
                         )
                       ],

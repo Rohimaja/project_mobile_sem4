@@ -10,6 +10,7 @@ class ForgetPasswordStep1Controller extends GetxController {
   var isProcessing = false.obs;
   var statusMessage = ''.obs;
   var logger = Logger();
+  final delayedSnackbar = 1;
   var isSnackbarOpen = false.obs;
 
   final String urlOtp = '${ApiManager.globalUrl}auth/forgetPassword.php';
@@ -28,12 +29,9 @@ class ForgetPasswordStep1Controller extends GetxController {
       if (email.isEmpty) {
         resetLoading();
         isSnackbarOpen.value = true;
-        Get.showSnackbar(GetSnackBar(
-          title: "Gagal",
-          message: "Email tidak boleh kosong",
-          duration: Duration(seconds: 2),
-        ));
-        Future.delayed(Duration(seconds: 3), () {
+        Get.snackbar("Gagal", "Email tidak boleh kosong",
+            duration: Duration(seconds: delayedSnackbar));
+        Future.delayed(Duration(seconds: 2), () {
           isSnackbarOpen.value = false;
         });
         logger.d("Email is empty");
@@ -42,12 +40,9 @@ class ForgetPasswordStep1Controller extends GetxController {
       } else if (!email.contains("@") || !email.isEmail) {
         resetLoading();
         isSnackbarOpen.value = true;
-        Get.showSnackbar(GetSnackBar(
-          title: "Gagal",
-          message: "Email tidak valid",
-          duration: Duration(seconds: 2),
-        ));
-        Future.delayed(Duration(seconds: 3), () {
+        Get.snackbar("Gagal", "Email tidak valid",
+            duration: Duration(seconds: delayedSnackbar));
+        Future.delayed(Duration(seconds: 2), () {
           isSnackbarOpen.value = false;
         });
         logger.d("Email is not valid");
@@ -65,29 +60,21 @@ class ForgetPasswordStep1Controller extends GetxController {
       } else {
         resetLoading();
         isSnackbarOpen.value = true;
-        Get.showSnackbar(GetSnackBar(
-          title: "Gagal",
-          message: "Email tidak valid",
-          duration: Duration(seconds: 2),
-        ));
-        Future.delayed(Duration(seconds: 3), () {
+        Get.snackbar("Gagal", "Email tidak valid",
+            duration: Duration(seconds: delayedSnackbar));
+        Future.delayed(Duration(seconds: 2), () {
           isSnackbarOpen.value = false;
         });
       }
     } catch (e) {
       resetLoading();
       isSnackbarOpen.value = true;
-      Get.showSnackbar(GetSnackBar(
-        title: "Error",
-        message: "Error : $e",
-        duration: Duration(seconds: 2),
-      ));
-      Future.delayed(Duration(seconds: 3), () {
+      Get.snackbar("Error", "Error ; $e",
+          duration: Duration(seconds: delayedSnackbar));
+      Future.delayed(Duration(seconds: 2), () {
         isSnackbarOpen.value = false;
       });
     } finally {
-      // await Future.delayed(Duration(milliseconds: 100));
-      // resetLoading();
       isProcessing.value = false;
     }
   }

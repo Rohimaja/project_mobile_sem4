@@ -119,25 +119,29 @@ class ForgetPassword2 extends StatelessWidget {
                                 )),
                               ),
                               const SizedBox(height: 20),
-                              ElevatedButton(
-                                onPressed: forgetPass2C.isLoading.value
-                                    ? null
-                                    : () async {
-                                        await forgetPass2C.checkOtp();
-                                      },
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 5,
-                                  backgroundColor: blueColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                              Obx(
+                                () => ElevatedButton(
+                                  onPressed: (forgetPass2C.isLoading.value ||
+                                          forgetPass2C.isSnackbarOpen.value)
+                                      ? null
+                                      : () async {
+                                          await forgetPass2C.checkOtp();
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 5,
+                                    backgroundColor: blueColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
                                   ),
-                                  minimumSize: const Size(double.infinity, 50),
+                                  child: Text("Berikutnya",
+                                      style: whiteTextStyle.copyWith(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold)),
                                 ),
-                                child: Text("Berikutnya",
-                                    style: whiteTextStyle.copyWith(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold)),
-                              ),
+                              )
                             ],
                           ),
                         ),
