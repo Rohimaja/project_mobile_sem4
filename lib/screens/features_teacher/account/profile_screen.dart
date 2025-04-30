@@ -292,7 +292,7 @@ class ProfilePage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
+                                    builder: (context) => LoginScreen()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
@@ -396,7 +396,7 @@ class ProfilePage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
+                                    builder: (context) => LoginScreen()),
                               );
                             },
                             style: ElevatedButton.styleFrom(

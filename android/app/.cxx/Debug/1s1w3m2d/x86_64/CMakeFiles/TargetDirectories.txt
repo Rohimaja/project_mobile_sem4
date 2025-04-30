@@ -1,2 +1,0 @@
-C:/laragon/www/project_mobile_sem4 - Copy/android/app/.cxx/Debug/1s1w3m2d/x86_64/CMakeFiles/edit_cache.dir
-C:/laragon/www/project_mobile_sem4 - Copy/android/app/.cxx/Debug/1s1w3m2d/x86_64/CMakeFiles/rebuild_cache.dir

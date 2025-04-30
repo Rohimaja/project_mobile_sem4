@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stipres/screens/auth/activation_account_screen_2.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
-class AktivasiAccount1 extends StatefulWidget {
-  const AktivasiAccount1({super.key});
+class ActivationAccount1 extends StatelessWidget {
+  const ActivationAccount1({super.key});
 
-  @override
-  State<AktivasiAccount1> createState() => _AktivasiAccount1State();
-}
-
-class _AktivasiAccount1State extends State<AktivasiAccount1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,52 +42,58 @@ class _AktivasiAccount1State extends State<AktivasiAccount1> {
                         Text("Silahkan masukkan alamat email anda",
                             style: blackTextStyle.copyWith(fontSize: 16)),
                         const SizedBox(height: 40),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("Email",
-                                style: blueTextStyle.copyWith(fontSize: 10),
-                                textAlign: TextAlign.left),
-                            const SizedBox(height: 7),
-                            TextField(
-                              keyboardType: TextInputType.visiblePassword,
-                              decoration: InputDecoration(
-                                hintText: "johndoe@gmail.com",
-                                hintStyle: greyTextStyle.copyWith(fontSize: 15),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(color: blueColor)),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Email",
+                                  style: blueTextStyle.copyWith(fontSize: 15),
+                                  textAlign: TextAlign.left),
+                              const SizedBox(height: 7),
+                              TextField(
+                                keyboardType: TextInputType.visiblePassword,
+                                decoration: InputDecoration(
+                                  hintText: "johndoe@gmail.com",
+                                  hintStyle:
+                                      greyTextStyle.copyWith(fontSize: 15),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(6),
+                                      borderSide: BorderSide(color: blueColor)),
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            const SizedBox(height: 20),
-                          ],
+                              const SizedBox(height: 20),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AktivasiAccount2()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: blueColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                minimumSize: const Size(double.infinity, 50),
-                              ),
-                              child: Text("Berikutnya",
-                                  style: whiteTextStyle.copyWith(fontSize: 15)),
-                            ),
+                            SizedBox(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: ReusableButton(
+                                  label: "Berikutnya",
+                                  buttonStyle: ElevatedButton.styleFrom(
+                                      elevation: 5,
+                                      backgroundColor: blueColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      minimumSize:
+                                          const Size(double.infinity, 50)),
+                                  textStyle: whiteTextStyle.copyWith(
+                                      fontSize: 17, fontWeight: bold),
+                                  onPressed: () {
+                                    Get.offNamed("/auth/activation/step2");
+                                  }),
+                            )
                           ],
                         ),
                         SizedBox(

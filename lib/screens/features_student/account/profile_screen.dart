@@ -477,7 +477,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Get.offAll(LoginPage());
+                              Get.offAll(LoginScreen());
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: redColor,

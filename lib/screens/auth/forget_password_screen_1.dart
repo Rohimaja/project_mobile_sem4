@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/main.dart';
-import 'package:stipres/screens/auth/forget_password_screen_2.dart';
+import 'package:get/get.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -16,7 +15,7 @@ class ForgetPassword1 extends StatelessWidget {
             ReusableBackground(),
             Center(
                 child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -40,53 +39,50 @@ class ForgetPassword1 extends StatelessWidget {
                         Text("Silahkan masukkan alamat email anda",
                             style: blackTextStyle.copyWith(fontSize: 14)),
                         const SizedBox(height: 30),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("Email",
-                                style: blueTextStyle.copyWith(fontSize: 15),
-                                textAlign: TextAlign.left),
-                            const SizedBox(height: 7),
-                            TextField(
-                              keyboardType: TextInputType.visiblePassword,
-                              decoration: InputDecoration(
-                                hintText: "johndoe@gmail.com",
-                                hintStyle: greyTextStyle.copyWith(fontSize: 15),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(color: blueColor)),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ForgetPassword2()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: blueColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Email",
+                                  style: blueTextStyle.copyWith(fontSize: 15),
+                                  textAlign: TextAlign.left),
+                              const SizedBox(height: 7),
+                              TextField(
+                                keyboardType: TextInputType.visiblePassword,
+                                decoration: InputDecoration(
+                                  hintText: "johndoe@gmail.com",
+                                  hintStyle:
+                                      greyTextStyle.copyWith(fontSize: 15),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(6),
+                                      borderSide: BorderSide(color: blueColor)),
                                 ),
-                                minimumSize: const Size(double.infinity, 50),
                               ),
-                              child: Text("Berikutnya",
-                                  style: whiteTextStyle.copyWith(fontSize: 17)),
-                            ),
-                          ],
+                              const SizedBox(height: 20),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Get.offNamed("/auth/forget-password/step2");
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 5,
+                                  backgroundColor: blueColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  minimumSize: const Size(double.infinity, 50),
+                                ),
+                                child: Text("Berikutnya",
+                                    style:
+                                        whiteTextStyle.copyWith(fontSize: 17)),
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 20,
@@ -98,10 +94,7 @@ class ForgetPassword1 extends StatelessWidget {
                                 style: blackTextStyle.copyWith(fontSize: 14)),
                             InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyApp()));
+                                Get.back();
                               },
                               child: Text(
                                 "Login",
