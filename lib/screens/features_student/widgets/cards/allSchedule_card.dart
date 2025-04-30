@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/features_student/home/dashboard_screen.dart';
-import 'package:stipres/models/student/jadwal_model.dart';
+import 'package:stipres/screens/features_student/models/allSchedule_model.dart';
+import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
+import 'package:stipres/styles/constant.dart';
 
-class JadwalCard extends StatelessWidget {
-  final JadwalModel jadwal;
+class AllScheduleCard extends StatelessWidget {
+  final AllScheduleModel jadwal;
 
-  const JadwalCard({Key? key, required this.jadwal}) : super(key: key);
+  const AllScheduleCard({Key? key, required this.jadwal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,10 @@ class JadwalCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: const Color(0xFFFFF3E0),
             borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: Colors.grey.shade300,
+              width: 1.2,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -64,18 +70,6 @@ class JadwalCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.purple,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            "Lihat Jadwal",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
-                        ),
                       ],
                     ),
                     const SizedBox(height: 6),
@@ -99,18 +93,10 @@ class JadwalCard extends StatelessWidget {
                           width: 16,
                         ),
                         const SizedBox(width: 4),
-                        Text(jadwal.durasiMatkul),
+                        Text(jadwal.durasi),
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: jadwal.chips.map((chip) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: ChipItem(label: chip),
-                        );
-                      }).toList(),
-                    ),
                   ],
                 ),
               ),

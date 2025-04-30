@@ -1,16 +1,33 @@
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/features_student/home/all_schedule_screen.dart';
+import 'package:stipres/screens/features_student/home/calendar_screen.dart';
+import 'package:stipres/screens/features_student/home/attendance_screen.dart';
+import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
+import 'package:stipres/screens/features_student/home/notification_screen.dart';
+import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
+import 'package:stipres/screens/features_student/models/account_data_model.dart';
+import 'package:stipres/screens/features_student/models/schedule_model.dart';
+import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
+import 'package:stipres/screens/features_student/widgets/cards/weeklyCalendar_card.dart';
+import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
+import 'package:stipres/screens/features_student/widgets/link/calendar_link.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
 import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
 import 'package:stipres/models/student/jadwal_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
+// import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';
 
-class DashboardPage extends StatelessWidget {
-  DashboardPage({super.key});
+class DashboardScreen extends StatelessWidget {
+  DashboardScreen({super.key});
   var height, width;
+
+  final Akun dataAkun = Akun(
+    namaLengkap: "Izzul Islam Ramadhan",
+    nim: "E41231215",
+  );
 
   final dashboardC = Get.put(DashboardController());
 
@@ -51,8 +68,7 @@ class DashboardPage extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(
-          255, 237, 235, 251), // Set background putih ke seluruh layar
+      backgroundColor: mainColor, // Set background putih ke seluruh layar
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -85,12 +101,12 @@ class DashboardPage extends StatelessWidget {
                           width: 30,
                         ),
                         const SizedBox(
-                            width: 5), // jarak kecil antara logo dan teks
+                            width: 3), // jarak kecil antara logo dan teks
                         Expanded(
                           child: Text(
-                            "STIKES PANTI WALUYA MALANG",
+                            "STIKES Panti Waluya Malang",
                             style: GoogleFonts.poppins(
-                              fontSize: 12,
+                              fontSize: 13,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                             ),
@@ -98,19 +114,34 @@ class DashboardPage extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
-                            shape: BoxShape.circle,
+                        Material(
+                          color:
+                              Colors.transparent, // biar background transparan
+                          shape: const CircleBorder(), // biar ripple bulat
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NotificationScreen()),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(100),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.3),
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.only(
+                                  top: 3, bottom: 6, left: 6, right: 6),
+                              child: const Icon(
+                                Icons.notifications_none,
+                                color: Colors.white,
+                                size: 26,
+                              ),
+                            ),
                           ),
-                          padding: const EdgeInsets.only(
-                              top: 3, bottom: 6, left: 6, right: 6),
-                          child: const Icon(
-                            Icons.notifications_none,
-                            color: Colors.white,
-                            size: 26,
-                          ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -134,7 +165,7 @@ class DashboardPage extends StatelessWidget {
                       width: 45,
                       height: 45,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 237, 235, 251),
+                          color: mainColor,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(40),
                           ) // warna ungu muda
@@ -150,13 +181,13 @@ class DashboardPage extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.all(2),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: mainColor,
                             shape: BoxShape.circle,
                           ),
                           child: ClipOval(
                             child: Image.asset(
-                              "assets/images/foto_izzul.jpg",
+                              "images/foto_izzul.jpg",
                               height: 70,
                               width: 70,
                               fit: BoxFit.cover,
@@ -174,7 +205,7 @@ class DashboardPage extends StatelessWidget {
                                 child: Text(
                                   dashboardC.storedName.value,
                                   overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.plusJakartaSans(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -185,7 +216,7 @@ class DashboardPage extends StatelessWidget {
                             const SizedBox(height: 4),
                             Obx(() => Text(
                                   dashboardC.storedNim.value,
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.plusJakartaSans(
                                     fontSize: 14,
                                     color: blueColor,
                                   ),
@@ -209,13 +240,13 @@ class DashboardPage extends StatelessWidget {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                padding: const EdgeInsets.only(top: 10, bottom: 48),
+                padding: const EdgeInsets.only(top: 10, bottom: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 237, 235, 251),
+                        color: mainColor,
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -230,50 +261,34 @@ class DashboardPage extends StatelessWidget {
                               ),
                               children: [
                                 TextSpan(
-                                  text: "Menu ",
-                                  style:
-                                      blackTextStyle, // TextStyle(color: Colors.black),
-                                ),
+                                    text: "Menu ",
+                                    style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700,
+                                        color: blackColor)),
                                 TextSpan(
                                   text: "Utama",
-                                  style:
-                                      greyTextStyle, // TextStyle(color: Colors.grey),
-                                ),
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.grey),
+                                )
                               ],
                             ),
-                          ),
-                          Row(
-                            children: const [
-                              Text(
-                                "lihat semua",
-                                style: TextStyle(
-                                  color: Color(0xFF1E88E4),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(width: 4),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16,
-                                color: Color(0xFF1E88E4),
-                              ),
-                            ],
                           ),
                         ],
                       ),
                     ),
-
-                    const SizedBox(height: 5),
 
                     // Horizontal Scroll Card
                     SizedBox(
                       height: 180,
                       width: width,
                       child: Container(
-                        color: Colors.white, // Warna latar belakang
+                        color: mainColor, // Warna latar belakang
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Row(
                             children: [
                               // === Card dengan Navigasi + Ripple ===
@@ -289,9 +304,9 @@ class DashboardPage extends StatelessWidget {
                                     child: CategoryCard(
                                       title: 'Kehadiran',
                                       items: 4,
-                                      imagePath: 'assets/icons/kehadiran.png',
+                                      imagePath: 'icons/ic_kehadiran.png',
                                       bgColor: const Color.fromARGB(
-                                          255, 187, 251, 189),
+                                          255, 187, 235, 251),
                                     ),
                                   ),
                                 ),
@@ -309,22 +324,22 @@ class DashboardPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                KehadiranPage()),
+                                                PresenceScreen()),
                                       );
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
                                     child: CategoryCard(
                                       title: 'Presensi',
                                       items: 4,
-                                      imagePath:
-                                          'assets/icons/rekap_kehadiran.png',
+                                      imagePath: 'icons/rekap_kehadiran.png',
                                       bgColor: const Color.fromARGB(
-                                          255, 251, 187, 189),
+                                          255, 187, 251, 193),
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 12),
+
+                              SizedBox(width: 12),
 
                               Material(
                                 color: Colors.transparent,
@@ -336,7 +351,7 @@ class DashboardPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                KehadiranPage()),
+                                                CalendarScreen()),
                                       );
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
@@ -346,7 +361,7 @@ class DashboardPage extends StatelessWidget {
                                       imagePath:
                                           'assets/icons/kalender_akademik.png',
                                       bgColor: const Color.fromARGB(
-                                          255, 249, 251, 187),
+                                          255, 251, 187, 187),
                                     ),
                                   ),
                                 ),
@@ -363,7 +378,7 @@ class DashboardPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                KehadiranPage()),
+                                                LectureScreen()),
                                       );
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
@@ -372,7 +387,7 @@ class DashboardPage extends StatelessWidget {
                                       items: 4,
                                       imagePath: 'assets/icons/zoom.png',
                                       bgColor: const Color.fromARGB(
-                                          255, 251, 232, 187),
+                                          255, 187, 191, 251),
                                     ),
                                   ),
                                 ),
@@ -385,10 +400,44 @@ class DashboardPage extends StatelessWidget {
 
                     const SizedBox(height: 16),
 
+                    Container(
+                      decoration: BoxDecoration(
+                        color: mainColor,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: "Kalender",
+                                    style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700,
+                                        color: blackColor)),
+                              ],
+                            ),
+                          ),
+                          CalendarLink(),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    WeeklyCalendar(),
+
+                    SizedBox(height: 16),
+
                     // Title Jadwal Hari Ini
                     Container(
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 237, 235, 251),
+                        color: mainColor,
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -403,54 +452,60 @@ class DashboardPage extends StatelessWidget {
                               ),
                               children: [
                                 TextSpan(
-                                  text: "Jadwal ",
-                                  style: blackTextStyle,
-                                ),
+                                    text: "Jadwal ",
+                                    style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700,
+                                        color: blackColor)),
                                 TextSpan(
                                   text: "Hari Ini",
-                                  style: greyTextStyle,
-                                ),
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.grey),
+                                )
                               ],
                             ),
                           ),
-                          Row(
-                            children: const [
-                              Text(
-                                "lihat semua",
-                                style: TextStyle(
-                                  color: Color(0xFF1E88E4),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(width: 4),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16,
-                                color: Color(0xFF1E88E4),
-                              ),
-                            ],
-                          ),
+                          AllScheduleLink(),
                         ],
                       ),
                     ),
 
-                    SizedBox(height: 5),
-
                     Container(
-                        color: Colors.white, // Warna latar belakang putih
-                        padding:
-                            EdgeInsets.all(20), // Pindahkan padding ke sini
-                        child: Obx(() {
-                          return ListView.builder(
-                            itemCount: dashboardC.jadwalList.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return JadwalCard(
-                                  jadwal: dashboardC.jadwalList[index]);
-                            },
-                          );
-                        }))
+                      alignment: Alignment.center,
+                      color: mainColor,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: dashboardC.jadwalList.isEmpty
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 20),
+                                Image.asset(
+                                  'icons/ic_noData.png',
+                                  height: 120,
+                                ),
+                                SizedBox(height: 15),
+                                Text(
+                                  'Tidak ada jadwal hari ini',
+                                  style: blackTextStyle.copyWith(
+                                      fontSize: 15,
+                                      fontFamily: 'poppins',
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            )
+                          : ListView.builder(
+                              itemCount: dashboardC.jadwalList.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return JadwalCard(
+                                    jadwal: dashboardC.jadwalList[index]);
+                              },
+                            ),
+                    ),
                   ],
                 ),
               ),
@@ -479,14 +534,14 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 140,
+      width: 160,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: whiteColor, // warna garis outline
-          width: 1.5, // ketebalan garis
+          color: Color(0xFFC8C8C8),
+          width: 0.5,
         ),
       ),
       child: Column(
@@ -500,10 +555,10 @@ class CategoryCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           AutoSizeText(
             title,
-            style: const TextStyle(
+            style: GoogleFonts.plusJakartaSans(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
@@ -513,7 +568,10 @@ class CategoryCard extends StatelessWidget {
           ),
           Text(
             "$items items",
-            style: TextStyle(color: Colors.grey.shade600),
+            style: GoogleFonts.plusJakartaSans(
+                color: const Color.fromARGB(255, 98, 98, 98),
+                fontSize: 13,
+                fontWeight: FontWeight.w500),
           ),
         ],
       ),

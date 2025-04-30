@@ -12,7 +12,7 @@ class DashboardMahasiswaService extends GetxService {
 
   var log = Logger();
 
-  Future<BaseResponse<List<JadwalModel>>> tampilJadwalHariIni(
+  Future<BaseResponse<List<JadwalModelApi>>> tampilJadwalHariIni(
       String nim) async {
     try {
       final url = Uri.parse("$_baseURL?nim=$nim");
@@ -25,7 +25,7 @@ class DashboardMahasiswaService extends GetxService {
       return BaseResponse.fromJson(
         body,
         (dataJson) => (dataJson as List)
-            .map((e) => JadwalModel.fromJson(e as Map<String, dynamic>))
+            .map((e) => JadwalModelApi.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
     } catch (e) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/models/student/kehadiran_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/kehadiran_card.dart';
+import 'package:stipres/screens/features_student/models/attendance_model.dart';
+import 'package:stipres/screens/features_student/widgets/cards/attendance_card.dart';
 import 'package:stipres/styles/constant.dart';
 
 class KehadiranPage extends StatelessWidget {
@@ -20,10 +20,10 @@ class KehadiranPage extends StatelessWidget {
         matkul: 'Pemrograman Dasar',
         persentase: 100,
         kehadiran: [
-          KehadiranItem(label: 'Hadir', jumlah: 1, colorHex: 0xFF4CAF50),
-          KehadiranItem(label: 'Sakit', jumlah: 1, colorHex: 0xFFFFEB3B),
-          KehadiranItem(label: 'Izin', jumlah: 1, colorHex: 0xFF2196F3),
-          KehadiranItem(label: 'Alpa', jumlah: 1, colorHex: 0xFFF44336),
+          KehadiranItem(label: 'Hadir', jumlah: 1),
+          KehadiranItem(label: 'Sakit', jumlah: 1),
+          KehadiranItem(label: 'Izin', jumlah: 1),
+          KehadiranItem(label: 'Alpa', jumlah: 1),
         ],
       ),
       Kehadiran(
@@ -31,10 +31,13 @@ class KehadiranPage extends StatelessWidget {
         matkul: 'Pemrograman Dasar',
         persentase: 100,
         kehadiran: [
-          KehadiranItem(label: 'Hadir', jumlah: 2, colorHex: 0xFF4CAF50),
-          KehadiranItem(label: 'Sakit', jumlah: 3, colorHex: 0xFFFFEB3B),
-          KehadiranItem(label: 'Izin', jumlah: 4, colorHex: 0xFF2196F3),
-          KehadiranItem(label: 'Alpa', jumlah: 2, colorHex: 0xFFF44336),
+          KehadiranItem(
+            label: 'Hadir',
+            jumlah: 2,
+          ),
+          KehadiranItem(label: 'Sakit', jumlah: 3),
+          KehadiranItem(label: 'Izin', jumlah: 4),
+          KehadiranItem(label: 'Alpa', jumlah: 2),
         ],
       ),
       Kehadiran(
@@ -42,10 +45,13 @@ class KehadiranPage extends StatelessWidget {
         matkul: 'Pemrograman Dasar',
         persentase: 100,
         kehadiran: [
-          KehadiranItem(label: 'Hadir', jumlah: 2, colorHex: 0xFF4CAF50),
-          KehadiranItem(label: 'Sakit', jumlah: 3, colorHex: 0xFFFFEB3B),
-          KehadiranItem(label: 'Izin', jumlah: 4, colorHex: 0xFF2196F3),
-          KehadiranItem(label: 'Alpa', jumlah: 2, colorHex: 0xFFF44336),
+          KehadiranItem(
+            label: 'Hadir',
+            jumlah: 2,
+          ),
+          KehadiranItem(label: 'Sakit', jumlah: 3),
+          KehadiranItem(label: 'Izin', jumlah: 4),
+          KehadiranItem(label: 'Alpa', jumlah: 2),
         ],
       ),
       Kehadiran(
@@ -53,10 +59,13 @@ class KehadiranPage extends StatelessWidget {
         matkul: 'Pemrograman Dasar',
         persentase: 100,
         kehadiran: [
-          KehadiranItem(label: 'Hadir', jumlah: 2, colorHex: 0xFF4CAF50),
-          KehadiranItem(label: 'Sakit', jumlah: 3, colorHex: 0xFFFFEB3B),
-          KehadiranItem(label: 'Izin', jumlah: 4, colorHex: 0xFF2196F3),
-          KehadiranItem(label: 'Alpa', jumlah: 2, colorHex: 0xFFF44336),
+          KehadiranItem(
+            label: 'Hadir',
+            jumlah: 2,
+          ),
+          KehadiranItem(label: 'Sakit', jumlah: 3),
+          KehadiranItem(label: 'Izin', jumlah: 4),
+          KehadiranItem(label: 'Alpa', jumlah: 2),
         ],
       ),
       Kehadiran(
@@ -64,10 +73,13 @@ class KehadiranPage extends StatelessWidget {
         matkul: 'Pemrograman Dasar',
         persentase: 100,
         kehadiran: [
-          KehadiranItem(label: 'Hadir', jumlah: 2, colorHex: 0xFF4CAF50),
-          KehadiranItem(label: 'Sakit', jumlah: 3, colorHex: 0xFFFFEB3B),
-          KehadiranItem(label: 'Izin', jumlah: 4, colorHex: 0xFF2196F3),
-          KehadiranItem(label: 'Alpa', jumlah: 2, colorHex: 0xFFF44336),
+          KehadiranItem(
+            label: 'Hadir',
+            jumlah: 2,
+          ),
+          KehadiranItem(label: 'Sakit', jumlah: 3),
+          KehadiranItem(label: 'Izin', jumlah: 4),
+          KehadiranItem(label: 'Alpa', jumlah: 2),
         ],
       ),
     ];

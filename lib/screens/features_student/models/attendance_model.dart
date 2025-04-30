@@ -1,14 +1,13 @@
 class KehadiranItem {
   final String label;
   final int jumlah;
-  final int colorHex;
 
   KehadiranItem({
     required this.label,
     required this.jumlah,
-    required this.colorHex,
   });
 }
+
 
 class Kehadiran {
   final int semester;
@@ -23,3 +22,4 @@ class Kehadiran {
     required this.kehadiran,
   });
 }
+

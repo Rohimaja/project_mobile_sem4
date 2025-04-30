@@ -1,11 +1,11 @@
-class JadwalModel {
+class JadwalModelApi {
   String waktu;
   final String mataKuliah;
   String? lokasi;
   String durasiMatkul;
   List<String> chips;
 
-  JadwalModel({
+  JadwalModelApi({
     required this.waktu,
     required this.mataKuliah,
     this.lokasi,
@@ -13,8 +13,8 @@ class JadwalModel {
     this.chips = const [],
   });
 
-  factory JadwalModel.fromJson(Map<String, dynamic> json) {
-    return JadwalModel(
+  factory JadwalModelApi.fromJson(Map<String, dynamic> json) {
+    return JadwalModelApi(
         waktu: json['durasi_presensi'],
         mataKuliah: json['nama_matkul'],
         lokasi: json['nama_ruangan'],
