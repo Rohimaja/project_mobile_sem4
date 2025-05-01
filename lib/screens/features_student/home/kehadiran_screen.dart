@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_student/home/rekap_controller.dart';
 import 'package:stipres/screens/features_student/models/attendance_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/attendance_card.dart';
 import 'package:stipres/styles/constant.dart';
@@ -8,81 +10,83 @@ class KehadiranPage extends StatelessWidget {
   KehadiranPage({super.key});
   var height, width;
 
+  final _controller = Get.put(RekapController());
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
     // Dummy data Kehadiran
-    final List<Kehadiran> dataKehadiran = [
-      Kehadiran(
-        semester: 3,
-        matkul: 'Pemrograman Dasar',
-        persentase: 100,
-        kehadiran: [
-          KehadiranItem(label: 'Hadir', jumlah: 1),
-          KehadiranItem(label: 'Sakit', jumlah: 1),
-          KehadiranItem(label: 'Izin', jumlah: 1),
-          KehadiranItem(label: 'Alpa', jumlah: 1),
-        ],
-      ),
-      Kehadiran(
-        semester: 3,
-        matkul: 'Pemrograman Dasar',
-        persentase: 100,
-        kehadiran: [
-          KehadiranItem(
-            label: 'Hadir',
-            jumlah: 2,
-          ),
-          KehadiranItem(label: 'Sakit', jumlah: 3),
-          KehadiranItem(label: 'Izin', jumlah: 4),
-          KehadiranItem(label: 'Alpa', jumlah: 2),
-        ],
-      ),
-      Kehadiran(
-        semester: 3,
-        matkul: 'Pemrograman Dasar',
-        persentase: 100,
-        kehadiran: [
-          KehadiranItem(
-            label: 'Hadir',
-            jumlah: 2,
-          ),
-          KehadiranItem(label: 'Sakit', jumlah: 3),
-          KehadiranItem(label: 'Izin', jumlah: 4),
-          KehadiranItem(label: 'Alpa', jumlah: 2),
-        ],
-      ),
-      Kehadiran(
-        semester: 3,
-        matkul: 'Pemrograman Dasar',
-        persentase: 100,
-        kehadiran: [
-          KehadiranItem(
-            label: 'Hadir',
-            jumlah: 2,
-          ),
-          KehadiranItem(label: 'Sakit', jumlah: 3),
-          KehadiranItem(label: 'Izin', jumlah: 4),
-          KehadiranItem(label: 'Alpa', jumlah: 2),
-        ],
-      ),
-      Kehadiran(
-        semester: 3,
-        matkul: 'Pemrograman Dasar',
-        persentase: 100,
-        kehadiran: [
-          KehadiranItem(
-            label: 'Hadir',
-            jumlah: 2,
-          ),
-          KehadiranItem(label: 'Sakit', jumlah: 3),
-          KehadiranItem(label: 'Izin', jumlah: 4),
-          KehadiranItem(label: 'Alpa', jumlah: 2),
-        ],
-      ),
-    ];
+    // final List<Kehadiran> dataKehadiran = [
+    //   Kehadiran(
+    //     semester: 3,
+    //     matkul: 'Pemrograman Dasar',
+    //     persentase: 100,
+    //     kehadiran: [
+    //       KehadiranItem(label: 'Hadir', jumlah: 1),
+    //       KehadiranItem(label: 'Sakit', jumlah: 1),
+    //       KehadiranItem(label: 'Izin', jumlah: 1),
+    //       KehadiranItem(label: 'Alpa', jumlah: 1),
+    //     ],
+    //   ),
+    //   Kehadiran(
+    //     semester: 3,
+    //     matkul: 'Pemrograman Dasar',
+    //     persentase: 100,
+    //     kehadiran: [
+    //       KehadiranItem(
+    //         label: 'Hadir',
+    //         jumlah: 2,
+    //       ),
+    //       KehadiranItem(label: 'Sakit', jumlah: 3),
+    //       KehadiranItem(label: 'Izin', jumlah: 4),
+    //       KehadiranItem(label: 'Alpa', jumlah: 2),
+    //     ],
+    //   ),
+    //   Kehadiran(
+    //     semester: 3,
+    //     matkul: 'Pemrograman Dasar',
+    //     persentase: 100,
+    //     kehadiran: [
+    //       KehadiranItem(
+    //         label: 'Hadir',
+    //         jumlah: 2,
+    //       ),
+    //       KehadiranItem(label: 'Sakit', jumlah: 3),
+    //       KehadiranItem(label: 'Izin', jumlah: 4),
+    //       KehadiranItem(label: 'Alpa', jumlah: 2),
+    //     ],
+    //   ),
+    //   Kehadiran(
+    //     semester: 3,
+    //     matkul: 'Pemrograman Dasar',
+    //     persentase: 100,
+    //     kehadiran: [
+    //       KehadiranItem(
+    //         label: 'Hadir',
+    //         jumlah: 2,
+    //       ),
+    //       KehadiranItem(label: 'Sakit', jumlah: 3),
+    //       KehadiranItem(label: 'Izin', jumlah: 4),
+    //       KehadiranItem(label: 'Alpa', jumlah: 2),
+    //     ],
+    //   ),
+    //   Kehadiran(
+    //     semester: 3,
+    //     matkul: 'Pemrograman Dasar',
+    //     persentase: 100,
+    //     kehadiran: [
+    //       KehadiranItem(
+    //         label: 'Hadir',
+    //         jumlah: 2,
+    //       ),
+    //       KehadiranItem(label: 'Sakit', jumlah: 3),
+    //       KehadiranItem(label: 'Izin', jumlah: 4),
+    //       KehadiranItem(label: 'Alpa', jumlah: 2),
+    //     ],
+    //   ),
+    // ];
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 237, 235, 251),
@@ -205,14 +209,17 @@ class KehadiranPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 5),
-                    ListView.builder(
-                      itemCount: dataKehadiran.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return KehadiranCard(jadwal: dataKehadiran[index]);
-                      },
-                    ),
+                    Obx(
+                      () => ListView.builder(
+                        itemCount: _controller.rekapList.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return KehadiranCard(
+                              rekap: _controller.rekapList[index]);
+                        },
+                      ),
+                    )
                   ],
                 ),
               )

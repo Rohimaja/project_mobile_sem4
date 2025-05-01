@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:stipres/models/student/rekap_model.dart';
 import 'package:stipres/screens/features_student/models/attendance_model.dart';
 import 'package:stipres/screens/features_student/widgets/chips/attendance_chip.dart';
-import 'package:stipres/styles/constant.dart';
 
 class KehadiranCard extends StatelessWidget {
-  final Kehadiran jadwal;
+  final RekapModelApi rekap;
 
-  const KehadiranCard({Key? key, required this.jadwal}) : super(key: key);
+  KehadiranCard({Key? key, required this.rekap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class KehadiranCard extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
                 Text(
-                  jadwal.semester.toString(),
+                  rekap.semester.toString(),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 28,
@@ -63,14 +63,14 @@ class KehadiranCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  jadwal.matkul,
+                  rekap.namaMatkul,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'Persentase Kehadiran (${jadwal.persentase.toStringAsFixed(0)}%)',
+                  'Persentase Kehadiran (${rekap.persentase}%)',
                   style: const TextStyle(
                       fontSize: 13, color: Color.fromARGB(255, 21, 92, 151)),
                 ),
@@ -80,22 +80,22 @@ class KehadiranCard extends StatelessWidget {
                   children: [
                     KehadiranChip(
                       label: 'Hadir',
-                      jumlah: _getJumlahKehadiran('Hadir'),
+                      jumlah: rekap.hadir,
                       color: Colors.green,
                     ),
                     KehadiranChip(
                       label: 'Sakit',
-                      jumlah: _getJumlahKehadiran('Sakit'),
+                      jumlah: rekap.sakit,
                       color: Colors.yellow.shade700,
                     ),
                     KehadiranChip(
                       label: 'Izin',
-                      jumlah: _getJumlahKehadiran('Izin'),
+                      jumlah: rekap.izin,
                       color: Colors.blue,
                     ),
                     KehadiranChip(
                       label: 'Alpa',
-                      jumlah: _getJumlahKehadiran('Alpa'),
+                      jumlah: rekap.alpa,
                       color: Colors.red,
                     ),
                   ],
@@ -108,11 +108,12 @@ class KehadiranCard extends StatelessWidget {
     );
   }
 
-  int _getJumlahKehadiran(String label) {
-    final item = jadwal.kehadiran.firstWhere(
-      (e) => e.label.toLowerCase() == label.toLowerCase(),
-      orElse: () => KehadiranItem(label: label, jumlah: 0),
-    );
-    return item.jumlah;
-  }
+  // int _getJumlahKehadiran(String label) {
+  //   var kehadiran = rekap.
+  //   final item = kehadiran.firstWhere(
+  //     (e) => e.label.toLowerCase() == label.toLowerCase(),
+  //     orElse: () => KehadiranItem(label: label, jumlah: 0),
+  //   );
+  //   return item.jumlah;
+  // }
 }

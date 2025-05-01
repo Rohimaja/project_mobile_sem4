@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/student/jadwal_model.dart';
-import 'package:stipres/screens/features_student/models/schedule_model.dart';
 import 'package:stipres/services/dashboard_mahasiswa_service.dart';
 
 class DashboardController extends GetxController {
@@ -10,13 +9,13 @@ class DashboardController extends GetxController {
   final storedNim = ''.obs;
   final _box = GetStorage();
 
+  final statusOffline = false.obs;
+
   Logger log = Logger();
 
   var jadwalList = <JadwalModelApi>[].obs;
 
   var errorMessage = ''.obs;
-
-  String nim = '';
 
   final DashboardMahasiswaService dashboardMahasiswaService =
       DashboardMahasiswaService();
@@ -47,9 +46,12 @@ class DashboardController extends GetxController {
         jadwal.durasiMatkul = ("${jadwal.durasiMatkul} Jam").toString();
         if (jadwal.lokasi == null) {
           jadwal.lokasi = "Online";
-          jadwal.chips.remove("Materi");
-          jadwal.chips.add("'Presensi', 'Zoom'");
+          statusOffline.value = false;
+        } else {
+          statusOffline.value = true;
         }
+
+        log.d("Status offline: ${statusOffline.value}");
 
         log.d(jadwal);
         return jadwal;

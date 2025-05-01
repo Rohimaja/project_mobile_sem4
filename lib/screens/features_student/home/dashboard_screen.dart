@@ -2,21 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/home/all_schedule_screen.dart';
-import 'package:stipres/screens/features_student/home/calendar_screen.dart';
-import 'package:stipres/screens/features_student/home/attendance_screen.dart';
-import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
-import 'package:stipres/screens/features_student/home/notification_screen.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
-import 'package:stipres/screens/features_student/models/account_data_model.dart';
-import 'package:stipres/screens/features_student/models/schedule_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_student/widgets/cards/weeklyCalendar_card.dart';
 import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
 import 'package:stipres/screens/features_student/widgets/link/calendar_link.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
-import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
-import 'package:stipres/models/student/jadwal_model.dart';
 // import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -24,43 +14,7 @@ class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
   var height, width;
 
-  // final Akun dataAkun = Akun(
-  //   namaLengkap: "Izzul Islam Ramadhan",
-  //   nim: "E41231215",
-  // );
-
   final dashboardC = Get.put(DashboardController());
-
-  // final List<JadwalModel> jadwalHariIni = [
-  //   JadwalModel(
-  //     waktu: '07.00 - 10.00 WIB',
-  //     mataKuliah: 'Pemrograman Dasar',
-  //     lokasi: 'Gedung JTI Ruang 3.3',
-  //     durasiMatkul: '2 Jam',
-  //     chips: ['Presensi', 'Zoom', 'Materi'],
-  //   ),
-  //   JadwalModel(
-  //     waktu: '10.15 - 12.00 WIB',
-  //     mataKuliah: 'Struktur Data',
-  //     lokasi: 'Gedung JTI Ruang 2.2',
-  //     durasiMatkul: '1.5 Jam',
-  //     chips: ['Presensi', 'Materi'],
-  //   ),
-  //   JadwalModel(
-  //     waktu: '13.00 - 15.00 WIB',
-  //     mataKuliah: 'Basis Data',
-  //     lokasi: 'Gedung JTI Ruang 1.1',
-  //     durasiMatkul: '2 Jam',
-  //     chips: ['Presensi', 'Zoom'],
-  //   ),
-  //   JadwalModel(
-  //     waktu: '07.00 - 10.00 WIB',
-  //     mataKuliah: 'Kewirausahaan',
-  //     lokasi: 'Gedung JTI Ruang 3.3',
-  //     durasiMatkul: '2 Jam',
-  //     chips: ['Presensi', 'Zoom', 'Materi'],
-  //   ),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +74,7 @@ class DashboardScreen extends StatelessWidget {
                           shape: const CircleBorder(), // biar ripple bulat
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationScreen()),
-                              );
+                              Get.toNamed("/student/notification-screen");
                             },
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
@@ -320,12 +270,7 @@ class DashboardScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PresenceScreen()),
-                                      );
+                                      Get.toNamed("/student/presence-screen");
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
                                     child: CategoryCard(
@@ -347,12 +292,7 @@ class DashboardScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CalendarScreen()),
-                                      );
+                                      Get.toNamed("/student/calendar-screen");
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
                                     child: CategoryCard(
@@ -374,12 +314,7 @@ class DashboardScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LectureScreen()),
-                                      );
+                                      Get.toNamed("/student/lecture-screen");
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
                                     child: CategoryCard(

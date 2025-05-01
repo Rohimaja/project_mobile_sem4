@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class KehadiranChip extends StatelessWidget {
   final String label;
-  final int jumlah;
+  final int? jumlah;
   final Color color;
 
   const KehadiranChip({

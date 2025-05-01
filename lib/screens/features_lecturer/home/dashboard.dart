@@ -448,7 +448,7 @@ class DashboardPage extends StatelessWidget {
                                             ),
                                             Padding(
                                               padding: EdgeInsets.only(left: 8),
-                                              child: ChipItem(label: "Materi"),
+                                              // child: ChipItem(label: "Materi"),
                                             ),
                                           ],
                                         )

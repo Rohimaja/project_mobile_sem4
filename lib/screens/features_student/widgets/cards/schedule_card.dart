@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
 import 'package:stipres/models/student/jadwal_model.dart';
-import 'package:stipres/screens/features_student/home/lecture/lecture_content_screen.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
-import 'package:stipres/screens/features_student/models/schedule_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
 import 'package:stipres/styles/constant.dart';
 
 class JadwalCard extends StatelessWidget {
   final JadwalModelApi jadwal;
 
-  const JadwalCard({Key? key, required this.jadwal}) : super(key: key);
+  final DashboardController _controller = DashboardController();
+
+  JadwalCard({Key? key, required this.jadwal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -175,28 +176,26 @@ class JadwalCard extends StatelessWidget {
                               label: 'Presensi',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => PresenceContentScreen()),
-                                );
+                                (jadwal.lokasi == "Online")
+                                    ? Get.toNamed(
+                                        "/student/presence-content-screen")
+                                    : Get.toNamed("/student/offline-screen");
                               },
                             ),
                             const SizedBox(width: 8),
                             _buildActionBox(
                               context: context,
-                              label: 'Zoom',
+                              label: 'Zoom',    
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => LectureContentScreen()),
-                                );
+                                (jadwal.lokasi == "Online")
+                                    ? Get.toNamed(
+                                        "/student/lecture-content-screen")
+                                    : Get.toNamed("/student/offline-screen");
                               },
                             ),
                           ],
-                        ),
+                        )
                       ],
                     ),
                   ),
