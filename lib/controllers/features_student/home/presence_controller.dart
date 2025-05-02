@@ -1,0 +1,49 @@
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
+import 'package:stipres/models/student/presensi_model.dart';
+import 'package:stipres/services/presensi_mahasiswa_service.dart';
+
+class PresenceController extends GetxController {
+  final _box = GetStorage();
+  Logger log = Logger();
+
+  final errorMessage = ''.obs;
+
+  var presenceList = <PresensiModelApi>[].obs;
+  final PresensiMahasiswaService presensiMahasiswaService =
+      PresensiMahasiswaService();
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchPresence();
+  }
+
+  void fetchPresence() async {
+    try {
+      String nim = _box.read("user_nim");
+      log.d(nim);
+      final result = await presensiMahasiswaService.tampilPresensi(nim);
+      log.d(result);
+
+      if (result.status == "success" && result.data != null) {
+        final List<PresensiModelApi> updatedList = result.data!.map((presence) {
+          if (presence.namaRuangan == null) {
+            presence.namaRuangan = "Online";
+          } else {
+            presence.namaRuangan = presence.namaRuangan;
+          }
+
+          return presence;
+        }).toList();
+        presenceList.assignAll(updatedList);
+        log.d(updatedList);
+      } else {
+        errorMessage.value = result.message;
+      }
+    } catch (e) {
+      log.d("Error: $e");
+    }
+  }
+}

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
+import 'package:stipres/controllers/features_student/base_screen_controller.dart';
 import 'package:stipres/screens/features_student/account/profile_screen.dart';
 import 'package:stipres/screens/features_student/home/dashboard_screen.dart';
 import 'package:stipres/styles/constant.dart';
@@ -13,19 +15,21 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  int _selectedIndex = 0;
+  final BaseScreenController _controller = BaseScreenController();
 
-  static final List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     DashboardScreen(),
     ProfileScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: Obx(
+            () => _widgetOptions.elementAt(_controller.selectedIndex.value)),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: blueColor,
           backgroundColor: Colors.white,
@@ -54,12 +58,10 @@ class _BaseScreenState extends State<BaseScreen> {
               label: "Akun",
             ),
           ],
-          currentIndex: _selectedIndex,
+          currentIndex: _controller.selectedIndex.value,
           onTap: (int index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          }),
+            _controller.changeIndex(index);
+          })),
     );
   }
 }

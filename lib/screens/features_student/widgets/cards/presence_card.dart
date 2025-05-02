@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:stipres/models/student/presensi_model.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
 import 'package:stipres/screens/features_student/models/presence_model.dart';
 import 'package:stipres/screens/features_student/widgets/chips/presence_chip.dart';
 
 class PresensiCard extends StatelessWidget {
-  final PresensiModel data;
+  final PresensiModelApi data;
 
   const PresensiCard({super.key, required this.data});
 
@@ -56,10 +57,10 @@ class PresensiCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PresensiChip(jam: data.jam),
+                PresensiChip(jam: data.durasiPresensi),
                 const SizedBox(height: 6),
                 Text(
-                  data.matkul,
+                  data.namaMatkul,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -69,10 +70,10 @@ class PresensiCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 IconTextInfo(
-                    iconPath: 'icons/ic_location.png', text: data.lokasi),
+                    iconPath: 'icons/ic_location.png', text: data.namaRuangan!),
                 const SizedBox(height: 4),
                 IconTextInfo(
-                    iconPath: 'icons/ic_duration.png', text: data.durasi),
+                    iconPath: 'icons/ic_duration.png', text: data.durasiMatkul),
               ],
             ),
           ),

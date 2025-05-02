@@ -107,13 +107,4 @@ class KehadiranCard extends StatelessWidget {
       ),
     );
   }
-
-  // int _getJumlahKehadiran(String label) {
-  //   var kehadiran = rekap.
-  //   final item = kehadiran.firstWhere(
-  //     (e) => e.label.toLowerCase() == label.toLowerCase(),
-  //     orElse: () => KehadiranItem(label: label, jumlah: 0),
-  //   );
-  //   return item.jumlah;
-  // }
 }

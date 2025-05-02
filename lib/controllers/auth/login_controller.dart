@@ -34,7 +34,10 @@ class LoginController extends GetxController {
 
     final pass = password.length;
     if (pass <= 7) {
-      Get.snackbar("Gagal", "Masukkan lebih dari 7 huruf password");
+      Get.snackbar(
+        "Gagal",
+        "Masukkan lebih dari 7 huruf password",
+      );
       return;
     }
 

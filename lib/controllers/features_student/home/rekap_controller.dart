@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/student/rekap_model.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
 import 'package:stipres/services/rekap_mahasiswa_service.dart';
 
 class RekapController extends GetxController {
@@ -22,7 +21,6 @@ class RekapController extends GetxController {
   void onInit() {
     super.onInit();
     fetchRekap();
-    log.d("message");
   }
 
   void fetchRekap() async {
@@ -64,7 +62,13 @@ class RekapController extends GetxController {
             persentase = ((rekap.hadir ?? 0) / totalPertemuan) * 100;
           }
 
-          rekap.persentase = "${persentase.toStringAsFixed(1)}%";
+          if (persentase % 1 == 0) {
+            rekap.persentase = "${persentase.toInt()}";
+          } else {
+            rekap.persentase = "${persentase.toStringAsFixed(1)}";
+          }
+
+          log.d(rekap.persentase);
 
           log.d(rekap);
 

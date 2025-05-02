@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/controllers/features_student/home/rekap_controller.dart';
@@ -23,53 +22,6 @@ class _AttendanceScreenState extends State<AttendanceScreen>
   final Logger log = Logger();
   final TextEditingController _searchController = TextEditingController();
   final RekapController _controller = Get.put(RekapController());
-
-  // final List<Kehadiran> dataKehadiran = [
-  //   Kehadiran(
-  //     semester: 3,
-  //     matkul: 'Pemrograman Dasar',
-  //     persentase: 100,
-  //     kehadiran: [
-  //       KehadiranItem(label: 'Hadir', jumlah: 1),
-  //       KehadiranItem(label: 'Sakit', jumlah: 1),
-  //       KehadiranItem(label: 'Izin', jumlah: 1),
-  //       KehadiranItem(label: 'Alpa', jumlah: 1),
-  //     ],
-  //   ),
-  //   Kehadiran(
-  //     semester: 3,
-  //     matkul: 'Matematika Diskrit',
-  //     persentase: 100,
-  //     kehadiran: [
-  //       KehadiranItem(label: 'Hadir', jumlah: 1),
-  //       KehadiranItem(label: 'Sakit', jumlah: 1),
-  //       KehadiranItem(label: 'Izin', jumlah: 1),
-  //       KehadiranItem(label: 'Alpa', jumlah: 1),
-  //     ],
-  //   ),
-  //   Kehadiran(
-  //     semester: 3,
-  //     matkul: 'Kewarganegaraan',
-  //     persentase: 100,
-  //     kehadiran: [
-  //       KehadiranItem(label: 'Hadir', jumlah: 1),
-  //       KehadiranItem(label: 'Sakit', jumlah: 1),
-  //       KehadiranItem(label: 'Izin', jumlah: 1),
-  //       KehadiranItem(label: 'Alpa', jumlah: 1),
-  //     ],
-  //   ),
-  //   Kehadiran(
-  //     semester: 3,
-  //     matkul: 'Bahasa Inggris',
-  //     persentase: 100,
-  //     kehadiran: [
-  //       KehadiranItem(label: 'Hadir', jumlah: 1),
-  //       KehadiranItem(label: 'Sakit', jumlah: 2),
-  //       KehadiranItem(label: 'Izin', jumlah: 3),
-  //       KehadiranItem(label: 'Alpa', jumlah: 4),
-  //     ],
-  //   ),
-  // ];
 
   @override
   void initState() {
