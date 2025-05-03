@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/account/change_password_screen.dart';
+import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -193,6 +194,9 @@ class ProfilPage extends StatelessWidget {
         if (title == "Ganti Password") {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => ChangePassword()));
+        } else if (title == "Ketentuan Layanan") {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => KetentuanLayanan()));
         }
       },
     );

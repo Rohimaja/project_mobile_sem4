@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart';
+import 'package:stipres/screens/features_student/account/view_profile.dart';
 import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
@@ -328,7 +331,7 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Get.to(ForgetPassword3());
+                              Get.to(ViewProfilePage());
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: blueColor,
@@ -372,14 +375,16 @@ class ProfilePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            InkWell(
+                            onTap: () {
+                              Get.to(KetentuanLayanan());
+                            },
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                    'assets/icons/ic_ketentuanlayanan.png',
-                                    height: 30,
-                                    width: 30),
+                                Image.asset('assets/icons/ic_ketentuanlayanan.png',
+                                    height: 30, width: 30),
                                 SizedBox(width: 10),
                                 Text("Ketentuan Layanan",
                                     style: blackTextStyle.copyWith(
@@ -389,8 +394,13 @@ class ProfilePage extends StatelessWidget {
                                     textAlign: TextAlign.center),
                               ],
                             ),
+                          ),
                             SizedBox(height: 20), // Jarak antar item
-                            Row(
+                            InkWell(
+                            onTap: () {
+                              Get.to(KebijakanPrivasi());
+                            },
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -406,6 +416,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     textAlign: TextAlign.center),
                               ],
+                            ),
                             ),
                             SizedBox(height: 20),
                             Row(
