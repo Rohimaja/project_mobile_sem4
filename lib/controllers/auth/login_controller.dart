@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
 import 'package:stipres/services/login_service.dart';
@@ -11,8 +10,6 @@ class LoginController extends GetxController {
 
   final isLoading = false.obs;
   final isPasswordVisible = false.obs;
-
-  GetStorage _box = GetStorage();
 
   final mahasiswa = Rxn<Mahasiswa>();
   final dosen = Rxn<Dosen>();
