@@ -36,6 +36,7 @@ class LoginService extends GetxService {
           _box.write("user_nama", data['nama']);
           _box.write("user_email", data['email']);
           _box.write("id_prodi", data['prodi_id']);
+          _box.write("nama_prodi", data['nama_prodi']);
           _box.write("semester", data['semester']);
           _box.write("role", "mahasiswa");
 
@@ -83,5 +84,4 @@ class LoginService extends GetxService {
   // bool isLoggedIn() {
   //   return _box.hasData('user_nim');
   // }
-
 }

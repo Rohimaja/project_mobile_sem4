@@ -11,13 +11,6 @@ import 'package:stipres/styles/constant.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
-  // final Mahasiswa dataMahasiswa = Mahasiswa(
-  //   namaLengkap: "Izzul Islam Ramadhan",
-  //   nim: "E41231215",
-  //   email: "izzulramadhan123@gmail.com",
-  //   programStudi: "Teknik Informatika",
-  // );
-
   var height, width;
 
   final profileC = Get.put(ProfileController());
@@ -346,7 +339,7 @@ class ProfileScreen extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Obx(
-                            () => Text(profileC.storedProdi.value,
+                            () => Text(profileC.storedNamaProdi.value,
                                 style: TextStyle(
                                   color:
                                       const Color.fromARGB(255, 161, 161, 161),
@@ -484,7 +477,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Get.offAll(LoginScreen());
+                              profileC.logout();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: redColor,
