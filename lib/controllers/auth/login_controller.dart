@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
 import 'package:stipres/services/login_service.dart';
@@ -11,11 +12,34 @@ class LoginController extends GetxController {
   final isLoading = false.obs;
   final isPasswordVisible = false.obs;
 
+  GetStorage _box = GetStorage();
+
   final mahasiswa = Rxn<Mahasiswa>();
   final dosen = Rxn<Dosen>();
   final loginService = LoginService();
 
   void checkVisible() => isPasswordVisible.toggle();
+
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkStatusLogin();
+    });
+  }
+
+  void checkStatusLogin() {
+    final statusUser = _box.read("logged");
+    final statusUserRole = _box.read("role");
+
+    if (statusUser == true) {
+      if (statusUserRole == "mahasiswa") {
+        Get.offAllNamed("/student/base-screen");
+      } else if (statusUserRole == "dosen") {
+        Get.offAllNamed("/lecturer/base-screen");
+      }
+    } else {}
+  }
 
   void login() async {
     isLoading.value = true;
@@ -44,6 +68,8 @@ class LoginController extends GetxController {
       if (result != null) {
         dosen.value = result;
         Get.snackbar("Berhasil", "Login berhasil sebagai ${result.nama}");
+        _box.write("logged", true);
+        _box.write("role", "dosen");
         Get.offAllNamed("/lecturer/base-screen");
         return;
       } else {
@@ -58,6 +84,8 @@ class LoginController extends GetxController {
     if (result != null) {
       mahasiswa.value = result;
       Get.snackbar("Berhasil", 'Login berhasil sebagai ${result.nama}');
+      _box.write("logged", true);
+      _box.write("role", "mahasiswa");
       Get.offAllNamed("/student/base-screen");
     } else {
       Get.snackbar("Gagal", "Login gagal");
@@ -65,8 +93,4 @@ class LoginController extends GetxController {
 
     isLoading.value = false;
   }
-
-  // bool isLoggedIn() {
-  //   return loginService.isLoggedIn();
-  // }
 }

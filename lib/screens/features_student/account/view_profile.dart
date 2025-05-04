@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/auth/forget_password_screen_3.dart';
-import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/controllers/features_student/account/full_profile_controller.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
   var height, width;
+
+  final _controller = Get.put(FullProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,9 @@ class ViewProfilePage extends StatelessWidget {
         child: Column(
           children: [
             _buildHeader(context),
-            _buildProfileForm(),
+            Obx(
+              () => _buildProfileForm(),
+            )
           ],
         ),
       ),
@@ -42,7 +45,8 @@ class ViewProfilePage extends StatelessWidget {
               fit: BoxFit.cover, // agar penuh
             ),
           ),
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 120),
+          padding:
+              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 120),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -50,7 +54,7 @@ class ViewProfilePage extends StatelessWidget {
                 color: Colors.transparent, // supaya ripple doang yang keliatan
                 child: InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   borderRadius: BorderRadius.circular(100),
                   customBorder: const CircleBorder(),
@@ -163,25 +167,27 @@ class ViewProfilePage extends StatelessWidget {
       padding: const EdgeInsets.only(top: 80.0, left: 16.0, right: 16.0),
       child: Column(
         children: [
-          _buildProfileItem("Full Name", "Izzul Islam Ramadhanjankjdsnfakhlah akjshfkh"),
+          _buildProfileItem("Full Name", _controller.storedFullName.value),
           _buildDivider(),
-          _buildProfileItem("NIM", "E4123125"),
+          _buildProfileItem("NIM", _controller.storedNim.value),
           _buildDivider(),
-          _buildProfileItem("Email", "izzul1232gamil.com"),
+          _buildProfileItem("Email", _controller.storedEmail.value),
           _buildDivider(),
-          _buildProfileItem("Jenis Kelamin", "Lanang"),
+          _buildProfileItem(
+              "Jenis Kelamin", _controller.storedJenisKelamin.value),
           _buildDivider(),
-          _buildProfileItem("Agama", "Islam"),
+          _buildProfileItem("Agama", _controller.storedAgama.value),
           _buildDivider(),
-          _buildProfileItem("Tempat Tanggal Lahir", "London,\n 30 Februari 2000"),
+          _buildProfileItem(
+              "Tempat Tanggal Lahir", _controller.storedTempatTglLahir.value),
           _buildDivider(),
-          _buildProfileItem("Alamat", "Jember"),
+          _buildProfileItem("Alamat", _controller.storedAlamat.value),
           _buildDivider(),
-          _buildProfileItem("Semester", "3 (Tiga)"),
+          _buildProfileItem("Semester", _controller.storedSemester.value),
           _buildDivider(),
-          _buildProfileItem("Program Studi", "Sastra Mesin"),
+          _buildProfileItem("Program Studi", _controller.storedProdi.value),
           _buildDivider(),
-          _buildProfileItem("No. Telp", "085737283847"),
+          _buildProfileItem("No. Telp", _controller.storedNoTelp.value),
         ],
       ),
     );
@@ -189,7 +195,8 @@ class ViewProfilePage extends StatelessWidget {
 
   // Widget untuk menampilkan label dan nilai.
   Widget _buildProfileItem(String label, String value) {
-    return Column( // Changed from Padding to Column
+    return Column(
+      // Changed from Padding to Column
       crossAxisAlignment: CrossAxisAlignment.start, // Align text to the left
       children: [
         Row(

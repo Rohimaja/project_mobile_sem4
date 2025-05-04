@@ -5,7 +5,9 @@ import 'package:stipres/routes/app_screens.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+
   runApp(MyApp());
 }
 
