@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/models/lecture_model.dart';
+import 'package:stipres/controllers/features_student/home/lecture_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/lecture_card.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -15,16 +16,18 @@ class _LectureContentScreenState extends State<LectureContentScreen>
     with TickerProviderStateMixin {
   late double height, width;
 
-  final List<PerkuliahanModel> perkuliahanOnline = [
-    PerkuliahanModel(
-      semester: 3,
-      matkul: 'Pemrograman Mobile',
-      tanggal: 'Senin, 11 Maret 2025',
-      dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
-      jam: '08:00 - 10:00',
-      linkZoom: 'https://zoom.us/j/123456789',
-    ),
-  ];
+  final LectureController _controller = Get.put(LectureController());
+
+  // final List<PerkuliahanModel> perkuliahanOnline = [
+  //   PerkuliahanModel(
+  //     semester: 3,
+  //     matkul: 'Pemrograman Mobile',
+  //     tanggal: 'Senin, 11 Maret 2025',
+  //     dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
+  //     jam: '08:00 - 10:00',
+  //     linkZoom: 'https://zoom.us/j/123456789',
+  //   ),
+  // ];
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -138,45 +141,47 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                       ),
                     ),
                     const SizedBox(height: 10),
-                    perkuliahanOnline.isEmpty
-                        ? Container(
-                            width: double
-                                .infinity, // Biar bisa center dalam parent
-                            padding: const EdgeInsets.only(top: 30),
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'icons/ic_noData.png',
-                                  height: 120,
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Link tidak tersedia',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: greyColor,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w400,
+                    Obx(() {
+                      return (_controller.lectureList.isEmpty)
+                          ? Container(
+                              width: double
+                                  .infinity, // Biar bisa center dalam parent
+                              padding: const EdgeInsets.only(top: 30),
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'icons/ic_noData.png',
+                                    height: 120,
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: perkuliahanOnline.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: PerkuliahanCard(
-                                  data: perkuliahanOnline[index],
-                                ),
-                              );
-                            },
-                          ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Link tidak tersedia',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: greyColor,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: _controller.lectureList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: PerkuliahanCard(
+                                    data: _controller.lectureList[index],
+                                  ),
+                                );
+                              },
+                            );
+                    })
                   ],
                 ),
               ),

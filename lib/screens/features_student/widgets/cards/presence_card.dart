@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/models/student/presensi_model.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
-import 'package:stipres/screens/features_student/models/presence_model.dart';
 import 'package:stipres/screens/features_student/widgets/chips/presence_chip.dart';
 
 class PresensiCard extends StatelessWidget {

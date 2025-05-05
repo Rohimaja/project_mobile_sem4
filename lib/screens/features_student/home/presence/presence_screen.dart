@@ -20,30 +20,6 @@ class _PresenceScreenState extends State<PresenceScreen>
   final TextEditingController _searchController = TextEditingController();
   final PresenceController _controller = Get.put(PresenceController());
 
-  // final List<PresensiModel> presensiHariIni = [
-  //   PresensiModel(
-  //     semester: 3,
-  //     jam: '08:00 - 10:00',
-  //     matkul: 'Pemrograman Dasar',
-  //     lokasi: 'Ruang 101',
-  //     durasi: '2 Jam',
-  //   ),
-  //   PresensiModel(
-  //     semester: 3,
-  //     jam: '10:00 - 12:00',
-  //     matkul: 'Struktur Data',
-  //     lokasi: 'Ruang 102',
-  //     durasi: '2 Jam',
-  //   ),
-  //   PresensiModel(
-  //     semester: 3,
-  //     jam: '13:00 - 15:00',
-  //     matkul: 'Algoritma',
-  //     lokasi: 'Ruang 103',
-  //     durasi: '2 Jam',
-  //   ),
-  // ];
-
   late AnimationController _animationController;
   late Animation<double> _animation;
 

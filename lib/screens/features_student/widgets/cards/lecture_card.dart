@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:stipres/screens/features_student/models/lecture_model.dart';
+import 'package:stipres/models/student/lecture_model.dart';
 import 'package:stipres/screens/features_student/widgets/chips/lecture_chip.dart';
 
 class PerkuliahanCard extends StatelessWidget {
-  final PerkuliahanModel data;
+  final LectureModelApi data;
 
   const PerkuliahanCard({super.key, required this.data});
 
@@ -85,7 +85,7 @@ class PerkuliahanCard extends StatelessWidget {
                         ),
                         alignment: Alignment.centerLeft,
                         child: AutoSizeText(
-                          data.matkul,
+                          data.namaMatkul,
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -113,22 +113,22 @@ class PerkuliahanCard extends StatelessWidget {
 
                   PerkuliahanChip(
                     iconPath: "icons/ic_calendar2.png",
-                    text: data.tanggal,
+                    text: data.tglPresensi,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "icons/ic_lecturer.png",
-                    text: data.dosen,
+                    text: data.namaDosen,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "icons/ic_clock.png",
-                    text: data.jam,
+                    text: data.durasiPresensi,
                   ),
                   const SizedBox(height: 8),
 
                   // Zoom Link
-                  if (data.linkZoom != null && data.linkZoom!.isNotEmpty)
+                  
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -165,7 +165,7 @@ class PerkuliahanCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                             onTap: () {
                               Clipboard.setData(
-                                ClipboardData(text: data.linkZoom ?? ''),
+                                ClipboardData(text: data.linkZoom),
                               );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

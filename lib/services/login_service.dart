@@ -34,6 +34,7 @@ class LoginService extends GetxService {
 
           _box.write("user_nim", data['nim']);
           _box.write("user_nama", data['nama']);
+          logger.d("tes nama ${_box.read("user_nama")}");
           _box.write("user_email", data['email']);
           _box.write("id_prodi", data['prodi_id']);
           _box.write("nama_prodi", data['nama_prodi']);

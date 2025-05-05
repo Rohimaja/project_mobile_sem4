@@ -51,6 +51,32 @@ class FullProfileController extends GetxController {
     }
   }
 
+  String formatTanggal(String tanggal) {
+    final bulan = {
+      '01': 'Januari',
+      '02': 'Februari',
+      '03': 'Maret',
+      '04': 'April',
+      '05': 'Mei',
+      '06': 'Juni',
+      '07': 'Juli',
+      '08': 'Agustus',
+      '09': 'September',
+      '10': 'Oktober',
+      '11': 'November',
+      '12': 'Desember',
+    };
+
+    final parts = tanggal.split('-');
+    if (parts.length != 3) return tanggal;
+
+    final year = parts[0];
+    final month = bulan[parts[1]] ?? parts[1];
+    final day = parts[2];
+
+    return "$day $month $year";
+  }
+
   void loadData() async {
     String nim = _box.read("user_nim");
 
@@ -67,7 +93,7 @@ class FullProfileController extends GetxController {
       storedJenisKelamin.value = profile.jenisKelamin;
       storedAgama.value = profile.agama;
       storedTempatTglLahir.value =
-          "${profile.tempatLahir}, ${profile.tglLahir}";
+          "${profile.tempatLahir}, ${formatTanggal(profile.tglLahir)}";
       storedAlamat.value = profile.alamat;
       storedSemester.value =
           "${profile.semester.toString()} (${numberToBahasa(profile.semester)})";
