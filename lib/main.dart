@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      // unknownRoute: GetPage(name: '/not-found', page: () => ),
       getPages: AppScreens.screens,
       home: LoginScreen(),
     );

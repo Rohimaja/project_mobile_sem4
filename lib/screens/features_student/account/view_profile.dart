@@ -102,7 +102,7 @@ class ViewProfilePage extends StatelessWidget {
             width: 45,
             height: 45,
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
+              color: Color.fromARGB(255, 254, 247, 255),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(40),
               ),
@@ -146,7 +146,7 @@ class ViewProfilePage extends StatelessWidget {
                       child: const Padding(
                         padding: EdgeInsets.all(8),
                         child: Image(
-                          image: AssetImage("assets/icons/ic_view.png"),
+                          image: AssetImage("assets/icons/ic_addpicture.png"),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -164,7 +164,7 @@ class ViewProfilePage extends StatelessWidget {
 
   Widget _buildProfileForm() {
     return Padding(
-      padding: const EdgeInsets.only(top: 80.0, left: 16.0, right: 16.0),
+      padding: const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
       child: Column(
         children: [
           _buildProfileItem("Full Name", _controller.storedFullName.value),
@@ -196,23 +196,23 @@ class ViewProfilePage extends StatelessWidget {
   // Widget untuk menampilkan label dan nilai.
   Widget _buildProfileItem(String label, String value) {
     return Column(
-      // Changed from Padding to Column
-      crossAxisAlignment: CrossAxisAlignment.start, // Align text to the left
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start, // Agar baris sejajar di bagian atas secara vertikal
           children: [
             SizedBox(
-              width: 150, // Lebar untuk Label
+              width: 150,
               child: Text(
                 label,
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                 ),
-                overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.ellipsis, // Tetap ada untuk label jika terlalu panjang
               ),
             ),
-            const SizedBox(width: 10), // Spasi antara Label dan Value
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 value,
@@ -220,7 +220,7 @@ class ViewProfilePage extends StatelessWidget {
                   color: Color.fromARGB(255, 30, 136, 228),
                   fontWeight: FontWeight.w400,
                 ),
-                overflow: TextOverflow.ellipsis,
+                // overflow: TextOverflow.ellipsis, // Dihapus agar teks bisa wrap
               ),
             ),
           ],

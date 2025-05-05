@@ -8,6 +8,7 @@ import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart'
 import 'package:stipres/screens/features_student/home/notification_screen.dart';
 // import 'package:stipres/screens/features_student/models/profile_model.dart';
 import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart';
+import 'package:stipres/screens/features_student/account/pengaturan.dart';
 import 'package:stipres/screens/features_student/account/view_profile.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -151,30 +152,6 @@ class ProfileScreen extends StatelessWidget {
                                   height: 90,
                                   width: 90,
                                   fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            // Ikon tambah foto
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: blueColor,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Image.asset(
-                                    "icons/ic_addpicture.png", // Pastikan path ini sesuai
-                                    fit: BoxFit.contain,
-                                  ),
                                 ),
                               ),
                             ),
@@ -404,11 +381,15 @@ class ProfileScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            InkWell(
+                            onTap: () {
+                              Get.to(Pengaturan());
+                            },
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('icons/ic_settings.png',
+                                Image.asset('assets/icons/ic_settings.png',
                                     height: 30, width: 30),
                                 SizedBox(width: 10),
                                 Text("Pengaturan",
@@ -419,53 +400,8 @@ class ProfileScreen extends StatelessWidget {
                                     textAlign: TextAlign.center),
                               ],
                             ),
-                            SizedBox(height: 20),
-                            InkWell(
-                              onTap: () {
-                                Get.to(KetentuanLayanan());
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                      'assets/icons/ic_ketentuanlayanan.png',
-                                      height: 30,
-                                      width: 30),
-                                  SizedBox(width: 10),
-                                  Text("Ketentuan Layanan",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                      textAlign: TextAlign.center),
-                                ],
-                              ),
-                            ),
+                          ),
                             SizedBox(height: 20), // Jarak antar item
-                            InkWell(
-                              onTap: () {
-                                Get.to(KebijakanPrivasi());
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                      'assets/icons/ic_kebijakanprivasi.png',
-                                      height: 30,
-                                      width: 30),
-                                  SizedBox(width: 10),
-                                  Text("Kebijakan Privasi",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                      textAlign: TextAlign.center),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
