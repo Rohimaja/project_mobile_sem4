@@ -149,7 +149,7 @@ class DashboardScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              dataAkun.namaLengkap,
+                              dashboardC.storedName.value,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -158,7 +158,7 @@ class DashboardScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              dataAkun.nim,
+                              dashboardC.storedNim.value,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14,
                                 color: blueColor,
@@ -241,12 +241,7 @@ class DashboardScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AttendanceScreen()),
-                                      );
+                                      Get.toNamed("/student/attendance-screen");
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
                                     child: CategoryCard(

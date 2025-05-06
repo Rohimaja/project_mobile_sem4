@@ -35,6 +35,7 @@ class DashboardController extends GetxController {
   }
 
   void fetchJadwal() async {
+    log.d("fetch jadwal");
     String nim = _box.read("user_nim");
     log.d(nim);
     final result = await dashboardMahasiswaService.tampilJadwalHariIni(nim);

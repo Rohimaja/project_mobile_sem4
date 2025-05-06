@@ -514,7 +514,7 @@ class DashboardScreenTeacher extends StatelessWidget {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
-                                return JadwalCard(jadwal: jadwalHariIni[index]);
+                                // return JadwalCard(jadwal: jadwalHariIni[index]);
                               },
                             ),
                     ),

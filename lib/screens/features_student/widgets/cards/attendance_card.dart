@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/models/student/rekap_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/models/attendance_model.dart';
 import 'package:stipres/screens/features_student/widgets/chips/attendance_chip.dart';
 
 class KehadiranCard extends StatelessWidget {
@@ -97,7 +96,7 @@ class KehadiranCard extends StatelessWidget {
                     ),
                     KehadiranChip(
                       label: 'Alpa',
-                      jumlah: rekap.alpa.toRadixString(radix),
+                      jumlah: rekap.alpa,
                       color: Colors.red,
                     ),
                   ],
@@ -110,11 +109,11 @@ class KehadiranCard extends StatelessWidget {
     );
   }
 
-  int _getJumlahKehadiran(String label) {
-    final item = jadwal.kehadiran.firstWhere(
-      (e) => e.label.toLowerCase() == label.toLowerCase(),
-      orElse: () => KehadiranItem(label: label, jumlah: 0),
-    );
-    return item.jumlah;
-  }
+  // int _getJumlahKehadiran(String label) {
+  //   final item = rekap..firstWhere(
+  //     (e) => e.label.toLowerCase() == label.toLowerCase(),
+  //     orElse: () => KehadiranItem(label: label, jumlah: 0),
+  //   );
+  //   return item.jumlah;
+  // }
 }

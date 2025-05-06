@@ -220,72 +220,72 @@ class _LectureScreenState extends State<LectureScreen>
                     ],
                   ),
 
-              // Body Content
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 5),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Perkuliahan Minggu Ini',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: blueColor,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    filteredPerkuliahan.isEmpty
-                        ? Container(
-                            width: double
-                                .infinity, // Biar bisa center dalam parent
-                            padding: const EdgeInsets.only(top: 30),
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/icons/ic_noData.png',
-                                  height: 120,
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  _searchController.text.isEmpty
-                                      ? "Tidak ada perkuliahan minggu ini."
-                                      : "Tidak ada mata kuliah ditemukan.",
-                                  style: TextStyle(
-                                    color: greyColor,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                  // Body Content
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Perkuliahan Minggu Ini',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: blueColor,
+                              fontWeight: FontWeight.w400,
                             ),
-                          )
-                        : ListView.builder(
-                            itemCount: filteredPerkuliahan.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: PerkuliahanCard(
-                                  data: filteredPerkuliahan[index],
-                                ),
-                              );
-                            },
                           ),
-                  ],
-                ),
+                        ),
+                        const SizedBox(height: 10),
+                        filteredPerkuliahan.isEmpty
+                            ? Container(
+                                width: double
+                                    .infinity, // Biar bisa center dalam parent
+                                padding: const EdgeInsets.only(top: 30),
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/ic_noData.png',
+                                      height: 120,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      _searchController.text.isEmpty
+                                          ? "Tidak ada perkuliahan minggu ini."
+                                          : "Tidak ada mata kuliah ditemukan.",
+                                      style: TextStyle(
+                                        color: greyColor,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: filteredPerkuliahan.length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 12),
+                                    child: PerkuliahanCard(
+                                      data: filteredPerkuliahan[index],
+                                    ),
+                                  );
+                                },
+                              ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        }));
   }
 }

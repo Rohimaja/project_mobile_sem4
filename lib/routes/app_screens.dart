@@ -15,12 +15,12 @@ import 'package:stipres/screens/features_student/account/pengaturan.dart'
     as student;
 import 'package:stipres/screens/features_student/account/view_profile.dart'
     as student;
+import 'package:stipres/screens/features_student/home/attendance_screen.dart';
 import 'package:stipres/screens/features_student/home/base_screen.dart'
     as student;
 import 'package:stipres/screens/features_lecturer/home/base_screen.dart'
     as lecturer;
 import 'package:stipres/screens/features_student/home/calendar_screen.dart';
-import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
 import 'package:stipres/screens/features_student/home/lecture/lecture_content_screen.dart';
 import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
 import 'package:stipres/screens/features_student/home/notification_screen.dart';
@@ -37,9 +37,11 @@ class AppScreens {
     GetPage(name: "/auth/activation/step1", page: () => ActivationAccount1()),
     GetPage(name: "/auth/activation/step2", page: () => ActivationAccount2()),
     GetPage(name: "/auth/activation/step3", page: () => ActivationAccount3()),
-    GetPage(name: "/lecturer/base-screen", page: () => lecturer.BaseScreen()),
+    GetPage(
+        name: "/lecturer/base-screen",
+        page: () => lecturer.BaseScreenLecturer()),
     GetPage(name: "/student/base-screen", page: () => student.BaseScreen()),
-    GetPage(name: "/student/kehadiran-screen", page: () => KehadiranPage()),
+    GetPage(name: "/student/attendance-screen", page: () => AttendanceScreen()),
     GetPage(name: "/student/presence-screen", page: () => PresenceScreen()),
     GetPage(name: "/student/offline-screen", page: () => OfflineScreen()),
     GetPage(name: "/student/calendar-screen", page: () => CalendarScreen()),

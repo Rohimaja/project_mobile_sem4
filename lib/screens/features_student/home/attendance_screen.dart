@@ -7,7 +7,7 @@ import 'package:stipres/screens/features_student/widgets/cards/attendance_card.d
 import 'package:stipres/styles/constant.dart';
 
 class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key});
+  AttendanceScreen({super.key});
 
   @override
   State<AttendanceScreen> createState() => _AttendanceScreenState();
@@ -90,7 +90,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                Navigator.pop(context);
+                                Get.back();
                               },
                               borderRadius: BorderRadius.circular(100),
                               customBorder: const CircleBorder(),

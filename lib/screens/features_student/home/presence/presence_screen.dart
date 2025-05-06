@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/presence_controller.dart';
-import 'package:stipres/screens/features_student/models/presence_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/presence_card.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -126,14 +125,16 @@ class _PresenceScreenState extends State<PresenceScreen>
                                               ),
                                               child: TextField(
                                                 controller: _searchController,
-                                                style: GoogleFonts.plusJakartaSans(
-                                                    color: Colors.black),
+                                                style:
+                                                    GoogleFonts.plusJakartaSans(
+                                                        color: Colors.black),
                                                 decoration: InputDecoration(
                                                   hintText:
                                                       'Cari mata kuliah...',
-                                                  hintStyle:
-                                                  GoogleFonts.plusJakartaSans(
-                                                          color: Colors.grey[600]),
+                                                  hintStyle: GoogleFonts
+                                                      .plusJakartaSans(
+                                                          color:
+                                                              Colors.grey[600]),
                                                   border: InputBorder.none,
                                                 ),
                                                 autofocus: true,
@@ -222,72 +223,72 @@ class _PresenceScreenState extends State<PresenceScreen>
                     ],
                   ),
 
-              // Body Content
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text(
-                        'Presensi Hari Ini',
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 16,
-                          color: blueColor,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    filteredPresensi.isEmpty
-                        ? Container(
-                            width: double
-                                .infinity, // Biar bisa center dalam parent
-                            padding: const EdgeInsets.only(top: 30),
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/icons/ic_noData.png',
-                                  height: 200,
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  _searchController.text.isEmpty
-                                      ? "Tidak ada data presensi"
-                                      : "Data mata kuliah tidak ditemukan",
-                                  style: GoogleFonts.plusJakartaSans(
-                                      color: greyColor,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 16),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                  // Body Content
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            'Presensi Hari Ini',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16,
+                              color: blueColor,
+                              fontWeight: FontWeight.w400,
                             ),
-                          )
-                        : ListView.builder(
-                            itemCount: filteredPresensi.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: PresensiCard(
-                                  data: filteredPresensi[index],
-                                ),
-                              );
-                            },
                           ),
-                  ],
-                ),
+                        ),
+                        const SizedBox(height: 10),
+                        filteredPresensi.isEmpty
+                            ? Container(
+                                width: double
+                                    .infinity, // Biar bisa center dalam parent
+                                padding: const EdgeInsets.only(top: 30),
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/ic_noData.png',
+                                      height: 200,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      _searchController.text.isEmpty
+                                          ? "Tidak ada data presensi"
+                                          : "Data mata kuliah tidak ditemukan",
+                                      style: GoogleFonts.plusJakartaSans(
+                                          color: greyColor,
+                                          fontStyle: FontStyle.italic,
+                                          fontSize: 16),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: filteredPresensi.length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 15),
+                                    child: PresensiCard(
+                                      data: filteredPresensi[index],
+                                    ),
+                                  );
+                                },
+                              ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        }));
   }
 }
