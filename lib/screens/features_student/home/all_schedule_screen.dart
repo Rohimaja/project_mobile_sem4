@@ -143,7 +143,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                         bottomLeft: Radius.circular(30),
                       ),
                       image: const DecorationImage(
-                        image: AssetImage('images/bgheader.png'),
+                        image: AssetImage('assets/images/bgheader.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -162,7 +162,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Image.asset(
-                                'icons/ic_back.png',
+                                'assets/icons/ic_back.png',
                                 height: 18,
                                 width: 18,
                               ),
@@ -246,7 +246,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(6.0),
                                 child: Image.asset(
-                                  'icons/ic_search.png',
+                                  'assets/icons/ic_search.png',
                                   height: 18,
                                   width: 18,
                                 ),
@@ -341,7 +341,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Image.asset(
-                                              'icons/ic_noData.png',
+                                              'assets/icons/ic_noData.png',
                                               height: 60,
                                               width: 60,
                                             ),

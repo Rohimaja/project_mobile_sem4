@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/screens/features_lecturer/account/profile_screen.dart';
+import 'package:stipres/screens/features_student/account/profile_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/dashboard.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';
 
-class BaseScreen extends StatefulWidget {
-  const BaseScreen({Key? key}) : super(key: key);
+class BaseScreenLecturer extends StatefulWidget {
+  const BaseScreenLecturer({Key? key}) : super(key: key);
 
   @override
-  _BaseScreenState createState() => _BaseScreenState();
+  _BaseScreenLecturerState createState() => _BaseScreenLecturerState();
 }
 
-class _BaseScreenState extends State<BaseScreen> {
+class _BaseScreenLecturerState extends State<BaseScreenLecturer> {
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    DashboardPage(),
-    ProfilePage(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    DashboardScreenTeacher(),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

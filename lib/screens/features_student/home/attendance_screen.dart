@@ -249,7 +249,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'icons/ic_noData.png',
+                                    'assets/icons/ic_noData.png',
                                     height: 120,
                                   ),
                                   const SizedBox(height: 16),

@@ -56,7 +56,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                         bottomLeft: Radius.circular(30),
                       ),
                       image: const DecorationImage(
-                        image: AssetImage('images/bgheader.png'),
+                        image: AssetImage('assets/images/bgheader.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -73,7 +73,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Image.asset(
-                                'icons/ic_back.png',
+                                'assets/icons/ic_back.png',
                                 height: 18,
                                 width: 18,
                               ),
@@ -133,7 +133,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Link Perkuliahan Online',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: blueColor,
                           fontWeight: FontWeight.w400,
@@ -152,13 +152,13 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'icons/ic_noData.png',
+                                    'assets/icons/ic_noData.png',
                                     height: 120,
                                   ),
                                   const SizedBox(height: 16),
                                   Text(
                                     'Link tidak tersedia',
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16,
                                       color: greyColor,
                                       fontStyle: FontStyle.italic,

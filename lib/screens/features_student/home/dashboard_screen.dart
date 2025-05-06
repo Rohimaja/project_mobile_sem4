@@ -137,7 +137,7 @@ class DashboardScreen extends StatelessWidget {
                           ),
                           child: ClipOval(
                             child: Image.asset(
-                              "images/foto_izzul.jpg",
+                              "assets/images/foto_izzul.jpg",
                               height: 70,
                               width: 70,
                               fit: BoxFit.cover,
@@ -148,29 +148,22 @@ class DashboardScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Obx(
-                              () => Container(
-                                width: MediaQuery.of(context).size.width * 0.65,
-                                margin: EdgeInsets.only(right: 10),
-                                child: Text(
-                                  dashboardC.storedName.value,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                            Text(
+                              dataAkun.namaLengkap,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                             const SizedBox(height: 4),
-                            Obx(() => Text(
-                                  dashboardC.storedNim.value,
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 14,
-                                    color: blueColor,
-                                  ),
-                                )),
+                            Text(
+                              dataAkun.nim,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                color: blueColor,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -248,13 +241,19 @@ class DashboardScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   child: InkWell(
                                     onTap: () {
-                                      Get.toNamed("/student/kehadiran-screen");
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AttendanceScreen()),
+                                      );
                                     },
                                     splashColor: Colors.blue.withOpacity(0.3),
                                     child: CategoryCard(
                                       title: 'Kehadiran',
                                       items: 4,
-                                      imagePath: 'icons/ic_kehadiran.png',
+                                      imagePath:
+                                          'assets/icons/ic_kehadiran.png',
                                       bgColor: const Color.fromARGB(
                                           255, 187, 235, 251),
                                     ),
@@ -276,7 +275,8 @@ class DashboardScreen extends StatelessWidget {
                                     child: CategoryCard(
                                       title: 'Presensi',
                                       items: 4,
-                                      imagePath: 'icons/rekap_kehadiran.png',
+                                      imagePath:
+                                          'assets/icons/rekap_kehadiran.png',
                                       bgColor: const Color.fromARGB(
                                           255, 187, 251, 193),
                                     ),
@@ -493,8 +493,8 @@ class CategoryCard extends StatelessWidget {
           const SizedBox(height: 12),
           AutoSizeText(
             title,
-            style: GoogleFonts.plusJakartaSans(
-              fontWeight: FontWeight.bold,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
               fontSize: 16,
             ),
             maxLines: 1,

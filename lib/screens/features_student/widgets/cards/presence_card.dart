@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/models/student/presensi_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
-import 'package:stipres/screens/features_student/widgets/chips/presence_chip.dart';
 
 class PresensiCard extends StatelessWidget {
   final PresensiModelApi data;
@@ -39,10 +39,12 @@ class PresensiCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Semester", style: TextStyle(color: Colors.white)),
+                Text("Semester",
+                    style: GoogleFonts.plusJakartaSans(
+                        color: Colors.white, fontSize: 12)),
                 Text(
                   data.semester.toString(),
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -60,7 +62,7 @@ class PresensiCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   data.namaMatkul,
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -69,10 +71,12 @@ class PresensiCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 IconTextInfo(
-                    iconPath: 'icons/ic_location.png', text: data.namaRuangan!),
+                    iconPath: 'assets/icons/ic_location.png',
+                    text: data.namaRuangan!),
                 const SizedBox(height: 4),
                 IconTextInfo(
-                    iconPath: 'icons/ic_duration.png', text: data.durasiMatkul),
+                    iconPath: 'assets/icons/ic_duration.png',
+                    text: data.durasiMatkul),
               ],
             ),
           ),
@@ -128,9 +132,44 @@ class IconTextInfo extends StatelessWidget {
         const SizedBox(width: 6),
         Text(
           text,
-          style: const TextStyle(fontSize: 13),
+          style: GoogleFonts.plusJakartaSans(fontSize: 13),
         ),
       ],
+    );
+  }
+}
+
+class PresensiChip extends StatelessWidget {
+  final String jam;
+
+  const PresensiChip({super.key, required this.jam});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            'assets/icons/ic_clock.png',
+            height: 16,
+            width: 16,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            jam,
+            style: GoogleFonts.plusJakartaSans(
+              color: Colors.white,
+              fontSize: 13,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

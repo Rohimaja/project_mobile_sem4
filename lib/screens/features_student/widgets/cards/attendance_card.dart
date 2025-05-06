@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/models/student/rekap_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/models/attendance_model.dart';
 import 'package:stipres/screens/features_student/widgets/chips/attendance_chip.dart';
 
@@ -41,15 +42,16 @@ class KehadiranCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Semester',
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: GoogleFonts.plusJakartaSans(
+                      color: Colors.white, fontSize: 12),
                 ),
                 Text(
                   rekap.semester.toString(),
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 28,
+                    fontSize: 36,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -66,12 +68,12 @@ class KehadiranCard extends StatelessWidget {
                   rekap.namaMatkul,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   'Persentase Kehadiran (${rekap.persentase}%)',
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                       fontSize: 13, color: Color.fromARGB(255, 21, 92, 151)),
                 ),
                 const SizedBox(height: 8),
@@ -95,7 +97,7 @@ class KehadiranCard extends StatelessWidget {
                     ),
                     KehadiranChip(
                       label: 'Alpa',
-                      jumlah: rekap.alpa,
+                      jumlah: rekap.alpa.toRadixString(radix),
                       color: Colors.red,
                     ),
                   ],
@@ -106,5 +108,13 @@ class KehadiranCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  int _getJumlahKehadiran(String label) {
+    final item = jadwal.kehadiran.firstWhere(
+      (e) => e.label.toLowerCase() == label.toLowerCase(),
+      orElse: () => KehadiranItem(label: label, jumlah: 0),
+    );
+    return item.jumlah;
   }
 }

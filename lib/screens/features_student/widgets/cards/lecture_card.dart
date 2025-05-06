@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/models/student/lecture_model.dart';
-import 'package:stipres/screens/features_student/widgets/chips/lecture_chip.dart';
 
 class PerkuliahanCard extends StatelessWidget {
   final LectureModelApi data;
@@ -35,7 +35,7 @@ class PerkuliahanCard extends StatelessWidget {
           children: [
             // SEMESTER COLUMN
             Container(
-              width: 80,
+              width: 90,
               height: 170, // fix height supaya sejajar
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 59, 136, 62),
@@ -44,14 +44,15 @@ class PerkuliahanCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'Semester',
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+                    style: GoogleFonts.plusJakartaSans(
+                        color: Colors.white, fontSize: 15),
                   ),
                   SizedBox(height: 5),
                   Text(
                     data.semester.toString(),
-                    style: const TextStyle(
+                    style: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
@@ -86,9 +87,9 @@ class PerkuliahanCard extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: AutoSizeText(
                           data.namaMatkul,
-                          style: const TextStyle(
+                          style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             fontSize: 16,
                           ),
                           maxLines: 1,
@@ -101,7 +102,7 @@ class PerkuliahanCard extends StatelessWidget {
                       Positioned(
                         // sedikit ke atas biar seimbang
                         child: Image.asset(
-                          "icons/ic_book2.png",
+                          "assets/icons/ic_book2.png",
                           width: 40,
                           height: 40,
                         ),
@@ -112,17 +113,17 @@ class PerkuliahanCard extends StatelessWidget {
                   const SizedBox(height: 15),
 
                   PerkuliahanChip(
-                    iconPath: "icons/ic_calendar2.png",
+                    iconPath: "assets/icons/ic_calendar2.png",
                     text: data.tglPresensi,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
-                    iconPath: "icons/ic_lecturer.png",
+                    iconPath: "assets/icons/ic_lecturer.png",
                     text: data.namaDosen,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
-                    iconPath: "icons/ic_clock.png",
+                    iconPath: "assets/icons/ic_clock.png",
                     text: data.durasiPresensi,
                   ),
                   const SizedBox(height: 8),
@@ -132,14 +133,14 @@ class PerkuliahanCard extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset("icons/ic_link.png", width: 20),
+                        Image.asset("assets/icons/ic_link.png", width: 20),
                         const SizedBox(width: 6),
                         Expanded(
                           child: TextField(
                             controller:
                                 TextEditingController(text: data.linkZoom),
                             readOnly: true,
-                            style: const TextStyle(
+                            style: GoogleFonts.plusJakartaSans(
                                 color: Colors.blue,
                                 fontSize: 14,
                                 decoration: TextDecoration.underline),
@@ -178,7 +179,8 @@ class PerkuliahanCard extends StatelessWidget {
                                   horizontal: 6, vertical: 4),
                               child: Row(
                                 children: [
-                                  Image.asset("icons/ic_copy.png", width: 20),
+                                  Image.asset("assets/icons/ic_copy.png",
+                                      width: 20),
                                   const SizedBox(width: 4),
                                   const Text("Salin",
                                       style: TextStyle(
@@ -198,6 +200,45 @@ class PerkuliahanCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class PerkuliahanChip extends StatelessWidget {
+  final String iconPath;
+  final String text;
+  final VoidCallback? onTap;
+
+  const PerkuliahanChip({
+    super.key,
+    required this.iconPath,
+    required this.text,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Image.asset(
+          iconPath,
+          width: 20,
+          height: 20,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: GestureDetector(
+            onTap: onTap,
+            child: AutoSizeText(
+              text,
+              style: GoogleFonts.plusJakartaSans(fontSize: 14),
+              maxLines: 1,
+              minFontSize: 10,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

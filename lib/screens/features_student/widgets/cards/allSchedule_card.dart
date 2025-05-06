@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/screens/features_student/home/dashboard_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/models/allSchedule_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
-import 'package:stipres/styles/constant.dart';
 
 class AllScheduleCard extends StatelessWidget {
   final AllScheduleModel jadwal;
@@ -24,7 +22,7 @@ class AllScheduleCard extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               jadwal.waktu,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -64,7 +62,7 @@ class AllScheduleCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             jadwal.mataKuliah,
-                            style: const TextStyle(
+                            style: GoogleFonts.plusJakartaSans(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
@@ -72,7 +70,7 @@ class AllScheduleCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Image.asset(
@@ -81,7 +79,7 @@ class AllScheduleCard extends StatelessWidget {
                           width: 16,
                         ),
                         const SizedBox(width: 4),
-                        Text(jadwal.lokasi ?? "-"),
+                        Text(jadwal.lokasi),
                       ],
                     ),
                     const SizedBox(height: 6),
