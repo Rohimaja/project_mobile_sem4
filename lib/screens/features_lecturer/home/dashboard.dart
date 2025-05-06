@@ -1,10 +1,55 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/features_student/home/all_schedule_screen.dart';
+import 'package:stipres/screens/features_student/home/calendar_screen.dart';
+import 'package:stipres/screens/features_student/home/attendance_screen.dart';
+import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
+import 'package:stipres/screens/features_student/home/notification_screen.dart';
+import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
+import 'package:stipres/screens/features_student/models/account_data_model.dart';
+import 'package:stipres/screens/features_student/models/schedule_model.dart';
+import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
+import 'package:stipres/screens/features_student/widgets/cards/weeklyCalendar_card.dart';
+import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
+import 'package:stipres/screens/features_student/widgets/link/calendar_link.dart';
 import 'package:stipres/styles/constant.dart';
 
-class DashboardPage extends StatelessWidget {
-  DashboardPage({super.key});
+class DashboardScreenTeacher extends StatelessWidget {
+  DashboardScreenTeacher({super.key});
   var height, width;
+
+  final Akun dataAkun = Akun(
+    namaLengkap: "Nurhadi Aldo",
+    nim: "19860926 201505 1 001",
+  );
+
+  final List<JadwalModel> jadwalHariIni = [
+    JadwalModel(
+      waktu: '07.00 - 10.00 WIB',
+      mataKuliah: 'Pemrograman Dasar',
+      lokasi: 'Gedung JTI Ruang 3.3',
+      durasi: '2 Jam',
+    ),
+    JadwalModel(
+      waktu: '10.15 - 12.00 WIB',
+      mataKuliah: 'Struktur Data',
+      lokasi: 'Gedung JTI Ruang 2.2',
+      durasi: '1.5 Jam',
+    ),
+    JadwalModel(
+      waktu: '13.00 - 15.00 WIB',
+      mataKuliah: 'Basis Data',
+      lokasi: 'Gedung JTI Ruang 1.1',
+      durasi: '2 Jam',
+    ),
+    JadwalModel(
+      waktu: '07.00 - 10.00 WIB',
+      mataKuliah: 'Kewirausahaan',
+      lokasi: 'Gedung JTI Ruang 3.3',
+      durasi: '2 Jam',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +57,7 @@ class DashboardPage extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(
-          255, 237, 235, 251), // Set background putih ke seluruh layar
+      backgroundColor: mainColor, // Set background putih ke seluruh layar
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -46,12 +90,12 @@ class DashboardPage extends StatelessWidget {
                           width: 30,
                         ),
                         const SizedBox(
-                            width: 5), // jarak kecil antara logo dan teks
+                            width: 3), // jarak kecil antara logo dan teks
                         Expanded(
                           child: Text(
-                            "STIKES PANTI WALUYA MALANG",
+                            "STIKES Panti Waluya Malang",
                             style: GoogleFonts.poppins(
-                              fontSize: 12,
+                              fontSize: 13,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                             ),
@@ -59,19 +103,34 @@ class DashboardPage extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
-                            shape: BoxShape.circle,
+                        Material(
+                          color:
+                              Colors.transparent, // biar background transparan
+                          shape: const CircleBorder(), // biar ripple bulat
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NotificationScreen()),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(100),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.3),
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.only(
+                                  top: 3, bottom: 6, left: 6, right: 6),
+                              child: const Icon(
+                                Icons.notifications_none,
+                                color: Colors.white,
+                                size: 26,
+                              ),
+                            ),
                           ),
-                          padding: const EdgeInsets.only(
-                              top: 3, bottom: 6, left: 6, right: 6),
-                          child: const Icon(
-                            Icons.notifications_none,
-                            color: Colors.white,
-                            size: 26,
-                          ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -95,7 +154,7 @@ class DashboardPage extends StatelessWidget {
                       width: 45,
                       height: 45,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 237, 235, 251),
+                          color: mainColor,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(40),
                           ) // warna ungu muda
@@ -111,13 +170,13 @@ class DashboardPage extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.all(2),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: mainColor,
                             shape: BoxShape.circle,
                           ),
                           child: ClipOval(
                             child: Image.asset(
-                              "assets/images/foto_aldo.jpg",
+                              "images/foto_aldo.jpg",
                               height: 70,
                               width: 70,
                               fit: BoxFit.cover,
@@ -129,8 +188,8 @@ class DashboardPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Aldo Rayhan Radittyanuh",
-                              style: GoogleFonts.poppins(
+                              dataAkun.namaLengkap,
+                              style: GoogleFonts.plusJakartaSans(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -138,8 +197,8 @@ class DashboardPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "199205142023052008",
-                              style: GoogleFonts.poppins(
+                              dataAkun.nim,
+                              style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14,
                                 color: blueColor,
                               ),
@@ -152,7 +211,7 @@ class DashboardPage extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 60), // Jarak agar profil tidak tertutup
+              const SizedBox(height: 40), // Jarak agar profil tidak tertutup
 
               // KONTEN PUTIH DI BAWAH
               Container(
@@ -163,19 +222,13 @@ class DashboardPage extends StatelessWidget {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                padding: const EdgeInsets.only(top: 10, bottom: 48),
+                padding: const EdgeInsets.only(top: 10, bottom: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.symmetric(
-                          horizontal: BorderSide(
-                            color: blackColor,
-                            width: 1,
-                          ),
-                        ),
+                        color: mainColor,
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -190,100 +243,214 @@ class DashboardPage extends StatelessWidget {
                               ),
                               children: [
                                 TextSpan(
-                                  text: "Menu ",
-                                  style:
-                                      blackTextStyle, // TextStyle(color: Colors.black),
-                                ),
+                                    text: "Menu ",
+                                    style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700,
+                                        color: blackColor)),
                                 TextSpan(
                                   text: "Utama",
-                                  style:
-                                      greyTextStyle, // TextStyle(color: Colors.grey),
-                                ),
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.grey),
+                                )
                               ],
                             ),
-                          ),
-                          Row(
-                            children: const [
-                              Text(
-                                "lihat semua",
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 94, 171),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(width: 4),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16,
-                                color: Color.fromARGB(255, 0, 94, 171),
-                              ),
-                            ],
                           ),
                         ],
                       ),
                     ),
 
-                    const SizedBox(height: 16),
-
                     // Horizontal Scroll Card
                     SizedBox(
-                      height: 160,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            CategoryCard(
-                              title: 'Kehadiran',
-                              items: 7,
-                              imagePath: 'assets/images/kehadiran.png',
-                              bgColor: Colors.green.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Materi',
-                              items: 7,
-                              imagePath: 'assets/images/materi.png',
-                              bgColor: Colors.blue.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Rekap Kehadiran',
-                              items: 4,
-                              imagePath: 'assets/images/rekap_kehadiran.png',
-                              bgColor: Colors.pink.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Kalender Akademik',
-                              items: 4,
-                              imagePath: 'assets/images/kalender_akademik.png',
-                              bgColor: Colors.yellow.shade100,
-                            ),
-                            const SizedBox(width: 12),
-                            CategoryCard(
-                              title: 'Perkuliahan Online',
-                              items: 4,
-                              imagePath: 'assets/images/zoom.png',
-                              bgColor: Colors.orange.shade100,
-                            ),
-                          ],
+                      height: 180,
+                      width: width,
+                      child: Container(
+                        color: mainColor, // Warna latar belakang
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            children: [
+                              // === Card dengan Navigasi + Ripple ===
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AttendanceScreen()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Kehadiran',
+                                      items: 4,
+                                      imagePath: 'icons/ic_kehadiran.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 187, 235, 251),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 12),
+
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PresenceScreen()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Presensi',
+                                      items: 4,
+                                      imagePath: 'icons/rekap_kehadiran.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 187, 251, 193),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 12),
+
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AllScheduleScreen()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Jadwal Perkuliahan',
+                                      items: 4,
+                                      imagePath:
+                                          'icons/ic_jadwal_perkuliahan.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 251, 232, 187),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(width: 12),
+
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CalendarScreen()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Kalender Akademik',
+                                      items: 4,
+                                      imagePath: 'icons/kalender_akademik.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 251, 187, 187),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+
+                              Material(
+                                color: Colors.transparent,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LectureScreen()),
+                                      );
+                                    },
+                                    splashColor: Colors.blue.withOpacity(0.3),
+                                    child: CategoryCard(
+                                      title: 'Perkuliahan Online',
+                                      items: 4,
+                                      imagePath: 'icons/zoom.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 187, 191, 251),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
 
                     const SizedBox(height: 16),
 
+                    Container(
+                      decoration: BoxDecoration(
+                        color: mainColor,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text: "Kalender",
+                                    style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700,
+                                        color: blackColor)),
+                              ],
+                            ),
+                          ),
+                          CalendarLink(),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    WeeklyCalendar(),
+
+                    SizedBox(height: 16),
+
                     // Title Jadwal Hari Ini
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.symmetric(
-                          horizontal: BorderSide(
-                            color: blackColor,
-                            width: 1,
-                          ),
-                        ),
+                        color: mainColor,
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
@@ -298,169 +465,58 @@ class DashboardPage extends StatelessWidget {
                               ),
                               children: [
                                 TextSpan(
-                                  text: "Jadwal ",
-                                  style: blackTextStyle,
-                                ),
+                                    text: "Jadwal ",
+                                    style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700,
+                                        color: blackColor)),
                                 TextSpan(
                                   text: "Hari Ini",
-                                  style: greyTextStyle,
-                                ),
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.grey),
+                                )
                               ],
                             ),
                           ),
-                          Row(
-                            children: const [
-                              Text(
-                                "lihat semua",
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 94, 171),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(width: 4),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16,
-                                color: Color.fromARGB(255, 0, 94, 171),
-                              ),
-                            ],
-                          ),
+                          AllScheduleLink(),
                         ],
                       ),
                     ),
 
-                    SizedBox(height: 10),
-
-                    ListView.builder(
-                      itemCount: 3, // jumlah data jadwal
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                    Container(
+                      alignment: Alignment.center,
+                      color: mainColor,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: jadwalHariIni.isEmpty
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                SizedBox(height: 20),
                                 Image.asset(
-                                  'assets/icons/ic_clock.png',
-                                  height: 20,
-                                  width: 20,
+                                  'icons/ic_noData.png',
+                                  height: 120,
                                 ),
-                                const SizedBox(width: 6),
-                                const Text(
-                                  "07.00 - 10.00 WIB",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                SizedBox(height: 15),
+                                Text(
+                                  'Tidak ada jadwal hari ini',
+                                  style: blackTextStyle.copyWith(
+                                      fontSize: 15,
+                                      fontFamily: 'poppins',
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ],
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              padding: const EdgeInsets.all(12),
-                              margin: const EdgeInsets.only(bottom: 16),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFFF3E0),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  // Gambar buku
-                                  Image.asset(
-                                    'assets/icons/ic_matakuliah.png', // ganti sesuai path file kamu
-                                    height: 70,
-                                    width: 70,
-                                  ),
-                                  const SizedBox(width: 15),
-                                  // Konten teks di sebelah kanan gambar
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Expanded(
-                                              child: Text(
-                                                "Pemrograman Dasar",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 4),
-                                              decoration: BoxDecoration(
-                                                color: Colors.purple,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: const Text(
-                                                "Lihat Jadwal",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/ic_location.png',
-                                              height: 16,
-                                              width: 16,
-                                            ),
-                                            const SizedBox(width: 4),
-                                            const Text("Gedung JTI Ruang 3.3"),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/ic_duration.png',
-                                              height: 16,
-                                              width: 16,
-                                            ),
-                                            const SizedBox(width: 4),
-                                            const Text("2 Jam"),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          children: const [
-                                            ChipItem(label: "Presensi"),
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 8),
-                                              child: ChipItem(label: "Zoom"),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 8),
-                                              child: ChipItem(label: "Materi"),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
                             )
-                          ],
-                        );
-                      },
+                          : ListView.builder(
+                              itemCount: jadwalHariIni.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return JadwalCard(jadwal: jadwalHariIni[index]);
+                              },
+                            ),
                     ),
                   ],
                 ),
@@ -490,14 +546,14 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 140,
+      width: 160,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: whiteColor, // warna garis outline
-          width: 1.5, // ketebalan garis
+          color: Color(0xFFC8C8C8),
+          width: 0.5,
         ),
       ),
       child: Column(
@@ -511,17 +567,23 @@ class CategoryCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
+          const SizedBox(height: 12),
+          AutoSizeText(
             title,
-            style: const TextStyle(
+            style: GoogleFonts.plusJakartaSans(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
+            maxLines: 1,
+            minFontSize: 10,
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             "$items items",
-            style: TextStyle(color: Colors.grey.shade600),
+            style: GoogleFonts.plusJakartaSans(
+                color: const Color.fromARGB(255, 98, 98, 98),
+                fontSize: 13,
+                fontWeight: FontWeight.w500),
           ),
         ],
       ),

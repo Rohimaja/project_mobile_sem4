@@ -67,7 +67,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         bottomLeft: Radius.circular(30),
                       ),
                       image: const DecorationImage(
-                        image: AssetImage('images/bgheader.png'),
+                        image: AssetImage('assets/images/bgheader.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -83,7 +83,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Image.asset(
-                                'icons/ic_back.png',
+                                'assets/icons/ic_back.png',
                                 height: 18,
                                 width: 18,
                               ),

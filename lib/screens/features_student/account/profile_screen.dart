@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/controllers/features_student/account/profile_controller.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/screens/features_student/home/notification_screen.dart';
-// import 'package:stipres/screens/features_student/models/profile_model.dart';
+import 'package:stipres/screens/features_student/models/profile_model.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
-  // final Mahasiswa dataMahasiswa = Mahasiswa(
-  //   namaLengkap: "Izzul Islam Ramadhan",
-  //   nim: "E41231215",
-  //   email: "izzulramadhan123@gmail.com",
-  //   programStudi: "Teknik Informatika",
-  // );
+  final Mahasiswa dataMahasiswa = Mahasiswa(
+    namaLengkap: "Izzul Islam Ramadhan",
+    nim: "E41231215",
+    email: "izzulramadhan123@gmail.com",
+    programStudi: "Teknik Informatika",
+  );
 
   var height, width;
-
-  final profileC = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -231,15 +228,14 @@ class ProfileScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Obx(() => Text(
-                                profileC.storedName.value,
-                                style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 161, 161, 161),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )),
+                          child: Text(
+                            dataMahasiswa.namaLengkap,
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 161, 161, 161),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -269,15 +265,14 @@ class ProfileScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Obx(() => Text(
-                                profileC.storedNim.value,
-                                style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 161, 161, 161),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )),
+                          child: Text(
+                            dataMahasiswa.nim,
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 161, 161, 161),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -307,15 +302,14 @@ class ProfileScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Obx(() => Text(
-                                profileC.storedEmail.value,
-                                style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 161, 161, 161),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )),
+                          child: Text(
+                            dataMahasiswa.email,
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 161, 161, 161),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -345,14 +339,13 @@ class ProfileScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Obx(
-                            () => Text(profileC.storedProdi.value,
-                                style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 161, 161, 161),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                )),
+                          child: Text(
+                            dataMahasiswa.programStudi,
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 161, 161, 161),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
@@ -483,31 +476,37 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                            onPressed: () {
-                              Get.offAll(LoginScreen());
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: redColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              minimumSize: const Size(double.infinity, 50),
+                          onPressed: () {
+                            _showLogoutDialog(
+                                context); // Tampilkan dialog konfirmasi logout
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: redColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/icons/ic_logout.png',
-                                    height: 20, width: 20),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Logout",
-                                  style: TextStyle(
-                                      color: whiteColor,
-                                      fontWeight: bold,
-                                      fontSize: 14),
+                            minimumSize: const Size(double.infinity, 50),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icons/ic_logout.png',
+                                height: 20,
+                                width: 20,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "Logout",
+                                style: TextStyle(
+                                  color: whiteColor,
+                                  fontWeight: bold,
+                                  fontSize: 14,
                                 ),
-                              ],
-                            )),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ],
@@ -519,4 +518,46 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showLogoutDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Tidak bisa ditutup dengan ketuk di luar dialog
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text(
+          'KONFIRMASI LOGOUT',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: const Text(
+          'Apakah anda yakin ingin keluar?',
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pop(); // Tutup dialog, kembali ke halaman sebelumnya
+            },
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Tutup dialog dulu
+              Get.offAll(() =>
+                  LoginScreen()); // Arahkan ke LoginScreen dan hapus semua riwayat halaman
+            },
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

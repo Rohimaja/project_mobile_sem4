@@ -21,7 +21,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           'Presensi anda pada jam 11.45 WIB pada mata kuliah Pemrograman Dasar gagal dilakukan.',
       time: '2 jam yang lalu',
       type: NotificationType.presensiGagal,
-      iconAssetPath: 'icons/ic_warning.png',
+      iconAssetPath: 'assets/icons/ic_warning.png',
     ),
     NotificationModel(
       title: 'Pengumuman Perubahan Jadwal!',
@@ -29,7 +29,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           'Terdapat perubahan jadwal perkuliahan minggu depan, silahkan periksa pada fitur jadwal.',
       time: '6 jam yang lalu',
       type: NotificationType.pengumuman,
-      iconAssetPath: 'icons/ic_announcement.png',
+      iconAssetPath: 'assets/icons/ic_announcement.png',
     ),
     NotificationModel(
       title: 'Presensi Berhasil!',
@@ -37,7 +37,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           'Anda telah melakukan presensi pada 09.00 WIB di mata kuliah Pemrograman Dasar.',
       time: 'Kemarin',
       type: NotificationType.presensiSukses,
-      iconAssetPath: 'icons/ic_presence.png',
+      iconAssetPath: 'assets/icons/ic_presence.png',
     ),
     NotificationModel(
       title: 'Batas Presensi Hampir Tercapai!',
@@ -45,7 +45,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           'Anda belum melakukan presensi mata kuliah Kewirausahaan hari ini.',
       time: '16 Maret',
       type: NotificationType.batasPresensi,
-      iconAssetPath: 'icons/ic_time.png',
+      iconAssetPath: 'assets/icons/ic_time.png',
     ),
   ];
 
@@ -110,7 +110,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 borderRadius:
                     const BorderRadius.only(bottomLeft: Radius.circular(30)),
                 image: const DecorationImage(
-                  image: AssetImage('images/bgheader.png'),
+                  image: AssetImage('assets/images/bgheader.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -126,7 +126,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       customBorder: const CircleBorder(),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.asset('icons/ic_back.png',
+                        child: Image.asset('assets/icons/ic_back.png',
                             height: 18, width: 18),
                       ),
                     ),
@@ -180,7 +180,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset('images/empty_state.png', height: 150),
+                            Image.asset('assets/images/empty_state.png', height: 150),
                             const SizedBox(height: 20),
                             Text(
                               "Tidak ada notifikasi",

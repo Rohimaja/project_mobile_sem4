@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/models/attendance_model.dart';
-import 'package:stipres/screens/features_student/widgets/chips/attendance_chip.dart';
-import 'package:stipres/styles/constant.dart';
 
 class KehadiranCard extends StatelessWidget {
   final Kehadiran jadwal;
@@ -41,15 +40,16 @@ class KehadiranCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Semester',
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: GoogleFonts.plusJakartaSans(
+                      color: Colors.white, fontSize: 12),
                 ),
                 Text(
                   jadwal.semester.toString(),
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                     color: Colors.white,
-                    fontSize: 28,
+                    fontSize: 36,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -64,14 +64,14 @@ class KehadiranCard extends StatelessWidget {
               children: [
                 Text(
                   jadwal.matkul,
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   'Persentase Kehadiran (${jadwal.persentase.toStringAsFixed(0)}%)',
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                       fontSize: 13, color: Color.fromARGB(255, 21, 92, 151)),
                 ),
                 const SizedBox(height: 8),
@@ -114,5 +114,53 @@ class KehadiranCard extends StatelessWidget {
       orElse: () => KehadiranItem(label: label, jumlah: 0),
     );
     return item.jumlah;
+  }
+}
+
+class KehadiranChip extends StatelessWidget {
+  final String label;
+  final int jumlah;
+  final Color color;
+
+  const KehadiranChip({
+    Key? key,
+    required this.label,
+    required this.jumlah,
+    required this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 55, // <- SET UKURAN SAMA
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              jumlah.toString(),
+              style: GoogleFonts.plusJakartaSans(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              label,
+              style: GoogleFonts.plusJakartaSans(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

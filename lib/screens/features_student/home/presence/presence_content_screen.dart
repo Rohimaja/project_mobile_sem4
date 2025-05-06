@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
 import 'package:stipres/screens/features_student/models/presenceContent_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/presenceContent_card.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/styles/constant.dart';
 
 enum StatusPresensi { hadir, ijin, sakit }
@@ -26,7 +28,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
       namaMatkul: 'Pemrograman Mobile',
       jamMatkul: '08:00 - 10:00',
     ),
-  ]; // kosongkan untuk tes "no data"
+  ];
 
   @override
   void initState() {
@@ -95,7 +97,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Image.asset(
-                                'icons/ic_back.png',
+                                'assets/icons/ic_back.png',
                                 height: 18,
                                 width: 18,
                               ),
@@ -119,11 +121,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                   Positioned(
                     bottom: -44,
                     right: 0,
-                    child: Container(
-                      width: 40,
-                      height: 44,
-                      color: blueColor,
-                    ),
+                    child: Container(width: 40, height: 44, color: blueColor),
                   ),
                   Positioned(
                     bottom: -45,
@@ -152,7 +150,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                           children: [
                             const SizedBox(height: 60),
                             Image.asset(
-                              'icons/ic_noData.png',
+                              'assets/icons/ic_noData.png',
                               width: 160,
                               height: 160,
                             ),
@@ -220,66 +218,142 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
 
                           const SizedBox(height: 15),
 
-                          // Alasan Field
-                          RichText(
-                            text: const TextSpan(
-                              text: "Alasan ",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 15),
-                              children: [
-                                TextSpan(
-                                  text: "(Jika Tidak Hadir)",
-                                  style: TextStyle(
+                          if (_status == StatusPresensi.ijin ||
+                              _status == StatusPresensi.sakit) ...[
+                            RichText(
+                              text: TextSpan(
+                                text: "Alasan ",
+                                style: GoogleFonts.plusJakartaSans(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "(Jika Tidak Hadir)",
+                                    style: GoogleFonts.plusJakartaSans(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                ),
-                                TextSpan(text: " :"),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                          Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: TextField(
-                              controller: _alasanController,
-                              maxLines: 4,
-                              decoration: const InputDecoration(
-                                hintText: "*Alasan ketidakhadiran",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                contentPadding: EdgeInsets.all(16),
-                                border: InputBorder.none,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  TextSpan(text: " :"),
+                                ],
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "Maks. $_jumlahKarakter/$_maksKarakter huruf",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: _jumlahKarakter > _maksKarakter
-                                  ? Colors.red
-                                  : Colors.grey[600],
-                              fontStyle: FontStyle.italic,
+                            const SizedBox(height: 15),
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: TextField(
+                                controller: _alasanController,
+                                maxLines: 4,
+                                decoration: InputDecoration(
+                                  hintText: "*Alasan ketidakhadiran",
+                                  hintStyle: GoogleFonts.plusJakartaSans(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                                  contentPadding: const EdgeInsets.all(16),
+                                  border: InputBorder.none,
+                                ),
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "Maks. $_jumlahKarakter/$_maksKarakter huruf",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: _jumlahKarakter > _maksKarakter
+                                    ? Colors.red
+                                    : Colors.grey[600],
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    // Aksi upload
+                                  },
+                                  icon: Padding(
+                                    padding: EdgeInsets.only(left: 4.0),
+                                    child: Image.asset(
+                                      'assets/icons/ic_upload.png',
+                                      height: 24,
+                                      width: 24,
+                                    ),
+                                  ),
+                                  label: Padding(
+                                    padding: EdgeInsets.only(right: 4.0),
+                                    child: Text(
+                                      'Upload Bukti',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: blueColor,
+                                    foregroundColor: Colors.white,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 16,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  '(PNG, JPG, JPEG, and PDF, up to 5 MB)',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 40),
+                          ],
 
-                          const SizedBox(height: 30),
+                          // Submit Button
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {
-                                // TODO: submit logic
+                              onPressed: () async {
+                                if (_status == null) {
+                                  _showErrorDialog(context,
+                                      "Silakan pilih status presensi terlebih dahulu.");
+                                  return;
+                                }
+
+                                if ((_status == StatusPresensi.ijin ||
+                                        _status == StatusPresensi.sakit) &&
+                                    _alasanController.text.trim().isEmpty) {
+                                  _showErrorDialog(context,
+                                      "Silakan isi alasan ketidakhadiran.");
+                                  return;
+                                }
+
+                                showLoadingDialog(context);
+                                await Future.delayed(
+                                    const Duration(seconds: 4));
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (_) => PresenceScreen()),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: blueColor,
@@ -304,11 +378,36 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                         ],
                       ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+void showLoadingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    barrierColor: Colors.black.withOpacity(0.3),
+    builder: (BuildContext context) => const LoadingPopup(),
+  );
+}
+
+void _showErrorDialog(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text("Validasi"),
+      content: Text(message),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text("OK"),
+        ),
+      ],
+    ),
+  );
 }
