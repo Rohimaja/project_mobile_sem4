@@ -10,87 +10,93 @@ class Bantuan extends StatelessWidget {
   var height, width;
 
   @override
-Widget build(BuildContext context) {
-  double width = MediaQuery.of(context).size.width; // Pastikan variabel width terdefinisi
-  return Scaffold(
-    backgroundColor: const Color.fromARGB(255, 237, 235, 251),
-    body: SingleChildScrollView(
-      child: Column(
-        children: [
-          _buildHeader(context),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, left: 23, right: 18, bottom: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Bantuan",
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 30, 136, 228),
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context)
+        .size
+        .width; // Pastikan variabel width terdefinisi
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 237, 235, 251),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildHeader(context),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 15, left: 23, right: 18, bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Bantuan",
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 30, 136, 228),
+                    ),
                   ),
-                ),
-                SizedBox(height: 15),
-                Container(
-                  width: width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Get.to(KetentuanLayanan());
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset('assets/icons/ic_ketentuanlayanan.png',
-                                height: 30, width: 30),
-                            SizedBox(width: 10),
-                            Text("Ketentuan Layanan",
-                                style: blackTextStyle.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                                textAlign: TextAlign.center),
-                          ],
+                  SizedBox(height: 15),
+                  Container(
+                    width: width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed("/student/terms-of-service-screen");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                  'assets/icons/ic_ketentuanlayanan.png',
+                                  height: 30,
+                                  width: 30),
+                              SizedBox(width: 10),
+                              Text("Ketentuan Layanan",
+                                  style: blackTextStyle.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                  textAlign: TextAlign.center),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      InkWell(
-                        onTap: () {
-                          Get.to(KebijakanPrivasi()); // Tambahkan halaman ini
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset('assets/icons/ic_kebijakanprivasi.png',
-                                height: 30, width: 30),
-                            SizedBox(width: 10),
-                            Text("Kebijakan Privasi",
-                                style: blackTextStyle.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                                textAlign: TextAlign.center),
-                          ],
+                        SizedBox(height: 20),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(
+                                "/student/privacy-policy-screen"); // Tambahkan halaman ini
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                  'assets/icons/ic_kebijakanprivasi.png',
+                                  height: 30,
+                                  width: 30),
+                              SizedBox(width: 10),
+                              Text("Kebijakan Privasi",
+                                  style: blackTextStyle.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                  textAlign: TextAlign.center),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget _buildHeader(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -111,7 +117,8 @@ Widget build(BuildContext context) {
               fit: BoxFit.cover,
             ),
           ),
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

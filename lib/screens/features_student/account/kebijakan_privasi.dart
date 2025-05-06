@@ -16,7 +16,8 @@ class KebijakanPrivasi extends StatelessWidget {
           children: [
             _buildHeader(context),
             Padding(
-              padding: const EdgeInsets.only(top: 10, left: 23, right: 18, bottom: 20),
+              padding: const EdgeInsets.only(
+                  top: 10, left: 23, right: 18, bottom: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -83,7 +84,8 @@ class KebijakanPrivasi extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
+          padding:
+              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -91,7 +93,7 @@ class KebijakanPrivasi extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   borderRadius: BorderRadius.circular(100),
                   customBorder: const CircleBorder(),

@@ -2,14 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/account/profile_controller.dart';
-import 'package:stipres/screens/auth/forget_password_screen_3.dart';
-import 'package:stipres/screens/auth/login_screen.dart';
-import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 import 'package:stipres/screens/features_student/home/notification_screen.dart';
-// import 'package:stipres/screens/features_student/models/profile_model.dart';
-import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart';
-import 'package:stipres/screens/features_student/account/pengaturan.dart';
-import 'package:stipres/screens/features_student/account/view_profile.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -337,7 +330,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Get.to(ViewProfilePage());
+                              Get.toNamed("/student/view-profile-screen");
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: blueColor,
@@ -382,40 +375,47 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
-                            onTap: () {
-                              Get.to(Pengaturan());
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_settings.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Pengaturan",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
+                              onTap: () {
+                                Get.toNamed("/student/settings-screen");
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Image.asset('assets/icons/ic_settings.png',
+                                      height: 30, width: 30),
+                                  SizedBox(width: 10),
+                                  Text("Pengaturan",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
                             ),
-                          ),
                             SizedBox(height: 20), // Jarak antar item
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_gantipassword.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Ganti Password",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed("/auth/forget-password/step3");
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                      'assets/icons/ic_gantipassword.png',
+                                      height: 30,
+                                      width: 30),
+                                  SizedBox(width: 10),
+                                  Text("Ganti Password",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
                             ),
                           ],
                         )),

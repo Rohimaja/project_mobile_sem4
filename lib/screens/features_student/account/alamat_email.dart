@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart';
-import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:flutter/gestures.dart';
 
