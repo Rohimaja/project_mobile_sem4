@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:stipres/controllers/features_student/base_screen_controller.dart';
 import 'package:stipres/screens/features_student/account/profile_screen.dart';
@@ -15,7 +16,7 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  final BaseScreenController _controller = BaseScreenController();
+  final BaseScreenController _controller = Get.find<BaseScreenController>();
 
   static List<Widget> _widgetOptions = <Widget>[
     DashboardScreen(),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/models/presenceContent_model.dart';
-
+import 'package:stipres/models/student/get_presence_model.dart';
 class MatkulDetailCard extends StatelessWidget {
-  final MatkulDetailModel data;
+  final GetPresenceApi data;
 
   const MatkulDetailCard({super.key, required this.data});
 
@@ -22,11 +21,11 @@ class MatkulDetailCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDetailRow("ID Matkul", data.idMatkul, bold: true),
+          _buildDetailRow("ID Matkul", data.kodeMatkul, bold: true),
           const SizedBox(height: 8),
           _buildDetailRow("Nama Matkul", data.namaMatkul, bold: true),
           const SizedBox(height: 8),
-          _buildDetailRow("Jam Matkul", data.jamMatkul, bold: true),
+          _buildDetailRow("Jam Matkul", data.durasiPresensi, bold: true),
         ],
       ),
     );

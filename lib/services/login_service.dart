@@ -33,6 +33,7 @@ class LoginService extends GetxService {
           final data = body['data'];
 
           _box.write("user_nim", data['nim']);
+          _box.write("mahasiswa_id", data['mahasiswa_id']);
           _box.write("user_nama", data['nama']);
           logger.d("tes nama ${_box.read("user_nama")}");
           _box.write("user_email", data['email']);
@@ -65,6 +66,7 @@ class LoginService extends GetxService {
           final data = body['data'];
 
           _box.write("user_nip", data['nip']);
+          _box.write("dosen_id", data['dosen_id']);
           _box.write("user_nama", data['nama']);
           _box.write("user_email", data['email']);
           // _box.write("prodi", data['prodi']);

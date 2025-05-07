@@ -8,9 +8,9 @@ import 'package:stipres/styles/constant.dart';
 class JadwalCard extends StatelessWidget {
   final JadwalModelApi jadwal;
 
-  final DashboardController _controller = DashboardController();
-
   JadwalCard({Key? key, required this.jadwal}) : super(key: key);
+
+  final _controller = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class JadwalCard extends StatelessWidget {
         Row(
           children: [
             Image.asset(
-              'icons/ic_clock.png',
+              'assets/icons/ic_clock.png',
               height: 20,
               width: 20,
             ),
@@ -59,7 +59,7 @@ class JadwalCard extends StatelessWidget {
               child: Row(
                 children: [
                   Image.asset(
-                    'icons/ic_matakuliah.png',
+                    'assets/icons/ic_matakuliah.png',
                     height: 90,
                     width: 90,
                   ),
@@ -148,7 +148,7 @@ class JadwalCard extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(
-                              'icons/ic_location.png',
+                              'assets/icons/ic_location.png',
                               height: 16,
                               width: 16,
                             ),
@@ -160,7 +160,7 @@ class JadwalCard extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(
-                              'icons/ic_duration.png',
+                              'assets/icons/ic_duration.png',
                               height: 16,
                               width: 16,
                             ),
@@ -176,16 +176,13 @@ class JadwalCard extends StatelessWidget {
                               label: 'Presensi',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                (jadwal.lokasi == "Online")
-                                    ? Get.toNamed(
-                                        "/student/presence-content-screen")
-                                    : Get.toNamed("/student/offline-screen");
+                                _controller.buttonAction(jadwal);
                               },
                             ),
                             const SizedBox(width: 8),
                             _buildActionBox(
                               context: context,
-                              label: 'Zoom',    
+                              label: 'Zoom',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
                                 (jadwal.lokasi == "Online")

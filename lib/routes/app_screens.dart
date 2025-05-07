@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:stipres/bindings/features_student/base_binding.dart';
+import 'package:stipres/bindings/features_student/dashboard_binding.dart';
+import 'package:stipres/bindings/features_student/profile_binding.dart';
 import 'package:stipres/screens/auth/activation_account_screen_1.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
 import 'package:stipres/screens/auth/activation_account_screen_3.dart';
@@ -13,6 +16,7 @@ import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart'
 import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 import 'package:stipres/screens/features_student/account/pengaturan.dart'
     as student;
+
 import 'package:stipres/screens/features_student/account/view_profile.dart'
     as student;
 import 'package:stipres/screens/features_student/home/attendance_screen.dart';
@@ -40,7 +44,10 @@ class AppScreens {
     GetPage(
         name: "/lecturer/base-screen",
         page: () => lecturer.BaseScreenLecturer()),
-    GetPage(name: "/student/base-screen", page: () => student.BaseScreen()),
+    GetPage(
+        name: "/student/base-screen",
+        page: () => student.BaseScreen(),
+        bindings: [BaseBinding(), DashboardBinding(), ProfileBinding()]),
     GetPage(name: "/student/attendance-screen", page: () => AttendanceScreen()),
     GetPage(name: "/student/presence-screen", page: () => PresenceScreen()),
     GetPage(name: "/student/offline-screen", page: () => OfflineScreen()),

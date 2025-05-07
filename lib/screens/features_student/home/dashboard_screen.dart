@@ -14,12 +14,14 @@ class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
   var height, width;
 
-  final dashboardC = Get.put(DashboardController());
+  final dashboardC = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+
+    dashboardC.fetchJadwal();
 
     return Scaffold(
       backgroundColor: mainColor, // Set background putih ke seluruh layar

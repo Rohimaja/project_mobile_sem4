@@ -24,7 +24,6 @@ class DashboardController extends GetxController {
   void onInit() {
     super.onInit();
     loadHeader();
-    fetchJadwal();
   }
 
   void loadHeader() {
@@ -34,7 +33,7 @@ class DashboardController extends GetxController {
     storedNim.value = nim;
   }
 
-  void fetchJadwal() async {
+  Future<void> fetchJadwal() async {
     log.d("fetch jadwal");
     String nim = _box.read("user_nim");
     log.d(nim);
@@ -60,6 +59,15 @@ class DashboardController extends GetxController {
       jadwalList.value = updatedList;
     } else {
       errorMessage.value = result.message;
+    }
+  }
+
+  void buttonAction(JadwalModelApi jadwal) {
+    if (jadwal.lokasi == "Online") {
+      Get.toNamed("/student/presence-content-screen",
+          arguments: [jadwal.presensiId]);
+    } else {
+      Get.toNamed("/student/offline-screen");
     }
   }
 }

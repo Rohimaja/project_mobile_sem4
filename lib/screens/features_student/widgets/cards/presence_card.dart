@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stipres/models/student/presensi_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
 
 class PresensiCard extends StatelessWidget {
   final PresensiModelApi data;
 
-  const PresensiCard({super.key, required this.data});
+  PresensiCard({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +84,8 @@ class PresensiCard extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PresenceContentScreen()),
-                );
+                Get.toNamed("/student/presence-content-screen",
+                    arguments: data.presensiId);
               },
               borderRadius: BorderRadius.circular(24),
               splashColor: Colors.purple.withOpacity(0.2),
