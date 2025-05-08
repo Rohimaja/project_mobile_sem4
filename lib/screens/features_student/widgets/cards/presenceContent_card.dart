@@ -21,11 +21,11 @@ class MatkulDetailCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDetailRow("ID Matkul", data.kodeMatkul, bold: true),
+          _buildDetailRow("ID Matkul", data.kodeMatkul!, bold: true),
           const SizedBox(height: 8),
-          _buildDetailRow("Nama Matkul", data.namaMatkul, bold: true),
+          _buildDetailRow("Nama Matkul", data.namaMatkul!, bold: true),
           const SizedBox(height: 8),
-          _buildDetailRow("Jam Matkul", data.durasiPresensi, bold: true),
+          _buildDetailRow("Jam Matkul", data.durasiPresensi!, bold: true),
         ],
       ),
     );

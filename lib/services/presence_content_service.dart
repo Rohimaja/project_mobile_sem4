@@ -14,7 +14,7 @@ class PresenceContentService extends GetxService {
   var log = Logger();
 
   Future<BaseResponse<GetPresenceApi>> getPresenceContent(
-      String mahasiswaId, String presensiId) async {
+      int mahasiswaId, dynamic presensiId) async {
     try {
       final url = Uri.parse(
           "$_baseURL?presensi_id=$presensiId&mahasiswa_id=$mahasiswaId");

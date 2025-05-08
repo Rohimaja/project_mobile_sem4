@@ -1,14 +1,14 @@
 class GetPresenceApi {
-  final String durasiPresensi;
-  final String namaMatkul;
-  final String kodeMatkul;
-  final DateTime? tglPresensi;
+   String? durasiPresensi;
+   String? namaMatkul;
+   String? kodeMatkul;
+   DateTime? tglPresensi;
 
   GetPresenceApi({
-    required this.durasiPresensi,
-    required this.namaMatkul,
-    required this.kodeMatkul,
-    required this.tglPresensi,
+    this.durasiPresensi,
+    this.namaMatkul,
+    this.kodeMatkul,
+    this.tglPresensi,
   });
 
   factory GetPresenceApi.fromJson(Map<String, dynamic> json) {

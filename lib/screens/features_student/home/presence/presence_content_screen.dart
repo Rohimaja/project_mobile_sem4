@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/presence_content_controller.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
-import 'package:stipres/screens/features_student/models/presenceContent_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/presenceContent_card.dart';
-import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/styles/constant.dart';
-
-enum StatusPresensi { hadir, ijin, sakit }
 
 class PresenceContentScreen extends StatefulWidget {
   PresenceContentScreen({super.key});
@@ -19,48 +14,8 @@ class PresenceContentScreen extends StatefulWidget {
 
 class _PresenceContentScreenState extends State<PresenceContentScreen> {
   var height, width;
-  StatusPresensi? _status;
-  TextEditingController _alasanController = TextEditingController();
 
-  final _controller = Get.put(PresenceContentController());
-
-  int _jumlahKarakter = 0;
-  final int _maksKarakter = 200;
-
-  // List<MatkulDetailModel> presenceList = [
-  //   MatkulDetailModel(
-  //     idMatkul: '123456',
-  //     namaMatkul: 'Pemrograman Mobile',
-  //     jamMatkul: '08:00 - 10:00',
-  //   ),
-  // ];
-
-  @override
-  void initState() {
-    super.initState();
-    _alasanController.addListener(_hitungKarakter);
-  }
-
-  void _hitungKarakter() {
-    final text = _alasanController.text;
-    setState(() {
-      _jumlahKarakter = text.length;
-    });
-
-    if (_jumlahKarakter > _maksKarakter) {
-      _alasanController.text = text.substring(0, _maksKarakter);
-      _alasanController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _maksKarakter),
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    _alasanController.removeListener(_hitungKarakter);
-    _alasanController.dispose();
-    super.dispose();
-  }
+  final _controller = Get.find<PresenceContentController>();
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +106,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: _controller.presenceList.isEmpty
+                    child: (_controller.presence.value.namaMatkul == null)
                         ? Center(
                             child: Column(
                               children: [
@@ -186,17 +141,17 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                               ),
                               const SizedBox(height: 5),
                               MatkulDetailCard(
-                                  data: _controller.presenceList[0]),
+                                  data: _controller.presence.value),
                               const SizedBox(height: 15),
 
                               // Status Presensi
                               RadioListTile<StatusPresensi>(
                                 title: const Text("Hadir"),
                                 value: StatusPresensi.hadir,
-                                groupValue: _status,
+                                groupValue: _controller.status.value,
                                 onChanged: (value) {
                                   setState(() {
-                                    _status = value;
+                                    _controller.status.value = value;
                                   });
                                 },
                                 activeColor: blueColor,
@@ -204,10 +159,10 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                               RadioListTile<StatusPresensi>(
                                 title: const Text("Izin"),
                                 value: StatusPresensi.ijin,
-                                groupValue: _status,
+                                groupValue: _controller.status.value,
                                 onChanged: (value) {
                                   setState(() {
-                                    _status = value;
+                                    _controller.status.value = value;
                                   });
                                 },
                                 activeColor: blueColor,
@@ -215,10 +170,10 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                               RadioListTile<StatusPresensi>(
                                 title: const Text("Sakit"),
                                 value: StatusPresensi.sakit,
-                                groupValue: _status,
+                                groupValue: _controller.status.value,
                                 onChanged: (value) {
                                   setState(() {
-                                    _status = value;
+                                    _controller.status.value = value;
                                   });
                                 },
                                 activeColor: blueColor,
@@ -226,8 +181,8 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
 
                               const SizedBox(height: 15),
 
-                              if (_status == StatusPresensi.ijin ||
-                                  _status == StatusPresensi.sakit) ...[
+                              if (_controller.status == StatusPresensi.ijin ||
+                                  _controller.status.value == StatusPresensi.sakit) ...[
                                 RichText(
                                   text: TextSpan(
                                     text: "Alasan ",
@@ -262,7 +217,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                     ],
                                   ),
                                   child: TextField(
-                                    controller: _alasanController,
+                                    controller: _controller.alasanController,
                                     maxLines: 4,
                                     decoration: InputDecoration(
                                       hintText: "*Alasan ketidakhadiran",
@@ -276,16 +231,19 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                Text(
-                                  "Maks. $_jumlahKarakter/$_maksKarakter huruf",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: _jumlahKarakter > _maksKarakter
-                                        ? Colors.red
-                                        : Colors.grey[600],
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    "Maks. ${_controller.jumlahKarakter}/${_controller.maksKarakter} huruf",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: _controller.jumlahKarakter >
+                                              _controller.maksKarakter
+                                          ? Colors.red
+                                          : Colors.grey[600],
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  );
+                                }),
                                 const SizedBox(height: 10),
                                 Row(
                                   children: [
@@ -341,28 +299,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    if (_status == null) {
-                                      _showErrorDialog(context,
-                                          "Silakan pilih status presensi terlebih dahulu.");
-                                      return;
-                                    }
-
-                                    if ((_status == StatusPresensi.ijin ||
-                                            _status == StatusPresensi.sakit) &&
-                                        _alasanController.text.trim().isEmpty) {
-                                      _showErrorDialog(context,
-                                          "Silakan isi alasan ketidakhadiran.");
-                                      return;
-                                    }
-
-                                    showLoadingDialog(context);
-                                    await Future.delayed(
-                                        const Duration(seconds: 4));
-                                    Get.back();
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (_) => PresenceScreen()),
-                                    );
+                                    _controller.submitPresence();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: blueColor,
@@ -394,29 +331,4 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
           );
         }));
   }
-}
-
-void showLoadingDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    barrierColor: Colors.black.withOpacity(0.3),
-    builder: (BuildContext context) => const LoadingPopup(),
-  );
-}
-
-void _showErrorDialog(BuildContext context, String message) {
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text("Validasi"),
-      content: Text(message),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text("OK"),
-        ),
-      ],
-    ),
-  );
 }

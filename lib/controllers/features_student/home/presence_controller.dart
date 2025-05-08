@@ -35,6 +35,8 @@ class PresenceController extends GetxController {
             presence.namaRuangan = presence.namaRuangan;
           }
 
+          log.d(presence.presensiId);
+
           return presence;
         }).toList();
         presenceList.assignAll(updatedList);

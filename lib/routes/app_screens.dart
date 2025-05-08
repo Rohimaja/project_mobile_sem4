@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart';
 import 'package:stipres/bindings/features_student/dashboard_binding.dart';
+import 'package:stipres/bindings/features_student/presence_content_binding.dart';
 import 'package:stipres/bindings/features_student/profile_binding.dart';
 import 'package:stipres/screens/auth/activation_account_screen_1.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
@@ -29,6 +30,7 @@ import 'package:stipres/screens/features_student/home/lecture/lecture_content_sc
 import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
 import 'package:stipres/screens/features_student/home/notification_screen.dart';
 import 'package:stipres/screens/features_student/home/offline_screen.dart';
+import 'package:stipres/screens/features_student/home/presence/fallback_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
 
@@ -51,6 +53,7 @@ class AppScreens {
     GetPage(name: "/student/attendance-screen", page: () => AttendanceScreen()),
     GetPage(name: "/student/presence-screen", page: () => PresenceScreen()),
     GetPage(name: "/student/offline-screen", page: () => OfflineScreen()),
+    GetPage(name: "/student/fallback-screen", page: () => FallbackScreen()),
     GetPage(name: "/student/calendar-screen", page: () => CalendarScreen()),
     GetPage(name: "/student/lecture-screen", page: () => LectureScreen()),
     GetPage(
@@ -70,7 +73,8 @@ class AppScreens {
         name: "/student/notification-screen", page: () => NotificationScreen()),
     GetPage(
         name: "/student/presence-content-screen",
-        page: () => PresenceContentScreen()),
+        page: () => PresenceContentScreen(),
+        binding: PresenceContentBinding()),
     GetPage(
         name: "/student/lecture-content-screen",
         page: () => LectureContentScreen())
