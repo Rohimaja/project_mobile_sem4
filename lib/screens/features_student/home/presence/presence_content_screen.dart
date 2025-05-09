@@ -106,7 +106,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: (_controller.presence.value.namaMatkul == null)
+                    child: (_controller.statusData.value == false)
                         ? Center(
                             child: Column(
                               children: [
@@ -182,7 +182,8 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                               const SizedBox(height: 15),
 
                               if (_controller.status == StatusPresensi.ijin ||
-                                  _controller.status.value == StatusPresensi.sakit) ...[
+                                  _controller.status.value ==
+                                      StatusPresensi.sakit) ...[
                                 RichText(
                                   text: TextSpan(
                                     text: "Alasan ",

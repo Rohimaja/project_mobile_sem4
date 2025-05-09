@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/student/get_presence_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
@@ -18,19 +19,25 @@ class PresenceContentController extends GetxController {
   var jumlahKarakter = 0.obs;
   final int maksKarakter = 200;
 
+  final statusAbsen = 0.obs;
+
   var status = Rxn<StatusPresensi>();
   var presence = GetPresenceApi().obs;
   final PresenceContentService presenceContentService =
       PresenceContentService();
 
   var presensiId = ''.obs;
+  var presensisId = 0.obs;
   var errorMessage = ''.obs;
+
+  var statusData = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     alasanController.addListener(hitungKarakter);
-    presensiId.value = Get.arguments;
+    presensiId.value = Get.arguments[0];
+    presensisId.value = Get.arguments[1] as int;
     log.d(presensiId);
   }
 
@@ -74,13 +81,51 @@ class PresenceContentController extends GetxController {
     return true;
   }
 
-  Future<void> submitPresence() async {
+  void submitPresence() async {
     if (!validate()) return;
 
     showLoading();
-    await Future.delayed(const Duration(seconds: 4));
-    Get.back();
-    Get.back();
+    await checkPresence();
+  }
+
+  Future<void> checkPresence() async {
+    try {
+      var mahasiswaId = _box.read("mahasiswa_id");
+
+      if (status.value == StatusPresensi.hadir) {
+        statusAbsen.value = 1;
+      } else if (status.value == StatusPresensi.ijin) {
+        statusAbsen.value = 2;
+      } else if (status.value == StatusPresensi.sakit) {
+        statusAbsen.value = 3;
+      } else {
+        statusAbsen.value = 0;
+      }
+      var waktuPresensi = await checkTime();
+
+      waktuPresensi = formatWaktuPresensi(waktuPresensi);
+      log.d("${statusAbsen.value}");
+      log.d("${mahasiswaId}");
+      log.d("${waktuPresensi}");
+      log.d("${alasanController.text}");
+
+      final alasan =
+          alasanController.text.isEmpty ? null : alasanController.text;
+
+      final result = await presenceContentService.checkPresence(
+          mahasiswaId, presensisId, statusAbsen.value, waktuPresensi, alasan);
+
+      if (result.status == "success") {
+        Get.back();
+        Get.snackbar("Berhasil", "${result.message}",
+            duration: Duration(seconds: 1));
+        Get.toNamed("/student/base-screen");
+      } else {
+        showError("$result.message");
+      }
+    } catch (e) {
+      log.d("Error: $e");
+    }
   }
 
   Future<void> checkAttendanceTime() async {
@@ -106,9 +151,12 @@ class PresenceContentController extends GetxController {
             await checkPresenceTime(data.tglPresensi!, data.durasiPresensi!);
         log.d("hasil schedule: $isOnSchedule");
         if (!isOnSchedule) {
-          Get.offNamed("/student/fallback-screen", arguments: "inComing");
+          // Get.offNamed("/student/fallback-screen", arguments: "inComing");
           log.d("tgl: ${data.tglPresensi}");
           log.d("durasi: ${data.durasiPresensi}");
+          statusData.value = false;
+        } else {
+          statusData.value = true;
         }
       } else {
         errorMessage.value = result.message;
@@ -175,6 +223,10 @@ class PresenceContentController extends GetxController {
     var jakarta = tz.getLocation("Asia/Jakarta");
     var timeNow = tz.TZDateTime.now(jakarta);
     return timeNow;
+  }
+
+  String formatWaktuPresensi(DateTime waktu) {
+    return DateFormat('yyyy-MM-dd HH:mm:ss').format(waktu);
   }
 
   void showLoading() {

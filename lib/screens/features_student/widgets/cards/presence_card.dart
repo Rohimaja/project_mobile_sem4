@@ -85,7 +85,7 @@ class PresensiCard extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Get.toNamed("/student/presence-content-screen",
-                    arguments: data.presensiId);
+                    arguments: [data.presensiId, data.presensisId]);
               },
               borderRadius: BorderRadius.circular(24),
               splashColor: Colors.purple.withOpacity(0.2),

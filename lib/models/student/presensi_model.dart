@@ -1,4 +1,5 @@
 class PresensiModelApi {
+  int presensisId;
   String nim;
   int semester;
   String presensiId;
@@ -10,6 +11,7 @@ class PresensiModelApi {
 
   PresensiModelApi(
       {required this.nim,
+      required this.presensisId,
       required this.semester,
       required this.presensiId,
       required this.durasiPresensi,
@@ -21,6 +23,7 @@ class PresensiModelApi {
   factory PresensiModelApi.fromJson(Map<String, dynamic> json) {
     return PresensiModelApi(
         nim: json['nim'],
+        presensisId: json['presensis_id'],
         semester: json['semester'],
         presensiId: json['presensi_id'],
         durasiPresensi: json['durasi_presensi'],
