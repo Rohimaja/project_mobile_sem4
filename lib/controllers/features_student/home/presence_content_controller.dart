@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -29,6 +31,8 @@ class PresenceContentController extends GetxController {
   var presensiId = ''.obs;
   var presensisId = 0.obs;
   var errorMessage = ''.obs;
+
+  final bukti = Rxn<File>();
 
   var statusData = false.obs;
 
@@ -78,6 +82,13 @@ class PresenceContentController extends GetxController {
       showError("Silakan isi alasan ketidakhadiran.");
       return false;
     }
+    if ((status.value == StatusPresensi.ijin ||
+            status.value == StatusPresensi.sakit) &&
+        bukti() == null) {
+      showError("Silakan upload bukti ketidakhadiran.");
+      return false;
+    }
+
     return true;
   }
 
@@ -105,9 +116,9 @@ class PresenceContentController extends GetxController {
 
       waktuPresensi = formatWaktuPresensi(waktuPresensi);
       log.d("${statusAbsen.value}");
-      log.d("${mahasiswaId}");
-      log.d("${waktuPresensi}");
-      log.d("${alasanController.text}");
+      log.d("$mahasiswaId");
+      log.d("$waktuPresensi");
+      log.d(alasanController.text);
 
       final alasan =
           alasanController.text.isEmpty ? null : alasanController.text;
@@ -117,7 +128,7 @@ class PresenceContentController extends GetxController {
 
       if (result.status == "success") {
         Get.back();
-        Get.snackbar("Berhasil", "${result.message}",
+        Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));
         Get.toNamed("/student/base-screen");
       } else {

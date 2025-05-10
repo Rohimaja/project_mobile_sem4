@@ -187,7 +187,8 @@ class JadwalCard extends StatelessWidget {
                               onTap: () {
                                 (jadwal.lokasi == "Online")
                                     ? Get.toNamed(
-                                        "/student/lecture-content-screen")
+                                        "/student/lecture-content-screen",
+                                        )
                                     : Get.toNamed("/student/offline-screen");
                               },
                             ),

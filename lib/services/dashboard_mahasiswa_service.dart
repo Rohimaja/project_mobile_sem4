@@ -22,6 +22,7 @@ class DashboardMahasiswaService extends GetxService {
       final body = jsonDecode(response.body);
       log.d(body);
 
+
       return BaseResponse.fromJson(
         body,
         (dataJson) => (dataJson as List)
