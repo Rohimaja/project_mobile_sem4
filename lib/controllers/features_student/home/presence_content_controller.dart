@@ -128,9 +128,9 @@ class PresenceContentController extends GetxController {
 
       if (result.status == "success") {
         Get.back();
+        Get.back();
         Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));
-        Get.toNamed("/student/base-screen");
       } else {
         showError("$result.message");
       }
@@ -143,10 +143,10 @@ class PresenceContentController extends GetxController {
     try {
       int mahasiswaId = _box.read('mahasiswa_id');
       log.d(mahasiswaId);
-      log.d(presensiId);
+      log.d(presensisId);
 
       final result = await presenceContentService.getPresenceContent(
-          mahasiswaId, presensiId.value);
+          mahasiswaId, presensisId.value);
 
       if (result.status == "success" && result.data != null) {
         final data = result.data!;

@@ -18,17 +18,6 @@ class _LectureContentScreenState extends State<LectureContentScreen>
 
   final LectureController _controller = Get.put(LectureController());
 
-  // final List<PerkuliahanModel> perkuliahanOnline = [
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Pemrograman Mobile',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  // ];
-
   late AnimationController _animationController;
   late Animation<double> _animation;
 

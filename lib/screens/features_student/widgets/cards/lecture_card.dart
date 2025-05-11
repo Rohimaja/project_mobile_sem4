@@ -124,76 +124,76 @@ class PerkuliahanCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_clock.png",
-                    text: data.durasiPresensi,
+                    text: "${data.durasiPresensi} WIB",
                   ),
                   const SizedBox(height: 8),
 
                   // Zoom Link
-                  
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/icons/ic_link.png", width: 20),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: TextField(
-                            controller:
-                                TextEditingController(text: data.linkZoom),
-                            readOnly: true,
-                            style: GoogleFonts.plusJakartaSans(
-                                color: Colors.blue,
-                                fontSize: 14,
-                                decoration: TextDecoration.underline),
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                                horizontal: 8,
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset("assets/icons/ic_link.png", width: 20),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: TextField(
+                          controller:
+                              TextEditingController(text: data.linkZoom),
+                          readOnly: true,
+                          style: GoogleFonts.plusJakartaSans(
+                              color: Colors.blue,
+                              fontSize: 14,
+                              decoration: TextDecoration.underline),
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 8,
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        // Ripple animation button
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(6),
-                            onTap: () {
-                              Clipboard.setData(
-                                ClipboardData(text: data.linkZoom),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Link Zoom berhasil disalin!"),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 4),
-                              child: Row(
-                                children: [
-                                  Image.asset("assets/icons/ic_copy.png",
-                                      width: 20),
-                                  const SizedBox(width: 4),
-                                  const Text("Salin",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.normal)),
-                                ],
+                      ),
+                      const SizedBox(width: 6),
+                      // Ripple animation button
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(6),
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(text: data.linkZoom),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Link Zoom berhasil disalin!"),
                               ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 4),
+                            child: Row(
+                              children: [
+                                Image.asset("assets/icons/ic_copy.png",
+                                    width: 20),
+                                const SizedBox(width: 4),
+                                const Text("Salin",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.normal)),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    )
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

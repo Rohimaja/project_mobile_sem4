@@ -17,6 +17,11 @@ class PresenceController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
     fetchPresence();
   }
 
