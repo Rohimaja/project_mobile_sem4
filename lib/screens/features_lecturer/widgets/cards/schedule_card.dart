@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/home/lecture/lecture_content_screen.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
-import 'package:stipres/screens/features_student/models/schedule_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
+import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
+import 'package:stipres/screens/features_lecturer/models/schedule_model.dart';
+import 'package:stipres/screens/features_lecturer/widgets/cards/course_detail_card.dart';
 import 'package:stipres/styles/constant.dart';
 
-class JadwalCard extends StatelessWidget {
-  final JadwalModel jadwal;
+class ScheduleCardLecturer extends StatelessWidget {
+  final ScheduleModel jadwal;
 
-  const JadwalCard({Key? key, required this.jadwal}) : super(key: key);
+  const ScheduleCardLecturer({Key? key, required this.jadwal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +208,7 @@ class JadwalCard extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => PresenceContentScreen()),
+                                      builder: (_) => PresenceDetailScreen()),
                                 );
                               },
                             ),

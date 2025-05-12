@@ -57,7 +57,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
           child: Column(
             children: [
               CustomHeader(title: "Kalender Akademik"),
+              
               SizedBox(height: 10),
+
               TableCalendar(
                 focusedDay: _focusedDay,
                 firstDay: DateTime(2020),

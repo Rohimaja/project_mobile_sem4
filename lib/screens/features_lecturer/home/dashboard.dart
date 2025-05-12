@@ -1,53 +1,57 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/home/all_schedule_screen.dart';
-import 'package:stipres/screens/features_student/home/calendar_screen.dart';
-import 'package:stipres/screens/features_student/home/attendance_screen.dart';
-import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
-import 'package:stipres/screens/features_student/home/notification_screen.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
-import 'package:stipres/screens/features_student/models/account_data_model.dart';
-import 'package:stipres/screens/features_student/models/schedule_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
-import 'package:stipres/screens/features_student/widgets/cards/weeklyCalendar_card.dart';
-import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
-import 'package:stipres/screens/features_student/widgets/link/calendar_link.dart';
+import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/attendance/attendance_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/notification_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/presence/presence_screen.dart';
+import 'package:stipres/screens/features_lecturer/models/account_data_model.dart';
+import 'package:stipres/screens/features_lecturer/models/schedule_model.dart';
+import 'package:stipres/screens/features_lecturer/widgets/cards/schedule_card.dart';
+import 'package:stipres/screens/features_lecturer/widgets/cards/weeklyCalendar_card.dart';
+import 'package:stipres/screens/features_lecturer/widgets/link/allSchedule_link.dart';
+import 'package:stipres/screens/features_lecturer/widgets/link/calendar_link.dart';
 import 'package:stipres/styles/constant.dart';
 
-class DashboardScreenTeacher extends StatelessWidget {
-  DashboardScreenTeacher({super.key});
+class DashboardScreenLecturer extends StatelessWidget {
+  DashboardScreenLecturer({super.key});
   var height, width;
 
   final Akun dataAkun = Akun(
     namaLengkap: "Nurhadi Aldo",
-    nim: "19860926 201505 1 001",
+    nip: "19930206 201805 1 035",
   );
 
-  final List<JadwalModel> jadwalHariIni = [
-    JadwalModel(
+  final List<ScheduleModel> jadwalHariIni = [
+    ScheduleModel(
       waktu: '07.00 - 10.00 WIB',
       mataKuliah: 'Pemrograman Dasar',
-      lokasi: 'Gedung JTI Ruang 3.3',
+      lokasi: 'Zoom Meeting',
       durasi: '2 Jam',
+      keterangan: 'daring',
     ),
-    JadwalModel(
+    ScheduleModel(
       waktu: '10.15 - 12.00 WIB',
       mataKuliah: 'Struktur Data',
       lokasi: 'Gedung JTI Ruang 2.2',
       durasi: '1.5 Jam',
+      keterangan: 'luring',
     ),
-    JadwalModel(
+    ScheduleModel(
       waktu: '13.00 - 15.00 WIB',
       mataKuliah: 'Basis Data',
-      lokasi: 'Gedung JTI Ruang 1.1',
+      lokasi: 'Google Meet',
       durasi: '2 Jam',
+      keterangan: 'daring',
     ),
-    JadwalModel(
+    ScheduleModel(
       waktu: '07.00 - 10.00 WIB',
       mataKuliah: 'Kewirausahaan',
-      lokasi: 'Gedung JTI Ruang 3.3',
+      lokasi: 'Zoom Meeting',
       durasi: '2 Jam',
+      keterangan: 'daring',
     ),
   ];
 
@@ -176,7 +180,7 @@ class DashboardScreenTeacher extends StatelessWidget {
                           ),
                           child: ClipOval(
                             child: Image.asset(
-                              "images/foto_aldo.jpg",
+                              "assets/images/foto_aldo.jpg",
                               height: 70,
                               width: 70,
                               fit: BoxFit.cover,
@@ -197,7 +201,7 @@ class DashboardScreenTeacher extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              dataAkun.nim,
+                              dataAkun.nip,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14,
                                 color: blueColor,
@@ -274,136 +278,90 @@ class DashboardScreenTeacher extends StatelessWidget {
                           child: Row(
                             children: [
                               // === Card dengan Navigasi + Ripple ===
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AttendanceScreen()),
-                                      );
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Kehadiran',
-                                      items: 4,
-                                      imagePath: 'icons/ic_kehadiran.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 187, 235, 251),
-                                    ),
-                                  ),
-                                ),
+                              CategoryCard(
+                                title: 'Kehadiran',
+                                items: 4,
+                                imagePath: 'assets/icons/ic_kehadiran.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 187, 235, 251),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AttendanceScreen()),
+                                  );
+                                },
                               ),
 
                               const SizedBox(width: 12),
 
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PresenceScreen()),
-                                      );
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Presensi',
-                                      items: 4,
-                                      imagePath: 'icons/rekap_kehadiran.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 187, 251, 193),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 12),
-
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AllScheduleScreen()),
-                                      );
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Jadwal Perkuliahan',
-                                      items: 4,
-                                      imagePath:
-                                          'icons/ic_jadwal_perkuliahan.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 251, 232, 187),
-                                    ),
-                                  ),
-                                ),
+                              CategoryCard(
+                                title: 'Presensi',
+                                items: 4,
+                                imagePath: 'assets/icons/rekap_kehadiran.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 187, 251, 193),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PresenceScreen()),
+                                  );
+                                },
                               ),
 
                               SizedBox(width: 12),
 
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CalendarScreen()),
-                                      );
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Kalender Akademik',
-                                      items: 4,
-                                      imagePath: 'icons/kalender_akademik.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 251, 187, 187),
-                                    ),
-                                  ),
-                                ),
+                              CategoryCard(
+                                title: 'Jadwal Mengajar',
+                                items: 4,
+                                imagePath:
+                                    'assets/icons/ic_jadwal_perkuliahan.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 251, 232, 187),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AllScheduleScreen()),
+                                  );
+                                },
                               ),
+
+                              SizedBox(width: 12),
+
+                              CategoryCard(
+                                title: 'Kalender Akademik',
+                                items: 4,
+                                imagePath: 'assets/icons/kalender_akademik.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 251, 187, 187),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CalendarScreen()),
+                                  );
+                                },
+                              ),
+
                               const SizedBox(width: 12),
 
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LectureScreen()),
-                                      );
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Perkuliahan Online',
-                                      items: 4,
-                                      imagePath: 'icons/zoom.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 187, 191, 251),
-                                    ),
-                                  ),
-                                ),
+                              CategoryCard(
+                                title: 'Perkuliahan Online',
+                                items: 4,
+                                imagePath: 'assets/icons/zoom.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 187, 191, 251),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LectureScreen()),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -496,7 +454,7 @@ class DashboardScreenTeacher extends StatelessWidget {
                               children: [
                                 SizedBox(height: 20),
                                 Image.asset(
-                                  'icons/ic_noData.png',
+                                  'assets/icons/ic_noData.png',
                                   height: 120,
                                 ),
                                 SizedBox(height: 15),
@@ -514,7 +472,8 @@ class DashboardScreenTeacher extends StatelessWidget {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
-                                return JadwalCard(jadwal: jadwalHariIni[index]);
+                                return ScheduleCardLecturer(
+                                    jadwal: jadwalHariIni[index]);
                               },
                             ),
                     ),
@@ -534,6 +493,7 @@ class CategoryCard extends StatelessWidget {
   final int items;
   final String imagePath;
   final Color bgColor;
+  final VoidCallback onTap;
 
   const CategoryCard({
     Key? key,
@@ -541,51 +501,62 @@ class CategoryCard extends StatelessWidget {
     required this.items,
     required this.imagePath,
     required this.bgColor,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: bgColor,
+    return Material(
+      color: bgColor,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Color(0xFFC8C8C8),
-          width: 0.5,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Center(
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.contain,
+        splashColor: const Color.fromARGB(255, 120, 120, 120).withOpacity(0.2),
+        highlightColor: Colors.blue.withOpacity(0.1),
+        onTap: onTap, // Gunakan onTap dari parameter
+        child: Container(
+          width: 160,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: const Color(0xFFC8C8C8),
+              width: 0.5,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    imagePath,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 12),
+              AutoSizeText(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+                maxLines: 1,
+                minFontSize: 10,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                "$items items",
+                style: GoogleFonts.plusJakartaSans(
+                  color: const Color.fromARGB(255, 98, 98, 98),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 12),
-          AutoSizeText(
-            title,
-            style: GoogleFonts.plusJakartaSans(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-            maxLines: 1,
-            minFontSize: 10,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            "$items items",
-            style: GoogleFonts.plusJakartaSans(
-                color: const Color.fromARGB(255, 98, 98, 98),
-                fontSize: 13,
-                fontWeight: FontWeight.w500),
-          ),
-        ],
+        ),
       ),
     );
   }

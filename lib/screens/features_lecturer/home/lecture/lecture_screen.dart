@@ -1,43 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/models/presence/presence_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/presence/presence_card.dart';
+import 'package:stipres/screens/features_lecturer/models/lecture_model.dart';
+import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
 import 'package:stipres/styles/constant.dart';
 
-class PresenceScreen extends StatefulWidget {
-  const PresenceScreen({super.key});
+class LectureScreen extends StatefulWidget {
+  const LectureScreen({super.key});
 
   @override
-  State<PresenceScreen> createState() => _PresenceScreenState();
+  State<LectureScreen> createState() => _LectureScreenState();
 }
 
-class _PresenceScreenState extends State<PresenceScreen>
+class _LectureScreenState extends State<LectureScreen>
     with TickerProviderStateMixin {
   late double height, width;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
 
-  final List<PresensiModel> presensiHariIni = [
-    PresensiModel(
+  final List<PerkuliahanModel> perkuliahanHariIni = [
+    PerkuliahanModel(
       semester: 3,
+      matkul: 'Pemrograman Mobile',
+      tanggal: 'Senin, 11 Maret 2025',
+      dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
       jam: '08:00 - 10:00',
-      matkul: 'Pemrograman Dasar',
-      lokasi: 'Ruang 101',
-      durasi: '2 Jam',
+      linkZoom: 'https://zoom.us/j/123456789',
     ),
-    PresensiModel(
+    PerkuliahanModel(
       semester: 3,
-      jam: '10:00 - 12:00',
-      matkul: 'Struktur Data',
-      lokasi: 'Ruang 102',
-      durasi: '2 Jam',
+      matkul: 'Pemrograman Website',
+      tanggal: 'Senin, 11 Maret 2025',
+      dosen: 'Izzul Islam Ramadhan S.Kom,M.Kom',
+      jam: '08:00 - 10:00',
+      linkZoom: 'https://zoom.us/j/123456789',
     ),
-    PresensiModel(
+    PerkuliahanModel(
       semester: 3,
-      jam: '13:00 - 15:00',
-      matkul: 'Algoritma',
-      lokasi: 'Ruang 103',
-      durasi: '2 Jam',
+      matkul: 'Logika Algoritma',
+      tanggal: 'Senin, 11 Maret 2025',
+      dosen: 'Bima Achmad Fiil A. S.Kom,M.Kom',
+      jam: '08:00 - 10:00',
+      linkZoom: 'https://zoom.us/j/123456789',
+    ),
+    PerkuliahanModel(
+      semester: 3,
+      matkul: 'Machine Learning',
+      tanggal: 'Senin, 11 Maret 2025',
+      dosen: 'Edwin Kurniawan S.Kom,M.Kom',
+      jam: '08:00 - 10:00',
+      linkZoom: 'https://zoom.us/j/123456789',
     ),
   ];
 
@@ -74,9 +85,9 @@ class _PresenceScreenState extends State<PresenceScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
-    final filteredPresensi = presensiHariIni.where((presensi) {
+    final filteredPerkuliahan = perkuliahanHariIni.where((perkuliahan) {
       final query = _searchController.text.toLowerCase();
-      return presensi.matkul.toLowerCase().contains(query);
+      return perkuliahan.matkul.toLowerCase().contains(query);
     }).toList();
 
     return Scaffold(
@@ -98,7 +109,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                         bottomLeft: Radius.circular(30),
                       ),
                       image: const DecorationImage(
-                        image: AssetImage('images/bgheader.png'),
+                        image: AssetImage('assets/images/bgheader.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -145,13 +156,12 @@ class _PresenceScreenState extends State<PresenceScreen>
                                           ),
                                           child: TextField(
                                             controller: _searchController,
-                                            style: GoogleFonts.plusJakartaSans(
+                                            style: const TextStyle(
                                                 color: Colors.black),
                                             decoration: InputDecoration(
                                               hintText: 'Cari mata kuliah...',
-                                              hintStyle:
-                                                  GoogleFonts.plusJakartaSans(
-                                                      color: Colors.grey[600]),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[600]),
                                               border: InputBorder.none,
                                             ),
                                             autofocus: true,
@@ -163,8 +173,8 @@ class _PresenceScreenState extends State<PresenceScreen>
                                 : Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Presensi Mata Kuliah",
-                                      style: GoogleFonts.plusJakartaSans(
+                                      "Perkuliahan Online",
+                                      style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.white,
@@ -246,11 +256,12 @@ class _PresenceScreenState extends State<PresenceScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                    const SizedBox(height: 5),
+                    Container(
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        'Presensi Hari Ini',
-                        style: GoogleFonts.plusJakartaSans(
+                        'Perkuliahan Minggu Ini',
+                        style: TextStyle(
                           fontSize: 16,
                           color: blueColor,
                           fontWeight: FontWeight.w400,
@@ -258,7 +269,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                       ),
                     ),
                     const SizedBox(height: 10),
-                    filteredPresensi.isEmpty
+                    filteredPerkuliahan.isEmpty
                         ? Container(
                             width: double
                                 .infinity, // Biar bisa center dalam parent
@@ -266,35 +277,34 @@ class _PresenceScreenState extends State<PresenceScreen>
                             alignment: Alignment.center,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset(
                                   'assets/icons/ic_noData.png',
-                                  height: 200,
+                                  height: 120,
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
                                   _searchController.text.isEmpty
-                                      ? "Tidak ada data presensi"
-                                      : "Data mata kuliah tidak ditemukan",
-                                  style: GoogleFonts.plusJakartaSans(
-                                      color: greyColor,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 16),
+                                      ? "Tidak ada perkuliahan minggu ini."
+                                      : "Tidak ada mata kuliah ditemukan.",
+                                  style: TextStyle(
+                                    color: greyColor,
+                                    fontStyle: FontStyle.italic,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               ],
                             ),
                           )
                         : ListView.builder(
-                            itemCount: filteredPresensi.length,
+                            itemCount: filteredPerkuliahan.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: PresensiCard(
-                                  data: filteredPresensi[index],
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: PerkuliahanCard(
+                                  data: filteredPerkuliahan[index],
                                 ),
                               );
                             },

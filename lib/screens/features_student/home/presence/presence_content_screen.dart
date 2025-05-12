@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
-import 'package:stipres/screens/features_student/models/presenceContent_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/presenceContent_card.dart';
+import 'package:stipres/screens/features_student/models/presence/presenceContent_model.dart';
+import 'package:stipres/screens/features_student/widgets/cards/presence/presenceContent_card.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/styles/constant.dart';
 

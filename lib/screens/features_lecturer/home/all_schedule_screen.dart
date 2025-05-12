@@ -1,48 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/models/presence/presence_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/presence/presence_card.dart';
+import 'package:stipres/screens/features_lecturer/models/allSchedule_model.dart';
+import 'package:stipres/screens/features_lecturer/widgets/cards/allSchedule_card.dart';
 import 'package:stipres/styles/constant.dart';
 
-class PresenceScreen extends StatefulWidget {
-  const PresenceScreen({super.key});
+class AllScheduleScreen extends StatefulWidget {
+  const AllScheduleScreen({super.key});
 
   @override
-  State<PresenceScreen> createState() => _PresenceScreenState();
+  State<AllScheduleScreen> createState() => _AllScheduleScreenState();
 }
 
-class _PresenceScreenState extends State<PresenceScreen>
-    with TickerProviderStateMixin {
+class _AllScheduleScreenState extends State<AllScheduleScreen>
+    with SingleTickerProviderStateMixin {
   late double height, width;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
 
-  final List<PresensiModel> presensiHariIni = [
-    PresensiModel(
-      semester: 3,
-      jam: '08:00 - 10:00',
-      matkul: 'Pemrograman Dasar',
+  final List<AllScheduleModel> JadwalSemester = [
+    AllScheduleModel(
+      day: 'Senin',
+      waktu: '08:00 - 10:00',
+      kodeMatkul: 'TIF123',
+      mataKuliah: 'Matematika Dasar',
+      semester: 'Semester 1',
       lokasi: 'Ruang 101',
       durasi: '2 Jam',
     ),
-    PresensiModel(
-      semester: 3,
-      jam: '10:00 - 12:00',
-      matkul: 'Struktur Data',
-      lokasi: 'Ruang 102',
+    AllScheduleModel(
+      day: 'Senin',
+      waktu: '08:00 - 10:00',
+      kodeMatkul: 'TIF124',
+      mataKuliah: 'Logika Algoritma',
+      semester: 'Semester 1',
+      lokasi: 'Ruang 101',
       durasi: '2 Jam',
     ),
-    PresensiModel(
-      semester: 3,
-      jam: '13:00 - 15:00',
-      matkul: 'Algoritma',
-      lokasi: 'Ruang 103',
+    AllScheduleModel(
+      day: 'Selasa',
+      waktu: '08:00 - 10:00',
+      kodeMatkul: 'TIF125',
+      mataKuliah: 'Pemrograman Dasar',
+      semester: 'Semester 1',
+      lokasi: 'Ruang 101',
+      durasi: '2 Jam',
+    ),
+    AllScheduleModel(
+      day: 'Rabu',
+      waktu: '08:00 - 10:00',
+      kodeMatkul: 'TIF126',
+      mataKuliah: 'Basis Data',
+      semester: 'Semester 3',
+      lokasi: 'Ruang 101',
+      durasi: '2 Jam',
+    ),
+    AllScheduleModel(
+      day: 'Jumat',
+      waktu: '08:00 - 10:00',
+      kodeMatkul: 'TIF127',
+      mataKuliah: 'Kewirausahaan',
+      semester: 'Semester 5',
+      lokasi: 'Ruang 101',
+      durasi: '2 Jam',
+    ),
+    AllScheduleModel(
+      day: 'Jumat',
+      waktu: '08:00 - 10:00',
+      kodeMatkul: 'TIF128',
+      mataKuliah: 'Agama',
+      semester: 'Semester 1',
+      lokasi: 'Ruang 101',
       durasi: '2 Jam',
     ),
   ];
-
-  late AnimationController _animationController;
-  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -74,9 +106,34 @@ class _PresenceScreenState extends State<PresenceScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
-    final filteredPresensi = presensiHariIni.where((presensi) {
+    final filteredSchedule = JadwalSemester.where((jadwal) {
       final query = _searchController.text.toLowerCase();
-      return presensi.matkul.toLowerCase().contains(query);
+      return jadwal.mataKuliah.toLowerCase().contains(query);
+    }).toList();
+
+    Map<String, List<AllScheduleModel>> jadwalPerHari = {};
+    for (var jadwal in filteredSchedule) {
+      jadwalPerHari.putIfAbsent(jadwal.day, () => []).add(jadwal);
+    }
+
+    final List<String> daysOfWeek = [
+      'Senin',
+      'Selasa',
+      'Rabu',
+      'Kamis',
+      'Jumat',
+      'Sabtu',
+      'Minggu',
+    ];
+
+    final query = _searchController.text.toLowerCase();
+
+    final filteredDays = daysOfWeek.where((day) {
+      final jadwals = jadwalPerHari[day] ?? [];
+      if (query.isEmpty)
+        return true; // Kalau tidak mencari, tampilkan semua hari
+      return jadwals
+          .any((jadwal) => jadwal.mataKuliah.toLowerCase().contains(query));
     }).toList();
 
     return Scaffold(
@@ -85,10 +142,10 @@ class _PresenceScreenState extends State<PresenceScreen>
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // HEADER + Search Bar
               Stack(
                 clipBehavior: Clip.none,
                 children: [
+                  // HEADER
                   Container(
                     width: width,
                     height: 80,
@@ -98,7 +155,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                         bottomLeft: Radius.circular(30),
                       ),
                       image: const DecorationImage(
-                        image: AssetImage('images/bgheader.png'),
+                        image: AssetImage('assets/images/bgheader.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -109,7 +166,9 @@ class _PresenceScreenState extends State<PresenceScreen>
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: () => Navigator.pop(context),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
                             borderRadius: BorderRadius.circular(100),
                             customBorder: const CircleBorder(),
                             child: Padding(
@@ -123,7 +182,6 @@ class _PresenceScreenState extends State<PresenceScreen>
                           ),
                         ),
                         const SizedBox(width: 10),
-                        // Animated Search Bar dengan fade
                         Expanded(
                           child: AnimatedSwitcher(
                             duration: const Duration(milliseconds: 300),
@@ -145,13 +203,12 @@ class _PresenceScreenState extends State<PresenceScreen>
                                           ),
                                           child: TextField(
                                             controller: _searchController,
-                                            style: GoogleFonts.plusJakartaSans(
+                                            style: const TextStyle(
                                                 color: Colors.black),
                                             decoration: InputDecoration(
                                               hintText: 'Cari mata kuliah...',
-                                              hintStyle:
-                                                  GoogleFonts.plusJakartaSans(
-                                                      color: Colors.grey[600]),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[600]),
                                               border: InputBorder.none,
                                             ),
                                             autofocus: true,
@@ -163,8 +220,8 @@ class _PresenceScreenState extends State<PresenceScreen>
                                 : Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Presensi Mata Kuliah",
-                                      style: GoogleFonts.plusJakartaSans(
+                                      "Jadwal Perkuliahan Semester Ini",
+                                      style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.white,
@@ -175,8 +232,6 @@ class _PresenceScreenState extends State<PresenceScreen>
                                   ),
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        // Tombol pencarian tetap di posisi yang sama
                         Material(
                           color: Colors.transparent,
                           shape: const CircleBorder(),
@@ -214,6 +269,8 @@ class _PresenceScreenState extends State<PresenceScreen>
                       ],
                     ),
                   ),
+
+                  // Corner Bottom-Right U Shape
                   Positioned(
                     bottom: -44,
                     right: 0,
@@ -240,68 +297,95 @@ class _PresenceScreenState extends State<PresenceScreen>
                 ],
               ),
 
-              // Body Content
+              // Body
               Container(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text(
-                        'Presensi Hari Ini',
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 16,
-                          color: blueColor,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    filteredPresensi.isEmpty
-                        ? Container(
-                            width: double
-                                .infinity, // Biar bisa center dalam parent
+                    filteredSchedule.isEmpty
+                        ? Padding(
                             padding: const EdgeInsets.only(top: 30),
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/icons/ic_noData.png',
-                                  height: 200,
+                            child: Center(
+                              child: Text(
+                                "Tidak ada mata kuliah ditemukan.",
+                                style: TextStyle(
+                                  color: greyColor,
+                                  fontStyle: FontStyle.italic,
                                 ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  _searchController.text.isEmpty
-                                      ? "Tidak ada data presensi"
-                                      : "Data mata kuliah tidak ditemukan",
-                                  style: GoogleFonts.plusJakartaSans(
-                                      color: greyColor,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 16),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                              ),
                             ),
                           )
-                        : ListView.builder(
-                            itemCount: filteredPresensi.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: PresensiCard(
-                                  data: filteredPresensi[index],
-                                ),
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: filteredDays.map((day) {
+                              final jadwal =
+                                  (jadwalPerHari[day] ?? []).where((jadwal) {
+                                final query =
+                                    _searchController.text.toLowerCase();
+                                return jadwal.mataKuliah
+                                    .toLowerCase()
+                                    .contains(query);
+                              }).toList();
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Text(
+                                      day,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: blueColor,
+                                        fontFamily: 'poppins',
+                                      ),
+                                    ),
+                                  ),
+                                  if (jadwal.isEmpty)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/ic_noData.png',
+                                              height: 60,
+                                              width: 60,
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              "Tidak ada jadwal",
+                                              style: TextStyle(
+                                                color: greyColor,
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Column(
+                                      children: jadwal.map((jadwal) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 0),
+                                          child:
+                                              AllScheduleCard(jadwal: jadwal),
+                                        );
+                                      }).toList(),
+                                    ),
+                                ],
                               );
-                            },
-                          ),
+                            }).toList()),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),

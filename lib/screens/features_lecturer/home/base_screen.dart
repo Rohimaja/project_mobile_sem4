@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/screens/features_student/account/profile_screen.dart';
+import 'package:stipres/screens/features_lecturer/account/profile_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/dashboard.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:stipres/styles/icons.dart';
@@ -16,8 +16,8 @@ class _BaseScreenLecturerState extends State<BaseScreenLecturer> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    DashboardScreenTeacher(),
-    ProfileScreen(),
+    DashboardScreenLecturer(),
+    ProfileScreenLecturer(),
   ];
   @override
   Widget build(BuildContext context) {

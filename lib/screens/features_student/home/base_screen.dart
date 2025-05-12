@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/features_student/account/profile_screen.dart';
-import 'package:stipres/screens/features_student/home/dashboard_screen.dart';
+import 'package:stipres/screens/features_student/home/dashboard.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';
@@ -16,7 +16,7 @@ class _BaseScreenState extends State<BaseScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    DashboardScreen(),
+    DashboardScreenStudent(),
     ProfileScreen(),
   ];
   @override

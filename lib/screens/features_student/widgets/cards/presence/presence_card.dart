@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
-import 'package:stipres/screens/features_student/models/presence_model.dart';
+import 'package:stipres/screens/features_student/models/presence/presence_model.dart';
 
 class PresensiCard extends StatelessWidget {
   final PresensiModel data;
