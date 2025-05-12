@@ -31,7 +31,7 @@ class CourseDetailCard extends StatelessWidget {
               Opacity(
                 opacity: 0.15,
                 child: Image.asset(
-                  'images/bgDetailMataKuliah.png',
+                  'assets/images/bgDetailMataKuliah.png',
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,

@@ -1,14 +1,16 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/student/get_presence_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/presence_content_service.dart';
-import 'package:timezone/data/latest.dart' as tzdata;
+
 import 'package:timezone/timezone.dart' as tz;
 
 enum StatusPresensi { hadir, ijin, sakit }
@@ -28,9 +30,13 @@ class PresenceContentController extends GetxController {
   final PresenceContentService presenceContentService =
       PresenceContentService();
 
+  static const int maxSizeInBytes = 5 * 1024 * 1024;
+
   var presensiId = ''.obs;
   var presensisId = 0.obs;
   var errorMessage = ''.obs;
+
+  final ImagePicker pickedImage = ImagePicker();
 
   final bukti = Rxn<File>();
 
@@ -43,6 +49,7 @@ class PresenceContentController extends GetxController {
     presensiId.value = Get.arguments[0];
     presensisId.value = Get.arguments[1] as int;
     log.d(presensiId);
+    log.d(presensisId);
   }
 
   @override
@@ -96,10 +103,10 @@ class PresenceContentController extends GetxController {
     if (!validate()) return;
 
     showLoading();
-    await checkPresence();
+    await uploadPresence();
   }
 
-  Future<void> checkPresence() async {
+  Future<void> uploadPresence() async {
     try {
       var mahasiswaId = _box.read("mahasiswa_id");
 
@@ -123,8 +130,12 @@ class PresenceContentController extends GetxController {
       final alasan =
           alasanController.text.isEmpty ? null : alasanController.text;
 
-      final result = await presenceContentService.checkPresence(
-          mahasiswaId, presensisId, statusAbsen.value, waktuPresensi, alasan);
+      final buktiFinal = bukti() == null ? null : bukti.value;
+
+      log.d(bukti.value);
+
+      final result = await presenceContentService.uploadPresence(mahasiswaId,
+          presensisId, statusAbsen.value, waktuPresensi, alasan, buktiFinal);
 
       if (result.status == "success") {
         Get.back();
@@ -162,10 +173,10 @@ class PresenceContentController extends GetxController {
             await checkPresenceTime(data.tglPresensi!, data.durasiPresensi!);
         log.d("hasil schedule: $isOnSchedule");
         if (!isOnSchedule) {
-          // Get.offNamed("/student/fallback-screen", arguments: "inComing");
           log.d("tgl: ${data.tglPresensi}");
           log.d("durasi: ${data.durasiPresensi}");
           statusData.value = false;
+          log.e(statusData.value);
         } else {
           statusData.value = true;
         }
@@ -230,7 +241,6 @@ class PresenceContentController extends GetxController {
   }
 
   Future<dynamic> checkTime() async {
-    tzdata.initializeTimeZones();
     var jakarta = tz.getLocation("Asia/Jakarta");
     var timeNow = tz.TZDateTime.now(jakarta);
     return timeNow;
@@ -238,6 +248,103 @@ class PresenceContentController extends GetxController {
 
   String formatWaktuPresensi(DateTime waktu) {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(waktu);
+  }
+
+  Future<void> getImageFromGallery() async {
+    final XFile? image =
+        await pickedImage.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      final file = File(image.path);
+      int fileSize = await file.length();
+
+      if (fileSize > maxSizeInBytes) {
+        Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+        return;
+      }
+      bukti.value = File(image.path);
+    }
+  }
+
+  Future<void> getImageFromCamera() async {
+    try {
+      final XFile? image =
+          await pickedImage.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        final file = File(image.path);
+        int fileSize = await file.length();
+
+        if (fileSize > maxSizeInBytes) {
+          Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+          return;
+        }
+
+        bukti.value = File(image.path);
+      }
+    } catch (e) {
+      Get.snackbar("Gagal", "Kamera tidak tersedia: $e");
+    }
+  }
+
+  Future<void> pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'png', 'jpg', 'jpeg', 'docx']);
+
+    if (result != null && result.files.single.path != null) {
+      final file = File(result.files.single.path!);
+      int fileSize = await file.length();
+      final extension = result.files.single.extension?.toLowerCase();
+
+      if (extension == null ||
+          !['pdf', 'png', 'jpg', 'jpeg', 'docx'].contains(extension)) {
+        Get.snackbar("Error", "Formal file tidak diizinkan");
+        return;
+      }
+
+      if (fileSize > maxSizeInBytes) {
+        Get.snackbar("Error", "Ukuran file melebihi 5MB");
+        return;
+      }
+
+      bukti.value = file;
+    }
+  }
+
+  void showFileOptions() {
+    Get.bottomSheet(Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      child: Wrap(
+        children: [
+          ListTile(
+            leading: Icon(Icons.camera_alt),
+            title: Text("Ambil Foto"),
+            onTap: () async {
+              Get.back();
+              await getImageFromCamera();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.image),
+            title: Text("Pilih Gambar"),
+            onTap: () async {
+              Get.back();
+              await getImageFromGallery();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.attach_file),
+            title: Text("Pilih File"),
+            onTap: () async {
+              Get.back();
+              await pickFile();
+            },
+          ),
+        ],
+      ),
+    ));
   }
 
   void showLoading() {

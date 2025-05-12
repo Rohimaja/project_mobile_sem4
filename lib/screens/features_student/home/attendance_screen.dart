@@ -78,7 +78,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           bottomLeft: Radius.circular(30),
                         ),
                         image: const DecorationImage(
-                          image: AssetImage('images/bgheader.png'),
+                          image: AssetImage('assets/images/bgheader.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -97,7 +97,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Image.asset(
-                                  'icons/ic_back.png',
+                                  'assets/icons/ic_back.png',
                                   height: 18,
                                   width: 18,
                                 ),
@@ -181,7 +181,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                 child: Padding(
                                   padding: const EdgeInsets.all(6.0),
                                   child: Image.asset(
-                                    'icons/ic_search.png',
+                                    'assets/icons/ic_search.png',
                                     height: 18,
                                     width: 18,
                                   ),

@@ -15,11 +15,6 @@ class PresenceController extends GetxController {
       PresensiMahasiswaService();
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
   void onReady() {
     super.onReady();
     fetchPresence();

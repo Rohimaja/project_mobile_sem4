@@ -17,7 +17,7 @@ class PresensiChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            'icons/ic_clock.png',
+            'assets/icons/ic_clock.png',
             height: 16,
             width: 16,
           ),

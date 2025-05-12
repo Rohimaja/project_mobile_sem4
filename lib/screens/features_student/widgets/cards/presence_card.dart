@@ -58,7 +58,7 @@ class PresensiCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PresensiChip(jam: data.durasiPresensi),
+                PresensiChip(jam: "${data.durasiPresensi} WIB"),
                 const SizedBox(height: 6),
                 Text(
                   data.namaMatkul,
@@ -76,7 +76,7 @@ class PresensiCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 IconTextInfo(
                     iconPath: 'assets/icons/ic_duration.png',
-                    text: data.durasiMatkul),
+                    text: "${data.durasiMatkul} Jam"),
               ],
             ),
           ),

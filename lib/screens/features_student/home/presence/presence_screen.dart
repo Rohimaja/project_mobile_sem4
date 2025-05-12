@@ -77,7 +77,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                             bottomLeft: Radius.circular(30),
                           ),
                           image: const DecorationImage(
-                            image: AssetImage('images/bgheader.png'),
+                            image: AssetImage('assets/images/bgheader.png'),
                             fit: BoxFit.cover,
                           ),
                         ),

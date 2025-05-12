@@ -496,7 +496,7 @@ class DashboardScreenTeacher extends StatelessWidget {
                               children: [
                                 SizedBox(height: 20),
                                 Image.asset(
-                                  'icons/ic_noData.png',
+                                  'assets/icons/ic_noData.png',
                                   height: 120,
                                 ),
                                 SizedBox(height: 15),

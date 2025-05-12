@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:path/path.dart' as path;
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
@@ -21,6 +23,7 @@ class PresenceContentService extends GetxService {
           "$_baseURL?presensi_id=$presensiId&mahasiswa_id=$mahasiswaId");
       log.d(url);
       final response = await http.get(url);
+      log.e(url);
 
       final body = jsonDecode(response.body);
 
@@ -35,26 +38,43 @@ class PresenceContentService extends GetxService {
     }
   }
 
-  Future<BasicResponse> checkPresence(int mahasiswaId, var presensiId,
-      int status, String waktuPresensi, String? alasan) async {
+  Future<BasicResponse> uploadPresence(int mahasiswaId, var presensiId,
+      int status, String waktuPresensi, String? alasan, File? bukti) async {
     try {
       final url = Uri.parse("${global}activity/presensiActivity.php");
       log.d(url);
       log.d("Mahasiswa ID: $mahasiswaId, Presensi ID: $presensiId");
 
-      final bodyy = {
-        'mahasiswa_id': mahasiswaId.toString(),
-        'presensi_id': presensiId.toString(),
-        'status': status.toString(),
-        'waktu_presensi': waktuPresensi,
-        if (alasan != null && alasan.isNotEmpty) 'alasan': alasan,
-      };
+      final request = http.MultipartRequest('POST', url)
+        ..fields['mahasiswa_id'] = mahasiswaId.toString()
+        ..fields['presensi_id'] = presensiId.toString()
+        ..fields['status'] = status.toString()
+        ..fields['waktu_presensi'] = waktuPresensi;
 
-      final response = await http.post(url, body: bodyy);
+      if (alasan != null && alasan.isNotEmpty) {
+        request.fields['alasan'] = alasan;
+      }
 
-      log.e(response.body);
+      if (bukti != null) {
+        var stream = http.ByteStream(bukti.openRead());
+        var length = await bukti.length();
+        var multipartFile = http.MultipartFile(
+          'bukti',
+          stream,
+          length,
+          filename: path.basename(bukti.path),
+        );
+        request.files.add(multipartFile);
+      }
 
-      final body = jsonDecode(response.body);
+      log.d(bukti);
+
+      final response = await request.send();
+
+      final respStr = await http.Response.fromStream(response);
+      log.d(respStr.body);
+
+      final body = jsonDecode(respStr.body);
 
       return BasicResponse.fromJson(
         body,

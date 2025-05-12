@@ -42,7 +42,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                             bottomLeft: Radius.circular(30),
                           ),
                           image: const DecorationImage(
-                            image: AssetImage('images/bgheader.png'),
+                            image: AssetImage('assets/images/bgheader.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -250,7 +250,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   children: [
                                     ElevatedButton.icon(
                                       onPressed: () {
-                                        // Aksi upload
+                                        _controller.showFileOptions();
                                       },
                                       icon: Padding(
                                         padding: EdgeInsets.only(left: 4.0),
@@ -261,14 +261,17 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                         ),
                                       ),
                                       label: Padding(
-                                        padding: EdgeInsets.only(right: 4.0),
-                                        child: Text(
-                                          'Upload Bukti',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
+                                          padding: EdgeInsets.only(right: 4.0),
+                                          child: Obx(() {
+                                            return Text(
+                                              _controller.bukti.value == null
+                                                  ? 'Upload Bukti'
+                                                  : "Ganti Bukti",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            );
+                                          })),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: blueColor,
                                         foregroundColor: Colors.white,
@@ -284,7 +287,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                     ),
                                     SizedBox(width: 8),
                                     Text(
-                                      '(PNG, JPG, JPEG, and PDF, up to 5 MB)',
+                                      '(PNG, JPG, JPEG, PDF, and DOCX, up to 5 MB)',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey,
@@ -299,7 +302,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                               SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () async {
+                                  onPressed: () {
                                     _controller.submitPresence();
                                   },
                                   style: ElevatedButton.styleFrom(

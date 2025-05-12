@@ -36,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
                         bottomLeft: Radius.circular(40),
                       ),
                       image: DecorationImage(
-                        image: AssetImage('images/bgheader.png'),
+                        image: AssetImage('assets/images/bgheader.png'),
                         fit: BoxFit.cover, // agar penuh
                       ),
                     ),
@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'images/Logo_PantiWaluya.png',
+                          'assets/images/Logo_PantiWaluya.png',
                           height: 30,
                           width: 30,
                         ),
@@ -141,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               child: ClipOval(
                                 child: Image.asset(
-                                  "images/foto_izzul.jpg",
+                                  "assets/images/foto_izzul.jpg",
                                   height: 90,
                                   width: 90,
                                   fit: BoxFit.cover,
