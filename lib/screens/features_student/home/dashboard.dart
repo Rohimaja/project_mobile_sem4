@@ -2,19 +2,51 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart';
 import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
-import 'package:stipres/screens/features_student/widgets/cards/weeklyCalendar_card.dart';
+import 'package:stipres/screens/features_student/widgets/cards/weekly_calendar_card.dart';
 import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
 import 'package:stipres/screens/features_student/widgets/link/calendar_link.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
 // import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';
 
-class DashboardScreen extends StatelessWidget {
-  DashboardScreen({super.key});
+class DashboardScreenStudent extends StatelessWidget {
+  DashboardScreenStudent({super.key});
   var height, width;
 
   final dashboardC = Get.find<DashboardController>();
+
+  // final List<JadwalModel> jadwalHariIni = [
+  //   JadwalModel(
+  //     waktu: '07.00 - 10.00 WIB',
+  //     mataKuliah: 'Pemrograman Dasar',
+  //     lokasi: 'Zoom Meeting',
+  //     durasi: '2 Jam',
+  //     keterangan: 'daring',
+  //   ),
+  //   JadwalModel(
+  //     waktu: '10.15 - 12.00 WIB',
+  //     mataKuliah: 'Struktur Data',
+  //     lokasi: 'Gedung JTI Ruang 2.2',
+  //     durasi: '1.5 Jam',
+  //     keterangan: 'luring',
+  //   ),
+  //   JadwalModel(
+  //     waktu: '13.00 - 15.00 WIB',
+  //     mataKuliah: 'Basis Data',
+  //     lokasi: 'Google Meet',
+  //     durasi: '2 Jam',
+  //     keterangan: 'daring',
+  //   ),
+  //   JadwalModel(
+  //     waktu: '07.00 - 10.00 WIB',
+  //     mataKuliah: 'Kewirausahaan',
+  //     lokasi: 'Zoom Meeting',
+  //     durasi: '2 Jam',
+  //     keterangan: 'daring',
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -237,92 +269,72 @@ class DashboardScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               // === Card dengan Navigasi + Ripple ===
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Get.toNamed("/student/attendance-screen");
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Kehadiran',
-                                      items: 4,
-                                      imagePath:
-                                          'assets/icons/ic_kehadiran.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 187, 235, 251),
-                                    ),
-                                  ),
-                                ),
+                              CategoryCard(
+                                title: 'Kehadiran',
+                                items: 4,
+                                imagePath: 'assets/icons/ic_kehadiran.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 187, 235, 251),
+                                onTap: () {
+                                  Get.toNamed("/student/attendance-screen");
+                                },
                               ),
 
                               const SizedBox(width: 12),
 
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
+                              CategoryCard(
+                                title: 'Presensi',
+                                items: 4,
+                                imagePath: 'assets/icons/rekap_kehadiran.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 187, 251, 193),
+                                onTap: () {
                                       Get.toNamed("/student/presence-screen");
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Presensi',
-                                      items: 4,
-                                      imagePath:
-                                          'assets/icons/rekap_kehadiran.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 187, 251, 193),
-                                    ),
-                                  ),
-                                ),
+                                },
                               ),
 
                               SizedBox(width: 12),
 
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
+                              CategoryCard(
+                                title: 'Jadwal Perkuliahan',
+                                items: 4,
+                                imagePath:
+                                    'assets/icons/ic_jadwal_perkuliahan.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 251, 232, 187),
+                                onTap: () {
                                       Get.toNamed("/student/calendar-screen");
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Kalender Akademik',
-                                      items: 4,
-                                      imagePath:
-                                          'assets/icons/kalender_akademik.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 251, 187, 187),
-                                    ),
-                                  ),
-                                ),
+                                },
                               ),
+
+                              SizedBox(width: 12),
+
+                              CategoryCard(
+                                title: 'Kalender Akademik',
+                                items: 4,
+                                imagePath: 'assets/icons/kalender_akademik.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 251, 187, 187),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CalendarScreen()),
+                                  );
+                                },
+                              ),
+
                               const SizedBox(width: 12),
 
-                              Material(
-                                color: Colors.transparent,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: InkWell(
-                                    onTap: () {
+                              CategoryCard(
+                                title: 'Perkuliahan Online',
+                                items: 4,
+                                imagePath: 'assets/icons/zoom.png',
+                                bgColor:
+                                    const Color.fromARGB(255, 187, 191, 251),
+                                onTap: () {
                                       Get.toNamed("/student/lecture-screen");
-                                    },
-                                    splashColor: Colors.blue.withOpacity(0.3),
-                                    child: CategoryCard(
-                                      title: 'Perkuliahan Online',
-                                      items: 4,
-                                      imagePath: 'assets/icons/zoom.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 187, 191, 251),
-                                    ),
-                                  ),
-                                ),
+                                },
                               ),
                             ],
                           ),
@@ -454,6 +466,7 @@ class CategoryCard extends StatelessWidget {
   final int items;
   final String imagePath;
   final Color bgColor;
+  final VoidCallback onTap;
 
   const CategoryCard({
     Key? key,
@@ -461,51 +474,62 @@ class CategoryCard extends StatelessWidget {
     required this.items,
     required this.imagePath,
     required this.bgColor,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: bgColor,
+    return Material(
+      color: bgColor,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Color(0xFFC8C8C8),
-          width: 0.5,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Center(
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.contain,
+        splashColor: const Color.fromARGB(255, 120, 120, 120).withOpacity(0.2),
+        highlightColor: Colors.blue.withOpacity(0.1),
+        onTap: onTap, // Gunakan onTap dari parameter
+        child: Container(
+          width: 160,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: const Color(0xFFC8C8C8),
+              width: 0.5,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    imagePath,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 12),
+              AutoSizeText(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+                maxLines: 1,
+                minFontSize: 10,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                "$items items",
+                style: GoogleFonts.plusJakartaSans(
+                  color: const Color.fromARGB(255, 98, 98, 98),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 12),
-          AutoSizeText(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-            maxLines: 1,
-            minFontSize: 10,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            "$items items",
-            style: GoogleFonts.plusJakartaSans(
-                color: const Color.fromARGB(255, 98, 98, 98),
-                fontSize: 13,
-                fontWeight: FontWeight.w500),
-          ),
-        ],
+        ),
       ),
     );
   }

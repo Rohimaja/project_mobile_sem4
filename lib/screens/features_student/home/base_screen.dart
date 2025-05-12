@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:stipres/controllers/features_student/base_screen_controller.dart';
 import 'package:stipres/screens/features_student/account/profile_screen.dart';
-import 'package:stipres/screens/features_student/home/dashboard_screen.dart';
+import 'package:stipres/screens/features_student/home/dashboard.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';
@@ -18,8 +18,8 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   final BaseScreenController _controller = Get.find<BaseScreenController>();
 
-  static List<Widget> _widgetOptions = <Widget>[
-    DashboardScreen(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    DashboardScreenStudent(),
     ProfileScreen(),
   ];
 

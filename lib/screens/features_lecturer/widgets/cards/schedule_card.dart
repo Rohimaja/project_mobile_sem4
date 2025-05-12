@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
-import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
-import 'package:stipres/models/student/jadwal_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
+import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
+import 'package:stipres/screens/features_lecturer/models/schedule_model.dart';
+import 'package:stipres/screens/features_lecturer/widgets/cards/course_detail_card.dart';
 import 'package:stipres/styles/constant.dart';
 
-class JadwalCard extends StatelessWidget {
-  final JadwalModelApi jadwal;
+class ScheduleCardLecturer extends StatelessWidget {
+  final ScheduleModel jadwal;
 
-  JadwalCard({Key? key, required this.jadwal}) : super(key: key);
-
-  final _controller = Get.find<DashboardController>();
+  const ScheduleCardLecturer({Key? key, required this.jadwal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class JadwalCard extends StatelessWidget {
         Row(
           children: [
             Image.asset(
-              'assets/icons/ic_clock.png',
+              'icons/ic_clock.png',
               height: 20,
               width: 20,
             ),
@@ -40,7 +39,7 @@ class JadwalCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
-                  'assets/images/abstract_body.png',
+                  'images/abstract_body.png',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -170,13 +169,13 @@ class JadwalCard extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(
-                              'assets/icons/ic_location.png',
+                              'icons/ic_location.png',
                               height: 16,
                               width: 16,
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              jadwal.lokasi!,
+                              jadwal.lokasi,
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 13, fontWeight: FontWeight.w500),
                             ),
@@ -186,13 +185,13 @@ class JadwalCard extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(
-                              'assets/icons/ic_duration.png',
+                              'icons/ic_duration.png',
                               height: 16,
                               width: 16,
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              jadwal.durasiMatkul,
+                              jadwal.durasi,
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 13, fontWeight: FontWeight.w500),
                             ),
@@ -206,7 +205,11 @@ class JadwalCard extends StatelessWidget {
                               label: 'Presensi',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                _controller.buttonAction(jadwal);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => PresenceDetailScreen()),
+                                );
                               },
                             ),
                             const SizedBox(width: 8),
@@ -215,15 +218,15 @@ class JadwalCard extends StatelessWidget {
                               label: 'Zoom',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                (jadwal.lokasi == "Online")
-                                    ? Get.toNamed(
-                                        "/student/lecture-content-screen",
-                                      )
-                                    : Get.toNamed("/student/offline-screen");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => LectureContentScreen()),
+                                );
                               },
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),

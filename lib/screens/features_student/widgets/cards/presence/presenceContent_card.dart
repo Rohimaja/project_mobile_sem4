@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/models/student/get_presence_model.dart';
+import 'package:stipres/screens/features_student/models/presence/presenceContent_model.dart';
+
 class MatkulDetailCard extends StatelessWidget {
   final GetPresenceApi data;
 
