@@ -71,7 +71,7 @@ class JadwalCard extends StatelessWidget {
                           Positioned(
                             top: 25, // Geser icon ke bawah
                             child: Image.asset(
-                              'icons/ic_matakuliah.png',
+                              'assets/icons/ic_matakuliah.png',
                               height: 75,
                               width: 75,
                             ),
@@ -79,7 +79,7 @@ class JadwalCard extends StatelessWidget {
                           Positioned(
                             top: -10,
                             left: 5,
-                            child: _buildModeChip(jadwal.keterangan),
+                            child: _buildModeChip(jadwal.keterangan!),
                           ),
                         ],
                       ),

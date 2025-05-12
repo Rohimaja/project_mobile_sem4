@@ -5,6 +5,7 @@ class JadwalModelApi {
   final String mataKuliah;
   String? lokasi;
   String durasiMatkul;
+  String? keterangan;
 
   JadwalModelApi({
     required this.presensiId,
@@ -13,6 +14,7 @@ class JadwalModelApi {
     required this.mataKuliah,
     this.lokasi,
     required this.durasiMatkul,
+    this.keterangan,
   });
 
   factory JadwalModelApi.fromJson(Map<String, dynamic> json) {

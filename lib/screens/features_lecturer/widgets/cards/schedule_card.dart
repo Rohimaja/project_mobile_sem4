@@ -70,7 +70,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                           Positioned(
                             top: 25, // Geser icon ke bawah
                             child: Image.asset(
-                              'icons/ic_matakuliah.png',
+                              'assets/icons/ic_matakuliah.png',
                               height: 75,
                               width: 75,
                             ),

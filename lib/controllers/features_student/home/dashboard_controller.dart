@@ -46,9 +46,11 @@ class DashboardController extends GetxController {
         jadwal.durasiMatkul = ("${jadwal.durasiMatkul} Jam").toString();
         if (jadwal.lokasi == null) {
           jadwal.lokasi = "Online";
+          jadwal.keterangan = "Daring";
           statusOffline.value = false;
         } else {
           statusOffline.value = true;
+          jadwal.keterangan = "Luring";
         }
 
         log.d("Status offline: ${statusOffline.value}");
