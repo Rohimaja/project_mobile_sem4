@@ -17,37 +17,6 @@ class DashboardScreenStudent extends StatelessWidget {
 
   final dashboardC = Get.find<DashboardController>();
 
-  // final List<JadwalModel> jadwalHariIni = [
-  //   JadwalModel(
-  //     waktu: '07.00 - 10.00 WIB',
-  //     mataKuliah: 'Pemrograman Dasar',
-  //     lokasi: 'Zoom Meeting',
-  //     durasi: '2 Jam',
-  //     keterangan: 'daring',
-  //   ),
-  //   JadwalModel(
-  //     waktu: '10.15 - 12.00 WIB',
-  //     mataKuliah: 'Struktur Data',
-  //     lokasi: 'Gedung JTI Ruang 2.2',
-  //     durasi: '1.5 Jam',
-  //     keterangan: 'luring',
-  //   ),
-  //   JadwalModel(
-  //     waktu: '13.00 - 15.00 WIB',
-  //     mataKuliah: 'Basis Data',
-  //     lokasi: 'Google Meet',
-  //     durasi: '2 Jam',
-  //     keterangan: 'daring',
-  //   ),
-  //   JadwalModel(
-  //     waktu: '07.00 - 10.00 WIB',
-  //     mataKuliah: 'Kewirausahaan',
-  //     lokasi: 'Zoom Meeting',
-  //     durasi: '2 Jam',
-  //     keterangan: 'daring',
-  //   ),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;

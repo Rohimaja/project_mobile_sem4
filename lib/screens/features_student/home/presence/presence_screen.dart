@@ -232,7 +232,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
-                            'Presensi Hari Ini',
+                            'Presensi berlangsung',
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 16,
                               color: blueColor,

@@ -230,7 +230,7 @@ class _LectureScreenState extends State<LectureScreen>
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Perkuliahan Minggu Ini',
+                            'Perkuliahan Hari Ini',
                             style: TextStyle(
                               fontSize: 16,
                               color: blueColor,
