@@ -5,14 +5,14 @@ import 'package:stipres/styles/constant.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';
 
-class BaseScreen extends StatefulWidget {
-  const BaseScreen({Key? key}) : super(key: key);
+class BaseScreenTeacher extends StatefulWidget {
+  const BaseScreenTeacher({Key? key}) : super(key: key);
 
   @override
-  _BaseScreenState createState() => _BaseScreenState();
+  _BaseScreenTeacherState createState() => _BaseScreenTeacherState();
 }
 
-class _BaseScreenState extends State<BaseScreen> {
+class _BaseScreenTeacherState extends State<BaseScreenTeacher> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[

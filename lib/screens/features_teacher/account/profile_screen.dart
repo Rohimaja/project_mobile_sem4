@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_teacher/account/view_profile.dart';
+import 'package:stipres/screens/features_teacher/account/pengaturan.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -292,7 +296,7 @@ class ProfilePage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginScreen()),
+                                    builder: (context) => ViewProfilePage()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
@@ -337,14 +341,18 @@ class ProfilePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            InkWell(
+                            onTap: () {
+                              Get.to(Pengaturan());
+                            },
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('icons/ic_ketentuanlayanan.png',
+                                Image.asset('assets/icons/ic_settings.png',
                                     height: 30, width: 30),
                                 SizedBox(width: 10),
-                                Text("Ketentuan Layanan",
+                                Text("Pengaturan",
                                     style: blackTextStyle.copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w800,
@@ -352,28 +360,13 @@ class ProfilePage extends StatelessWidget {
                                     textAlign: TextAlign.center),
                               ],
                             ),
+                          ),
                             SizedBox(height: 20), // Jarak antar item
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('icons/ic_kebijakanprivasi.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Kebijakan Privasi",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('icons/ic_gantipassword.png',
+                                Image.asset('assets/icons/ic_gantipassword.png',
                                     height: 30, width: 30),
                                 SizedBox(width: 10),
                                 Text("Ganti Password",

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/ganti_email.dart';
 import 'package:stipres/styles/constant.dart';
-import 'package:flutter/gestures.dart';
 
+class SidikJari extends StatefulWidget {
+  SidikJari({Key? key}) : super(key: key);
 
-class AlamatEmail extends StatelessWidget {
-  AlamatEmail({Key? key}) : super(key: key);
+  @override
+  State<SidikJari> createState() => _SidikJariState();
+}
+
+class _SidikJariState extends State<SidikJari> {
   var height, width;
+  bool _isNotifOn = true;
+
 
   @override
 Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ Widget build(BuildContext context) {
         children: [
           _buildHeader(context),
           Padding(
-            padding: const EdgeInsets.only(top: 15, left: 30, right: 30, bottom: 20),
+            padding: const EdgeInsets.only(top: 15, left: 30 , right: 30, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -28,14 +32,14 @@ Widget build(BuildContext context) {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/icons/ic_email.png',
+                        'assets/icons/ic_fingerprint3.png',
                         width: 80,
                         height: 80,
                         fit: BoxFit.cover,
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Email membantu anda untuk mengelola akun, email tidak dapat \n dilihat oleh pengguna lain',
+                        'Akses STIPRES dengan cara yang aman dan mudah \n menggunakan sidik jari',
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
@@ -54,86 +58,83 @@ Widget build(BuildContext context) {
                 ),
                 SizedBox(height: 15),
                 Text(
-                  "Verifikasi Email",
+                  "Sidik Jari",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Color.fromARGB(255, 30, 136, 228),
                   ),
                 ),
-                SizedBox(height: 7),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: "johndoe@gmail.com",
-                          prefixIcon: Icon(Icons.mail, color: Colors.grey,),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintStyle: greyTextStyle.copyWith(fontSize: 15),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide(color: blueColor),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8), // Jarak antara TextField dan icon
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(GantiEmail());
-                      },
-                      child: Icon(Icons.edit, color: Colors.grey),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center, // ini membuat vertikal rata tengah
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 6.0),
-                      child: Image.asset(
-                        'assets/icons/ic_warning.png', // ganti dengan path gambarmu
-                        width: 14,
-                        height: 14,
-                      ),
-                    ),
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Apakah ini masih email anda? ',
-                          style: blackTextStyle.copyWith(
-                            fontSize: 10,
-                            color: Color.fromARGB(255, 161, 161, 161),
-                            fontWeight: FontWeight.w800,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Konfirmasi',
-                              style: blackTextStyle.copyWith(
-                                fontSize: 10,
-                                color: blueColor,
-                                fontWeight: FontWeight.w800,
-                                decoration: TextDecoration.underline,
+                SizedBox(height: 15),
+                Container(
+                  width: width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _isNotifOn = !_isNotifOn;
+                          });
+                          print("Toggled: $_isNotifOn");
+                        },
+                        borderRadius: BorderRadius.circular(10),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
+                          child: Row(
+                            children: [
+                              Image.asset('assets/icons/ic_fingerprint2.png', height: 30, width: 30),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      "Notifikasi",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Pengingat notifikasi",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Color.fromARGB(255, 161, 161, 161),
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  print("Konfirmasi diklik");
-                                },
-                            ),
-                          ],
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Transform.scale(
+                                    scale: 0.75,
+                                    child: Switch(
+                                      value: _isNotifOn,
+                                      onChanged: (bool newValue) {
+                                        setState(() {
+                                          _isNotifOn = newValue;
+                                        });
+                                      },
+                                      activeColor: Color.fromARGB(255, 30, 136, 228),
+                                      activeTrackColor: Color.fromARGB(255, 189, 222, 251),
+                                      inactiveThumbColor: Colors.grey,
+                                      inactiveTrackColor: Color.fromARGB(255, 224, 224, 224),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
+                      SizedBox(height: 15),
+                      ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -142,6 +143,7 @@ Widget build(BuildContext context) {
     ),
   );
 }
+
   Widget _buildHeader(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
@@ -186,7 +188,7 @@ Widget build(BuildContext context) {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  "Alamat Email",
+                  "Login dengan Sidik Jari",
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,

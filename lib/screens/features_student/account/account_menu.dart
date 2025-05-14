@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart';
-import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
+import 'package:stipres/screens/features_student/account/alamat_email.dart';
+import 'package:stipres/screens/features_student/account/sidik_jari.dart';
 import 'package:stipres/styles/constant.dart';
 
-class Bantuan extends StatelessWidget {
-  Bantuan({Key? key}) : super(key: key);
+class Akun extends StatelessWidget {
+  Akun({Key? key}) : super(key: key);
   var height, width;
 
   @override
@@ -26,14 +26,6 @@ class Bantuan extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Bantuan",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 30, 136, 228),
-                    ),
-                  ),
                   SizedBox(height: 15),
                   Container(
                     width: width,
@@ -42,7 +34,7 @@ class Bantuan extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(KetentuanLayanan());
+                            Get.to(AlamatEmail());
                           },
                           borderRadius: BorderRadius.circular(
                               10), // ripple efek yang lebih halus
@@ -54,14 +46,12 @@ class Bantuan extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image.asset(
-                                    'assets/icons/ic_ketentuanlayanan.png',
-                                    height: 30,
-                                    width: 30),
+                                Image.asset('assets/icons/ic_gmail.png',
+                                    height: 30, width: 30),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Text(
-                                    "Ketentuan Layanan",
+                                    "Verifikasi Akun",
                                     style: blackTextStyle.copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w800,
@@ -76,7 +66,7 @@ class Bantuan extends StatelessWidget {
                         SizedBox(height: 20),
                         InkWell(
                           onTap: () {
-                            Get.to(KebijakanPrivasi());
+                            Get.to(SidikJari());
                           },
                           borderRadius: BorderRadius.circular(
                               10), // ripple efek yang lebih halus
@@ -88,14 +78,12 @@ class Bantuan extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image.asset(
-                                    'assets/icons/ic_kebijakanprivasi.png',
-                                    height: 30,
-                                    width: 30),
+                                Image.asset('assets/icons/ic_fingerprint.png',
+                                    height: 30, width: 30),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Text(
-                                    "Kebijakan Privasi",
+                                    "Login dengan Sidik Jari",
                                     style: blackTextStyle.copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w800,
@@ -164,7 +152,7 @@ class Bantuan extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  "Bantuan",
+                  "Akun",
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,

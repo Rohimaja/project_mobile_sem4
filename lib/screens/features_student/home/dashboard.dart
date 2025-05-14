@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/home/kehadiran_screen.dart';
-import 'package:stipres/screens/features_student/home/materi_screen.dart';
 import 'package:stipres/screens/features_student/models/jadwal_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';

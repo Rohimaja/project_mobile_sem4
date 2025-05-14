@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/account_menu.dart';
-import 'package:stipres/screens/features_student/account/bantuan.dart';
+import 'package:stipres/screens/features_teacher/account/account_menu.dart';
+import 'package:stipres/screens/features_teacher/account/bantuan.dart';
 import 'package:stipres/styles/constant.dart';
 
 class Pengaturan extends StatefulWidget {
@@ -152,7 +152,7 @@ class _PengaturanState extends State<Pengaturan> {
                                         scale: 0.75,
                                         child: Switch(
                                           value: _isNotifOn,
-                                          onChanged: (bool newValue) {
+                                          onChanged: (bool newValue) {  
                                             setState(() {
                                               _isNotifOn = newValue;
                                             });
