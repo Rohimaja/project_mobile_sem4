@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_lecturer/account/pengaturan.dart';
+import 'package:stipres/screens/features_lecturer/account/view_profile.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ProfileScreenLecturer extends StatelessWidget {
@@ -348,25 +350,25 @@ class ProfileScreenLecturer extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
-                            onTap: () {
-                              Get.to(Pengaturan());
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_settings.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Pengaturan",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
+                              onTap: () {
+                                Get.to(Pengaturan());
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Image.asset('assets/icons/ic_settings.png',
+                                      height: 30, width: 30),
+                                  SizedBox(width: 10),
+                                  Text("Pengaturan",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
                             ),
-                          ),
                             SizedBox(height: 20), // Jarak antar item
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
