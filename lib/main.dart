@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      getPages: AppScreens.screens,
+      getPages: AppScreens.screens, 
       home: LoginScreen(),
     );
   }

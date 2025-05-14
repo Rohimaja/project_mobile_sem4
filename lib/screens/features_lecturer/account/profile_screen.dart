@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ProfileScreenLecturer extends StatelessWidget {
   ProfileScreenLecturer({Key? key}) : super(key: key);
   var height, width;
+
+  final _controller = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -196,16 +200,18 @@ class ProfileScreenLecturer extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Aldo Rayhan Radittyanuh",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 161, 161, 161),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+                            alignment: Alignment.centerLeft,
+                            child: Obx(() {
+                              return Text(
+                                _controller.storedName.value,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 161, 161, 161),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            })),
                       ),
                     ),
                     const SizedBox(height: 9),
@@ -233,16 +239,18 @@ class ProfileScreenLecturer extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "199205142023052008",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 161, 161, 161),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+                            alignment: Alignment.centerLeft,
+                            child: Obx(() {
+                              return Text(
+                                _controller.storedNip.value,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 161, 161, 161),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            })),
                       ),
                     ),
                     const SizedBox(height: 9),
@@ -270,16 +278,18 @@ class ProfileScreenLecturer extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "aldorayhan123@gmail.com",
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 161, 161, 161),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+                            alignment: Alignment.centerLeft,
+                            child: Obx(() {
+                              return Text(
+                                _controller.storedEmail.value,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 161, 161, 161),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            })),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -341,8 +351,10 @@ class ProfileScreenLecturer extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('assets/icons/ic_ketentuanlayanan.png',
-                                    height: 30, width: 30),
+                                Image.asset(
+                                    'assets/icons/ic_ketentuanlayanan.png',
+                                    height: 30,
+                                    width: 30),
                                 SizedBox(width: 10),
                                 Text("Ketentuan Layanan",
                                     style: blackTextStyle.copyWith(
@@ -357,8 +369,10 @@ class ProfileScreenLecturer extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('assets/icons/ic_kebijakanprivasi.png',
-                                    height: 30, width: 30),
+                                Image.asset(
+                                    'assets/icons/ic_kebijakanprivasi.png',
+                                    height: 30,
+                                    width: 30),
                                 SizedBox(width: 10),
                                 Text("Kebijakan Privasi",
                                     style: blackTextStyle.copyWith(
@@ -393,11 +407,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginScreen()),
-                              );
+                              _controller.logout();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: redColor,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/schedule_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/course_detail_card.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ScheduleCardLecturer extends StatelessWidget {
-  final ScheduleModel jadwal;
+  final JadwalModelApi jadwal;
 
   const ScheduleCardLecturer({Key? key, required this.jadwal})
       : super(key: key);
@@ -78,7 +78,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                           Positioned(
                             top: -10,
                             left: 5,
-                            child: _buildModeChip(jadwal.keterangan),
+                            child: _buildModeChip(jadwal.keterangan!),
                           ),
                         ],
                       ),
@@ -175,7 +175,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              jadwal.lokasi,
+                              jadwal.lokasi!,
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 13, fontWeight: FontWeight.w500),
                             ),
@@ -191,7 +191,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              jadwal.durasi,
+                              jadwal.durasiMatkul,
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 13, fontWeight: FontWeight.w500),
                             ),

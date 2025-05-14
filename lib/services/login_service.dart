@@ -21,10 +21,7 @@ class LoginService extends GetxService {
         body: {'nim': nim, 'password': password, 'role': "mahasiswa"},
       );
 
-      logger.d("Response status: ${response.statusCode}");
       logger.d("Response status: ${response.body}");
-      logger.d("Sending nim: $nim");
-      logger.d("Sending password: $password");
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
@@ -35,7 +32,6 @@ class LoginService extends GetxService {
           _box.write("user_nim", data['nim']);
           _box.write("mahasiswa_id", data['mahasiswa_id']);
           _box.write("user_nama", data['nama']);
-          logger.d("tes nama ${_box.read("user_nama")}");
           _box.write("user_email", data['email']);
           _box.write("id_prodi", data['prodi_id']);
           _box.write("nama_prodi", data['nama_prodi']);
@@ -69,7 +65,6 @@ class LoginService extends GetxService {
           _box.write("dosen_id", data['dosen_id']);
           _box.write("user_nama", data['nama']);
           _box.write("user_email", data['email']);
-          // _box.write("prodi", data['prodi']);
           _box.write("role", data['role']);
 
           logger.d(body);
@@ -83,8 +78,4 @@ class LoginService extends GetxService {
       return null;
     }
   }
-
-  // bool isLoggedIn() {
-  //   return _box.hasData('user_nim');
-  // }
 }

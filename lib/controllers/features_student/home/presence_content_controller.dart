@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/student/get_presence_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
-import 'package:stipres/services/presence_content_service.dart';
+import 'package:stipres/services/student/presence_content_service.dart';
 
 import 'package:timezone/timezone.dart' as tz;
 

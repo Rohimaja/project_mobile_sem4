@@ -1,8 +1,13 @@
 import 'package:get/get.dart';
-import 'package:stipres/bindings/features_student/base_binding.dart';
-import 'package:stipres/bindings/features_student/dashboard_binding.dart';
+import 'package:stipres/bindings/features_student/base_binding.dart' as student;
+import 'package:stipres/bindings/features_lecturer/base_binding.dart';
+import 'package:stipres/bindings/features_lecturer/dashboard_binding.dart';
+import 'package:stipres/bindings/features_student/dashboard_binding.dart'
+    as student;
 import 'package:stipres/bindings/features_student/presence_content_binding.dart';
-import 'package:stipres/bindings/features_student/profile_binding.dart';
+import 'package:stipres/bindings/features_student/profile_binding.dart'
+    as student;
+import 'package:stipres/bindings/features_lecturer/profile_binding.dart';
 import 'package:stipres/screens/auth/activation_account_screen_1.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
 import 'package:stipres/screens/auth/activation_account_screen_3.dart';
@@ -45,11 +50,20 @@ class AppScreens {
     GetPage(name: "/auth/activation/step3", page: () => ActivationAccount3()),
     GetPage(
         name: "/lecturer/base-screen",
-        page: () => lecturer.BaseScreenLecturer()),
+        page: () => lecturer.BaseScreenLecturer(),
+        bindings: [
+          LecturerBaseBinding(),
+          LecturerDashboardBinding(),
+          LecturerProfileBinding()
+        ]),
     GetPage(
         name: "/student/base-screen",
         page: () => student.BaseScreen(),
-        bindings: [BaseBinding(), DashboardBinding(), ProfileBinding()]),
+        bindings: [
+          student.BaseBinding(),
+          student.DashboardBinding(),
+          student.ProfileBinding()
+        ]),
     GetPage(name: "/student/attendance-screen", page: () => AttendanceScreen()),
     GetPage(name: "/student/presence-screen", page: () => PresenceScreen()),
     GetPage(name: "/student/offline-screen", page: () => OfflineScreen()),

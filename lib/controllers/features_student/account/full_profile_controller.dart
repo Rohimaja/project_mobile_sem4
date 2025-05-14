@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/services/profile_mahasiswa_service.dart';
+import 'package:stipres/services/student/profile_mahasiswa_service.dart';
 
 class FullProfileController extends GetxController {
   final storedFullName = ''.obs;
@@ -15,9 +19,11 @@ class FullProfileController extends GetxController {
   final storedProdi = ''.obs;
   final storedNoTelp = ''.obs;
 
-  final _box = GetStorage();
+  static const int maxSizeInBytes = 5 * 1024 * 1024;
 
+  final _box = GetStorage();
   final log = Logger();
+  final ImagePicker pickedImage = ImagePicker();
 
   final ProfileMahasiswaService profileMahasiswaService =
       ProfileMahasiswaService();
@@ -100,5 +106,69 @@ class FullProfileController extends GetxController {
       storedProdi.value = profile.namaProdi;
       storedNoTelp.value = profile.noTelp;
     }
+  }
+
+  Future<void> getImageFromGallery() async {
+    final XFile? image =
+        await pickedImage.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      final file = File(image.path);
+      int fileSize = await file.length();
+
+      if (fileSize > maxSizeInBytes) {
+        Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+        return;
+      }
+      // bukti.value = File(image.path);
+    }
+  }
+
+  Future<void> getImageFromCamera() async {
+    try {
+      final XFile? image =
+          await pickedImage.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        final file = File(image.path);
+        int fileSize = await file.length();
+
+        if (fileSize > maxSizeInBytes) {
+          Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+          return;
+        }
+
+        // bukti.value = File(image.path);
+      }
+    } catch (e) {
+      Get.snackbar("Gagal", "Kamera tidak tersedia: $e");
+    }
+  }
+
+  void addImage() {
+    Get.bottomSheet(Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      child: Wrap(
+        children: [
+          ListTile(
+            leading: Icon(Icons.camera_alt),
+            title: Text("Ambil Foto"),
+            onTap: () async {
+              Get.back();
+              await getImageFromCamera();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.image),
+            title: Text("Pilih Gambar"),
+            onTap: () async {
+              Get.back();
+              await getImageFromGallery();
+            },
+          ),
+        ],
+      ),
+    ));
   }
 }

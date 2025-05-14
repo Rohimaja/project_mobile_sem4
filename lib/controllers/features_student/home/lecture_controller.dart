@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/student/lecture_model.dart';
-import 'package:stipres/services/lecture_student_service.dart';
+import 'package:stipres/services/student/lecture_student_service.dart';
 
 class LectureController extends GetxController {
   final _box = GetStorage();

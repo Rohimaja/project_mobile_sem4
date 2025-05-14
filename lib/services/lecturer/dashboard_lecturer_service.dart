@@ -1,27 +1,28 @@
 import 'dart:convert';
+
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
-import 'package:stipres/models/student/jadwal_model.dart';
+import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/services/api_manager.dart';
 
-class DashboardMahasiswaService extends GetxService {
-  final String _baseURL = "${ApiManager.globalUrl}listview/getLesson.php";
+class DashboardLecturerService extends GetxService {
+  final String _baseURL =
+      "${ApiManager.globalUrl}listview/getLessonLecturer.php";
   final global = ApiManager.globalUrl;
 
   var log = Logger();
 
   Future<BaseResponse<List<JadwalModelApi>>> tampilJadwalHariIni(
-      String nim) async {
+      int dosenId) async {
     try {
-      final url = Uri.parse("$_baseURL?nim=$nim");
+      final url = Uri.parse("$_baseURL?dosen_id=$dosenId");
       final response = await http.get(url);
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
-
 
       return BaseResponse.fromJson(
         body,

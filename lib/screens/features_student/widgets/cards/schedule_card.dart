@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
-import 'package:stipres/models/student/jadwal_model.dart';
+import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -215,7 +215,7 @@ class JadwalCard extends StatelessWidget {
                               label: 'Zoom',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                (jadwal.lokasi == "Online")
+                                (jadwal.lokasi == "-")
                                     ? Get.toNamed(
                                         "/student/lecture-content-screen",
                                       )

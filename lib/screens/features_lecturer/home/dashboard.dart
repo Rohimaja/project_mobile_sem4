@@ -1,14 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
 import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/attendance/attendance_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/notification_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/presence_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/account_data_model.dart';
-import 'package:stipres/screens/features_lecturer/models/schedule_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/weeklyCalendar_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/allSchedule_link.dart';
@@ -19,46 +19,45 @@ class DashboardScreenLecturer extends StatelessWidget {
   DashboardScreenLecturer({super.key});
   var height, width;
 
-  final Akun dataAkun = Akun(
-    namaLengkap: "Nurhadi Aldo",
-    nip: "19930206 201805 1 035",
-  );
+  final _controller = Get.find<DashboardController>();
 
-  final List<ScheduleModel> jadwalHariIni = [
-    ScheduleModel(
-      waktu: '07.00 - 10.00 WIB',
-      mataKuliah: 'Pemrograman Dasar',
-      lokasi: 'Zoom Meeting',
-      durasi: '2 Jam',
-      keterangan: 'daring',
-    ),
-    ScheduleModel(
-      waktu: '10.15 - 12.00 WIB',
-      mataKuliah: 'Struktur Data',
-      lokasi: 'Gedung JTI Ruang 2.2',
-      durasi: '1.5 Jam',
-      keterangan: 'luring',
-    ),
-    ScheduleModel(
-      waktu: '13.00 - 15.00 WIB',
-      mataKuliah: 'Basis Data',
-      lokasi: 'Google Meet',
-      durasi: '2 Jam',
-      keterangan: 'daring',
-    ),
-    ScheduleModel(
-      waktu: '07.00 - 10.00 WIB',
-      mataKuliah: 'Kewirausahaan',
-      lokasi: 'Zoom Meeting',
-      durasi: '2 Jam',
-      keterangan: 'daring',
-    ),
-  ];
+  // final List<ScheduleModel> jadwalHariIni = [
+  //   ScheduleModel(
+  //     waktu: '07.00 - 10.00 WIB',
+  //     mataKuliah: 'Pemrograman Dasar',
+  //     lokasi: 'Zoom Meeting',
+  //     durasi: '2 Jam',
+  //     keterangan: 'daring',
+  //   ),
+  //   ScheduleModel(
+  //     waktu: '10.15 - 12.00 WIB',
+  //     mataKuliah: 'Struktur Data',
+  //     lokasi: 'Gedung JTI Ruang 2.2',
+  //     durasi: '1.5 Jam',
+  //     keterangan: 'luring',
+  //   ),
+  //   ScheduleModel(
+  //     waktu: '13.00 - 15.00 WIB',
+  //     mataKuliah: 'Basis Data',
+  //     lokasi: 'Google Meet',
+  //     durasi: '2 Jam',
+  //     keterangan: 'daring',
+  //   ),
+  //   ScheduleModel(
+  //     waktu: '07.00 - 10.00 WIB',
+  //     mataKuliah: 'Kewirausahaan',
+  //     lokasi: 'Zoom Meeting',
+  //     durasi: '2 Jam',
+  //     keterangan: 'daring',
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+
+    _controller.fetchSchedule();
 
     return Scaffold(
       backgroundColor: mainColor, // Set background putih ke seluruh layar
@@ -188,27 +187,29 @@ class DashboardScreenLecturer extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              dataAkun.namaLengkap,
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                        Obx(() {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _controller.storedName.value,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              dataAkun.nip,
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14,
-                                color: blueColor,
+                              const SizedBox(height: 4),
+                              Text(
+                                _controller.storedNip.value,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 14,
+                                  color: blueColor,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          );
+                        })
                       ],
                     ),
                   ),
@@ -443,40 +444,42 @@ class DashboardScreenLecturer extends StatelessWidget {
                       ),
                     ),
 
-                    Container(
-                      alignment: Alignment.center,
-                      color: mainColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: jadwalHariIni.isEmpty
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 20),
-                                Image.asset(
-                                  'assets/icons/ic_noData.png',
-                                  height: 120,
-                                ),
-                                SizedBox(height: 15),
-                                Text(
-                                  'Tidak ada jadwal hari ini',
-                                  style: blackTextStyle.copyWith(
-                                      fontSize: 15,
-                                      fontFamily: 'poppins',
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ],
-                            )
-                          : ListView.builder(
-                              itemCount: jadwalHariIni.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return ScheduleCardLecturer(
-                                    jadwal: jadwalHariIni[index]);
-                              },
-                            ),
-                    ),
+                    Obx(() {
+                      return Container(
+                        alignment: Alignment.center,
+                        color: mainColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: _controller.jadwalList.isEmpty
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Image.asset(
+                                    'assets/icons/ic_noData.png',
+                                    height: 120,
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    'Tidak ada jadwal hari ini',
+                                    style: blackTextStyle.copyWith(
+                                        fontSize: 15,
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              )
+                            : ListView.builder(
+                                itemCount: _controller.jadwalList.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return ScheduleCardLecturer(
+                                      jadwal: _controller.jadwalList[index]);
+                                },
+                              ),
+                      );
+                    })
                   ],
                 ),
               ),

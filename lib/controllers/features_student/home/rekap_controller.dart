@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/student/rekap_model.dart';
-import 'package:stipres/services/rekap_mahasiswa_service.dart';
+import 'package:stipres/services/student/rekap_mahasiswa_service.dart';
 
 class RekapController extends GetxController {
   final _box = GetStorage();

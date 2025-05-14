@@ -136,18 +136,29 @@ class ViewProfilePage extends StatelessWidget {
                   Positioned(
                     bottom: 10,
                     right: 0,
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF0D0063),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Image(
-                          image: AssetImage("assets/icons/ic_addpicture.png"),
-                          fit: BoxFit.contain,
+                    child: Material(
+                      color: Colors.transparent,
+                      shape: const CircleBorder(),
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: () {
+                          _controller.addImage();
+                        },
+                        child: Ink(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF0D0063),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Image(
+                              image:
+                                  AssetImage("assets/icons/ic_addpicture.png"),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -199,7 +210,8 @@ class ViewProfilePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Agar baris sejajar di bagian atas secara vertikal
+          crossAxisAlignment: CrossAxisAlignment
+              .start, // Agar baris sejajar di bagian atas secara vertikal
           children: [
             SizedBox(
               width: 150,
@@ -209,7 +221,8 @@ class ViewProfilePage extends StatelessWidget {
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                 ),
-                overflow: TextOverflow.ellipsis, // Tetap ada untuk label jika terlalu panjang
+                overflow: TextOverflow
+                    .ellipsis, // Tetap ada untuk label jika terlalu panjang
               ),
             ),
             const SizedBox(width: 10),

@@ -8,7 +8,6 @@ import 'package:stipres/screens/features_student/widgets/cards/weekly_calendar_c
 import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
 import 'package:stipres/screens/features_student/widgets/link/calendar_link.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
-// import 'package:stipres/screens/features_student/widgets/cards/jadwal_card.dart';
 import 'package:stipres/styles/constant.dart';
 
 class DashboardScreenStudent extends StatelessWidget {
@@ -258,7 +257,7 @@ class DashboardScreenStudent extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 251, 193),
                                 onTap: () {
-                                      Get.toNamed("/student/presence-screen");
+                                  Get.toNamed("/student/presence-screen");
                                 },
                               ),
 
@@ -272,7 +271,7 @@ class DashboardScreenStudent extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 251, 232, 187),
                                 onTap: () {
-                                      Get.toNamed("/student/calendar-screen");
+                                  Get.toNamed("/student/calendar-screen");
                                 },
                               ),
 
@@ -302,7 +301,7 @@ class DashboardScreenStudent extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 191, 251),
                                 onTap: () {
-                                      Get.toNamed("/student/lecture-screen");
+                                  Get.toNamed("/student/lecture-screen");
                                 },
                               ),
                             ],
