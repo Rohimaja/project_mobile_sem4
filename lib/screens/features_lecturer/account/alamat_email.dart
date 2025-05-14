@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/ganti_email.dart';
+import 'package:stipres/screens/features_lecturer/account/ganti_email.dart';
 import 'package:stipres/styles/constant.dart';
 import 'package:flutter/gestures.dart';
 
@@ -175,7 +176,7 @@ Widget build(BuildContext context) {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('assets/icons/ic_back.png'),
+                      image: AssetImage('icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),

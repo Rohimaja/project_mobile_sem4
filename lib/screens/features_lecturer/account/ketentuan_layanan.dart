@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/styles/constant.dart';
 
-class KebijakanPrivasi extends StatelessWidget {
-  KebijakanPrivasi({Key? key}) : super(key: key);
+class KetentuanLayanan extends StatelessWidget {
+  KetentuanLayanan({Key? key}) : super(key: key);
   var height, width;
 
   @override
@@ -15,15 +15,15 @@ class KebijakanPrivasi extends StatelessWidget {
           children: [
             _buildHeader(context),
             Padding(
-              padding: const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 20),
+              padding: const EdgeInsets.only(top: 10, left: 23, right: 18, bottom: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Kebijakan Privasi",
-                    style: TextStyle  (
+                    "Ketentuan Layanan",
+                    style: GoogleFonts.poppins(
                       fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
@@ -82,8 +82,7 @@ class KebijakanPrivasi extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -91,14 +90,14 @@ class KebijakanPrivasi extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                   borderRadius: BorderRadius.circular(100),
                   customBorder: const CircleBorder(),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('assets/icons/ic_back.png'),
+                      image: AssetImage('icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),
@@ -108,7 +107,7 @@ class KebijakanPrivasi extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  "Kebijakan Privasi",
+                  "Ketentuan Layanan",
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,

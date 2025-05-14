@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/account_menu.dart';
+import 'package:stipres/screens/features_lecturer/account/account_menu.dart';
 import 'package:stipres/screens/features_student/account/bantuan.dart';
 import 'package:stipres/styles/constant.dart';
 
@@ -152,7 +152,7 @@ class _PengaturanState extends State<Pengaturan> {
                                         scale: 0.75,
                                         child: Switch(
                                           value: _isNotifOn,
-                                          onChanged: (bool newValue) {
+                                          onChanged: (bool newValue) {  
                                             setState(() {
                                               _isNotifOn = newValue;
                                             });
@@ -309,7 +309,7 @@ class _PengaturanState extends State<Pengaturan> {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('assets/icons/ic_back.png'),
+                      image: AssetImage('icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),

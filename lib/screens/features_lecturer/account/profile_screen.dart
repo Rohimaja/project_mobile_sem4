@@ -302,7 +302,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginScreen()),
+                                    builder: (context) => ViewProfilePage()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
@@ -347,16 +347,18 @@ class ProfileScreenLecturer extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            InkWell(
+                            onTap: () {
+                              Get.to(Pengaturan());
+                            },
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                    'assets/icons/ic_ketentuanlayanan.png',
-                                    height: 30,
-                                    width: 30),
+                                Image.asset('assets/icons/ic_settings.png',
+                                    height: 30, width: 30),
                                 SizedBox(width: 10),
-                                Text("Ketentuan Layanan",
+                                Text("Pengaturan",
                                     style: blackTextStyle.copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w800,
@@ -364,25 +366,8 @@ class ProfileScreenLecturer extends StatelessWidget {
                                     textAlign: TextAlign.center),
                               ],
                             ),
+                          ),
                             SizedBox(height: 20), // Jarak antar item
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                    'assets/icons/ic_kebijakanprivasi.png',
-                                    height: 30,
-                                    width: 30),
-                                SizedBox(width: 10),
-                                Text("Kebijakan Privasi",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
-                            ),
-                            SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,

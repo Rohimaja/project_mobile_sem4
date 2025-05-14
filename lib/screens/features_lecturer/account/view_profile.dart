@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/controllers/features_student/account/full_profile_controller.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
   var height, width;
-
-  final _controller = Get.put(FullProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +15,7 @@ class ViewProfilePage extends StatelessWidget {
         child: Column(
           children: [
             _buildHeader(context),
-            Obx(
-              () => _buildProfileForm(),
-            )
+            _buildProfileForm(),
           ],
     ),
   ),
@@ -50,8 +43,7 @@ class ViewProfilePage extends StatelessWidget {
               fit: BoxFit.cover, // agar penuh
             ),
           ),
-          padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 120),
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 120),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -59,14 +51,14 @@ class ViewProfilePage extends StatelessWidget {
                 color: Colors.transparent, // supaya ripple doang yang keliatan
                 child: InkWell(
                   onTap: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                   borderRadius: BorderRadius.circular(100),
                   customBorder: const CircleBorder(),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('assets/icons/ic_back.png'),
+                      image: AssetImage('icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),
@@ -131,7 +123,7 @@ class ViewProfilePage extends StatelessWidget {
                     ),
                     child: ClipOval(
                       child: Image.asset(
-                        "assets/images/foto_izzul.jpg",
+                        "assets/images/foto_aldo.jpg",
                         height: 110,
                         width: 110,
                         fit: BoxFit.cover,
@@ -141,29 +133,18 @@ class ViewProfilePage extends StatelessWidget {
                   Positioned(
                     bottom: 10,
                     right: 0,
-                    child: Material(
-                      color: Colors.transparent,
-                      shape: const CircleBorder(),
-                      child: InkWell(
-                        customBorder: const CircleBorder(),
-                        onTap: () {
-                          _controller.addImage();
-                        },
-                        child: Ink(
-                          width: 32,
-                          height: 32,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFF0D0063),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Image(
-                              image:
-                                  AssetImage("assets/icons/ic_addpicture.png"),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF0D0063),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Image(
+                          image: AssetImage("assets/icons/ic_addpicture.png"),
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
@@ -183,27 +164,25 @@ class ViewProfilePage extends StatelessWidget {
       padding: const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
       child: Column(
         children: [
-          _buildProfileItem("Full Name", _controller.storedFullName.value),
+          _buildProfileItem("Full Name", "Izzul Islam Ramadhan"),
           _buildDivider(),
-          _buildProfileItem("NIM", _controller.storedNim.value),
+          _buildProfileItem("NIM", "E4123125"),
           _buildDivider(),
-          _buildProfileItem("Email", _controller.storedEmail.value),
+          _buildProfileItem("Email", "izzul1232gamil.com"),
           _buildDivider(),
-          _buildProfileItem(
-              "Jenis Kelamin", _controller.storedJenisKelamin.value),
+          _buildProfileItem("Jenis Kelamin", "Lanang"),
           _buildDivider(),
-          _buildProfileItem("Agama", _controller.storedAgama.value),
+          _buildProfileItem("Agama", "Islam"),
           _buildDivider(),
-          _buildProfileItem(
-              "Tempat Tanggal Lahir", _controller.storedTempatTglLahir.value),
+          _buildProfileItem("Tempat Tanggal Lahir", "London, 30 Februari 2000"),
           _buildDivider(),
-          _buildProfileItem("Alamat", _controller.storedAlamat.value),
+          _buildProfileItem("Alamat", "Jember"),
           _buildDivider(),
-          _buildProfileItem("Semester", _controller.storedSemester.value),
+          _buildProfileItem("Semester", "3 (Tiga)"),
           _buildDivider(),
-          _buildProfileItem("Program Studi", _controller.storedProdi.value),
+          _buildProfileItem("Program Studi", "Sastra Mesin"),
           _buildDivider(),
-          _buildProfileItem("No. Telp", _controller.storedNoTelp.value),
+          _buildProfileItem("No. Telp", "085737283847"),
         ],
       ),
     );
@@ -215,8 +194,7 @@ class ViewProfilePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment
-              .start, // Agar baris sejajar di bagian atas secara vertikal
+          crossAxisAlignment: CrossAxisAlignment.start, // Agar baris sejajar di bagian atas secara vertikal
           children: [
             SizedBox(
               width: 150,
@@ -226,8 +204,7 @@ class ViewProfilePage extends StatelessWidget {
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                 ),
-                overflow: TextOverflow
-                    .ellipsis, // Tetap ada untuk label jika terlalu panjang
+                overflow: TextOverflow.ellipsis, // Tetap ada untuk label jika terlalu panjang
               ),
             ),
             const SizedBox(width: 10),

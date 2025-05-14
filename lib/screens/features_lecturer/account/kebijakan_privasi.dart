@@ -82,8 +82,7 @@ class KebijakanPrivasi extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -91,14 +90,14 @@ class KebijakanPrivasi extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                   borderRadius: BorderRadius.circular(100),
                   customBorder: const CircleBorder(),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('assets/icons/ic_back.png'),
+                      image: AssetImage('icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),
