@@ -57,7 +57,7 @@ class _CariDataScreenState extends State<CariDataScreen> {
               ),
               child: Row(
                 children: [
-                  Image.asset('icons/ic_document.png', height: 24),
+                  Image.asset('assets/icons/ic_document.png', height: 24),
                   const SizedBox(width: 10),
                   Text(
                     'Mohon isi data dibawah ini',

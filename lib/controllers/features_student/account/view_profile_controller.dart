@@ -1,13 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 import 'package:stipres/services/student/profile_mahasiswa_service.dart';
 
-class FullProfileController extends GetxController {
+class ViewProfileController extends GetxController {
   final storedFullName = ''.obs;
   final storedNim = ''.obs;
   final storedEmail = ''.obs;
@@ -19,11 +23,12 @@ class FullProfileController extends GetxController {
   final storedProdi = ''.obs;
   final storedNoTelp = ''.obs;
 
-  static const int maxSizeInBytes = 5 * 1024 * 1024;
+  static const int maxSizeInBytes = 2 * 1024 * 1024;
 
   final _box = GetStorage();
   final log = Logger();
   final ImagePicker pickedImage = ImagePicker();
+  final profilePic = Rxn<File>();
 
   final ProfileMahasiswaService profileMahasiswaService =
       ProfileMahasiswaService();
@@ -113,13 +118,17 @@ class FullProfileController extends GetxController {
         await pickedImage.pickImage(source: ImageSource.gallery);
     if (image != null) {
       final file = File(image.path);
-      int fileSize = await file.length();
+      final cropped = await cropImage(file);
+      if (cropped == null) return;
+      final compressed = await compressImage(cropped);
 
+      int fileSize = await compressed.length();
       if (fileSize > maxSizeInBytes) {
-        Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+        Get.snackbar("Error", "Ukuran gambar melebihi 2MB");
         return;
       }
-      // bukti.value = File(image.path);
+      profilePic.value = compressed;
+      uploadProfilePic(compressed);
     }
   }
 
@@ -129,21 +138,72 @@ class FullProfileController extends GetxController {
           await pickedImage.pickImage(source: ImageSource.camera);
       if (image != null) {
         final file = File(image.path);
-        int fileSize = await file.length();
+        final cropped = await cropImage(file);
+        if (cropped == null) return;
+
+        final compressed = await compressImage(cropped);
+        int fileSize = await compressed.length();
 
         if (fileSize > maxSizeInBytes) {
-          Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+          Get.snackbar("Error", "Ukuran gambar melebihi 2MB");
           return;
         }
-
-        // bukti.value = File(image.path);
+        profilePic.value = compressed;
+        uploadProfilePic(compressed);
       }
     } catch (e) {
       Get.snackbar("Gagal", "Kamera tidak tersedia: $e");
     }
   }
 
-  void addImage() {
+  Future<File?> cropImage(File file) async {
+    final cropped = await ImageCropper().cropImage(
+        sourcePath: file.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Pangkas Gambar",
+              hideBottomControls: true,
+              lockAspectRatio: true),
+          IOSUiSettings(aspectRatioLockEnabled: true)
+        ]);
+    return cropped != null ? File(cropped.path) : null;
+  }
+
+  Future<File> compressImage(File file) async {
+    final dir = await getTemporaryDirectory();
+    final targetPath = path.join(dir.path, 'temp.jpg');
+
+    final XFile? compressedFile = await FlutterImageCompress.compressAndGetFile(
+        file.absolute.path, targetPath,
+        quality: 70, format: CompressFormat.jpeg);
+
+    if (compressedFile == null) {
+      throw Exception("Gagal mengompresi gambar");
+    }
+    return File(compressedFile.path);
+  }
+
+  Future<void> uploadProfilePic(File? profilePicture) async {
+    try {
+      int mahasiswaId = _box.read("mahasiswa_id");
+
+      final result =
+          await profileMahasiswaService.sendImage(mahasiswaId, profilePicture);
+      if (result.status == "success") {
+        Get.back();
+        Get.back();
+        Get.snackbar("Berhasil", result.message,
+            duration: Duration(seconds: 1));
+      } else {
+        Get.snackbar("Error", "$result.message");
+      }
+    } catch (e) {
+      log.e("Error: $e");
+    }
+  }
+
+  void showFileOptions() {
     Get.bottomSheet(Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(

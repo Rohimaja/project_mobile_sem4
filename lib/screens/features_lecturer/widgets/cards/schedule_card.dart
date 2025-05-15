@@ -39,7 +39,7 @@ class ScheduleCardLecturer extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
-                  'images/abstract_body.png',
+                  'assets/images/abstract_body.png',
                   fit: BoxFit.cover,
                 ),
               ),

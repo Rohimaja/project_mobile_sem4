@@ -1,3 +1,3 @@
 class ApiManager {
-  static const String globalUrl = "http://192.168.0.17/tes/v2/";
+  static const String globalUrl = "http://192.168.0.16/tes/v2/";
 }

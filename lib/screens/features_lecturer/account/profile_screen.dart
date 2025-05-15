@@ -47,7 +47,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'images/Logo_PantiWaluya.png',
+                          'assets/images/Logo_PantiWaluya.png',
                           height: 30,
                           width: 30,
                         ),
@@ -127,7 +127,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                               ),
                               child: ClipOval(
                                 child: Image.asset(
-                                  "images/foto_aldo.jpg",
+                                  "assets/images/foto_aldo.jpg",
                                   height: 90,
                                   width: 90,
                                   fit: BoxFit.cover,
@@ -148,7 +148,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8),
                                   child: Image.asset(
-                                    "icons/ic_addpicture.png", // Pastikan path ini sesuai
+                                    "assets/icons/ic_addpicture.png", // Pastikan path ini sesuai
                                     fit: BoxFit.contain,
                                   ),
                                 ),
