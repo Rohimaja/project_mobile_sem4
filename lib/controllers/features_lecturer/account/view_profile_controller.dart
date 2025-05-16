@@ -9,6 +9,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
+import 'package:stipres/constants/api.dart';
+import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
 import 'package:stipres/services/lecturer/profile_lecturer_service.dart';
 
 class ViewProfileController extends GetxController {
@@ -18,9 +20,25 @@ class ViewProfileController extends GetxController {
   final log = Logger();
   final ImagePicker pickedImage = ImagePicker();
   final profilePic = Rxn<File>();
+  var storedProfiles = ''.obs;
+  final url = ApiConstants.pathProfile;
+
+  final conDashboard = Get.find<DashboardController>();
 
   final ProfileLecturerService profileLecturerService =
       ProfileLecturerService();
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadHeader();
+  }
+
+  void loadHeader() {
+    String profile = _box.read('foto');
+    storedProfiles.value = profile.isNotEmpty ? "$url$profile" : "";
+    log.e("Profile: ${storedProfiles.value}");
+  }
 
   Future<void> getImageFromGallery() async {
     final XFile? image =
@@ -100,8 +118,15 @@ class ViewProfileController extends GetxController {
 
       final result =
           await profileLecturerService.sendImage(dosenId, profilePicture);
-      if (result.status == "success") {
-        Get.back();
+      if (result.status == "success" && result.data != null) {
+        String? foto = result.data;
+        _box.write('foto', foto);
+        log.f(foto);
+
+        conDashboard.storedProfile.value = "${ApiConstants.pathProfile}$foto";
+        conDashboard.storedProfile.refresh();
+        Get.find<DashboardController>().loadHeader();
+
         Get.back();
         Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));

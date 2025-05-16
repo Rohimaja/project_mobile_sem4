@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/lecture_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/lecture_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class LectureScreen extends StatefulWidget {
   const LectureScreen({super.key});

@@ -5,10 +5,10 @@ import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/student/rekap_model.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 
 class RekapMahasiswaService extends GetxService {
-  final String _baseUrl = "${ApiManager.globalUrl}listview/getRekap.php";
+  final String _baseUrl = "${ApiConstants.globalUrl}listview/getRekap.php";
 
   var log = Logger();
 

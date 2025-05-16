@@ -5,11 +5,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 import 'package:http/http.dart' as http;
 
 class LoginService extends GetxService {
-  final String _baseURL = "${ApiManager.globalUrl}auth/login.php";
+  final String _baseURL = "${ApiConstants.globalUrl}auth/login.php";
   final GetStorage _box = GetStorage();
 
   var logger = Logger(printer: PrettyPrinter(methodCount: 0));
@@ -36,6 +36,7 @@ class LoginService extends GetxService {
           _box.write("id_prodi", data['prodi_id']);
           _box.write("nama_prodi", data['nama_prodi']);
           _box.write("semester", data['semester']);
+          _box.write("foto", data['foto']);
           _box.write("role", "mahasiswa");
 
           logger.d(_box.read("id_prodi"));
@@ -65,6 +66,7 @@ class LoginService extends GetxService {
           _box.write("dosen_id", data['dosen_id']);
           _box.write("user_nama", data['nama']);
           _box.write("user_email", data['email']);
+          _box.write("foto", data['foto']);
           _box.write("role", data['role']);
 
           logger.d(body);

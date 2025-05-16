@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_lecturer/models/attendance/attendance_content_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/attendance/attendance_content_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class AttendanceContentScreen extends StatefulWidget {
   const AttendanceContentScreen({super.key});

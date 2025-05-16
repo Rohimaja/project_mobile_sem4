@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stipres/controllers/auth/forget_password_step1_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ForgetPassword1 extends StatelessWidget {
   ForgetPassword1({super.key});

@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/basic_response.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 
 class ForgetPasswordService extends GetxService {
-  final String _baseURL = "${ApiManager.globalUrl}auth/ForgetPassword.php";
+  final String _baseURL = "${ApiConstants.globalUrl}auth/ForgetPassword.php";
   final GetStorage _box = GetStorage();
-  final global = ApiManager.globalUrl;
+  final global = ApiConstants.globalUrl;
 
   var logger = Logger();
 

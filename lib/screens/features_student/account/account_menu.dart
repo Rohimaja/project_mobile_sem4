@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart';
 import 'package:stipres/screens/features_student/account/sidik_jari.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class Akun extends StatelessWidget {
   Akun({Key? key}) : super(key: key);

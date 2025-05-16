@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stipres/controllers/auth/forget_password_step2_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ForgetPassword2 extends StatelessWidget {
   ForgetPassword2({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ActivationAccount1 extends StatelessWidget {
   const ActivationAccount1({super.key});

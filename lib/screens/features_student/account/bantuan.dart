@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart';
 import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class Bantuan extends StatelessWidget {
   Bantuan({Key? key}) : super(key: key);

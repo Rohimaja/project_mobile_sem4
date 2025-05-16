@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stipres/controllers/auth/login_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

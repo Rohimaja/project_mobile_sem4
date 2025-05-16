@@ -4,7 +4,7 @@ import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/course_detail_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ScheduleCardLecturer extends StatelessWidget {
   final JadwalModelApi jadwal;
@@ -20,7 +20,7 @@ class ScheduleCardLecturer extends StatelessWidget {
         Row(
           children: [
             Image.asset(
-              'icons/ic_clock.png',
+              'assets/icons/ic_clock.png',
               height: 20,
               width: 20,
             ),
@@ -169,7 +169,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(
-                              'icons/ic_location.png',
+                              'assets/icons/ic_location.png',
                               height: 16,
                               width: 16,
                             ),
@@ -185,7 +185,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(
-                              'icons/ic_duration.png',
+                              'assets/icons/ic_duration.png',
                               height: 16,
                               width: 16,
                             ),

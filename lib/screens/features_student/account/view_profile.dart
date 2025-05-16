@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/account/view_profile_controller.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
   var height, width;
 
-  final _controller = Get.put(ViewProfileController());
+  final _controller = Get.put(StudentViewProfileController());
 
   @override
   Widget build(BuildContext context) {

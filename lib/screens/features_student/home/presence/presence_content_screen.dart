@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
-import 'package:stipres/screens/features_student/models/presence/presenceContent_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/presence/presenceContent_card.dart';
-import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/controllers/features_student/home/presence_content_controller.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class PresenceContentScreen extends StatefulWidget {
   PresenceContentScreen({super.key});

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
-import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/screens/features_lecturer/account/pengaturan.dart';
 import 'package:stipres/screens/features_lecturer/account/view_profile.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ProfileScreenLecturer extends StatelessWidget {
   ProfileScreenLecturer({Key? key}) : super(key: key);
@@ -17,6 +16,7 @@ class ProfileScreenLecturer extends StatelessWidget {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Color.fromARGB(
           255, 237, 235, 251), // Set background putih ke seluruh layar
@@ -37,7 +37,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                         bottomLeft: Radius.circular(40),
                       ),
                       image: DecorationImage(
-                        image: AssetImage('images/bgheader.png'),
+                        image: AssetImage('assets/images/bgheader.png'),
                         fit: BoxFit.cover, // agar penuh
                       ),
                     ),
@@ -125,14 +125,30 @@ class ProfileScreenLecturer extends StatelessWidget {
                                 color: Color.fromARGB(255, 237, 235, 251),
                                 shape: BoxShape.circle,
                               ),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  "assets/images/foto_aldo.jpg",
-                                  height: 90,
-                                  width: 90,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              child: ClipOval(child: Obx(() {
+                                final foto = _controller.storedProfile.value;
+                                return (foto.isNotEmpty)
+                                    ? Image.network(
+                                        foto,
+                                        height: 90,
+                                        width: 90,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, url, error) {
+                                          return Image.asset(
+                                            "assets/images/foto_aldo.jpg",
+                                            height: 90,
+                                            width: 90,
+                                            fit: BoxFit.cover,
+                                          );
+                                        },
+                                      )
+                                    : Image.asset(
+                                        "assets/images/foto_aldo.jpg",
+                                        height: 90,
+                                        width: 90,
+                                        fit: BoxFit.cover,
+                                      );
+                              })),
                             ),
                             // Ikon tambah foto
                             Positioned(

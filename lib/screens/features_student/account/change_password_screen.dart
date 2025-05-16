@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/main.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ChangePassword extends StatelessWidget {
   @override

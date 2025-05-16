@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/controllers/features_student/home/rekap_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/attendance_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class AttendanceScreen extends StatefulWidget {
   AttendanceScreen({super.key});

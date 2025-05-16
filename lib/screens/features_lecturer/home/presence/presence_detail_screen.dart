@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/home/attendance/search_attendance_screen.dart';
 import 'package:stipres/screens/features_lecturer/models/presence/course_presence_detail_model.dart';
 import 'package:stipres/screens/features_lecturer/models/presence/presence_detail_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/presence/presence_detail_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class PresenceDetailScreen extends StatefulWidget {
   const PresenceDetailScreen({super.key});

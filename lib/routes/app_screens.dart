@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:stipres/bindings/features_lecturer/presence_detail_binding.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart' as student;
 import 'package:stipres/bindings/features_lecturer/base_binding.dart';
 import 'package:stipres/bindings/features_lecturer/dashboard_binding.dart';
@@ -15,6 +16,7 @@ import 'package:stipres/screens/auth/forget_password_screen_1.dart';
 import 'package:stipres/screens/auth/forget_password_screen_2.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart'
     as student;
 import 'package:stipres/screens/features_student/account/bantuan.dart';
@@ -56,6 +58,10 @@ class AppScreens {
           LecturerDashboardBinding(),
           LecturerProfileBinding()
         ]),
+    GetPage(
+        name: "/lecturer/presence-detail-screen",
+        page: () => PresenceDetailScreen(),
+        binding: PresenceDetailBinding()),
     GetPage(
         name: "/student/base-screen",
         page: () => student.BaseScreen(),

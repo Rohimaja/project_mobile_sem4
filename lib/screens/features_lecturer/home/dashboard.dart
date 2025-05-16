@@ -13,7 +13,7 @@ import 'package:stipres/screens/features_lecturer/widgets/cards/schedule_card.da
 import 'package:stipres/screens/features_lecturer/widgets/cards/weeklyCalendar_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/allSchedule_link.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/calendar_link.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class DashboardScreenLecturer extends StatelessWidget {
   DashboardScreenLecturer({super.key});
@@ -177,14 +177,29 @@ class DashboardScreenLecturer extends StatelessWidget {
                             color: mainColor,
                             shape: BoxShape.circle,
                           ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              "assets/images/foto_aldo.jpg",
-                              height: 70,
-                              width: 70,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                          child: ClipOval(child: Obx(() {
+                            final imageUrl = _controller.storedProfile.value;
+                            return (imageUrl.isNotEmpty)
+                                ? Image.network(
+                                    imageUrl,
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, url, error) =>
+                                        Image.asset(
+                                      "assets/images/foto_aldo.jpg",
+                                      height: 70,
+                                      width: 70,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : Image.asset(
+                                    "assets/images/foto_aldo.jpg",
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                  );
+                          })),
                         ),
                         const SizedBox(width: 10),
                         Obx(() {

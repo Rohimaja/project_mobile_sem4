@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/models/allSchedule_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/allSchedule_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class AllScheduleScreen extends StatefulWidget {
   const AllScheduleScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_lecturer/account/account_menu.dart';
 import 'package:stipres/screens/features_student/account/bantuan.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class Pengaturan extends StatefulWidget {
   Pengaturan({Key? key}) : super(key: key);

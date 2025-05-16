@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_lecturer/models/lecture_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class LectureContentScreen extends StatefulWidget {
   const LectureContentScreen({super.key});

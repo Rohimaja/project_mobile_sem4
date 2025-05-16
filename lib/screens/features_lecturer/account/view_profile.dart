@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/view_profile_controller.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
@@ -30,6 +30,7 @@ class ViewProfilePage extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+    _controller.loadHeader();
     return SizedBox(
       height: 230,
       child: Stack(
@@ -128,14 +129,29 @@ class ViewProfilePage extends StatelessWidget {
                         color: Color.fromARGB(255, 237, 235, 251),
                         shape: BoxShape.circle,
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          "assets/images/foto_aldo.jpg",
-                          height: 110,
-                          width: 110,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      child: ClipOval(child: Obx(() {
+                        final imageUrl = _controller.storedProfiles.value;
+                        return (imageUrl.isNotEmpty)
+                            ? Image.network(
+                                imageUrl,
+                                height: 110,
+                                width: 110,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, url, error) =>
+                                    Image.asset(
+                                  "assets/images/foto_aldo.jpg",
+                                  height: 110,
+                                  width: 110,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Image.asset(
+                                "assets/images/foto_aldo.jpg",
+                                height: 110,
+                                width: 110,
+                                fit: BoxFit.cover,
+                              );
+                      })),
                     ),
                     Positioned(
                       bottom: 10,

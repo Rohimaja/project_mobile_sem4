@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
 import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class JadwalCard extends StatelessWidget {
   final JadwalModelApi jadwal;

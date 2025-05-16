@@ -5,10 +5,10 @@ import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:stipres/models/student/presensi_model.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 
 class PresensiMahasiswaService extends GetxService {
-  final String _baseUrl = "${ApiManager.globalUrl}listview/getPresensi.php";
+  final String _baseUrl = "${ApiConstants.globalUrl}listview/getPresensi.php";
 
   var log = Logger();
 

@@ -11,7 +11,7 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:stipres/services/student/profile_mahasiswa_service.dart';
 
-class ViewProfileController extends GetxController {
+class StudentViewProfileController extends GetxController {
   final storedFullName = ''.obs;
   final storedNim = ''.obs;
   final storedEmail = ''.obs;
@@ -196,7 +196,7 @@ class ViewProfileController extends GetxController {
         Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));
       } else {
-        Get.snackbar("Error", "$result.message");
+        Get.snackbar("Error", result.message);
       }
     } catch (e) {
       log.e("Error: $e");

@@ -1,18 +1,22 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:stipres/constants/api.dart';
 import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/services/lecturer/dashboard_lecturer_service.dart';
 
 class DashboardController extends GetxController {
   final storedName = ''.obs;
   final storedNip = ''.obs;
+  var storedProfile = ''.obs;
   final _box = GetStorage();
 
   final statusOffline = false.obs;
   Logger log = Logger();
   var jadwalList = <JadwalModelApi>[].obs;
   var errorMessage = ''.obs;
+
+  final url = ApiConstants.pathProfile;
 
   final DashboardLecturerService dashboardLecturerService =
       DashboardLecturerService();
@@ -26,10 +30,23 @@ class DashboardController extends GetxController {
   void loadHeader() {
     String? nama = _box.read("user_nama");
     String? nip = _box.read("user_nip");
-    log.d(_box.read("user_nama"));
-    log.d(_box.read("user_nip"));
+    String profile = _box.read("foto") ?? "";
+
     storedName.value = nama ?? "No name found";
     storedNip.value = nip ?? "No name found";
+
+    if (profile.isNotEmpty) {
+      if (profile.startsWith('http')) {
+        storedProfile.value = profile; // full URL
+      } else {
+        storedProfile.value = "$url$profile"; // path relatif + base URL
+      }
+    } else {
+      storedProfile.value = "";
+    }
+
+    log.f("fetch header");
+    log.d("Profile: ${storedProfile.value}");
   }
 
   Future<void> fetchSchedule() async {
@@ -63,6 +80,15 @@ class DashboardController extends GetxController {
       }
     } catch (e) {
       log.e("Error: $e");
+    }
+  }
+
+  void buttonAction(JadwalModelApi jadwal) {
+    if (jadwal.lokasi == '') {
+      Get.toNamed("lecturer/presence-content-screen",
+          arguments: [jadwal.presensiId, jadwal.presensisId]);
+    } else {
+      Get.toNamed("/lecturer/offline-screen");
     }
   }
 }

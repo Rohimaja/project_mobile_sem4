@@ -8,7 +8,7 @@ import 'package:stipres/screens/features_student/widgets/cards/weekly_calendar_c
 import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
 import 'package:stipres/screens/features_student/widgets/link/calendar_link.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class DashboardScreenStudent extends StatelessWidget {
   DashboardScreenStudent({super.key});

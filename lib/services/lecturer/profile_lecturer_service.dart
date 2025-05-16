@@ -8,16 +8,16 @@ import 'package:http_parser/http_parser.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:stipres/models/basic_response.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/models/base_response.dart';
+import 'package:stipres/constants/api.dart';
 
 class ProfileLecturerService extends GetxService {
-  final String _baseURL = "${ApiManager.globalUrl}activity/viewProfile.php";
-  final global = ApiManager.globalUrl;
+  final String _baseURL = "${ApiConstants.globalUrl}activity/viewProfile.php";
+  final global = ApiConstants.globalUrl;
 
   var log = Logger();
 
-  Future<BasicResponse> sendImage(int dosenId, File? profilePic) async {
+  Future<BaseResponse<String>> sendImage(int dosenId, File? profilePic) async {
     try {
       final url = Uri.parse("${global}activity/upProfileImage.php");
       final request = http.MultipartRequest('POST', url)
@@ -52,10 +52,13 @@ class ProfileLecturerService extends GetxService {
 
       final body = jsonDecode(respStr.body);
 
-      return BasicResponse.fromJson(body);
+      return BaseResponse<String>.fromJson(
+        body,
+        (data) => data['foto'],
+      );
     } catch (e) {
       log.e("Error: $e");
-      return BasicResponse(status: "error", message: "Terjadi kesalahan: $e");
+      return BaseResponse(status: "error", message: "Terjadi kesalahan: $e");
     }
   }
 }

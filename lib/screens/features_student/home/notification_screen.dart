@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/models/notification_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/notification_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});

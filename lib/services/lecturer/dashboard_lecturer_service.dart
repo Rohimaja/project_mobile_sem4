@@ -5,12 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/jadwal_model.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 
 class DashboardLecturerService extends GetxService {
   final String _baseURL =
-      "${ApiManager.globalUrl}listview/getLessonLecturer.php";
-  final global = ApiManager.globalUrl;
+      "${ApiConstants.globalUrl}listview/getLessonLecturer.php";
+  final global = ApiConstants.globalUrl;
 
   var log = Logger();
 
