@@ -337,29 +337,29 @@ class ProfilePage extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Container(
-                        width: width,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
+                      width: width,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: whiteColor,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
                             onTap: () {
                               Get.to(Pengaturan());
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset('assets/icons/ic_settings.png',
                                     height: 30, width: 30),
@@ -373,10 +373,14 @@ class ProfilePage extends StatelessWidget {
                               ],
                             ),
                           ),
-                            SizedBox(height: 20), // Jarak antar item
-                            Row(
+                          SizedBox(height: 20), // Jarak antar item
+                          InkWell(
+                            onTap: () {
+                              print("ganti password");
+                            },
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset('assets/icons/ic_gantipassword.png',
                                     height: 30, width: 30),
@@ -389,8 +393,10 @@ class ProfilePage extends StatelessWidget {
                                     textAlign: TextAlign.center),
                               ],
                             ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,

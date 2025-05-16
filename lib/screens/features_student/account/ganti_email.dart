@@ -129,7 +129,7 @@ Widget build(BuildContext context) {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('icons/ic_back.png'),
+                      image: AssetImage('assets/icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),

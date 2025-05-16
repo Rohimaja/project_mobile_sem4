@@ -26,7 +26,6 @@ class Akun extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 15),
                   Container(
                     width: width,
                     child: Column(
@@ -63,7 +62,7 @@ class Akun extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 15),
                         InkWell(
                           onTap: () {
                             Get.to(SidikJari());
@@ -142,7 +141,7 @@ class Akun extends StatelessWidget {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('icons/ic_back.png'),
+                      image: AssetImage('assets/icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),
@@ -168,27 +167,46 @@ class Akun extends StatelessWidget {
         Positioned(
           bottom: -44,
           right: 0,
-          child: Container(
-            width: 40,
-            height: 44,
-            color: blueColor,
-          ),
-        ),
-        Positioned(
-          bottom: -45,
-          right: 0,
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
-              ),
+          child: ClipPath(
+            clipper: InvertedQuarterCircleClipper(),
+            child: Container(
+              width: 40,
+              height: 44,
+              color:
+                  Color.fromARGB(255, 30, 136, 228), // warna abu sesuai gambar
             ),
           ),
         ),
       ],
     );
   }
+}
+
+class InvertedQuarterCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    // Mulai dari sudut kiri atas
+    path.moveTo(0, 0);
+
+    // Garis ke sudut kanan atas
+    path.lineTo(size.width, 0);
+
+    // Garis ke sudut kanan bawah
+    path.lineTo(size.width, size.height);
+
+    // Arc dari sudut kanan bawah ke kiri atas
+    path.arcToPoint(
+      Offset(0, 0),
+      radius: Radius.circular(size.width),
+      clockwise: false,
+    );
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

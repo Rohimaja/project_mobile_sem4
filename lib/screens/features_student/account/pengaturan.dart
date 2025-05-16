@@ -51,12 +51,11 @@ class _PengaturanState extends State<Pengaturan> {
                           onTap: () {
                             Get.to(Akun());
                           },
-                          borderRadius: BorderRadius.circular(
-                              10), // opsional, supaya ripple-nya lebih bagus
+                          borderRadius: BorderRadius.circular(10), // opsional, supaya ripple-nya lebih bagus
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical:
-                                    12.0), // ⬅️ memperluas area klik secara vertikal
+                                vertical:12.0,
+                                horizontal: 4.0), // ⬅️ memperluas area klik secara vertikal
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -111,7 +110,9 @@ class _PengaturanState extends State<Pengaturan> {
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 4.0),
                             child: Row(
                               children: [
                                 Image.asset('assets/icons/ic_notification.png',
@@ -146,8 +147,7 @@ class _PengaturanState extends State<Pengaturan> {
                                     alignment: Alignment.centerRight,
                                     child: Container(
                                       margin: const EdgeInsets.only(
-                                          left:
-                                              20), // Ganti angkanya sesuai kebutuhan
+                                          left:100), // Ganti angkanya sesuai kebutuhan
                                       child: Transform.scale(
                                         scale: 0.75,
                                         child: Switch(
@@ -180,7 +180,9 @@ class _PengaturanState extends State<Pengaturan> {
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal: 4.0),
                             child: Row(
                               children: [
                                 Image.asset('assets/icons/ic_personalisasi.png',
@@ -218,7 +220,9 @@ class _PengaturanState extends State<Pengaturan> {
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal: 4.0),
                             child: Row(
                               children: [
                                 Image.asset('assets/icons/ic_help.png',
@@ -309,7 +313,7 @@ class _PengaturanState extends State<Pengaturan> {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('icons/ic_back.png'),
+                      image: AssetImage('assets/icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),

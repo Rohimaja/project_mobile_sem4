@@ -68,6 +68,7 @@ Widget build(BuildContext context) {
                     Expanded(
                       child: TextField(
                         keyboardType: TextInputType.emailAddress,
+                        enabled: false,
                         decoration: InputDecoration(
                           hintText: "johndoe@gmail.com",
                           prefixIcon: Icon(Icons.mail, color: Colors.grey,),
@@ -176,7 +177,7 @@ Widget build(BuildContext context) {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('icons/ic_back.png'),
+                      image: AssetImage('assets/assets/'),
                       height: 18,
                       width: 18,
                     ),

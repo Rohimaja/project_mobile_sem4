@@ -56,7 +56,7 @@ Widget build(BuildContext context) {
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 4),
                 Text(
                   "Sidik Jari",
                   style: TextStyle(
@@ -65,7 +65,7 @@ Widget build(BuildContext context) {
                     color: Color.fromARGB(255, 30, 136, 228),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 4),
                 Container(
                   width: width,
                   child: Column(
@@ -83,48 +83,38 @@ Widget build(BuildContext context) {
                           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
                           child: Row(
                             children: [
-                              Image.asset('assets/icons/ic_fingerprint2.png', height: 30, width: 30),
-                              const SizedBox(width: 10),
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      "Notifikasi",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
+                                child: Row(
+                                  children: [
+                                    Image.asset('assets/icons/ic_fingerprint2.png', height: 30, width: 30),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Text(
+                                        "Login dengan sidik jari",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                        overflow: TextOverflow.ellipsis, // Tambahkan jika perlu memotong teks panjang
                                       ),
                                     ),
-                                    Text(
-                                      "Pengingat notifikasi",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        color: Color.fromARGB(255, 161, 161, 161),
-                                        fontWeight: FontWeight.w800,
+                                    const SizedBox(width: 10),
+                                    Transform.scale(
+                                      scale: 0.75,
+                                      child: Switch(
+                                        value: _isNotifOn,
+                                        onChanged: (bool newValue) {
+                                          setState(() {
+                                            _isNotifOn = newValue;
+                                          });
+                                        },
+                                        activeColor: Color.fromARGB(255, 30, 136, 228),
+                                        activeTrackColor: Color.fromARGB(255, 189, 222, 251),
+                                        inactiveThumbColor: Colors.grey,
+                                        inactiveTrackColor: Color.fromARGB(255, 224, 224, 224),
                                       ),
                                     ),
                                   ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Transform.scale(
-                                    scale: 0.75,
-                                    child: Switch(
-                                      value: _isNotifOn,
-                                      onChanged: (bool newValue) {
-                                        setState(() {
-                                          _isNotifOn = newValue;
-                                        });
-                                      },
-                                      activeColor: Color.fromARGB(255, 30, 136, 228),
-                                      activeTrackColor: Color.fromARGB(255, 189, 222, 251),
-                                      inactiveThumbColor: Colors.grey,
-                                      inactiveTrackColor: Color.fromARGB(255, 224, 224, 224),
-                                    ),
-                                  ),
                                 ),
                               ),
                             ],
@@ -178,7 +168,7 @@ Widget build(BuildContext context) {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('icons/ic_back.png'),
+                      image: AssetImage('assets/icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),

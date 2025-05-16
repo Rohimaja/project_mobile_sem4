@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/features_student/account/profile_screen.dart';
 import 'package:stipres/styles/constant.dart';
 
 class ViewProfilePage extends StatelessWidget {
@@ -7,58 +8,63 @@ class ViewProfilePage extends StatelessWidget {
   var height, width;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-      color: Color.fromARGB(255, 237, 235, 251), 
-      child: SingleChildScrollView(
-        child: Column(
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: const Color.fromARGB(255, 237, 235, 251),
+    body: Stack(
+      children: [
+        // Header di bawah
+        Column(
           children: [
             _buildHeader(context),
+            const SizedBox(height: 20), // agar tidak tabrakan dengan profilePicture
             _buildProfileForm(),
           ],
-    ),
-  ),
-),
+        ),
 
-    );
-  }
+        // Foto profil di atas, posisi dipotong setengah
+        Positioned(
+          top: 110, // atur posisi agar setengah berada di header
+          left: 0,
+          right: 0,
+          child: _buildProfilePicture(),
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildHeader(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          width: width,
-          height: 170,
-          decoration: BoxDecoration(
-            color: blueColor,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-            ),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/bgheader.png'),
-              fit: BoxFit.cover, // agar penuh
-            ),
+  return Stack(
+    clipBehavior: Clip.none, // agar Positioned bisa keluar dari boundary container
+    children: [
+      Container(
+        height: 170,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: blueColor,
+          image: const DecorationImage(
+            image: AssetImage('assets/images/bgheader.png'),
+            fit: BoxFit.cover,
           ),
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(40),
+          ),
+        ),
+        child: Padding(
           padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 120),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Material(
-                color: Colors.transparent, // supaya ripple doang yang keliatan
+                color: Colors.transparent,
                 child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                  onTap: () => Navigator.pop(context),
                   borderRadius: BorderRadius.circular(100),
-                  customBorder: const CircleBorder(),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('icons/ic_back.png'),
+                      image: AssetImage('assets/icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),
@@ -74,99 +80,102 @@ class ViewProfilePage extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     color: Colors.white,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
         ),
-        Positioned(
-          bottom: -44,
-          right: 0,
-          child: Container(
-            width: 40,
-            height: 44,
-            decoration: BoxDecoration(
-              color: blueColor,
+      ),
+
+      // Aksen 1 (ungu muda)
+      Positioned(
+        bottom: -44,
+        right: 0,
+        child: Container(
+          width: 40,
+          height: 44,
+          decoration: BoxDecoration(
+            color: blueColor,
+          ),
+        ),
+      ),
+
+      // Aksen 2 (melengkung ke background luar)
+      Positioned(
+        bottom: -45,
+        right: 0,
+        child: Container(
+          width: 45,
+          height: 45,
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 237, 235, 251),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(40),
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+
+Widget _buildProfilePicture() {
+  return Center(
+    child: Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(2),
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 237, 235, 251),
+            shape: BoxShape.circle,
+          ),
+          child: ClipOval(
+            child: Image.asset(
+              "assets/images/foto_izzul.jpg",
+              height: 110,
+              width: 110,
+              fit: BoxFit.cover,
             ),
           ),
         ),
         Positioned(
-          bottom: -45,
+          bottom: 0,
           right: 0,
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
+          child: GestureDetector(
+            onTap: () {
+              print("add image on tapped");
+            },
+            child: Container(
+              width: 32,
+              height: 32,
+              decoration: const BoxDecoration(
+                color: Color(0xFF0D0063),
+                shape: BoxShape.circle,
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8),
+                child: Image(
+                  image: AssetImage("assets/icons/ic_addpicture.png"),
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-        ),
-        Positioned(
-          top: 117,
-          left: 0,
-          right: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(2),
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 237, 235, 251),
-                      shape: BoxShape.circle,
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        "assets/images/foto_izzul.jpg",
-                        height: 110,
-                        width: 110,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 10,
-                    right: 0,
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF0D0063),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Image(
-                          image: AssetImage("assets/icons/ic_addpicture.png"),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-            ],
           ),
         ),
       ],
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildProfileForm() {
     return Padding(
       padding: const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
       child: Column(
         children: [
-          _buildProfileItem("Full Name", "Izzul Islam Ramadhan"),
+          _buildProfileItem("Nama", "Izzul Islam Ramadhan"),
           _buildDivider(),
-          _buildProfileItem("NIM", "E4123125"),
+          _buildProfileItem("NIM", "E41231123"),
           _buildDivider(),
           _buildProfileItem("Email", "izzul1232gamil.com"),
           _buildDivider(),
@@ -174,11 +183,11 @@ class ViewProfilePage extends StatelessWidget {
           _buildDivider(),
           _buildProfileItem("Agama", "Islam"),
           _buildDivider(),
-          _buildProfileItem("Tempat Tanggal Lahir", "London, 30 Februari 2000"),
+          _buildProfileItem("Tempat Tanggal Lahir", "Jember, 30 Februari 2003"),
           _buildDivider(),
           _buildProfileItem("Alamat", "Jember"),
           _buildDivider(),
-          _buildProfileItem("Semester", "3 (Tiga)"),
+          _buildProfileItem("Semester", "4 (Empat)"),
           _buildDivider(),
           _buildProfileItem("Program Studi", "Sastra Mesin"),
           _buildDivider(),
@@ -194,7 +203,8 @@ class ViewProfilePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Agar baris sejajar di bagian atas secara vertikal
+          crossAxisAlignment: CrossAxisAlignment
+              .start, // Agar baris sejajar di bagian atas secara vertikal
           children: [
             SizedBox(
               width: 150,
@@ -204,7 +214,8 @@ class ViewProfilePage extends StatelessWidget {
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                 ),
-                overflow: TextOverflow.ellipsis, // Tetap ada untuk label jika terlalu panjang
+                overflow: TextOverflow
+                    .ellipsis, // Tetap ada untuk label jika terlalu panjang
               ),
             ),
             const SizedBox(width: 10),

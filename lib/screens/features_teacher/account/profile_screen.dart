@@ -132,26 +132,6 @@ class ProfilePage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            // Ikon tambah foto
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF0D0063),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Image.asset(
-                                    "icons/ic_addpicture.png", // Pastikan path ini sesuai
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ],
@@ -342,40 +322,47 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
-                            onTap: () {
-                              Get.to(Pengaturan());
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_settings.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Pengaturan",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
+                              onTap: () {
+                                Get.to(Pengaturan());
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset('assets/icons/ic_settings.png',
+                                      height: 30, width: 30),
+                                  SizedBox(width: 10),
+                                  Text("Pengaturan",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
                             ),
-                          ),
                             SizedBox(height: 20), // Jarak antar item
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_gantipassword.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Ganti Password",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                print("ganti password");
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      'assets/icons/ic_gantipassword.png',
+                                      height: 30,
+                                      width: 30),
+                                  SizedBox(width: 10),
+                                  Text("Ganti Password",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
                             ),
                           ],
                         )),
