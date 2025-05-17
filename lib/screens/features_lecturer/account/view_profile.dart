@@ -8,7 +8,7 @@ class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
   var height, width;
 
-  final _controller = Get.put(ViewProfileController());
+  final _controller = Get.find<ViewProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,6 @@ class ViewProfilePage extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    _controller.loadHeader();
     return SizedBox(
       height: 230,
       child: Stack(

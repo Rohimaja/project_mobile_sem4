@@ -10,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
 
   var height, width;
 
-  final profileC = Get.put(ProfileController());
+  final profileC = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -139,14 +139,29 @@ class ProfileScreen extends StatelessWidget {
                                 color: Color.fromARGB(255, 237, 235, 251),
                                 shape: BoxShape.circle,
                               ),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  "assets/images/foto_izzul.jpg",
-                                  height: 90,
-                                  width: 90,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              child: ClipOval(child: Obx(() {
+                                final imageUrl = profileC.storedProfile.value;
+                                return (imageUrl.isNotEmpty)
+                                    ? Image.network(
+                                        imageUrl,
+                                        height: 90,
+                                        width: 90,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, url, error) =>
+                                            Image.asset(
+                                          "assets/images/foto_izzul.jpg",
+                                          height: 90,
+                                          width: 90,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : Image.asset(
+                                        "assets/images/foto_izzul.jpg",
+                                        height: 90,
+                                        width: 90,
+                                        fit: BoxFit.cover,
+                                      );
+                              })),
                             ),
                           ],
                         ),

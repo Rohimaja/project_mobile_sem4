@@ -79,7 +79,7 @@ class _CariDataScreenState extends State<CariDataScreen> {
             DropdownButtonFormField<String>(
               value: selectedSemester,
               hint: const Text("Silahkan pilih semester"),
-              items: ['1', '2', '3', '4', '5']
+              items: ['1', '2', '3', '4', '5', '6', '7', '8']
                   .map((s) => DropdownMenuItem(value: s, child: Text(s)))
                   .toList(),
               onChanged: (value) => setState(() => selectedSemester = value),

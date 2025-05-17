@@ -9,7 +9,7 @@ class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
   var height, width;
 
-  final _controller = Get.put(StudentViewProfileController());
+  final _controller = Get.find<StudentViewProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -131,14 +131,29 @@ class ViewProfilePage extends StatelessWidget {
                         color: Color.fromARGB(255, 237, 235, 251),
                         shape: BoxShape.circle,
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          "assets/images/foto_izzul.jpg",
-                          height: 110,
-                          width: 110,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      child: ClipOval(child: Obx(() {
+                            final imageUrl = _controller.storedProfile.value;
+                            return (imageUrl.isNotEmpty)
+                                ? Image.network(
+                                    imageUrl,
+                                    height: 110,
+                                    width: 110,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, url, error) =>
+                                        Image.asset(
+                                      "assets/images/foto_izzul.jpg",
+                                      height: 110,
+                                      width: 110,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : Image.asset(
+                                    "assets/images/foto_izzul.jpg",
+                                    height: 110,
+                                    width: 110,
+                                    fit: BoxFit.cover,
+                                  );
+                      })),
                     ),
                     Positioned(
                       bottom: 10,

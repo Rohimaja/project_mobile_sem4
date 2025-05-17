@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:stipres/bindings/features_lecturer/presence_detail_binding.dart';
+import 'package:stipres/bindings/features_lecturer/view_profile_binding.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart' as student;
 import 'package:stipres/bindings/features_lecturer/base_binding.dart';
 import 'package:stipres/bindings/features_lecturer/dashboard_binding.dart';
@@ -9,6 +10,7 @@ import 'package:stipres/bindings/features_student/presence_content_binding.dart'
 import 'package:stipres/bindings/features_student/profile_binding.dart'
     as student;
 import 'package:stipres/bindings/features_lecturer/profile_binding.dart';
+import 'package:stipres/bindings/features_student/view_profile_binding.dart';
 import 'package:stipres/screens/auth/activation_account_screen_1.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
 import 'package:stipres/screens/auth/activation_account_screen_3.dart';
@@ -16,6 +18,7 @@ import 'package:stipres/screens/auth/forget_password_screen_1.dart';
 import 'package:stipres/screens/auth/forget_password_screen_2.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_lecturer/account/view_profile.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart'
     as student;
@@ -59,6 +62,10 @@ class AppScreens {
           LecturerProfileBinding()
         ]),
     GetPage(
+        name: "/lecturer/view-profile-screen",
+        page: () => ViewProfilePage(),
+        binding: LecturerViewProfileBinding()),
+    GetPage(
         name: "/lecturer/presence-detail-screen",
         page: () => PresenceDetailScreen(),
         binding: PresenceDetailBinding()),
@@ -78,7 +85,8 @@ class AppScreens {
     GetPage(name: "/student/lecture-screen", page: () => LectureScreen()),
     GetPage(
         name: "/student/view-profile-screen",
-        page: () => student.ViewProfilePage()),
+        page: () => student.ViewProfilePage(),
+        binding: ViewProfileBinding()),
     GetPage(name: "/student/settings-screen", page: () => student.Pengaturan()),
     GetPage(
         name: "/student/change-email-screen",

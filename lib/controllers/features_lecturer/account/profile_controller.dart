@@ -20,7 +20,7 @@ class ProfileController extends GetxController {
     loadHeader();
   }
 
-  void loadHeader() {
+  Future<void> loadHeader() async {
     String? nama = _box.read("user_nama");
     String? nip = _box.read("user_nip");
     String? email = _box.read("user_email");
@@ -30,7 +30,9 @@ class ProfileController extends GetxController {
     storedName.value = nama ?? 'No name found';
     storedNip.value = nip ?? 'No nim found';
     storedEmail.value = email ?? 'No email found';
-    storedProfile.value = profile.isNotEmpty ? "$url$profile" : "";
+    final profileUrl =
+        "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
+    storedProfile.value = profileUrl;
   }
 
   void logout() {

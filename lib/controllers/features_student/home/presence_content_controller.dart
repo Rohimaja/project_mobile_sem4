@@ -143,7 +143,7 @@ class PresenceContentController extends GetxController {
         Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));
       } else {
-        showError("$result.message");
+        showError(result.message);
       }
     } catch (e) {
       log.d("Error: $e");

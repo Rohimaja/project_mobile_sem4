@@ -10,7 +10,9 @@ import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:stipres/constants/api.dart';
+import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
 import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/lecturer/profile_lecturer_service.dart';
 
 class ViewProfileController extends GetxController {
@@ -24,6 +26,7 @@ class ViewProfileController extends GetxController {
   final url = ApiConstants.pathProfile;
 
   final conDashboard = Get.find<DashboardController>();
+  final conProfile = Get.find<ProfileController>();
 
   final ProfileLecturerService profileLecturerService =
       ProfileLecturerService();
@@ -34,9 +37,11 @@ class ViewProfileController extends GetxController {
     loadHeader();
   }
 
-  void loadHeader() {
+  Future<void> loadHeader() async {
     String profile = _box.read('foto');
-    storedProfiles.value = profile.isNotEmpty ? "$url$profile" : "";
+    final profileUrl =
+        "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
+    storedProfiles.value = profileUrl;
     log.e("Profile: ${storedProfiles.value}");
   }
 
@@ -114,6 +119,7 @@ class ViewProfileController extends GetxController {
 
   Future<void> uploadProfilePic(File? profilePicture) async {
     try {
+      LoadingPopup();
       int dosenId = _box.read("dosen_id");
 
       final result =
@@ -123,17 +129,21 @@ class ViewProfileController extends GetxController {
         _box.write('foto', foto);
         log.f(foto);
 
-        conDashboard.storedProfile.value = "${ApiConstants.pathProfile}$foto";
-        conDashboard.storedProfile.refresh();
-        Get.find<DashboardController>().loadHeader();
-
+        // conDashboard.storedProfile.value = "${ApiConstants.pathProfile}$foto";
+        // conDashboard.storedProfile.refresh();
+        await conDashboard.loadHeader();
+        await conProfile.loadHeader();
+        await loadHeader();
         Get.back();
         Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));
       } else {
-        Get.snackbar("Error", "$result.message");
+        Get.back();
+
+        Get.snackbar("Error", result.message);
       }
     } catch (e) {
+      Get.back();
       log.e("Error: $e");
     }
   }

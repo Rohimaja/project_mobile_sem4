@@ -1,20 +1,21 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:stipres/constants/api.dart';
 import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/services/student/dashboard_mahasiswa_service.dart';
 
 class DashboardController extends GetxController {
   final storedName = ''.obs;
   final storedNim = ''.obs;
-  final _box = GetStorage();
+  var storedProfile = ''.obs;
+  final url = ApiConstants.pathProfile;
 
+  final _box = GetStorage();
   final statusOffline = false.obs;
 
   Logger log = Logger();
-
   var jadwalList = <JadwalModelApi>[].obs;
-
   var errorMessage = ''.obs;
 
   final DashboardMahasiswaService dashboardMahasiswaService =
@@ -26,11 +27,21 @@ class DashboardController extends GetxController {
     loadHeader();
   }
 
-  void loadHeader() {
+  Future<void> loadHeader() async {
     String? nama = _box.read("user_nama");
     String nim = _box.read("user_nim");
+    String profile = _box.read("foto") ?? "";
+
     storedName.value = nama ?? "No name found";
     storedNim.value = nim;
+
+    final profileUrl =
+        "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
+
+    storedProfile.value = profileUrl; // path relatif + base URL
+
+    log.f("fetch header");
+    log.d("Profile: ${storedProfile.value}");
   }
 
   Future<void> fetchJadwal() async {

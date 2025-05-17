@@ -137,14 +137,29 @@ class DashboardScreenStudent extends StatelessWidget {
                             color: mainColor,
                             shape: BoxShape.circle,
                           ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              "assets/images/foto_izzul.jpg",
-                              height: 70,
-                              width: 70,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                          child: ClipOval(child: Obx(() {
+                            final imageUrl = dashboardC.storedProfile.value;
+                            return (imageUrl.isNotEmpty)
+                                ? Image.network(
+                                    imageUrl,
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, url, error) =>
+                                        Image.asset(
+                                      "assets/images/foto_izzul.jpg",
+                                      height: 70,
+                                      width: 70,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : Image.asset(
+                                    "assets/images/foto_izzul.jpg",
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                  );
+                          })),
                         ),
                         const SizedBox(width: 10),
                         Column(

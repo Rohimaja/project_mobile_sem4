@@ -218,7 +218,7 @@ class JadwalCard extends StatelessWidget {
                                 (jadwal.lokasi == "-")
                                     ? Get.toNamed(
                                         "/student/lecture-content-screen",
-                                      )
+                                        arguments: jadwal.presensisId)
                                     : Get.toNamed("/student/offline-screen");
                               },
                             ),

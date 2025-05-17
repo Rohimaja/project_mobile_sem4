@@ -9,6 +9,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
+import 'package:stipres/constants/api.dart';
+import 'package:stipres/controllers/features_student/account/profile_controller.dart';
+import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/student/profile_mahasiswa_service.dart';
 
 class StudentViewProfileController extends GetxController {
@@ -22,6 +26,8 @@ class StudentViewProfileController extends GetxController {
   final storedSemester = ''.obs;
   final storedProdi = ''.obs;
   final storedNoTelp = ''.obs;
+  var storedProfile = ''.obs;
+  final url = ApiConstants.pathProfile;
 
   static const int maxSizeInBytes = 2 * 1024 * 1024;
 
@@ -29,6 +35,8 @@ class StudentViewProfileController extends GetxController {
   final log = Logger();
   final ImagePicker pickedImage = ImagePicker();
   final profilePic = Rxn<File>();
+  final conDashboard = Get.find<DashboardController>();
+  final conProfile = Get.find<ProfileController>();
 
   final ProfileMahasiswaService profileMahasiswaService =
       ProfileMahasiswaService();
@@ -37,6 +45,15 @@ class StudentViewProfileController extends GetxController {
   void onInit() {
     super.onInit();
     loadData();
+    loadHeader();
+  }
+
+  Future<void> loadHeader() async {
+    String profile = _box.read('foto');
+    final profileUrl =
+        "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
+    storedProfile.value = profileUrl;
+    log.e("Profile: ${storedProfile.value}");
   }
 
   String numberToBahasa(int number) {
@@ -186,19 +203,28 @@ class StudentViewProfileController extends GetxController {
 
   Future<void> uploadProfilePic(File? profilePicture) async {
     try {
+      LoadingPopup();
       int mahasiswaId = _box.read("mahasiswa_id");
 
       final result =
           await profileMahasiswaService.sendImage(mahasiswaId, profilePicture);
       if (result.status == "success") {
-        Get.back();
+        String? foto = result.data;
+        _box.write('foto', foto);
+        log.f(foto);
+
+        await conDashboard.loadHeader();
+        await conProfile.loadHeader();
+        await loadHeader();
         Get.back();
         Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));
       } else {
+        Get.back();
         Get.snackbar("Error", result.message);
       }
     } catch (e) {
+      Get.back();
       log.e("Error: $e");
     }
   }

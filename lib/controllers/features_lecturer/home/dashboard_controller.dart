@@ -27,7 +27,7 @@ class DashboardController extends GetxController {
     loadHeader();
   }
 
-  void loadHeader() {
+  Future<void> loadHeader() async {
     String? nama = _box.read("user_nama");
     String? nip = _box.read("user_nip");
     String profile = _box.read("foto") ?? "";
@@ -35,15 +35,10 @@ class DashboardController extends GetxController {
     storedName.value = nama ?? "No name found";
     storedNip.value = nip ?? "No name found";
 
-    if (profile.isNotEmpty) {
-      if (profile.startsWith('http')) {
-        storedProfile.value = profile; // full URL
-      } else {
-        storedProfile.value = "$url$profile"; // path relatif + base URL
-      }
-    } else {
-      storedProfile.value = "";
-    }
+    final profileUrl =
+        "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
+
+    storedProfile.value = profileUrl; // path relatif + base URL
 
     log.f("fetch header");
     log.d("Profile: ${storedProfile.value}");

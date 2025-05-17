@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
 import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart';
@@ -51,6 +52,7 @@ class DashboardScreenLecturer extends StatelessWidget {
   //     keterangan: 'daring',
   //   ),
   // ];
+  Logger log = Logger();
 
   @override
   Widget build(BuildContext context) {

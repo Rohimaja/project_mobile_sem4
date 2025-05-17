@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
 import 'package:stipres/screens/features_lecturer/account/pengaturan.dart';
-import 'package:stipres/screens/features_lecturer/account/view_profile.dart';
 import 'package:stipres/constants/styles.dart';
 
 class ProfileScreenLecturer extends StatelessWidget {
@@ -317,11 +316,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ViewProfilePage()),
-                              );
+                              Get.toNamed("/lecturer/view-profile-screen");
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: blueColor,

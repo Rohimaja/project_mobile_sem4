@@ -17,7 +17,12 @@ class LectureController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchLecture();
+    if (Get.arguments == null) {
+      fetchLecture();
+    } else {
+      final presensisId = Get.arguments;
+      fetchContentLecture(presensisId);
+    }
   }
 
   String formatTanggal(String tanggal) {
@@ -45,6 +50,24 @@ class LectureController extends GetxController {
           return lecture;
         }).toList();
         lectureList.assignAll(updatedList);
+      } else {
+        errorMessage.value = result.message;
+      }
+    } catch (e) {
+      log.d("Error : $e");
+    }
+  }
+
+  void fetchContentLecture(int presensisId) async {
+    try {
+      log.d("Check presensisId: $presensisId");
+      final result = await lectureStudentService.tampilZoomContent(presensisId);
+
+      if (result.status == "success" && result.data != null) {
+        final lecture = result.data!;
+        lecture.tglPresensi = formatTanggal(lecture.tglPresensi);
+
+        lectureList.assignAll([lecture]);
       } else {
         errorMessage.value = result.message;
       }

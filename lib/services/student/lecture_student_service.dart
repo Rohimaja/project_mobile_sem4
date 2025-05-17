@@ -14,7 +14,8 @@ class LectureStudentService extends GetxService {
 
   Future<BaseResponse<List<LectureModelApi>>> tampilZoom(String nim) async {
     try {
-      final url = Uri.parse("$_baseUrl?nim=$nim");
+      final action = 'lecture';
+      final url = Uri.parse("$_baseUrl?nim=$nim&action=$action");
       log.d(url);
       final response = await http.get(url);
 
@@ -26,6 +27,30 @@ class LectureStudentService extends GetxService {
         (dataJson) => (dataJson as List)
             .map((e) => LectureModelApi.fromJson(e as Map<String, dynamic>))
             .toList(),
+      );
+    } catch (e) {
+      log.d("Error: $e");
+      return BaseResponse(
+          status: "error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
+
+  Future<BaseResponse<LectureModelApi>> tampilZoomContent(
+      int presensisId) async {
+    try {
+      final action = 'lectureContent';
+      final url =
+          Uri.parse("$_baseUrl?presensis_id=$presensisId&action=$action");
+      log.d(url);
+      final response = await http.get(url);
+
+      final body = jsonDecode(response.body);
+      log.d(body);
+
+      return BaseResponse.fromJson(
+        body,
+        (dataJson) =>
+            LectureModelApi.fromJson(dataJson as Map<String, dynamic>),
       );
     } catch (e) {
       log.d("Error: $e");
