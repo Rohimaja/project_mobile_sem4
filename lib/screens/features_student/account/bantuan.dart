@@ -118,11 +118,11 @@ class Bantuan extends StatelessWidget {
       children: [
         Container(
           width: width,
-          height: 70,
+          height: 80,
           decoration: BoxDecoration(
             color: blueColor,
             borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
+              bottomLeft: Radius.circular(30),
             ),
             image: const DecorationImage(
               image: AssetImage('assets/images/bgheader.png'),
@@ -130,7 +130,7 @@ class Bantuan extends StatelessWidget {
             ),
           ),
           padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
+              const EdgeInsets.symmetric(horizontal: 23),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

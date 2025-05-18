@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/styles/constant.dart';
 
 class KetentuanLayanan extends StatelessWidget {
@@ -13,7 +14,7 @@ class KetentuanLayanan extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildHeader(context),
+            CustomHeader(title: "Ketentuan Layanan"),
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 23, right: 18, bottom: 20),
               child: Column(
@@ -62,91 +63,6 @@ class KetentuanLayanan extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildHeader(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          width: width,
-          height: 70,
-          decoration: BoxDecoration(
-            color: blueColor,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-            ),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/bgheader.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  borderRadius: BorderRadius.circular(100),
-                  customBorder: const CircleBorder(),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Image(
-                      image: AssetImage('assets/icons/ic_back.png'),
-                      height: 18,
-                      width: 18,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  "Ketentuan Layanan",
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          bottom: -44,
-          right: 0,
-          child: Container(
-            width: 40,
-            height: 44,
-            color: blueColor,
-          ),
-        ),
-        Positioned(
-          bottom: -45,
-          right: 0,
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildSectionTitle(String title) {
     return Text(
       "> $title",
