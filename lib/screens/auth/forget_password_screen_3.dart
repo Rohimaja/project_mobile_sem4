@@ -7,7 +7,7 @@ import 'package:stipres/constants/styles.dart';
 class ForgetPassword3 extends StatelessWidget {
   ForgetPassword3({super.key});
 
-  final _controller = Get.put(ForgetPasswordStep3Controller());
+  final _controller = Get.find<ForgetPasswordStep3Controller>();
 
   @override
   Widget build(BuildContext context) {

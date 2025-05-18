@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:stipres/bindings/auth/activation_step1_binding.dart';
+import 'package:stipres/bindings/auth/activation_step2_binding.dart';
+import 'package:stipres/bindings/auth/activation_step3_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_detail_binding.dart';
 import 'package:stipres/bindings/features_lecturer/view_profile_binding.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart' as student;
@@ -50,9 +53,18 @@ class AppScreens {
     GetPage(name: "/auth/forget-password/step1", page: () => ForgetPassword1()),
     GetPage(name: "/auth/forget-password/step2", page: () => ForgetPassword2()),
     GetPage(name: "/auth/forget-password/step3", page: () => ForgetPassword3()),
-    GetPage(name: "/auth/activation/step1", page: () => ActivationAccount1()),
-    GetPage(name: "/auth/activation/step2", page: () => ActivationAccount2()),
-    GetPage(name: "/auth/activation/step3", page: () => ActivationAccount3()),
+    GetPage(
+        name: "/auth/activation/step1",
+        page: () => ActivationAccount1(),
+        binding: ActivationStep1Binding()),
+    GetPage(
+        name: "/auth/activation/step2",
+        page: () => ActivationAccount2(),
+        binding: ActivationStep2Binding()),
+    GetPage(
+        name: "/auth/activation/step3",
+        page: () => ActivationAccount3(),
+        binding: ActivationStep3Binding()),
     GetPage(
         name: "/lecturer/base-screen",
         page: () => lecturer.BaseScreenLecturer(),

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:stipres/controllers/auth/activation_step2_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
 
 class ActivationAccount2 extends StatelessWidget {
-  const ActivationAccount2({super.key});
+  ActivationAccount2({super.key});
+
+  final _controller = Get.find<ActivationStep2Controller>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class ActivationAccount2 extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         Text(
-                          "tok*****@gmail.com",
+                          _controller.maskedEmail(),
                           style: TextStyle(fontSize: 16, color: Colors.green),
                           textAlign: TextAlign.center,
                         ),
@@ -64,6 +67,7 @@ class ActivationAccount2 extends StatelessWidget {
                               ),
                               TextField(
                                 cursorHeight: 18,
+                                controller: _controller.nimController,
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
                                     hintText: "E41231261",
@@ -85,6 +89,7 @@ class ActivationAccount2 extends StatelessWidget {
                                   textAlign: TextAlign.left),
                               const SizedBox(height: 7),
                               PinCodeTextField(
+                                controller: _controller.otpController,
                                 appContext: context,
                                 length: 4, // Jumlah kotak OTP
                                 // controller: otpController,
@@ -109,19 +114,31 @@ class ActivationAccount2 extends StatelessWidget {
                                 },
                               ),
                               const SizedBox(height: 5),
-                              RichText(
-                                text: TextSpan(
-                                  text: "Belum menerima kode? ",
-                                  style: blackTextStyle.copyWith(fontSize: 15),
-                                  children: [
-                                    TextSpan(
-                                      text: "Kirim",
-                                      style:
-                                          blueTextStyle.copyWith(fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              Obx(() {
+                                return RichText(
+                                  text: TextSpan(
+                                    text: "Belum menerima kode? ",
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 15),
+                                    children: [
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: GestureDetector(
+                                          onTap:
+                                              _controller.isButtonEnabled.value
+                                                  ? _controller.send
+                                                  : null,
+                                          child: Text(
+                                            _controller.textKirim.value,
+                                            style: blueTextStyle.copyWith(
+                                                fontSize: 15),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              })
                             ],
                           ),
                         ),
@@ -146,9 +163,12 @@ class ActivationAccount2 extends StatelessWidget {
                                             const Size(double.infinity, 50)),
                                     textStyle: whiteTextStyle.copyWith(
                                         fontSize: 17, fontWeight: bold),
-                                    onPressed: () {
-                                      Get.offNamed("/auth/activation/step3");
-                                    })),
+                                    onPressed:
+                                        (_controller.isSnackbarOpen.value)
+                                            ? null
+                                            : () async {
+                                                await _controller.checkOtp();
+                                              })),
                           ],
                         )
                       ],

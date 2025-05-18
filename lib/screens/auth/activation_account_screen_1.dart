@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stipres/controllers/auth/activation_step1_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
 
 class ActivationAccount1 extends StatelessWidget {
-  const ActivationAccount1({super.key});
+  ActivationAccount1({super.key});
+
+  final _controller = Get.find<ActivationStep1Controller>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +58,7 @@ class ActivationAccount1 extends StatelessWidget {
                               const SizedBox(height: 7),
                               TextField(
                                 keyboardType: TextInputType.visiblePassword,
+                                controller: _controller.emailController,
                                 decoration: InputDecoration(
                                   hintText: "johndoe@gmail.com",
                                   hintStyle:
@@ -76,24 +80,26 @@ class ActivationAccount1 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: ReusableButton(
-                                  label: "Berikutnya",
-                                  buttonStyle: ElevatedButton.styleFrom(
-                                      elevation: 5,
-                                      backgroundColor: blueColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      minimumSize:
-                                          const Size(double.infinity, 50)),
-                                  textStyle: whiteTextStyle.copyWith(
-                                      fontSize: 17, fontWeight: bold),
-                                  onPressed: () {
-                                    Get.offNamed("/auth/activation/step2");
-                                  }),
-                            )
+                                height: 40,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                child: Obx(() {
+                                  return ReusableButton(
+                                      label: "Berikutnya",
+                                      buttonStyle: ElevatedButton.styleFrom(
+                                          elevation: 5,
+                                          backgroundColor: blueColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          minimumSize:
+                                              const Size(double.infinity, 50)),
+                                      textStyle: whiteTextStyle.copyWith(
+                                          fontSize: 17, fontWeight: bold),
+                                      onPressed: (_controller.isSnackbarOpen.value) ? null : () {
+                                        _controller.checkEmail();
+                                      });
+                                }))
                           ],
                         ),
                         SizedBox(

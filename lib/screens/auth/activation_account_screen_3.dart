@@ -7,7 +7,7 @@ import 'package:stipres/constants/styles.dart';
 class ActivationAccount3 extends StatelessWidget {
   ActivationAccount3({super.key});
 
-  final activation3C = Get.put(ActivationStep3Controller());
+  final activation3C = Get.find<ActivationStep3Controller>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +56,9 @@ class ActivationAccount3 extends StatelessWidget {
                                       !activation3C.isPasswordVisible.value,
                                   controller: activation3C.passwordController,
                                   keyboardType: TextInputType.visiblePassword,
+                                  onChanged: (value) {
+                                    activation3C.startTimerPassword();
+                                  },
                                   decoration: InputDecoration(
                                     suffixIcon: IconButton(
                                         onPressed: () {
@@ -69,6 +72,12 @@ class ActivationAccount3 extends StatelessWidget {
                                         (!activation3C.isPasswordVisible.value)
                                             ? "********"
                                             : "12345678",
+                                    errorText:
+                                        (activation3C.valuePassword.value ==
+                                                true)
+                                            ? activation3C
+                                                .passwordErrorMessage.value
+                                            : null,
                                     hintStyle:
                                         greyTextStyle.copyWith(fontSize: 15),
                                     border: OutlineInputBorder(
@@ -91,11 +100,22 @@ class ActivationAccount3 extends StatelessWidget {
                                   obscureText:
                                       !activation3C.isPasswordVisible2.value,
                                   keyboardType: TextInputType.visiblePassword,
+                                  controller:
+                                      activation3C.confirmPasswordController,
+                                  onChanged: (value) {
+                                    activation3C.startTimerConfirmPassword();
+                                  },
                                   decoration: InputDecoration(
                                     hintText:
                                         (!activation3C.isPasswordVisible2.value)
                                             ? "********"
                                             : "12345678",
+                                    errorText: (activation3C
+                                                .valueConfirmPassword.value ==
+                                            true)
+                                        ? activation3C
+                                            .confirmPasswordErrorMessage.value
+                                        : null,
                                     suffixIcon: IconButton(
                                         onPressed: () {
                                           activation3C.checkVisible2();
@@ -125,24 +145,30 @@ class ActivationAccount3 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: ReusableButton(
-                                  label: "Submit",
-                                  buttonStyle: ElevatedButton.styleFrom(
-                                      elevation: 5,
-                                      backgroundColor: blueColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      minimumSize:
-                                          const Size(double.infinity, 50)),
-                                  textStyle: whiteTextStyle.copyWith(
-                                      fontSize: 17, fontWeight: bold),
-                                  onPressed: () {
-                                    Get.back();
-                                  }),
-                            )
+                                height: 40,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                child: Obx(() {
+                                  return ReusableButton(
+                                    label: "Submit",
+                                    buttonStyle: ElevatedButton.styleFrom(
+                                        elevation: 5,
+                                        backgroundColor: blueColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        minimumSize:
+                                            const Size(double.infinity, 50)),
+                                    textStyle: whiteTextStyle.copyWith(
+                                        fontSize: 17, fontWeight: bold),
+                                    onPressed:
+                                        (activation3C.isSnackbarOpen.value)
+                                            ? null
+                                            : () {
+                                                activation3C.validate();
+                                              },
+                                  );
+                                }))
                           ],
                         )
                       ],

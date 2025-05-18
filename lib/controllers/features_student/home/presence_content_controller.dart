@@ -351,6 +351,7 @@ class PresenceContentController extends GetxController {
     Get.dialog(
       const LoadingPopup(),
       barrierDismissible: false,
+      // ignore: deprecated_member_use
       barrierColor: Colors.black.withOpacity(0.3),
     );
   }

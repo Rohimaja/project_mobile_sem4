@@ -124,8 +124,6 @@ class ForgetPasswordStep2Controller extends GetxController {
     bool success = await forgetPasswordService.checkOtp(email, otp);
     resetLoading();
 
-    logger.d(success);
-
     if (success) {
       // resetLoading();
       Get.offNamed("/auth/forget-password/step3", arguments: email);
