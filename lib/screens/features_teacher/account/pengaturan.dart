@@ -179,13 +179,149 @@ class _PengaturanState extends State<Pengaturan> {
                         SizedBox(height: 15),
                         InkWell(
                           onTap: () {
-                            // Tambahkan navigasi jika ingin
+                            String? selectedTheme =
+                                "Default"; // bisa juga ambil dari state kalau mau
+
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return StatefulBuilder(
+                                  builder: (context, setState) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      title: Text(
+                                        "Pilih Tema",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: blueColor,
+                                        ),
+                                      ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Theme(
+                                            data: Theme.of(context).copyWith(
+                                              unselectedWidgetColor: blueColor,
+                                              radioTheme: RadioThemeData(
+                                                fillColor:
+                                                    MaterialStateProperty.all(
+                                                        blueColor),
+                                              ),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                "Default",
+                                                "Cerah",
+                                                "Gelap"
+                                              ].map((option) {
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 4),
+                                                  child: Material(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    color: Colors.transparent,
+                                                    child: InkWell(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      splashColor: blueColor
+                                                          .withOpacity(0.2),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          selectedTheme =
+                                                              option;
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 6),
+                                                        child: Row(
+                                                          children: [
+                                                            Radio<String>(
+                                                              value: option,
+                                                              groupValue:
+                                                                  selectedTheme,
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
+                                                                  selectedTheme =
+                                                                      value;
+                                                                });
+                                                              },
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 4),
+                                                            Text(
+                                                              option,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            "Batal",
+                                            style: GoogleFonts.poppins(
+                                                color: blueColor),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            // TODO: Simpan tema
+                                            Navigator.pop(context);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                blueColor, // Warna latar biru
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 10),
+                                          ),
+                                          child: Text(
+                                            "Simpan",
+                                            style: GoogleFonts.poppins(
+                                              color:
+                                                  Colors.white, // Tulisan putih
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                              vertical: 12.0,
-                              horizontal: 4.0),
+                                vertical: 12.0, horizontal: 4.0),
                             child: Row(
                               children: [
                                 Image.asset('assets/icons/ic_personalisasi.png',
