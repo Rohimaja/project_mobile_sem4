@@ -13,7 +13,7 @@ void main() async {
   await GetStorage.init();
 
   runApp(MyApp());
-}
+} 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

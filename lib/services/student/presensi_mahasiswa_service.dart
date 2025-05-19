@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:http/http.dart' as http;
-import 'package:stipres/models/student/presensi_model.dart';
+import 'package:stipres/models/students/presensi_model.dart';
 import 'package:stipres/constants/api.dart';
 
 class PresensiMahasiswaService extends GetxService {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/models/student/rekap_model.dart';
+import 'package:stipres/models/students/rekap_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/attendance/attendance_content_card.dart';
 

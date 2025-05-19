@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'package:stipres/models/base_response.dart';
-import 'package:stipres/models/student/full_student_model.dart';
+import 'package:stipres/models/students/full_student_model.dart';
 import 'package:stipres/constants/api.dart';
 
 class ProfileMahasiswaService extends GetxService {

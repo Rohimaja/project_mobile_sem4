@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_lecturer/home/attendances/attendance_controller.dart';
 
 class CariDataScreen extends StatefulWidget {
   final void Function(String semester, String prodi) onSearch;
@@ -12,8 +14,7 @@ class CariDataScreen extends StatefulWidget {
 }
 
 class _CariDataScreenState extends State<CariDataScreen> {
-  String? selectedSemester;
-  String? selectedProdi;
+  final _controller = Get.find<AttendanceController>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,19 +77,25 @@ class _CariDataScreenState extends State<CariDataScreen> {
                   style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
             ),
             const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              value: selectedSemester,
-              hint: const Text("Silahkan pilih semester"),
-              items: ['1', '2', '3', '4', '5', '6', '7', '8']
-                  .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-                  .toList(),
-              onChanged: (value) => setState(() => selectedSemester = value),
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(),
-              ),
-            ),
+            Obx(() {
+              final semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
+              return DropdownButtonFormField<String>(
+                value: _controller.tempSelectedSemester.value.isEmpty
+                    ? null
+                    : _controller.tempSelectedSemester.value,
+                hint: const Text("Silahkan pilih semester"),
+                items: semesterList
+                    .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                    .toList(),
+                onChanged: (value) =>
+                    _controller.tempSelectedSemester.value = value!,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                ),
+              );
+            }),
             const SizedBox(height: 12),
             Align(
               alignment: Alignment.centerLeft,
@@ -96,48 +103,68 @@ class _CariDataScreenState extends State<CariDataScreen> {
                   style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
             ),
             const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              value: selectedProdi,
-              hint: const Text("Silahkan pilih program studi"),
-              items: [
-                'Teknik Informatika',
-                'Sistem Informasi',
-                'Teknik Komputer',
-                'Teknik Elektro',
-                'Teknik Mesin'
-              ].map((p) => DropdownMenuItem(value: p, child: Text(p))).toList(),
-              onChanged: (value) => setState(() => selectedProdi = value),
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: blueColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+            Obx(() {
+              return DropdownButtonFormField<String>(
+                value: _controller.tempSelectedProdi.value.isEmpty
+                    ? null
+                    : _controller.tempSelectedProdi.value,
+                hint: const Text("Silahkan pilih program studi"),
+                items: _controller.prodiMap.entries
+                    .map((entry) => DropdownMenuItem<String>(
+                        value: entry.key, child: Text(entry.value)))
+                    .toList(),
+                onChanged: (value) =>
+                    _controller.tempSelectedProdi.value = value!,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
                 ),
-                onPressed: () {
-                  if (selectedSemester != null && selectedProdi != null) {
-                    widget.onSearch(selectedSemester!, selectedProdi!);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Cari',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    )),
-              ),
-            ),
+              );
+            }),
+            const SizedBox(height: 20),
+            Obx(() {
+              return SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: blueColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  onPressed: (_controller.isSnackbarOpen.value)
+                      ? null
+                      : () async {
+                          if (_controller.tempSelectedSemester.value.isEmpty ||
+                              _controller.tempSelectedProdi.value.isEmpty) {
+                            _controller.isSnackbarOpen.value = true;
+                            Get.snackbar("Gagal", "Penuhi data terlebih dahulu",
+                                duration: Duration(seconds: 1));
+                            await Future.delayed(Duration(seconds: 2));
+                            _controller.isSnackbarOpen.value = false;
+                          } else {
+                            _controller.selectedSemester.value =
+                                _controller.tempSelectedSemester.value;
+                            _controller.selectedProdi.value =
+                                _controller.tempSelectedProdi.value;
+                            widget.onSearch(_controller.selectedSemester.value,
+                                _controller.selectedProdi.value);
+                            Get.back();
+                            await _controller.showStudent();
+                          }
+                          ;
+                        },
+                  child: Text('Cari',
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      )),
+                ),
+              );
+            })
           ],
         ),
       ),

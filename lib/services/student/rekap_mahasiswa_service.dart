@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:stipres/models/base_response.dart';
-import 'package:stipres/models/student/rekap_model.dart';
+import 'package:stipres/models/students/rekap_model.dart';
 import 'package:stipres/constants/api.dart';
 
 class RekapMahasiswaService extends GetxService {
@@ -12,7 +12,7 @@ class RekapMahasiswaService extends GetxService {
 
   var log = Logger();
 
-  Future<BaseResponse<List<RekapModelApi>>> tampilRekap(String nim) async {
+  Future<BaseResponse<List<RekapModelApi>>> tampilRekap(String? nim) async {
     try {
       final url = Uri.parse("$_baseUrl?nim=$nim");
       final response = await http.get(url);

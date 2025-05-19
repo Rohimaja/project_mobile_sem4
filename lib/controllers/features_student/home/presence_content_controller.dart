@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/student/get_presence_model.dart';
+import 'package:stipres/models/students/get_presence_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/student/presence_content_service.dart';
 

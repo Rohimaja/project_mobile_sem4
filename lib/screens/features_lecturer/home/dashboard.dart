@@ -4,12 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
-import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/attendance/attendance_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/notification_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/presence/presence_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/weeklyCalendar_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/allSchedule_link.dart';
@@ -303,12 +298,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 235, 251),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AttendanceScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/attendance-screen");
                                 },
                               ),
 
@@ -321,11 +311,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 251, 193),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PresenceScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/presence-screen");
                                 },
                               ),
 
@@ -339,12 +325,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 251, 232, 187),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AllScheduleScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/all-schedule-screen");
                                 },
                               ),
 
@@ -357,11 +338,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 251, 187, 187),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CalendarScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/calendar-screen");
                                 },
                               ),
 
@@ -374,11 +351,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 191, 251),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LectureScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/lecture-screen");
                                 },
                               ),
                             ],

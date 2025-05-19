@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:http/http.dart' as http;
-import 'package:stipres/models/student/lecture_model.dart';
+import 'package:stipres/models/students/lecture_model.dart';
 import 'package:stipres/constants/api.dart';
 
 class LectureStudentService extends GetxService {

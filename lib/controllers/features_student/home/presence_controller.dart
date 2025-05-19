@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/student/presensi_model.dart';
+import 'package:stipres/models/students/presensi_model.dart';
 import 'package:stipres/services/student/presensi_mahasiswa_service.dart';
 
 class PresenceController extends GetxController {

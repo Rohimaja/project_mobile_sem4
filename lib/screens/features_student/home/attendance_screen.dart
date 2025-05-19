@@ -21,7 +21,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
   bool _isSearching = false;
   final Logger log = Logger();
   final TextEditingController _searchController = TextEditingController();
-  final RekapController _controller = Get.put(RekapController());
+  final RekapController _controller = Get.find<RekapController>();
 
   @override
   void initState() {

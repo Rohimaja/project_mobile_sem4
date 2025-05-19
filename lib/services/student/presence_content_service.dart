@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:stipres/models/basic_response.dart';
-import 'package:stipres/models/student/get_presence_model.dart';
+import 'package:stipres/models/students/get_presence_model.dart';
 import 'package:stipres/constants/api.dart';
 
 class PresenceContentService extends GetxService {

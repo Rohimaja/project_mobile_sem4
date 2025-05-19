@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/models/attendance/attendance_model.dart';
+import 'package:stipres/models/lecturers/attendance_model.dart';
 import 'package:stipres/screens/features_lecturer/home/attendance/attendance_content_screen.dart';
 import 'package:stipres/screens/features_lecturer/models/presence/presence_detail_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/detail_presence/presence_information.dart';
