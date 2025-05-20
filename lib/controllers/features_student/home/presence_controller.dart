@@ -25,7 +25,7 @@ class PresenceController extends GetxController {
       String nim = _box.read("user_nim");
       log.d(nim);
       final result = await presensiMahasiswaService.tampilPresensi(nim);
-      log.d(result);
+      log.d(result.data);
 
       if (result.status == "success" && result.data != null) {
         final List<PresensiModelApi> updatedList = result.data!.map((presence) {

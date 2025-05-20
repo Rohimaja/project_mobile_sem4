@@ -8,7 +8,7 @@ import 'package:stipres/models/students/presensi_model.dart';
 import 'package:stipres/constants/api.dart';
 
 class PresensiMahasiswaService extends GetxService {
-  final String _baseUrl = "${ApiConstants.globalUrl}listview/getPresensi.php";
+  final String _baseUrl = "${ApiConstants.globalUrl}listview/getPresence.php";
 
   var log = Logger();
 

@@ -17,36 +17,6 @@ class DashboardScreenLecturer extends StatelessWidget {
 
   final _controller = Get.find<DashboardController>();
 
-  // final List<ScheduleModel> jadwalHariIni = [
-  //   ScheduleModel(
-  //     waktu: '07.00 - 10.00 WIB',
-  //     mataKuliah: 'Pemrograman Dasar',
-  //     lokasi: 'Zoom Meeting',
-  //     durasi: '2 Jam',
-  //     keterangan: 'daring',
-  //   ),
-  //   ScheduleModel(
-  //     waktu: '10.15 - 12.00 WIB',
-  //     mataKuliah: 'Struktur Data',
-  //     lokasi: 'Gedung JTI Ruang 2.2',
-  //     durasi: '1.5 Jam',
-  //     keterangan: 'luring',
-  //   ),
-  //   ScheduleModel(
-  //     waktu: '13.00 - 15.00 WIB',
-  //     mataKuliah: 'Basis Data',
-  //     lokasi: 'Google Meet',
-  //     durasi: '2 Jam',
-  //     keterangan: 'daring',
-  //   ),
-  //   ScheduleModel(
-  //     waktu: '07.00 - 10.00 WIB',
-  //     mataKuliah: 'Kewirausahaan',
-  //     lokasi: 'Zoom Meeting',
-  //     durasi: '2 Jam',
-  //     keterangan: 'daring',
-  //   ),
-  // ];
   Logger log = Logger();
 
   @override

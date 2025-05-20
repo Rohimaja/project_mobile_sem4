@@ -3,6 +3,7 @@ import 'package:stipres/bindings/auth/activation_step1_binding.dart';
 import 'package:stipres/bindings/auth/activation_step2_binding.dart';
 import 'package:stipres/bindings/auth/activation_step3_binding.dart';
 import 'package:stipres/bindings/features_lecturer/attendance_binding.dart';
+import 'package:stipres/bindings/features_lecturer/presence_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_detail_binding.dart';
 import 'package:stipres/bindings/features_lecturer/view_profile_binding.dart';
 import 'package:stipres/bindings/features_student/attendance_binding.dart';
@@ -24,7 +25,8 @@ import 'package:stipres/screens/auth/forget_password_screen_2.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/screens/features_lecturer/account/view_profile.dart';
-import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart' as lecturer;
+import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart'
+    as lecturer;
 import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart'
     as student;
@@ -44,10 +46,12 @@ import 'package:stipres/screens/features_student/home/base_screen.dart'
 import 'package:stipres/screens/features_lecturer/home/base_screen.dart'
     as lecturer;
 import 'package:stipres/screens/features_student/home/calendar_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart' as lecturer;
+import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart'
+    as lecturer;
 import 'package:stipres/screens/features_student/home/lecture/lecture_content_screen.dart';
 import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart' as lecturer;
+import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart'
+    as lecturer;
 import 'package:stipres/screens/features_student/home/notification_screen.dart';
 import 'package:stipres/screens/features_student/home/offline_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/fallback_screen.dart';
@@ -87,9 +91,9 @@ class AppScreens {
         page: () => lecturer.AttendanceScreen(),
         binding: LecturerAttendanceBinding()),
     GetPage(
-      name: "/lecturer/presence-screen",
-      page: () => lecturer.PresenceScreen(),
-    ),
+        name: "/lecturer/presence-screen",
+        page: () => lecturer.PresenceScreen(),
+        binding: LecturerPresenceBinding()),
     GetPage(
       name: "/lecturer/all-schedule-screen",
       page: () => lecturer.AllScheduleScreen(),
