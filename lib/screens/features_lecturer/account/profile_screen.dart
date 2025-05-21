@@ -305,7 +305,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset('assets/icons/ic_view.png',
+                                Image.asset('icons/ic_view.png',
                                     height: 20, width: 20),
                                 SizedBox(width: 10),
                                 Text(
@@ -341,7 +341,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('assets/icons/ic_ketentuanlayanan.png',
+                                Image.asset('icons/ic_ketentuanlayanan.png',
                                     height: 30, width: 30),
                                 SizedBox(width: 10),
                                 Text("Ketentuan Layanan",
@@ -357,7 +357,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('assets/icons/ic_kebijakanprivasi.png',
+                                Image.asset('icons/ic_kebijakanprivasi.png',
                                     height: 30, width: 30),
                                 SizedBox(width: 10),
                                 Text("Kebijakan Privasi",
@@ -373,7 +373,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('assets/icons/ic_gantipassword.png',
+                                Image.asset('icons/ic_gantipassword.png',
                                     height: 30, width: 30),
                                 SizedBox(width: 10),
                                 Text("Ganti Password",
@@ -409,7 +409,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset('assets/icons/ic_logout.png',
+                                Image.asset('icons/ic_logout.png',
                                     height: 20, width: 20),
                                 SizedBox(width: 10),
                                 Text(

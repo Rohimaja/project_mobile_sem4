@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart';
 import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/styles/constant.dart';
 
 class Bantuan extends StatelessWidget {
@@ -16,84 +17,97 @@ class Bantuan extends StatelessWidget {
         .width; // Pastikan variabel width terdefinisi
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 237, 235, 251),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildHeader(context),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 15, left: 23, right: 18, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Bantuan",
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 30, 136, 228),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Container(
-                    width: width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Get.toNamed("/student/terms-of-service-screen");
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                  'assets/icons/ic_ketentuanlayanan.png',
-                                  height: 30,
-                                  width: 30),
-                              SizedBox(width: 10),
-                              Text("Ketentuan Layanan",
-                                  style: blackTextStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              CustomHeader(title: "Bantuan"),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Get.to(KetentuanLayanan());
+                            },
+                            borderRadius: BorderRadius.circular(
+                                10), // ripple efek yang lebih halus
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0,
+                                  horizontal: 4.0), // memperluas area klik
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      'assets/icons/ic_ketentuanlayanan.png',
+                                      height: 30,
+                                      width: 30),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Text(
+                                      "Ketentuan Layanan",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.center),
-                            ],
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        InkWell(
-                          onTap: () {
-                            Get.toNamed(
-                                "/student/privacy-policy-screen"); // Tambahkan halaman ini
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                  'assets/icons/ic_kebijakanprivasi.png',
-                                  height: 30,
-                                  width: 30),
-                              SizedBox(width: 10),
-                              Text("Kebijakan Privasi",
-                                  style: blackTextStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800,
+                          SizedBox(height: 15),
+                          InkWell(
+                            onTap: () {
+                              Get.to(KebijakanPrivasi());
+                            },
+                            borderRadius: BorderRadius.circular(
+                                10), // ripple efek yang lebih halus
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0,
+                                  horizontal: 4.0), // memperluas area klik
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      'assets/icons/ic_kebijakanprivasi.png',
+                                      height: 30,
+                                      width: 30),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Text(
+                                      "Kebijakan Privasi",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.center),
-                            ],
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -106,19 +120,18 @@ class Bantuan extends StatelessWidget {
       children: [
         Container(
           width: width,
-          height: 70,
+          height: 80,
           decoration: BoxDecoration(
             color: blueColor,
             borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
+              bottomLeft: Radius.circular(30),
             ),
             image: const DecorationImage(
               image: AssetImage('assets/images/bgheader.png'),
               fit: BoxFit.cover,
             ),
           ),
-          padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 23),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -133,7 +146,7 @@ class Bantuan extends StatelessWidget {
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Image(
-                      image: AssetImage('icons/ic_back.png'),
+                      image: AssetImage('assets/icons/ic_back.png'),
                       height: 18,
                       width: 18,
                     ),
@@ -159,57 +172,46 @@ class Bantuan extends StatelessWidget {
         Positioned(
           bottom: -44,
           right: 0,
-          child: Container(
-            width: 40,
-            height: 44,
-            color: blueColor,
-          ),
-        ),
-        Positioned(
-          bottom: -45,
-          right: 0,
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
-              ),
+          child: ClipPath(
+            clipper: InvertedQuarterCircleClipper(),
+            child: Container(
+              width: 40,
+              height: 44,
+              color:
+                  Color.fromARGB(255, 30, 136, 228), // warna abu sesuai gambar
             ),
           ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      "> $title",
-      style: GoogleFonts.poppins(
-        fontSize: 14,
-        fontWeight: FontWeight.w700,
-        color: Colors.black87,
-      ),
+class InvertedQuarterCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    // Mulai dari sudut kiri atas
+    path.moveTo(0, 0);
+
+    // Garis ke sudut kanan atas
+    path.lineTo(size.width, 0);
+
+    // Garis ke sudut kanan bawah
+    path.lineTo(size.width, size.height);
+
+    // Arc dari sudut kanan bawah ke kiri atas
+    path.arcToPoint(
+      Offset(0, 0),
+      radius: Radius.circular(size.width),
+      clockwise: false,
     );
+
+    path.close();
+    return path;
   }
 
-  Widget _buildNumberedList(List<String> items) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(items.length, (index) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 6.0),
-          child: Text(
-            "${index + 1}. ${items[index]}",
-            style: GoogleFonts.poppins(
-              fontSize: 13,
-              fontWeight: FontWeight.w400,
-              color: Colors.black87,
-            ),
-          ),
-        );
-      }),
-    );
-  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

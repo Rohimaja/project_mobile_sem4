@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/styles/constant.dart';
 
 class EditPresensiDialog extends StatefulWidget {
   const EditPresensiDialog({super.key});
@@ -52,7 +53,9 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
               'jamAkhir': jamAkhir,
             });
           },
-          child: const Text("SUBMIT", style: TextStyle(color: Colors.blue)),
+          child: const Text("SUBMIT",
+              style:
+                  TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
         ),
       ],
     );
@@ -66,7 +69,7 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: GoogleFonts.plusJakartaSans(color: Colors.blue)),
+        Text(label, style: GoogleFonts.plusJakartaSans(color: blueColor)),
         const SizedBox(height: 4),
         GestureDetector(
           onTap: () async {

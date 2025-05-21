@@ -10,6 +10,7 @@ import 'package:stipres/screens/auth/forget_password_screen_1.dart';
 import 'package:stipres/screens/auth/forget_password_screen_2.dart';
 import 'package:stipres/screens/auth/forget_password_screen_3.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_student/home/all_schedule_screen.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart'
     as student;
 import 'package:stipres/screens/features_student/account/bantuan.dart';
@@ -25,7 +26,6 @@ import 'package:stipres/screens/features_student/home/base_screen.dart'
     as student;
 import 'package:stipres/screens/features_lecturer/home/base_screen.dart'
     as lecturer;
-import 'package:stipres/screens/features_student/home/calendar_screen.dart';
 import 'package:stipres/screens/features_student/home/lecture/lecture_content_screen.dart';
 import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
 import 'package:stipres/screens/features_student/home/notification_screen.dart';
@@ -54,7 +54,8 @@ class AppScreens {
     GetPage(name: "/student/presence-screen", page: () => PresenceScreen()),
     GetPage(name: "/student/offline-screen", page: () => OfflineScreen()),
     GetPage(name: "/student/fallback-screen", page: () => FallbackScreen()),
-    GetPage(name: "/student/calendar-screen", page: () => CalendarScreen()),
+    GetPage(
+        name: "/student/allschedule-screen", page: () => AllScheduleScreen()),
     GetPage(name: "/student/lecture-screen", page: () => LectureScreen()),
     GetPage(
         name: "/student/view-profile-screen",

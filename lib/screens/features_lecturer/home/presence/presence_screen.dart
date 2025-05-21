@@ -40,6 +40,13 @@ class _PresenceScreenState extends State<PresenceScreen>
       lokasi: 'Ruang 103',
       durasi: '2 Jam',
     ),
+    PresensiModel(
+      semester: 3,
+      jam: '15:00 - 16:00',
+      matkul: 'Kewirausahaan',
+      lokasi: 'Ruang 103',
+      durasi: '1 Jam',
+    ),
   ];
 
   late AnimationController _animationController;
@@ -85,193 +92,190 @@ class _PresenceScreenState extends State<PresenceScreen>
       body: SafeArea(
         child: Stack(
           children: [
-            Positioned.fill(
-              child: SingleChildScrollView(
-                child: Column(
+            Column(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
                   children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: blueColor,
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                            ),
-                            image: const DecorationImage(
-                              image: AssetImage('images/bgheader.png'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 23),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () => Navigator.pop(context),
-                                  borderRadius: BorderRadius.circular(100),
-                                  customBorder: const CircleBorder(),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(
-                                      'assets/icons/ic_back.png',
-                                      height: 18,
-                                      width: 18,
-                                    ),
-                                  ),
+                    Container(
+                      width: width,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: blueColor,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(30),
+                        ),
+                        image: const DecorationImage(
+                          image: AssetImage('images/bgheader.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 23),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () => Navigator.pop(context),
+                              borderRadius: BorderRadius.circular(100),
+                              customBorder: const CircleBorder(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                  'assets/icons/ic_back.png',
+                                  height: 18,
+                                  width: 18,
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              // Animated Search Bar dengan fade
-                              Expanded(
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 300),
-                                  child: _isSearching
-                                      ? FadeTransition(
-                                          opacity: _animation,
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: SizedBox(
-                                              width: width * 0.70,
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 12,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white
-                                                      .withOpacity(0.9),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: TextField(
-                                                  controller: _searchController,
-                                                  style: GoogleFonts
-                                                      .plusJakartaSans(
-                                                    color: Colors.black,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Cari mata kuliah...',
-                                                    hintStyle: GoogleFonts
-                                                        .plusJakartaSans(
-                                                      color: Colors.grey[600],
-                                                    ),
-                                                    border: InputBorder.none,
-                                                  ),
-                                                  autofocus: true,
-                                                ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          // Animated Search Bar dengan fade
+                          Expanded(
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              child: _isSearching
+                                  ? FadeTransition(
+                                      opacity: _animation,
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: SizedBox(
+                                          width: width * 0.70,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.white.withOpacity(0.9),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: TextField(
+                                              controller: _searchController,
+                                              style:
+                                                  GoogleFonts.plusJakartaSans(
+                                                color: Colors.black,
                                               ),
+                                              decoration: InputDecoration(
+                                                hintText: 'Cari mata kuliah...',
+                                                hintStyle:
+                                                    GoogleFonts.plusJakartaSans(
+                                                  color: Colors.grey[600],
+                                                ),
+                                                border: InputBorder.none,
+                                              ),
+                                              autofocus: true,
                                             ),
-                                          ),
-                                        )
-                                      : Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Presensi Mata Kuliah",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.white,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              // Tombol pencarian tetap di posisi yang sama
-                              Material(
-                                color: Colors.transparent,
-                                shape: const CircleBorder(),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                    color: whiteColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        _isSearching = !_isSearching;
-                                        if (_isSearching) {
-                                          _animationController
-                                              .forward(); // Fade-in saat search aktif
-                                        } else {
-                                          _animationController
-                                              .reverse(); // Fade-out saat search non-aktif
-                                          _searchController.clear();
-                                        }
-                                      });
-                                    },
-                                    customBorder: const CircleBorder(),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: Image.asset(
-                                        'assets/icons/ic_search.png',
-                                        height: 18,
-                                        width: 18,
+                                      ),
+                                    )
+                                  : Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Presensi Mata Kuliah",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.white,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          // Tombol pencarian tetap di posisi yang sama
+                          Material(
+                            color: Colors.transparent,
+                            shape: const CircleBorder(),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                color: whiteColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _isSearching = !_isSearching;
+                                    if (_isSearching) {
+                                      _animationController
+                                          .forward(); // Fade-in saat search aktif
+                                    } else {
+                                      _animationController
+                                          .reverse(); // Fade-out saat search non-aktif
+                                      _searchController.clear();
+                                    }
+                                  });
+                                },
+                                customBorder: const CircleBorder(),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Image.asset(
+                                    'assets/icons/ic_search.png',
+                                    height: 18,
+                                    width: 18,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -44,
-                          right: 0,
-                          child: Container(
-                            width: 40,
-                            height: 44,
-                            color: blueColor,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -45,
-                          right: 0,
-                          child: Container(
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              color: mainColor,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(40),
-                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                    Positioned(
+                      bottom: -44,
+                      right: 0,
+                      child: Container(
+                        width: 40,
+                        height: 44,
+                        color: blueColor,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -45,
+                      right: 0,
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: mainColor,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(40),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
 
-                    // Body Content
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Text(
-                              'Presensi Hari Ini',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: blueColor,
-                                fontWeight: FontWeight.normal,
-                              ),
+                // Body Content
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            'Presensi Sedang Berlangsung',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: blueColor,
+                              fontWeight: FontWeight.normal,
                             ),
                           ),
-                          const SizedBox(height: 12),
-                          filteredPresensi.isEmpty
+                        ),
+                        const SizedBox(height: 12),
+                        Expanded(
+                          child: filteredPresensi.isEmpty
                               ? Container(
                                   width: double
                                       .infinity, // Biar bisa center dalam parent
-                                  padding: const EdgeInsets.only(top: 30),
                                   alignment: Alignment.center,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -293,14 +297,12 @@ class _PresenceScreenState extends State<PresenceScreen>
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      const SizedBox(height: 220),
                                     ],
                                   ),
                                 )
                               : ListView.builder(
                                   itemCount: filteredPresensi.length,
                                   shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return Padding(
                                       padding:
@@ -311,12 +313,12 @@ class _PresenceScreenState extends State<PresenceScreen>
                                     );
                                   },
                                 ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
             Positioned(
               bottom: 20,
@@ -357,8 +359,8 @@ class _PresenceScreenState extends State<PresenceScreen>
                         children: [
                           Image.asset(
                             'assets/icons/ic_add_presence.png',
-                            height: 20,
-                            width: 20,
+                            height: 25,
+                            width: 25,
                           ),
                           const SizedBox(width: 8),
                           Text(

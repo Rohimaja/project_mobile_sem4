@@ -13,8 +13,8 @@ class ViewProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: Stack(children: [
+        Column(
           children: [
             _buildHeader(context),
             Obx(
@@ -22,7 +22,13 @@ class ViewProfilePage extends StatelessWidget {
             )
           ],
         ),
-      ),
+        Positioned(
+          top: 110, // atur posisi agar setengah berada di header
+          left: 0,
+          right: 0,
+          child: _buildProfilePicture(),
+        ),
+      ]),
     );
   }
 
@@ -46,7 +52,7 @@ class ViewProfilePage extends StatelessWidget {
             ),
           ),
           padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 120),
+              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 80),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -109,56 +115,55 @@ class ViewProfilePage extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          top: 117,
-          left: 0,
-          right: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(2),
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 237, 235, 251),
-                      shape: BoxShape.circle,
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        "assets/images/foto_izzul.jpg",
-                        height: 110,
-                        width: 110,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 10,
-                    right: 0,
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF0D0063),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Image(
-                          image: AssetImage("assets/icons/ic_addpicture.png"),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
       ],
+    );
+  }
+
+  Widget _buildProfilePicture() {
+    return Center(
+      child: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(2),
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 237, 235, 251),
+              shape: BoxShape.circle,
+            ),
+            child: ClipOval(
+              child: Image.asset(
+                "assets/images/foto_izzul.jpg",
+                height: 110,
+                width: 110,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: GestureDetector(
+              onTap: () {
+                print("add image on tapped");
+              },
+              child: Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: blueColor,
+                  shape: BoxShape.circle,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Image(
+                    image: AssetImage("assets/icons/ic_addpicture.png"),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -179,7 +184,7 @@ class ViewProfilePage extends StatelessWidget {
           _buildProfileItem("Agama", _controller.storedAgama.value),
           _buildDivider(),
           _buildProfileItem(
-              "Tempat Tanggal Lahir", _controller.storedTempatTglLahir.value),
+              "Tempat, Tanggal Lahir", _controller.storedTempatTglLahir.value),
           _buildDivider(),
           _buildProfileItem("Alamat", _controller.storedAlamat.value),
           _buildDivider(),
@@ -199,26 +204,26 @@ class ViewProfilePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Agar baris sejajar di bagian atas secara vertikal
+          crossAxisAlignment: CrossAxisAlignment
+              .start, // Agar baris sejajar di bagian atas secara vertikal
           children: [
             SizedBox(
               width: 150,
               child: Text(
                 label,
-                style: const TextStyle(
+                style: GoogleFonts.plusJakartaSans(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis, // Tetap ada untuk label jika terlalu panjang
+                ), // Tetap ada untuk label jika terlalu panjang
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
                 value,
-                style: const TextStyle(
+                style: GoogleFonts.plusJakartaSans(
                   color: Color.fromARGB(255, 30, 136, 228),
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                 ),
                 // overflow: TextOverflow.ellipsis, // Dihapus agar teks bisa wrap
               ),

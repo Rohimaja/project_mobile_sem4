@@ -36,8 +36,9 @@ class DashboardController extends GetxController {
   Future<void> fetchJadwal() async {
     log.d("fetch jadwal");
     String nim = _box.read("user_nim");
+    int mahasiswaId = _box.read("mahasiswa_id");
     log.d(nim);
-    final result = await dashboardMahasiswaService.tampilJadwalHariIni(nim);
+    final result = await dashboardMahasiswaService.tampilJadwalHariIni(mahasiswaId);
     log.d(result);
 
     if (result.status == "success" && result.data != null) {

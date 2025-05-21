@@ -15,19 +15,19 @@ class NotificationCard extends StatelessWidget {
     switch (notification.type) {
       case NotificationType.presensiGagal:
         backgroundColor = Colors.red;
-        iconPath = 'icons/ic_warning.png';
+        iconPath = 'assets/icons/ic_warning.png';
         break;
       case NotificationType.presensiSukses:
         backgroundColor = Colors.green;
-        iconPath = 'icons/ic_presence.png';
+        iconPath = 'assets/icons/ic_presence.png';
         break;
       case NotificationType.batasPresensi:
         backgroundColor = Colors.blue;
-        iconPath = 'icons/ic_time.png';
+        iconPath = 'assets/icons/ic_time.png';
         break;
       case NotificationType.pengumuman:
         backgroundColor = Colors.orange;
-        iconPath = 'icons/ic_announcement.png';
+        iconPath = 'assets/icons/ic_announcement.png';
         break;
     }
 

@@ -13,9 +13,9 @@ class DashboardMahasiswaService extends GetxService {
   var log = Logger();
 
   Future<BaseResponse<List<JadwalModelApi>>> tampilJadwalHariIni(
-      String nim) async {
+      int mahasiswaId) async {
     try {
-      final url = Uri.parse("$_baseURL?nim=$nim");
+      final url = Uri.parse("$_baseURL?mahasiswa_id=$mahasiswaId");
       final response = await http.get(url);
       log.d(url);
 

@@ -25,7 +25,7 @@ class CourseDetailDialog extends StatelessWidget {
       backgroundColor: Colors.white,
       content: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
               'Detail Mata Kuliah',

@@ -284,13 +284,13 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
     return Scaffold(
       backgroundColor: mainColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomHeader(title: 'Presensi Mata Kuliah'),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            CustomHeader(title: 'Presensi Mata Kuliah'),
+            SizedBox(height: 20),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(25, 0, 25, 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -306,7 +306,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                       "Mohon isi data dibawah ini",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                     Divider(
@@ -315,108 +315,121 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                       height: 20,
                     ),
                     const SizedBox(height: 4),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Dropdown Program Studi
+                            _buildDropdownField(
+                              label: "Program Studi",
+                              value: selectedProdi,
+                              hint: "Silahkan pilih program studi",
+                              items: [
+                                'Teknik Informatika',
+                                'Sistem Informasi',
+                                'Teknik Komputer'
+                              ],
+                              onChanged: (val) =>
+                                  setState(() => selectedProdi = val),
+                            ),
+                            const SizedBox(height: 12),
 
-                    // Dropdown Program Studi
-                    _buildDropdownField(
-                      label: "Program Studi",
-                      value: selectedProdi,
-                      hint: "Silahkan pilih program studi",
-                      items: [
-                        'Teknik Informatika',
-                        'Sistem Informasi',
-                        'Teknik Komputer'
-                      ],
-                      onChanged: (val) => setState(() => selectedProdi = val),
-                    ),
-                    const SizedBox(height: 12),
+                            // Dropdown Semester
+                            _buildDropdownField(
+                              label: "Semester",
+                              value: selectedSemester,
+                              hint: "Silahkan pilih semester",
+                              items: ['1', '2', '3', '4', '5', '6'],
+                              onChanged: (val) =>
+                                  setState(() => selectedSemester = val),
+                            ),
+                            const SizedBox(height: 12),
 
-                    // Dropdown Semester
-                    _buildDropdownField(
-                      label: "Semester",
-                      value: selectedSemester,
-                      hint: "Silahkan pilih semester",
-                      items: ['1', '2', '3', '4', '5', '6'],
-                      onChanged: (val) =>
-                          setState(() => selectedSemester = val),
-                    ),
-                    const SizedBox(height: 12),
+                            // Nama Matkul dan ID Matkul
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: _buildDropdownField(
+                                    label: "Nama Matkul",
+                                    value: selectedMatkul,
+                                    hint: "Pilih matkul",
+                                    items: [
+                                      'Matematika',
+                                      'Pemrograman',
+                                      'Jaringan'
+                                    ],
+                                    onChanged: (val) =>
+                                        setState(() => selectedMatkul = val),
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 8, right: 8, top: 20),
+                                  child: Icon(Icons.arrow_forward_ios,
+                                      size: 20, color: Colors.blue),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: _buildTextField2(
+                                    label: "ID Matkul",
+                                    hint: "ID Matkul",
+                                    onChanged: (val) =>
+                                        setState(() => idMatkul = val),
+                                    enabled: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
 
-                    // Nama Matkul dan ID Matkul
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: _buildDropdownField(
-                            label: "Nama Matkul",
-                            value: selectedMatkul,
-                            hint: "Pilih matkul",
-                            items: ['Matematika', 'Pemrograman', 'Jaringan'],
-                            onChanged: (val) =>
-                                setState(() => selectedMatkul = val),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 8, right: 8, top: 20),
-                          child: Icon(Icons.arrow_forward_ios,
-                              size: 20, color: Colors.blue),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: _buildTextField2(
-                            label: "ID Matkul",
-                            hint: "ID Matkul",
-                            onChanged: (val) => setState(() => idMatkul = val),
-                            enabled: false,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
+                            // Tanggal Presensi
+                            _buildDatePicker(context),
+                            const SizedBox(height: 12),
 
-                    // Tanggal Presensi
-                    _buildDatePicker(context),
-                    const SizedBox(height: 12),
+                            // Jam Awal & Akhir
+                            _buildTimePickers(context),
+                            const SizedBox(height: 12),
 
-                    // Jam Awal & Akhir
-                    _buildTimePickers(context),
-                    const SizedBox(height: 12),
-
-                    // Link Zoom
-                    _buildTextField(
-                      label: "Link Zoom",
-                      hint: "Masukkan link zoom (Opsional)",
-                      controller: linkZoomController,
-                    ),
-                    const SizedBox(height: 42),
-
-                    // Tombol Submit
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _submitPresence,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: blueColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                        ),
-                        child: Text(
-                          'Submit',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
+                            // Link Zoom
+                            _buildTextField(
+                              label: "Link Zoom",
+                              hint: "Masukkan link zoom (Opsional)",
+                              controller: linkZoomController,
+                            ),
+                            const SizedBox(height: 30),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: _submitPresence,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: blueColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                ),
+                                child: Text(
+                                  'Submit',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
