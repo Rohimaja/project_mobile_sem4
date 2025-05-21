@@ -9,7 +9,7 @@ import 'package:stipres/constants/styles.dart';
 class ForgetPassword2 extends StatelessWidget {
   ForgetPassword2({super.key});
 
-  final forgetPass2C = ForgetPasswordStep2Controller();
+  final forgetPass2C = Get.find<ForgetPasswordStep2Controller>();
 
   @override
   Widget build(BuildContext context) {

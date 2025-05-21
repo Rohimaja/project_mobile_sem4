@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_student/home/calendar_controller.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -14,6 +16,7 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  final _controller = Get.find<CalendarController>();
 
   // Simulasi data dari database
   final Map<DateTime, List<Map<String, String>>> _events = {

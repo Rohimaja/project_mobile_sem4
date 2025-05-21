@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/home/calendar_screen.dart'; // pastikan path-nya sesuai
 
@@ -18,10 +19,7 @@ class _CalendarLinkState extends State<CalendarLink> {
     });
 
     // Navigasi ke halaman KalenderScreen
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CalendarScreen()),
-    );
+    await Get.toNamed("/student/calendar-screen");
 
     // Setelah kembali, hilangkan underline
     if (mounted) {

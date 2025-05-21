@@ -2,7 +2,11 @@ import 'package:get/get.dart';
 import 'package:stipres/bindings/auth/activation_step1_binding.dart';
 import 'package:stipres/bindings/auth/activation_step2_binding.dart';
 import 'package:stipres/bindings/auth/activation_step3_binding.dart';
+import 'package:stipres/bindings/auth/forget_password_step1_binding.dart';
+import 'package:stipres/bindings/auth/forget_password_step2_binding.dart';
+import 'package:stipres/bindings/auth/forget_password_step3_binding.dart';
 import 'package:stipres/bindings/features_lecturer/attendance_binding.dart';
+import 'package:stipres/bindings/features_lecturer/lecture_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_detail_binding.dart';
 import 'package:stipres/bindings/features_lecturer/view_profile_binding.dart';
@@ -10,8 +14,11 @@ import 'package:stipres/bindings/features_student/attendance_binding.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart' as student;
 import 'package:stipres/bindings/features_lecturer/base_binding.dart';
 import 'package:stipres/bindings/features_lecturer/dashboard_binding.dart';
+import 'package:stipres/bindings/features_student/calendar_binding.dart';
 import 'package:stipres/bindings/features_student/dashboard_binding.dart'
     as student;
+import 'package:stipres/bindings/features_student/lecture_binding.dart';
+import 'package:stipres/bindings/features_student/presence_binding.dart';
 import 'package:stipres/bindings/features_student/presence_content_binding.dart';
 import 'package:stipres/bindings/features_student/profile_binding.dart'
     as student;
@@ -38,6 +45,7 @@ import 'package:stipres/screens/features_student/account/pengaturan.dart'
 
 import 'package:stipres/screens/features_student/account/view_profile.dart'
     as student;
+import 'package:stipres/screens/features_student/home/all_schedule_screen.dart';
 import 'package:stipres/screens/features_student/home/attendance_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/attendance/attendance_screen.dart'
     as lecturer;
@@ -63,9 +71,18 @@ import 'package:stipres/screens/features_lecturer/home/presence/presence_screen.
 class AppScreens {
   static final screens = [
     GetPage(name: "/", page: () => LoginScreen()),
-    GetPage(name: "/auth/forget-password/step1", page: () => ForgetPassword1()),
-    GetPage(name: "/auth/forget-password/step2", page: () => ForgetPassword2()),
-    GetPage(name: "/auth/forget-password/step3", page: () => ForgetPassword3()),
+    GetPage(
+        name: "/auth/forget-password/step1",
+        page: () => ForgetPassword1(),
+        binding: ForgetPasswordStep1Binding()),
+    GetPage(
+        name: "/auth/forget-password/step2",
+        page: () => ForgetPassword2(),
+        binding: ForgetPasswordStep2Binding()),
+    GetPage(
+        name: "/auth/forget-password/step3",
+        page: () => ForgetPassword3(),
+        binding: ForgetPasswordStep3Binding()),
     GetPage(
         name: "/auth/activation/step1",
         page: () => ActivationAccount1(),
@@ -103,9 +120,9 @@ class AppScreens {
       page: () => lecturer.CalendarScreen(),
     ),
     GetPage(
-      name: "/lecturer/lecture-screen",
-      page: () => lecturer.LectureScreen(),
-    ),
+        name: "/lecturer/lecture-screen",
+        page: () => lecturer.LectureScreen(),
+        binding: LecturerLectureBinding()),
     GetPage(
         name: "/lecturer/view-profile-screen",
         page: () => ViewProfilePage(),
@@ -126,11 +143,22 @@ class AppScreens {
         name: "/student/attendance-screen",
         page: () => AttendanceScreen(),
         binding: AttendanceBinding()),
-    GetPage(name: "/student/presence-screen", page: () => PresenceScreen()),
+    GetPage(
+        name: "/student/presence-screen",
+        page: () => PresenceScreen(),
+        binding: PresenceBinding()),
     GetPage(name: "/student/offline-screen", page: () => OfflineScreen()),
     GetPage(name: "/student/fallback-screen", page: () => FallbackScreen()),
-    GetPage(name: "/student/calendar-screen", page: () => CalendarScreen()),
-    GetPage(name: "/student/lecture-screen", page: () => LectureScreen()),
+    GetPage(
+        name: "/student/calendar-screen",
+        page: () => CalendarScreen(),
+        binding: CalendarBinding()),
+    GetPage(
+        name: "/student/lecture-screen",
+        page: () => LectureScreen(),
+        binding: LectureBinding()),
+    GetPage(
+        name: "/student/all-schedule-screen", page: () => AllScheduleScreen()),
     GetPage(
         name: "/student/view-profile-screen",
         page: () => student.ViewProfilePage(),

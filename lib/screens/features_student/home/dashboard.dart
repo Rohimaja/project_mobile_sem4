@@ -299,11 +299,7 @@ class DashboardScreenStudent extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 251, 187, 187),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CalendarScreen()),
-                                  );
+                                  Get.toNamed("/student/calendar-screen");
                                 },
                               ),
 

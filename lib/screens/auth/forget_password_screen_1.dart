@@ -8,7 +8,7 @@ class ForgetPassword1 extends StatelessWidget {
   ForgetPassword1({super.key});
 
   final emailController = TextEditingController();
-  final forgetPass1C = ForgetPasswordStep1Controller();
+  final forgetPass1C = Get.find<ForgetPasswordStep1Controller>();
 
   @override
   Widget build(BuildContext context) {

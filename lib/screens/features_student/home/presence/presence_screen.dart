@@ -17,7 +17,7 @@ class _PresenceScreenState extends State<PresenceScreen>
   late double height, width;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
-  final PresenceController _controller = Get.put(PresenceController());
+  final PresenceController _controller = Get.find<PresenceController>();
 
   late AnimationController _animationController;
   late Animation<double> _animation;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart';
@@ -205,11 +206,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                               label: 'Presensi',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => PresenceDetailScreen()),
-                                );
+                                Get.toNamed("/lecturer/presence-detail-screen");
                               },
                             ),
                             const SizedBox(width: 8),

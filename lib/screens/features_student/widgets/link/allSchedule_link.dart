@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/home/all_schedule_screen.dart'; // pastikan path-nya sesuai
 
@@ -18,10 +19,7 @@ class _AllScheduleLinkState extends State<AllScheduleLink> {
     });
 
     // Navigasi ke halaman KalenderScreen
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AllScheduleScreen()),
-    );
+    await Get.toNamed("/student/all-schedule-screen");
 
     // Setelah kembali, hilangkan underline
     if (mounted) {

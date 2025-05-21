@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_lecturer/home/lectures/lecture_controller.dart';
 import 'package:stipres/screens/features_lecturer/models/lecture_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
 import 'package:stipres/constants/styles.dart';
@@ -16,6 +18,7 @@ class _LectureScreenState extends State<LectureScreen>
   late double height, width;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
+  final _controller = Get.find<LectureController>();
 
   final List<PerkuliahanModel> perkuliahanHariIni = [
     PerkuliahanModel(

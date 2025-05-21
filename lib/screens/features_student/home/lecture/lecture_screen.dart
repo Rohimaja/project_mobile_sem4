@@ -17,7 +17,7 @@ class _LectureScreenState extends State<LectureScreen>
   late double height, width;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
-  final LectureController _controller = Get.put(LectureController());
+  final LectureController _controller = Get.find<LectureController>();
 
   late AnimationController _animationController;
   late Animation<double> _animation;
