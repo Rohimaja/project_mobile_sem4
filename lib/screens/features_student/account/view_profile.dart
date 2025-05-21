@@ -132,7 +132,7 @@ class ViewProfilePage extends StatelessWidget {
             ),
             child: ClipOval(
               child: Image.asset(
-                "assets/images/foto_izzul.jpg",
+                "assets/icons/ic_profile.jpeg",
                 height: 110,
                 width: 110,
                 fit: BoxFit.cover,

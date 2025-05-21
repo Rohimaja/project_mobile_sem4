@@ -150,14 +150,14 @@ class ProfileScreen extends StatelessWidget {
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, url, error) =>
                                             Image.asset(
-                                          "assets/images/foto_izzul.jpg",
+                                          "assets/icons/ic_profile.jpeg",
                                           height: 90,
                                           width: 90,
                                           fit: BoxFit.cover,
                                         ),
                                       )
                                     : Image.asset(
-                                        "assets/images/foto_izzul.jpg",
+                                        "assets/icons/ic_profile.jpeg",
                                         height: 90,
                                         width: 90,
                                         fit: BoxFit.cover,

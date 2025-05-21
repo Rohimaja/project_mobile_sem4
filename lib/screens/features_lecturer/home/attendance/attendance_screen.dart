@@ -237,7 +237,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                     width: 100, child: Text('Program Studi')),
                                 const Text(' : '),
                                 const SizedBox(width: 10),
-                                Text('${selectedProdi ?? "-"}',
+                                Text(_controller.selectedProdi.value,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold)),
                               ],

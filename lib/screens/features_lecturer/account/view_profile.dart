@@ -138,14 +138,14 @@ class ViewProfilePage extends StatelessWidget {
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, url, error) =>
                                     Image.asset(
-                                  "assets/images/foto_aldo.jpg",
+                                  "assets/icons/ic_profile.jpeg",
                                   height: 110,
                                   width: 110,
                                   fit: BoxFit.cover,
                                 ),
                               )
                             : Image.asset(
-                                "assets/images/foto_aldo.jpg",
+                                "assets/icons/ic_profile.jpeg",
                                 height: 110,
                                 width: 110,
                                 fit: BoxFit.cover,

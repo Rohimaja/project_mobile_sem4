@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/add_presence_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/presence/presence_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/presence/presence_card.dart';
 import 'package:stipres/constants/styles.dart';
 

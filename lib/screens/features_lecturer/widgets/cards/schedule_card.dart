@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/course_detail_card.dart';
 import 'package:stipres/constants/styles.dart';
 
@@ -71,7 +70,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                     Positioned(
                       top: -10,
                       left: 5,
-                      child: _buildModeChip(jadwal.keterangan),
+                      child: _buildModeChip(jadwal.keterangan!),
                     ),
                   ],
                 ),

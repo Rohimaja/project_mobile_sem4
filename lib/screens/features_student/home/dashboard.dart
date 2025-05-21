@@ -147,14 +147,14 @@ class DashboardScreenStudent extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     errorBuilder: (context, url, error) =>
                                         Image.asset(
-                                      "assets/images/foto_izzul.jpg",
+                                      "assets/icons/ic_profile.jpeg",
                                       height: 70,
                                       width: 70,
                                       fit: BoxFit.cover,
                                     ),
                                   )
                                 : Image.asset(
-                                    "assets/images/foto_izzul.jpg",
+                                    "assets/icons/ic_profile.jpeg",
                                     height: 70,
                                     width: 70,
                                     fit: BoxFit.cover,
@@ -313,7 +313,7 @@ class DashboardScreenStudent extends StatelessWidget {
                                     bgColor: const Color.fromARGB(
                                         255, 251, 187, 187),
                                     onTap: () {
-                                  Get.toNamed("/student/calendar-screen");
+                                      Get.toNamed("/student/calendar-screen");
                                     },
                                   ),
 
