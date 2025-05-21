@@ -237,9 +237,14 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                     width: 100, child: Text('Program Studi')),
                                 const Text(' : '),
                                 const SizedBox(width: 10),
-                                Text(_controller.selectedProdi.value,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold)),
+                                Obx(() {
+                                  return Text(
+                                      _controller.prodiMap[_controller
+                                              .selectedProdi.value] ??
+                                          "-",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold));
+                                })
                               ],
                             ),
                             const SizedBox(height: 8),

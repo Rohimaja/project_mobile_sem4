@@ -130,71 +130,72 @@ class DashboardScreenLecturer extends StatelessWidget {
                   ),
                 ),
 
-                  // PROFIL (MENJOROK KE PUTIH)
-                  Positioned(
-                    top: 80,
-                    left: 30,
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: mainColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipOval(child: Obx(() {
-                            final imageUrl = _controller.storedProfile.value;
-                            return (imageUrl.isNotEmpty)
-                                ? Image.network(
-                                    imageUrl,
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, url, error) =>
-                                        Image.asset(
-                                      "assets/icons/ic_profile.jpeg",
-                                      height: 70,
-                                      width: 70,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : Image.asset(
+                // PROFIL (MENJOROK KE PUTIH)
+                Positioned(
+                  top: 80,
+                  left: 30,
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: mainColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipOval(child: Obx(() {
+                          final imageUrl = _controller.storedProfile.value;
+                          return (imageUrl.isNotEmpty)
+                              ? FadeInImage.assetNetwork(
+                                  placeholder: "assets/icons/ic_profile.jpeg",
+                                  image: imageUrl,
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                  imageErrorBuilder: (context, url, error) =>
+                                      Image.asset(
                                     "assets/icons/ic_profile.jpeg",
                                     height: 70,
                                     width: 70,
                                     fit: BoxFit.cover,
-                                  );
-                          })),
-                        ),
-                        const SizedBox(width: 10),
-                        Obx(() {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _controller.storedName.value,
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                                  ),
+                                )
+                              : Image.asset(
+                                  "assets/icons/ic_profile.jpeg",
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                );
+                        })),
+                      ),
+                      const SizedBox(width: 10),
+                      Obx(() {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _controller.storedName.value,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                _controller.storedNip.value,
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
-                                  color: blueColor,
-                                ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              _controller.storedNip.value,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                color: blueColor,
                               ),
-                            ],
-                          );
-                        })
-                      ],
-                    ),
+                            ),
+                          ],
+                        );
+                      })
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
 
             const SizedBox(height: 40), // Jarak agar profil tidak tertutup
 

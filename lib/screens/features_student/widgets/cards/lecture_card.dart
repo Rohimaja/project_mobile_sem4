@@ -118,7 +118,7 @@ class PerkuliahanCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_lecturer.png",
-                    text: data.namaDosen,
+                    text: data.namaDosen!,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(

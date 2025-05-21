@@ -21,6 +21,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> loadHeader() async {
+    log.d("Fetch profile controller");
     String? nama = _box.read("user_nama");
     String? nip = _box.read("user_nip");
     String? email = _box.read("user_email");

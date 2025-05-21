@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/models/lecture_model.dart';
+import 'package:stipres/controllers/features_lecturer/home/lectures/lecture_controller.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
 import 'package:stipres/constants/styles.dart';
 
@@ -15,16 +16,18 @@ class _LectureContentScreenState extends State<LectureContentScreen>
     with TickerProviderStateMixin {
   late double height, width;
 
-  final List<PerkuliahanModel> perkuliahanOnline = [
-    PerkuliahanModel(
-      semester: 3,
-      matkul: 'Pemrograman Mobile',
-      tanggal: 'Senin, 11 Maret 2025',
-      dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
-      jam: '08:00 - 10:00',
-      linkZoom: 'https://zoom.us/j/123456789',
-    ),
-  ];
+  final _controller = Get.find<LectureController>();
+
+  // final List<PerkuliahanModel> perkuliahanOnline = [
+  //   PerkuliahanModel(
+  //     semester: 3,
+  //     matkul: 'Pemrograman Mobile',
+  //     tanggal: 'Senin, 11 Maret 2025',
+  //     dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
+  //     jam: '08:00 - 10:00',
+  //     linkZoom: 'https://zoom.us/j/123456789',
+  //   ),
+  // ];
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -139,7 +142,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                     ),
                     const SizedBox(height: 10),
                     Expanded(
-                      child: perkuliahanOnline.isEmpty
+                      child: _controller.lectureList.isEmpty
                           ? Container(
                               width: double
                                   .infinity, // Biar bisa center dalam parent
@@ -166,13 +169,13 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                               ),
                             )
                           : ListView.builder(
-                              itemCount: perkuliahanOnline.length,
+                              itemCount: _controller.lectureList.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 12),
                                   child: PerkuliahanCard(
-                                    data: perkuliahanOnline[index],
+                                    data: _controller.lectureList[index],
                                   ),
                                 );
                               },

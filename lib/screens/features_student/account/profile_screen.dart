@@ -143,13 +143,16 @@ class ProfileScreen extends StatelessWidget {
                               child: ClipOval(child: Obx(() {
                                 final imageUrl = profileC.storedProfile.value;
                                 return (imageUrl.isNotEmpty)
-                                    ? Image.network(
-                                        imageUrl,
+                                    ? FadeInImage.assetNetwork(
+                                        placeholder:
+                                            "assets/icons/ic_profile.jpeg",
+                                        image: imageUrl,
                                         height: 90,
                                         width: 90,
                                         fit: BoxFit.cover,
-                                        errorBuilder: (context, url, error) =>
-                                            Image.asset(
+                                        imageErrorBuilder:
+                                            (context, url, error) =>
+                                                Image.asset(
                                           "assets/icons/ic_profile.jpeg",
                                           height: 90,
                                           width: 90,

@@ -119,9 +119,8 @@ class ViewProfileController extends GetxController {
 
   Future<void> uploadProfilePic(File? profilePicture) async {
     try {
-      LoadingPopup();
       int dosenId = _box.read("dosen_id");
-
+      showLoading();
       final result =
           await profileLecturerService.sendImage(dosenId, profilePicture);
       if (result.status == "success" && result.data != null) {
@@ -129,8 +128,6 @@ class ViewProfileController extends GetxController {
         _box.write('foto', foto);
         log.f(foto);
 
-        // conDashboard.storedProfile.value = "${ApiConstants.pathProfile}$foto";
-        // conDashboard.storedProfile.refresh();
         await conDashboard.loadHeader();
         await conProfile.loadHeader();
         await loadHeader();
@@ -139,7 +136,6 @@ class ViewProfileController extends GetxController {
             duration: Duration(seconds: 1));
       } else {
         Get.back();
-
         Get.snackbar("Error", result.message);
       }
     } catch (e) {
@@ -175,5 +171,13 @@ class ViewProfileController extends GetxController {
         ],
       ),
     ));
+  }
+
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

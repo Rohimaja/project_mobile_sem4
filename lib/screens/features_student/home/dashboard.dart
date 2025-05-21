@@ -140,12 +140,13 @@ class DashboardScreenStudent extends StatelessWidget {
                           child: ClipOval(child: Obx(() {
                             final imageUrl = dashboardC.storedProfile.value;
                             return (imageUrl.isNotEmpty)
-                                ? Image.network(
-                                    imageUrl,
+                                ? FadeInImage.assetNetwork(
+                                    placeholder: "assets/icons/ic_profile.jpeg",
+                                    image: imageUrl,
                                     height: 70,
                                     width: 70,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (context, url, error) =>
+                                    imageErrorBuilder: (context, url, error) =>
                                         Image.asset(
                                       "assets/icons/ic_profile.jpeg",
                                       height: 70,

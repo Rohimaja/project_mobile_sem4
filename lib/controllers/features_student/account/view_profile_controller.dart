@@ -203,9 +203,8 @@ class StudentViewProfileController extends GetxController {
 
   Future<void> uploadProfilePic(File? profilePicture) async {
     try {
-      LoadingPopup();
       int mahasiswaId = _box.read("mahasiswa_id");
-
+      showLoading();
       final result =
           await profileMahasiswaService.sendImage(mahasiswaId, profilePicture);
       if (result.status == "success") {
@@ -256,5 +255,13 @@ class StudentViewProfileController extends GetxController {
         ],
       ),
     ));
+  }
+
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

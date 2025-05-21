@@ -2,11 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/models/lecture_model.dart';
-import 'package:stipres/screens/features_lecturer/widgets/dialog/edit_lecture_dialog.dart';
+import 'package:stipres/models/lecturers/lecture_model.dart';
 
 class PerkuliahanCard extends StatelessWidget {
-  final PerkuliahanModel data;
+  final LecturerLectureModel data;
   final void Function(String linkZoom)? onEdit;
 
   const PerkuliahanCard({
@@ -92,7 +91,7 @@ class PerkuliahanCard extends StatelessWidget {
                         ),
                         alignment: Alignment.centerLeft,
                         child: AutoSizeText(
-                          data.matkul,
+                          data.namaMatkul,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -120,17 +119,17 @@ class PerkuliahanCard extends StatelessWidget {
 
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_calendar2.png",
-                    text: data.tanggal,
+                    text: data.tglPresensi,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_lecturer.png",
-                    text: data.dosen,
+                    text: data.namaDosen!,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_clock.png",
-                    text: data.jam,
+                    text: data.durasiPresensi,
                   ),
                   const SizedBox(height: 8),
 

@@ -130,21 +130,36 @@ class ViewProfilePage extends StatelessWidget {
               color: Color.fromARGB(255, 237, 235, 251),
               shape: BoxShape.circle,
             ),
-            child: ClipOval(
-              child: Image.asset(
-                "assets/icons/ic_profile.jpeg",
-                height: 110,
-                width: 110,
-                fit: BoxFit.cover,
-              ),
-            ),
+            child: ClipOval(child: Obx(() {
+              final imageUrl = _controller.storedProfile.value;
+              return (imageUrl.isNotEmpty)
+                  ? FadeInImage.assetNetwork(
+                      placeholder: "assets/icons/ic_profile.jpeg",
+                      image: imageUrl,
+                      height: 110,
+                      width: 110,
+                      fit: BoxFit.cover,
+                      imageErrorBuilder: (context, url, error) => Image.asset(
+                        "assets/icons/ic_profile.jpeg",
+                        height: 110,
+                        width: 110,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Image.asset(
+                      "assets/icons/ic_profile.jpeg",
+                      height: 110,
+                      width: 110,
+                      fit: BoxFit.cover,
+                    );
+            })),
           ),
           Positioned(
             bottom: 0,
             right: 0,
             child: GestureDetector(
               onTap: () {
-                print("add image on tapped");
+                _controller.showFileOptions();
               },
               child: Container(
                 width: 32,

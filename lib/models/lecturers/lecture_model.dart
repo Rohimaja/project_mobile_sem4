@@ -1,4 +1,4 @@
-class LectureModelApi {
+class LecturerLectureModel {
   final String namaMatkul;
   final int semester;
   final String durasiPresensi;
@@ -6,7 +6,7 @@ class LectureModelApi {
   final String linkZoom;
   String tglPresensi;
 
-  LectureModelApi({
+  LecturerLectureModel({
     required this.namaMatkul,
     required this.semester,
     required this.durasiPresensi,
@@ -15,12 +15,12 @@ class LectureModelApi {
     required this.tglPresensi,
   });
 
-  factory LectureModelApi.fromJson(Map<String, dynamic> json) {
-    return LectureModelApi(
+  factory LecturerLectureModel.fromJson(Map<String, dynamic> json) {
+    return LecturerLectureModel(
       namaMatkul: json["nama_matkul"],
       semester: json["semester"],
       durasiPresensi: json["durasi_presensi"],
-      namaDosen: json["nama_dosen"] ?? "",
+      namaDosen: json["nama_dosen"],
       linkZoom: json["link_zoom"],
       tglPresensi: json["tgl_presensi"],
     );
