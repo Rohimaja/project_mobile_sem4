@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
-import 'package:stipres/screens/features_lecturer/account/pengaturan.dart';
 import 'package:stipres/constants/styles.dart';
 
 class ProfileScreenLecturer extends StatelessWidget {
@@ -134,7 +133,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                                         fit: BoxFit.cover,
                                         errorBuilder: (context, url, error) {
                                           return Image.asset(
-                                            "assets/images/foto_aldo.jpg",
+                                            "assets/icons/ic_profile.jpeg",
                                             height: 90,
                                             width: 90,
                                             fit: BoxFit.cover,
@@ -142,7 +141,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                                         },
                                       )
                                     : Image.asset(
-                                        "assets/images/foto_aldo.jpg",
+                                        "assets/icons/ic_profile.jpeg",
                                         height: 90,
                                         width: 90,
                                         fit: BoxFit.cover,
@@ -328,7 +327,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset('assets/icons/ic_view.png',
+                                Image.asset('icons/ic_view.png',
                                     height: 20, width: 20),
                                 SizedBox(width: 10),
                                 Text(
@@ -360,32 +359,43 @@ class ProfileScreenLecturer extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                Get.to(Pengaturan());
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/icons/ic_settings.png',
-                                      height: 30, width: 30),
-                                  SizedBox(width: 10),
-                                  Text("Pengaturan",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                      textAlign: TextAlign.center),
-                                ],
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset('assets/icons/ic_ketentuanlayanan.png',
+                                    height: 30, width: 30),
+                                SizedBox(width: 10),
+                                Text("Ketentuan Layanan",
+                                    style: blackTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                    textAlign: TextAlign.center),
+                              ],
                             ),
                             SizedBox(height: 20), // Jarak antar item
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset('assets/icons/ic_gantipassword.png',
+                                Image.asset('assets/icons/ic_kebijakanprivasi.png',
+                                    height: 30, width: 30),
+                                SizedBox(width: 10),
+                                Text("Kebijakan Privasi",
+                                    style: blackTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                    textAlign: TextAlign.center),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset('icons/ic_gantipassword.png',
                                     height: 30, width: 30),
                                 SizedBox(width: 10),
                                 Text("Ganti Password",
@@ -417,7 +427,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset('assets/icons/ic_logout.png',
+                                Image.asset('icons/ic_logout.png',
                                     height: 20, width: 20),
                                 SizedBox(width: 10),
                                 Text(

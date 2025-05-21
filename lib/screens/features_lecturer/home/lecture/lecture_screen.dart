@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/lectures/lecture_controller.dart';
 import 'package:stipres/screens/features_lecturer/models/lecture_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
+import 'package:stipres/screens/features_lecturer/widgets/dialog/edit_lecture_dialog.dart';
 import 'package:stipres/constants/styles.dart';
 
 class LectureScreen extends StatefulWidget {
@@ -96,165 +97,164 @@ class _LectureScreenState extends State<LectureScreen>
     return Scaffold(
       backgroundColor: mainColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // HEADER + Search Bar
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: width,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: blueColor,
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                      ),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/bgheader.png'),
-                        fit: BoxFit.cover,
-                      ),
+        child: Column(
+          children: [
+            // HEADER + Search Bar
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: width,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: blueColor,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 23),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Material(
-                          color: Colors.transparent,
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/bgheader.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 23),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          borderRadius: BorderRadius.circular(100),
+                          customBorder: const CircleBorder(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              'assets/icons/ic_back.png',
+                              height: 18,
+                              width: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      // Animated Search Bar dengan fade
+                      Expanded(
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: _isSearching
+                              ? FadeTransition(
+                                  opacity: _animation,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: SizedBox(
+                                      width: width * 0.70,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.9),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: TextField(
+                                          controller: _searchController,
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                          decoration: InputDecoration(
+                                            hintText: 'Cari mata kuliah...',
+                                            hintStyle: TextStyle(
+                                                color: Colors.grey[600]),
+                                            border: InputBorder.none,
+                                          ),
+                                          autofocus: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Perkuliahan Online",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      // Tombol pencarian tetap di posisi yang sama
+                      Material(
+                        color: Colors.transparent,
+                        shape: const CircleBorder(),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            shape: BoxShape.circle,
+                          ),
                           child: InkWell(
-                            onTap: () => Navigator.pop(context),
-                            borderRadius: BorderRadius.circular(100),
+                            onTap: () {
+                              setState(() {
+                                _isSearching = !_isSearching;
+                                if (_isSearching) {
+                                  _animationController
+                                      .forward(); // Fade-in saat search aktif
+                                } else {
+                                  _animationController
+                                      .reverse(); // Fade-out saat search non-aktif
+                                  _searchController.clear();
+                                }
+                              });
+                            },
                             customBorder: const CircleBorder(),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: Image.asset(
-                                'assets/icons/ic_back.png',
+                                'assets/icons/ic_search.png',
                                 height: 18,
                                 width: 18,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        // Animated Search Bar dengan fade
-                        Expanded(
-                          child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            child: _isSearching
-                                ? FadeTransition(
-                                    opacity: _animation,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: SizedBox(
-                                        width: width * 0.70,
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.9),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: TextField(
-                                            controller: _searchController,
-                                            style: const TextStyle(
-                                                color: Colors.black),
-                                            decoration: InputDecoration(
-                                              hintText: 'Cari mata kuliah...',
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey[600]),
-                                              border: InputBorder.none,
-                                            ),
-                                            autofocus: true,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Perkuliahan Online",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        // Tombol pencarian tetap di posisi yang sama
-                        Material(
-                          color: Colors.transparent,
-                          shape: const CircleBorder(),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              color: whiteColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _isSearching = !_isSearching;
-                                  if (_isSearching) {
-                                    _animationController
-                                        .forward(); // Fade-in saat search aktif
-                                  } else {
-                                    _animationController
-                                        .reverse(); // Fade-out saat search non-aktif
-                                    _searchController.clear();
-                                  }
-                                });
-                              },
-                              customBorder: const CircleBorder(),
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Image.asset(
-                                  'assets/icons/ic_search.png',
-                                  height: 18,
-                                  width: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    bottom: -44,
-                    right: 0,
-                    child: Container(
-                      width: 40,
-                      height: 44,
-                      color: blueColor,
-                    ),
+                ),
+                Positioned(
+                  bottom: -44,
+                  right: 0,
+                  child: Container(
+                    width: 40,
+                    height: 44,
+                    color: blueColor,
                   ),
-                  Positioned(
-                    bottom: -45,
-                    right: 0,
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(40),
-                        ),
+                ),
+                Positioned(
+                  bottom: -45,
+                  right: 0,
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(40),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
 
-              // Body Content
-              Container(
+            // Body Content
+            Expanded(
+              child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,7 +263,7 @@ class _LectureScreenState extends State<LectureScreen>
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Perkuliahan Minggu Ini',
+                        'Perkuliahan Hari Ini',
                         style: TextStyle(
                           fontSize: 16,
                           color: blueColor,
@@ -272,51 +272,64 @@ class _LectureScreenState extends State<LectureScreen>
                       ),
                     ),
                     const SizedBox(height: 10),
-                    filteredPerkuliahan.isEmpty
-                        ? Container(
-                            width: double
-                                .infinity, // Biar bisa center dalam parent
-                            padding: const EdgeInsets.only(top: 30),
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/icons/ic_noData.png',
-                                  height: 120,
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  _searchController.text.isEmpty
-                                      ? "Tidak ada perkuliahan minggu ini."
-                                      : "Tidak ada mata kuliah ditemukan.",
-                                  style: TextStyle(
-                                    color: greyColor,
-                                    fontStyle: FontStyle.italic,
+                    Expanded(
+                      child: filteredPerkuliahan.isEmpty
+                          ? Container(
+                              width: double
+                                  .infinity, // Biar bisa center dalam parent
+                              padding: const EdgeInsets.only(top: 30),
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/ic_noData.png',
+                                    height: 120,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    _searchController.text.isEmpty
+                                        ? "Tidak ada perkuliahan minggu ini."
+                                        : "Tidak ada mata kuliah ditemukan.",
+                                    style: TextStyle(
+                                      color: greyColor,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: filteredPerkuliahan.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                final currentData = filteredPerkuliahan[index];
+
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: PerkuliahanCard(
+                                    data: currentData,
+                                    onEdit: (String currentLink) {
+                                      showEditLinkDialog(
+                                        context,
+                                        currentLink,
+                                        (String newLink) {
+                                          // ✅ Tangani perubahan di sini
+                                          print("Link baru: $newLink");
+                                        },
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                             ),
-                          )
-                        : ListView.builder(
-                            itemCount: filteredPerkuliahan.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: PerkuliahanCard(
-                                  data: filteredPerkuliahan[index],
-                                ),
-                              );
-                            },
-                          ),
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

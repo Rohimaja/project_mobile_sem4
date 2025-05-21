@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/account/account_menu.dart';
 import 'package:stipres/screens/features_student/account/bantuan.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
 
 class Pengaturan extends StatefulWidget {
@@ -26,22 +27,24 @@ class _PengaturanState extends State<Pengaturan> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildHeader(context),
+            CustomHeader(title: "Pengaturan"),
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 15, left: 30, right: 30, bottom: 20),
+              padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Pengaturan Aplikasi",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 30, 136, 228),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Text(
+                      'Pengaturan Aplikasi',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: blueColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const Divider(height: 20, color: Color(0xFFDADADA)),
                   Container(
                     width: width,
                     child: Column(
@@ -55,28 +58,30 @@ class _PengaturanState extends State<Pengaturan> {
                               10), // opsional, supaya ripple-nya lebih bagus
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical:
-                                    12.0), // ⬅️ memperluas area klik secara vertikal
+                                vertical: 12.0,
+                                horizontal:
+                                    4.0), // ⬅️ memperluas area klik secara vertikal
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset('assets/icons/ic_key.png',
                                     height: 30, width: 30),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 16),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "Akun",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
+                                    SizedBox(height: 3),
                                     Text(
                                       "Ganti akun, ganti email",
                                       style: blackTextStyle.copyWith(
-                                        fontSize: 10,
+                                        fontSize: 12,
                                         color:
                                             Color.fromARGB(255, 161, 161, 161),
                                         fontWeight: FontWeight.w800,
@@ -111,28 +116,30 @@ class _PengaturanState extends State<Pengaturan> {
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 4.0),
                             child: Row(
                               children: [
                                 Image.asset('assets/icons/ic_notification.png',
                                     height: 30, width: 30),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 16),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       Text(
                                         "Notifikasi",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w800,
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
+                                      SizedBox(height: 3),
                                       Text(
                                         "Pengingat notifikasi",
-                                        style: TextStyle(
-                                          fontSize: 10,
+                                        style: blackTextStyle.copyWith(
+                                          fontSize: 12,
                                           color: Color.fromARGB(
                                               255, 161, 161, 161),
                                           fontWeight: FontWeight.w800,
@@ -147,7 +154,7 @@ class _PengaturanState extends State<Pengaturan> {
                                     child: Container(
                                       margin: const EdgeInsets.only(
                                           left:
-                                              20), // Ganti angkanya sesuai kebutuhan
+                                              100), // Ganti angkanya sesuai kebutuhan
                                       child: Transform.scale(
                                         scale: 0.75,
                                         child: Switch(
@@ -176,30 +183,169 @@ class _PengaturanState extends State<Pengaturan> {
                         SizedBox(height: 15),
                         InkWell(
                           onTap: () {
-                            // Tambahkan navigasi jika ingin
+                            String? selectedTheme =
+                                "Default"; // bisa juga ambil dari state kalau mau
+
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return StatefulBuilder(
+                                  builder: (context, setState) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      title: Text(
+                                        "Pilih Tema",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: blueColor,
+                                        ),
+                                      ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Theme(
+                                            data: Theme.of(context).copyWith(
+                                              unselectedWidgetColor: blueColor,
+                                              radioTheme: RadioThemeData(
+                                                fillColor:
+                                                    MaterialStateProperty.all(
+                                                        blueColor),
+                                              ),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                "Default",
+                                                "Cerah",
+                                                "Gelap"
+                                              ].map((option) {
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 4),
+                                                  child: Material(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    color: Colors.transparent,
+                                                    child: InkWell(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      splashColor: blueColor
+                                                          .withOpacity(0.2),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          selectedTheme =
+                                                              option;
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 6),
+                                                        child: Row(
+                                                          children: [
+                                                            Radio<String>(
+                                                              value: option,
+                                                              groupValue:
+                                                                  selectedTheme,
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
+                                                                  selectedTheme =
+                                                                      value;
+                                                                });
+                                                              },
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 4),
+                                                            Text(
+                                                              option,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            "Batal",
+                                            style: GoogleFonts.poppins(
+                                                color: blueColor),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            // TODO: Simpan tema
+                                            Navigator.pop(context);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                blueColor, // Warna latar biru
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 10),
+                                          ),
+                                          child: Text(
+                                            "Simpan",
+                                            style: GoogleFonts.poppins(
+                                              color:
+                                                  Colors.white, // Tulisan putih
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12.0, horizontal: 4.0),
                             child: Row(
                               children: [
                                 Image.asset('assets/icons/ic_personalisasi.png',
                                     height: 30, width: 30),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 16),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "Personalisasi",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
+                                    SizedBox(height: 3),
                                     Text(
                                       "Atur tema",
                                       style: blackTextStyle.copyWith(
-                                        fontSize: 10,
+                                        fontSize: 12,
                                         color:
                                             Color.fromARGB(255, 161, 161, 161),
                                         fontWeight: FontWeight.w800,
@@ -218,26 +364,28 @@ class _PengaturanState extends State<Pengaturan> {
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12.0, horizontal: 4.0),
                             child: Row(
                               children: [
                                 Image.asset('assets/icons/ic_help.png',
                                     height: 30, width: 30),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 16),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       "Bantuan",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
+                                    SizedBox(height: 3),
                                     Text(
                                       "Ketentuan layanan, kebijakan privasi",
                                       style: blackTextStyle.copyWith(
-                                        fontSize: 10,
+                                        fontSize: 12,
                                         color:
                                             Color.fromARGB(255, 161, 161, 161),
                                         fontWeight: FontWeight.w800,
@@ -271,91 +419,6 @@ class _PengaturanState extends State<Pengaturan> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          width: width,
-          height: 70,
-          decoration: BoxDecoration(
-            color: blueColor,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-            ),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/bgheader.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  borderRadius: BorderRadius.circular(100),
-                  customBorder: const CircleBorder(),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Image(
-                      image: AssetImage('assets/icons/ic_back.png'),
-                      height: 18,
-                      width: 18,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  "Pengaturan",
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          bottom: -44,
-          right: 0,
-          child: Container(
-            width: 40,
-            height: 44,
-            color: blueColor,
-          ),
-        ),
-        Positioned(
-          bottom: -45,
-          right: 0,
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

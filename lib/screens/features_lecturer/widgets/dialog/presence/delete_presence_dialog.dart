@@ -21,7 +21,9 @@ Future<bool?> showDeleteConfirmationDialog(BuildContext context) {
         ),
         TextButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text("YES", style: TextStyle(color: Colors.blue)),
+          child: const Text("YES",
+              style:
+                  TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
         ),
       ],
     ),

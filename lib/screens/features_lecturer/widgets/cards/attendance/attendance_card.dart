@@ -16,7 +16,7 @@ class MahasiswaCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(
-          vertical: 8), // Tambah jarak bawah antar card
+          vertical: 3), // Tambah jarak bawah antar card
       child: Material(
         color: const Color(0xFFCFE9FF),
         elevation: 3,

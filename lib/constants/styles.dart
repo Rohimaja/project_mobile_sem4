@@ -9,11 +9,13 @@ Color blackColor = const Color(0xFF000000);
 Color greyColor = const Color(0xFFBABABA);
 Color redColor = const Color.fromARGB(255, 200, 0, 0);
 Color mainColor = const Color(0xFFEDEBFB);
+Color greenColor = const Color.fromARGB(225, 22, 130, 0);
 
 TextStyle blackTextStyle = GoogleFonts.poppins(color: blackColor);
 TextStyle whiteTextStyle = GoogleFonts.poppins(color: whiteColor);
 TextStyle greyTextStyle = GoogleFonts.poppins(color: greyColor);
 TextStyle blueTextStyle = GoogleFonts.poppins(color: blueColor);
+TextStyle greenTextStyle = GoogleFonts.poppins(color: greenColor);
 TextStyle linkTextStyle = GoogleFonts.poppins(color: linkColor);
 
 FontWeight bold = FontWeight.bold;

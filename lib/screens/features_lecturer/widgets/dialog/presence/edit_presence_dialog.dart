@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
+import 'package:stipres/constants/styles.dart';
 
 class EditPresensiDialog extends StatefulWidget {
   final String presensisId;
@@ -70,7 +71,9 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
               Get.back();
             }
           },
-          child: const Text("SUBMIT", style: TextStyle(color: Colors.blue)),
+          child: const Text("SUBMIT",
+              style:
+                  TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
         ),
       ],
     );
@@ -84,7 +87,7 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: GoogleFonts.plusJakartaSans(color: Colors.blue)),
+        Text(label, style: GoogleFonts.plusJakartaSans(color: blueColor)),
         const SizedBox(height: 4),
         GestureDetector(
           onTap: () async {

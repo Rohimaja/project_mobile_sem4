@@ -60,17 +60,16 @@ class _PresenceScreenState extends State<PresenceScreen>
             return presensi.namaMatkul.toLowerCase().contains(query);
           }).toList();
 
-          return SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
+          return Stack(
+            children: [
+              Column(
                 children: [
-                  // HEADER + Search Bar
                   Stack(
                     clipBehavior: Clip.none,
                     children: [
                       Container(
                         width: width,
-                        height: 80,
+                        height: 110,
                         decoration: BoxDecoration(
                           color: blueColor,
                           borderRadius: const BorderRadius.only(
@@ -81,7 +80,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                             fit: BoxFit.cover,
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 23),
+                        padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -147,7 +146,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           "Presensi Mata Kuliah",
-                                          style: GoogleFonts.plusJakartaSans(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.white,
@@ -158,7 +157,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                                       ),
                               ),
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 5),
                             // Tombol pencarian tetap di posisi yang sama
                             Material(
                               color: Colors.transparent,
@@ -222,72 +221,78 @@ class _PresenceScreenState extends State<PresenceScreen>
                       ),
                     ],
                   ),
-
-                  // Body Content
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Text(
-                            'Presensi berlangsung',
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,
-                              color: blueColor,
-                              fontWeight: FontWeight.w400,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              'Presensi Sedang Berlangsung',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: blueColor,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        filteredPresensi.isEmpty
-                            ? Container(
-                                width: double
-                                    .infinity, // Biar bisa center dalam parent
-                                padding: const EdgeInsets.only(top: 30),
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/ic_noData.png',
-                                      height: 200,
+                          const Divider(height: 20, color: Color(0xFFDADADA)),
+                          Expanded(
+                            child: filteredPresensi.isEmpty
+                                ? SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.6, // setengah tinggi layar
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize
+                                            .min, // agar tidak memaksa full height
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/ic_noData.png',
+                                            height: 120,
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Text(
+                                            _searchController.text.isEmpty
+                                                ? "Tidak ada data presensi"
+                                                : "Data mata kuliah tidak ditemukan",
+                                            style: TextStyle(
+                                              color: greyColor,
+                                              fontStyle: FontStyle.italic,
+                                              fontSize: 16,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      _searchController.text.isEmpty
-                                          ? "Tidak ada data presensi"
-                                          : "Data mata kuliah tidak ditemukan",
-                                      style: GoogleFonts.plusJakartaSans(
-                                          color: greyColor,
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: 16),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : ListView.builder(
-                                itemCount: filteredPresensi.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 15),
-                                    child: PresensiCard(
-                                      data: filteredPresensi[index],
-                                    ),
-                                  );
-                                },
-                              ),
-                      ],
+                                  )
+                                : ListView.builder(
+                                    itemCount: filteredPresensi.length,
+                                    padding: const EdgeInsets.only(top: 0),
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(bottom: 16),
+                                        child: PresensiCard(
+                                          data: filteredPresensi[index],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
+            ],
           );
         }));
   }

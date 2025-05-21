@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart';
 import 'package:stipres/screens/features_student/account/sidik_jari.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
 
 class Akun extends StatelessWidget {
@@ -16,179 +17,135 @@ class Akun extends StatelessWidget {
         .width; // Pastikan variabel width terdefinisi
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 237, 235, 251),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildHeader(context),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 15, left: 30, right: 30, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 15),
-                  Container(
-                    width: width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Get.to(AlamatEmail());
-                          },
-                          borderRadius: BorderRadius.circular(
-                              10), // ripple efek yang lebih halus
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12.0,
-                                horizontal: 4.0), // memperluas area klik
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/icons/ic_gmail.png',
-                                    height: 30, width: 30),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    "Verifikasi Akun",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        InkWell(
-                          onTap: () {
-                            Get.to(SidikJari());
-                          },
-                          borderRadius: BorderRadius.circular(
-                              10), // ripple efek yang lebih halus
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12.0,
-                                horizontal: 4.0), // memperluas area klik
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/icons/ic_fingerprint.png',
-                                    height: 30, width: 30),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    "Login dengan Sidik Jari",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          width: width,
-          height: 70,
-          decoration: BoxDecoration(
-            color: blueColor,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-            ),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/bgheader.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          padding:
-              const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+      body: Stack(
+        children: [
+          Column(
             children: [
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  borderRadius: BorderRadius.circular(100),
-                  customBorder: const CircleBorder(),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Image(
-                      image: AssetImage('icons/ic_back.png'),
-                      height: 18,
-                      width: 18,
+              CustomHeader(title: "Akun"),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              'Pengaturan Akun',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: blueColor,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          const Divider(height: 20, color: Color(0xFFDADADA)),
+                          InkWell(
+                            onTap: () {
+                              Get.to(AlamatEmail());
+                            },
+                            borderRadius: BorderRadius.circular(
+                                10), // ripple efek yang lebih halus
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0,
+                                  horizontal: 4.0), // memperluas area klik
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset('assets/icons/ic_gmail.png',
+                                      height: 30, width: 30),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Text(
+                                      "Verifikasi Akun",
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          InkWell(
+                            onTap: () {
+                              Get.to(SidikJari());
+                            },
+                            borderRadius: BorderRadius.circular(
+                                10), 
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0,
+                                  horizontal: 4.0), // memperluas area klik
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset('assets/icons/ic_fingerprint.png',
+                                      height: 30, width: 30),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Text(
+                                      "Login dengan Sidik Jari",
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  "Akun",
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-        Positioned(
-          bottom: -44,
-          right: 0,
-          child: Container(
-            width: 40,
-            height: 44,
-            color: blueColor,
-          ),
-        ),
-        Positioned(
-          bottom: -45,
-          right: 0,
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40),
-              ),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+}
+
+class InvertedQuarterCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    // Mulai dari sudut kiri atas
+    path.moveTo(0, 0);
+
+    // Garis ke sudut kanan atas
+    path.lineTo(size.width, 0);
+
+    // Garis ke sudut kanan bawah
+    path.lineTo(size.width, size.height);
+
+    // Arc dari sudut kanan bawah ke kiri atas
+    path.arcToPoint(
+      Offset(0, 0),
+      radius: Radius.circular(size.width),
+      clockwise: false,
+    );
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

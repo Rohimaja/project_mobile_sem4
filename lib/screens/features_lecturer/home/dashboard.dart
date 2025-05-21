@@ -29,108 +29,106 @@ class DashboardScreenLecturer extends StatelessWidget {
     return Scaffold(
       backgroundColor: mainColor, // Set background putih ke seluruh layar
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  // HEADER
-                  Container(
-                    width: width,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: blueColor,
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                      ),
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/bgheader.png'),
-                        fit: BoxFit.cover, // agar penuh
-                      ),
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // HEADER
+                Container(
+                  width: width,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: blueColor,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
                     ),
-                    padding: const EdgeInsets.only(
-                        top: 16, left: 16, right: 16, bottom: 70),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/Logo_PantiWaluya.png',
-                          height: 30,
-                          width: 30,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/bgheader.png'),
+                      fit: BoxFit.cover, // agar penuh
+                    ),
+                  ),
+                  padding: const EdgeInsets.only(
+                      top: 16, left: 16, right: 16, bottom: 70),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/Logo_PantiWaluya.png',
+                        height: 30,
+                        width: 30,
+                      ),
+                      const SizedBox(
+                          width: 3), // jarak kecil antara logo dan teks
+                      Expanded(
+                        child: Text(
+                          "STIKES Panti Waluya Malang",
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(
-                            width: 3), // jarak kecil antara logo dan teks
-                        Expanded(
-                          child: Text(
-                            "STIKES Panti Waluya Malang",
-                            style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              fontWeight: FontWeight.normal,
+                      ),
+                      Material(
+                        color: Colors.transparent, // biar background transparan
+                        shape: const CircleBorder(), // biar ripple bulat
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationScreen()),
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(100),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.3),
+                              shape: BoxShape.circle,
+                            ),
+                            padding: const EdgeInsets.only(
+                                top: 3, bottom: 6, left: 6, right: 6),
+                            child: const Icon(
+                              Icons.notifications_none,
                               color: Colors.white,
+                              size: 26,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Material(
-                          color:
-                              Colors.transparent, // biar background transparan
-                          shape: const CircleBorder(), // biar ripple bulat
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationScreen()),
-                              );
-                            },
-                            borderRadius: BorderRadius.circular(100),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.3),
-                                shape: BoxShape.circle,
-                              ),
-                              padding: const EdgeInsets.only(
-                                  top: 3, bottom: 6, left: 6, right: 6),
-                              child: const Icon(
-                                Icons.notifications_none,
-                                color: Colors.white,
-                                size: 26,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
+                ),
 
-                  Positioned(
-                    bottom: -44,
-                    right: 0,
-                    child: Container(
-                      width: 40,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: blueColor, // warna ungu muda
-                      ),
+                Positioned(
+                  bottom: -44,
+                  right: 0,
+                  child: Container(
+                    width: 40,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: blueColor, // warna ungu muda
                     ),
                   ),
+                ),
 
-                  Positioned(
-                    bottom: -45,
-                    right: 0,
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                          color: mainColor,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(40),
-                          ) // warna ungu muda
-                          ),
-                    ),
+                Positioned(
+                  bottom: -45,
+                  right: 0,
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                        color: mainColor,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(40),
+                        ) // warna ungu muda
+                        ),
                   ),
+                ),
 
                   // PROFIL (MENJOROK KE PUTIH)
                   Positioned(
@@ -154,14 +152,14 @@ class DashboardScreenLecturer extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     errorBuilder: (context, url, error) =>
                                         Image.asset(
-                                      "assets/images/foto_aldo.jpg",
+                                      "assets/icons/ic_profile.jpeg",
                                       height: 70,
                                       width: 70,
                                       fit: BoxFit.cover,
                                     ),
                                   )
                                 : Image.asset(
-                                    "assets/images/foto_aldo.jpg",
+                                    "assets/icons/ic_profile.jpeg",
                                     height: 70,
                                     width: 70,
                                     fit: BoxFit.cover,
@@ -198,10 +196,11 @@ class DashboardScreenLecturer extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 40), // Jarak agar profil tidak tertutup
+            const SizedBox(height: 40), // Jarak agar profil tidak tertutup
 
-              // KONTEN PUTIH DI BAWAH
-              Container(
+            Expanded(
+                child: SingleChildScrollView(
+              child: Container(
                 width: width,
                 decoration: const BoxDecoration(
                   color: Color(0XEDEBFB),
@@ -443,8 +442,8 @@ class DashboardScreenLecturer extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
-          ),
+            ))
+          ],
         ),
       ),
     );

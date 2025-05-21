@@ -53,110 +53,105 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
       backgroundColor: mainColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomHeader(title: "Kalender Akademik"),
-              
-              SizedBox(height: 10),
-
-              TableCalendar(
-                focusedDay: _focusedDay,
-                firstDay: DateTime(2020),
-                lastDay: DateTime(2030),
-                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                eventLoader: _getEventsForDay,
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _focusedDay = focusedDay;
-                  });
-                },
-                calendarStyle: const CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color: Colors.orange,
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle,
-                  ),
-                  markerDecoration: BoxDecoration(
-                    color: Colors.orange,
-                    shape: BoxShape.circle,
-                  ),
+        child: Column(
+          children: [
+            CustomHeader(title: "Kalender Akademik"),
+            SizedBox(height: 10),
+            TableCalendar(
+              focusedDay: _focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2030),
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              eventLoader: _getEventsForDay,
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                });
+              },
+              calendarStyle: const CalendarStyle(
+                todayDecoration: BoxDecoration(
+                  color: Colors.orange,
+                  shape: BoxShape.circle,
                 ),
-                headerStyle: HeaderStyle(
-                  headerPadding: EdgeInsets.symmetric(
-                      horizontal: width * 0.07, vertical: 10),
-                  formatButtonVisible: false,
-                  titleCentered: true,
-                  titleTextStyle: TextStyle(
-                    color: blueColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  leftChevronIcon: Icon(
-                    Icons.chevron_left,
-                    color: blueColor,
-                  ),
-                  rightChevronIcon: Icon(
-                    Icons.chevron_right,
-                    color: blueColor,
-                  ),
+                selectedDecoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
                 ),
+                markerDecoration: BoxDecoration(
+                  color: Colors.orange,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              headerStyle: HeaderStyle(
+                headerPadding: EdgeInsets.symmetric(
+                    horizontal: width * 0.07, vertical: 10),
+                formatButtonVisible: false,
+                titleCentered: true,
+                titleTextStyle: TextStyle(
+                  color: blueColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                leftChevronIcon: Icon(
+                  Icons.chevron_left,
+                  color: blueColor,
+                ),
+                rightChevronIcon: Icon(
+                  Icons.chevron_right,
+                  color: blueColor,
+                ),
+              ),
 
-                // 👇 Tambahkan bagian ini untuk ripple dan kursor tangan
-                calendarBuilders: CalendarBuilders(
-                  defaultBuilder: (context, day, focusedDay) {
-                    final isSelected = isSameDay(day, _selectedDay);
-                    final isToday = isSameDay(day, DateTime.now());
+              // 👇 Tambahkan bagian ini untuk ripple dan kursor tangan
+              calendarBuilders: CalendarBuilders(
+                defaultBuilder: (context, day, focusedDay) {
+                  final isSelected = isSameDay(day, _selectedDay);
+                  final isToday = isSameDay(day, DateTime.now());
 
-                    return MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedDay = day;
-                            _focusedDay = focusedDay;
-                          });
-                        },
-                        child: Material(
-                          color: Colors.transparent,
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? Colors.blue
-                                  : isToday
-                                      ? Colors.orange
-                                      : Colors.transparent,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '${day.day}',
-                                style: TextStyle(
-                                  color: isSelected || isToday
-                                      ? Colors.white
-                                      : Colors.black,
-                                  fontWeight: isSelected
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                ),
+                  return MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedDay = day;
+                          _focusedDay = focusedDay;
+                        });
+                      },
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? Colors.blue
+                                : isToday
+                                    ? Colors.orange
+                                    : Colors.transparent,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${day.day}',
+                              style: TextStyle(
+                                color: isSelected || isToday
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: isSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-
-              const SizedBox(height: 30),
-
-              // Daftar event berdasarkan selectedDay
-              AnimatedSwitcher(
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
                 transitionBuilder: (Widget child, Animation<double> animation) {
                   return SlideTransition(
@@ -168,14 +163,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   );
                 },
                 child: selectedEvents.isEmpty
-                    ? const Text(
-                        "Tidak ada acara pada hari ini.",
+                    ? const Center(
                         key: ValueKey("no_event"),
-                        style: TextStyle(fontStyle: FontStyle.italic),
+                        child: Text(
+                          "Tidak ada acara pada hari ini.",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
                       )
-                    : Column(
-                        key: ValueKey("has_event"),
-                        children: selectedEvents.map((event) {
+                    : ListView.builder(
+                        key: const ValueKey("has_event"),
+                        itemCount: selectedEvents.length,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        itemBuilder: (context, index) {
+                          final event = selectedEvents[index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 4),
@@ -192,8 +192,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     "${_selectedDay!.day.toString().padLeft(2, '0')}\n${_getMonthName(_selectedDay!.month)}",
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -211,12 +212,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          event['title']!,
+                                          event['title'] ?? '',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          event['type']!,
+                                          event['type'] ?? '',
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                       ],
@@ -226,13 +227,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               ],
                             ),
                           );
-                        }).toList(),
+                        },
                       ),
               ),
-
-              const SizedBox(height: 20),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
