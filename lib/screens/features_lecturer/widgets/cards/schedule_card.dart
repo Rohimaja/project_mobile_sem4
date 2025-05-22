@@ -199,7 +199,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                           label: 'Presensi',
                           color: const Color(0xFFF4D8FB),
                           onTap: () {
-                                Get.toNamed("/lecturer/presence-detail-screen");
+                            Get.toNamed("/lecturer/presence-detail-screen");
                           },
                         ),
                         const SizedBox(width: 8),
@@ -208,12 +208,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                           label: 'Zoom',
                           color: const Color(0xFFF4D8FB),
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => LectureContentScreen(),
-                              ),
-                            );
+                            Get.toNamed("/lecturer/lecture-content-screen", arguments: jadwal.presensisId);
                           },
                         ),
                       ],

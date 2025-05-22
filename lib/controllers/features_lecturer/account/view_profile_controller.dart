@@ -16,6 +16,15 @@ import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/lecturer/profile_lecturer_service.dart';
 
 class ViewProfileController extends GetxController {
+  final storedFullName = ''.obs;
+  final storedNip = ''.obs;
+  final storedEmail = ''.obs;
+  final storedJenisKelamin = ''.obs;
+  final storedAgama = ''.obs;
+  final storedTempatTglLahir = ''.obs;
+  final storedAlamat = ''.obs;
+  final storedProdi = ''.obs;
+  final storedNoTelp = ''.obs;
   static const int maxSizeInBytes = 2 * 1024 * 1024;
 
   final _box = GetStorage();
@@ -34,6 +43,7 @@ class ViewProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    loadData();
     loadHeader();
   }
 
@@ -43,6 +53,77 @@ class ViewProfileController extends GetxController {
         "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
     storedProfiles.value = profileUrl;
     log.e("Profile: ${storedProfiles.value}");
+  }
+
+  void loadData() async {
+    String nip = _box.read("user_nip");
+
+    final result = await profileLecturerService.tampilFullProfile(nip);
+
+    if (result.status == "success" && result.data != null) {
+      final profile = result.data!;
+      log.d(profile.agama);
+
+      storedFullName.value = profile.nama;
+      storedNip.value = profile.nip;
+      storedEmail.value = profile.email;
+      storedJenisKelamin.value = profile.jenisKelamin;
+      storedAgama.value = profile.agama;
+      storedTempatTglLahir.value =
+          "${profile.tempatLahir}, ${formatTanggal(profile.tglLahir)}";
+      storedAlamat.value = profile.alamat;
+      storedProdi.value = profile.namaProdi;
+      storedNoTelp.value = profile.noTelp;
+    }
+  }
+
+  String numberToBahasa(int number) {
+    List<String> angka = [
+      "",
+      "Satu",
+      "Dua",
+      "Tiga",
+      "Empat",
+      "Lima",
+      "Enam",
+      "Tujuh",
+      "Delapan",
+      "Sembilan",
+    ];
+
+    if (number < 10) {
+      return angka[number];
+    } else if (number < 20) {
+      return "${angka[number - 10]} Belas";
+    } else {
+      return number.toString();
+    }
+  }
+
+  String formatTanggal(String tanggal) {
+    final bulan = {
+      '01': 'Januari',
+      '02': 'Februari',
+      '03': 'Maret',
+      '04': 'April',
+      '05': 'Mei',
+      '06': 'Juni',
+      '07': 'Juli',
+      '08': 'Agustus',
+      '09': 'September',
+      '10': 'Oktober',
+      '11': 'November',
+      '12': 'Desember',
+    };
+
+    final parts = tanggal.split('-');
+    if (parts.length != 3) return tanggal;
+
+    final year = parts[0];
+    final month = bulan[parts[1]] ?? parts[1];
+    final day = parts[2];
+
+    return "$day $month $year";
   }
 
   Future<void> getImageFromGallery() async {

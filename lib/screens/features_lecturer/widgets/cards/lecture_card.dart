@@ -2,10 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/models/lecturers/lecture_model.dart';
+import 'package:stipres/models/students/lecture_model.dart';
 
 class PerkuliahanCard extends StatelessWidget {
-  final LecturerLectureModel data;
+  final LectureModelApi data;
   final void Function(String linkZoom)? onEdit;
 
   const PerkuliahanCard({
@@ -129,7 +129,7 @@ class PerkuliahanCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_clock.png",
-                    text: data.durasiPresensi,
+                    text: "${data.durasiPresensi} WIB ",
                   ),
                   const SizedBox(height: 8),
 

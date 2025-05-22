@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/lecturers/lecture_model.dart';
+import 'package:stipres/models/students/lecture_model.dart';
 import 'package:stipres/services/lecturer/lecture_lecturer_service.dart';
 
 class LectureController extends GetxController {
@@ -10,7 +10,7 @@ class LectureController extends GetxController {
   Logger log = Logger();
   final errorMessage = ''.obs;
 
-  var lectureList = <LecturerLectureModel>[].obs;
+  var lectureList = <LectureModelApi>[].obs;
   final LectureLecturerService lectureLecturerService =
       LectureLecturerService();
 
@@ -20,8 +20,8 @@ class LectureController extends GetxController {
     if (Get.arguments == null) {
       fetchLecture();
     } else {
-      final presensisId = Get.arguments;
-      // fetchContentLecture(presensisId);
+      final presensisId = Get.arguments.toString();
+      fetchContentLecture(presensisId);
     }
   }
 
@@ -47,8 +47,7 @@ class LectureController extends GetxController {
       log.f("fmalmfa;lmf");
 
       if (result.status == "success") {
-        final List<LecturerLectureModel> updatedList =
-            result.data!.map((lecture) {
+        final List<LectureModelApi> updatedList = result.data!.map((lecture) {
           lecture.tglPresensi = formatTanggal(lecture.tglPresensi);
           lecture.namaDosen ??= namaDosen;
           log.f(lecture.namaDosen);
@@ -57,6 +56,26 @@ class LectureController extends GetxController {
           return lecture;
         }).toList();
         lectureList.assignAll(updatedList);
+      } else {
+        errorMessage.value = result.message;
+      }
+    } catch (e) {
+      log.d("Error : $e");
+    }
+  }
+
+  void fetchContentLecture(String presensisId) async {
+    try {
+      log.d("Check presensisId: $presensisId");
+      final result =
+          await lectureLecturerService.tampilZoomContent(presensisId);
+      log.d("Test");
+
+      if (result.status == "success" && result.data != null) {
+        final lecture = result.data!;
+        lecture.tglPresensi = formatTanggal(lecture.tglPresensi);
+
+        lectureList.assignAll([lecture]);
       } else {
         errorMessage.value = result.message;
       }

@@ -57,6 +57,8 @@ import 'package:stipres/screens/features_student/home/calendar_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart'
     as lecturer;
 import 'package:stipres/screens/features_student/home/lecture/lecture_content_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart'
+    as lecturer;
 import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart'
     as lecturer;
@@ -131,6 +133,10 @@ class AppScreens {
         name: "/lecturer/presence-detail-screen",
         page: () => PresenceDetailScreen(),
         binding: PresenceDetailBinding()),
+    GetPage(
+        name: "/lecturer/lecture-content-screen",
+        page: () => lecturer.LectureContentScreen(),
+        binding: LecturerLectureBinding()),
     GetPage(
         name: "/student/base-screen",
         page: () => student.BaseScreen(),

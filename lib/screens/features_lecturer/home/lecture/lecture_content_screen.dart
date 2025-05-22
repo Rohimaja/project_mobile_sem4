@@ -18,17 +18,6 @@ class _LectureContentScreenState extends State<LectureContentScreen>
 
   final _controller = Get.find<LectureController>();
 
-  // final List<PerkuliahanModel> perkuliahanOnline = [
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Pemrograman Mobile',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  // ];
-
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -141,46 +130,48 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Expanded(
-                      child: _controller.lectureList.isEmpty
-                          ? Container(
-                              width: double
-                                  .infinity, // Biar bisa center dalam parent
-                              padding: const EdgeInsets.only(top: 30),
-                              alignment: Alignment.center,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/ic_noData.png',
-                                    height: 120,
+                    Obx(() {
+                      return Expanded(
+                          child: _controller.lectureList.isEmpty
+                              ? Container(
+                                  width: double
+                                      .infinity, // Biar bisa center dalam parent
+                                  padding: const EdgeInsets.only(top: 30),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/ic_noData.png',
+                                        height: 120,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        'Link tidak tersedia',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16,
+                                          color: greyColor,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    'Link tidak tersedia',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: greyColor,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: _controller.lectureList.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: PerkuliahanCard(
-                                    data: _controller.lectureList[index],
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
+                                )
+                              : ListView.builder(
+                                  itemCount: _controller.lectureList.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 12),
+                                      child: PerkuliahanCard(
+                                        data: _controller.lectureList[index],
+                                      ),
+                                    );
+                                  },
+                                ));
+                    })
                   ],
                 ),
               ),

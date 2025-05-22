@@ -19,7 +19,9 @@ class ViewProfilePage extends StatelessWidget {
           child: Column(
             children: [
               _buildHeader(context),
-              _buildProfileForm(),
+              Obx(() {
+                return _buildProfileForm();
+              })
             ],
           ),
         ),
@@ -199,25 +201,25 @@ class ViewProfilePage extends StatelessWidget {
       padding: const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
       child: Column(
         children: [
-          _buildProfileItem("Full Name", "Izzul Islam Ramadhan"),
+          _buildProfileItem("Full Name", _controller.storedFullName.value),
           _buildDivider(),
-          _buildProfileItem("NIM", "E4123125"),
+          _buildProfileItem("NIP", _controller.storedNip.value),
           _buildDivider(),
-          _buildProfileItem("Email", "izzul1232gamil.com"),
+          _buildProfileItem("Email", _controller.storedEmail.value),
           _buildDivider(),
-          _buildProfileItem("Jenis Kelamin", "Lanang"),
+          _buildProfileItem(
+              "Jenis Kelamin", _controller.storedJenisKelamin.value),
           _buildDivider(),
-          _buildProfileItem("Agama", "Islam"),
+          _buildProfileItem("Agama", _controller.storedAgama.value),
           _buildDivider(),
-          _buildProfileItem("Tempat Tanggal Lahir", "London, 30 Februari 2000"),
+          _buildProfileItem(
+              "Tempat Tanggal Lahir", _controller.storedTempatTglLahir.value),
           _buildDivider(),
-          _buildProfileItem("Alamat", "Jember"),
+          _buildProfileItem("Alamat", _controller.storedAlamat.value),
           _buildDivider(),
-          _buildProfileItem("Semester", "3 (Tiga)"),
+          _buildProfileItem("Program Studi", _controller.storedProdi.value),
           _buildDivider(),
-          _buildProfileItem("Program Studi", "Sastra Mesin"),
-          _buildDivider(),
-          _buildProfileItem("No. Telp", "085737283847"),
+          _buildProfileItem("No. Telp", _controller.storedNoTelp.value),
         ],
       ),
     );

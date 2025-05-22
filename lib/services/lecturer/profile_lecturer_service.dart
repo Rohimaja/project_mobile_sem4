@@ -10,12 +10,32 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/constants/api.dart';
+import 'package:stipres/models/lecturers/full_lecturer_model.dart';
 
 class ProfileLecturerService extends GetxService {
   final String _baseURL = "${ApiConstants.globalUrl}activity/viewProfile.php";
   final global = ApiConstants.globalUrl;
 
   var log = Logger();
+
+  Future<BaseResponse<FullLecturerModel>> tampilFullProfile(String nip) async {
+    try {
+      final url = Uri.parse("$_baseURL?nip=$nip");
+      final response = await http.get(url);
+      log.d(url);
+
+      final body = jsonDecode(response.body);
+
+      return BaseResponse.fromJson(
+          body,
+          (dataJson) =>
+              FullLecturerModel.fromJson(dataJson as Map<String, dynamic>));
+    } catch (e) {
+      log.d("Error: $e");
+      return BaseResponse(
+          status: "error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
 
   Future<BaseResponse<String>> sendImage(int dosenId, File? profilePic) async {
     try {
