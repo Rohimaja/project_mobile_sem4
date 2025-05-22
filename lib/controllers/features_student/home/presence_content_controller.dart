@@ -7,9 +7,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/student/get_presence_model.dart';
+import 'package:stipres/models/students/get_presence_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
-import 'package:stipres/services/presence_content_service.dart';
+import 'package:stipres/services/student/presence_content_service.dart';
 
 import 'package:timezone/timezone.dart' as tz;
 
@@ -143,7 +143,7 @@ class PresenceContentController extends GetxController {
         Get.snackbar("Berhasil", result.message,
             duration: Duration(seconds: 1));
       } else {
-        showError("$result.message");
+        showError(result.message);
       }
     } catch (e) {
       log.d("Error: $e");
@@ -351,6 +351,7 @@ class PresenceContentController extends GetxController {
     Get.dialog(
       const LoadingPopup(),
       barrierDismissible: false,
+      // ignore: deprecated_member_use
       barrierColor: Colors.black.withOpacity(0.3),
     );
   }

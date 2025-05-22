@@ -1,20 +1,21 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/student/jadwal_model.dart';
-import 'package:stipres/services/dashboard_mahasiswa_service.dart';
+import 'package:stipres/constants/api.dart';
+import 'package:stipres/models/jadwal_model.dart';
+import 'package:stipres/services/student/dashboard_mahasiswa_service.dart';
 
 class DashboardController extends GetxController {
   final storedName = ''.obs;
   final storedNim = ''.obs;
-  final _box = GetStorage();
+  var storedProfile = ''.obs;
+  final url = ApiConstants.pathProfile;
 
+  final _box = GetStorage();
   final statusOffline = false.obs;
 
   Logger log = Logger();
-
   var jadwalList = <JadwalModelApi>[].obs;
-
   var errorMessage = ''.obs;
 
   final DashboardMahasiswaService dashboardMahasiswaService =
@@ -26,18 +27,28 @@ class DashboardController extends GetxController {
     loadHeader();
   }
 
-  void loadHeader() {
+  Future<void> loadHeader() async {
     String? nama = _box.read("user_nama");
     String nim = _box.read("user_nim");
+    String profile = _box.read("foto") ?? "";
+
     storedName.value = nama ?? "No name found";
     storedNim.value = nim;
+
+    final profileUrl =
+        "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
+
+    storedProfile.value = profileUrl; // path relatif + base URL
+
+    log.f("fetch header");
+    log.d("Profile: ${storedProfile.value}");
   }
 
   Future<void> fetchJadwal() async {
-    log.d("fetch jadwal");
-    String nim = _box.read("user_nim");
-    log.d(nim);
-    final result = await dashboardMahasiswaService.tampilJadwalHariIni(nim);
+    int mahasiswaId = _box.read("mahasiswa_id");
+    log.d(mahasiswaId);
+    final result =
+        await dashboardMahasiswaService.tampilJadwalHariIni(mahasiswaId);
     log.d(result);
 
     if (result.status == "success" && result.data != null) {
@@ -45,7 +56,7 @@ class DashboardController extends GetxController {
         jadwal.waktu = ("${jadwal.waktu} WIB").toString();
         jadwal.durasiMatkul = ("${jadwal.durasiMatkul} Jam").toString();
         if (jadwal.lokasi == null) {
-          jadwal.lokasi = "Online";
+          jadwal.lokasi = "-";
           jadwal.keterangan = "Daring";
           statusOffline.value = false;
         } else {
@@ -65,7 +76,7 @@ class DashboardController extends GetxController {
   }
 
   void buttonAction(JadwalModelApi jadwal) {
-    if (jadwal.lokasi == "Online") {
+    if (jadwal.lokasi == "-") {
       Get.toNamed("/student/presence-content-screen",
           arguments: [jadwal.presensiId, jadwal.presensisId]);
     } else {

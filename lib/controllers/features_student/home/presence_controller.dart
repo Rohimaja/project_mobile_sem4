@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/student/presensi_model.dart';
-import 'package:stipres/services/presensi_mahasiswa_service.dart';
+import 'package:stipres/models/students/presensi_model.dart';
+import 'package:stipres/services/student/presensi_mahasiswa_service.dart';
 
 class PresenceController extends GetxController {
   final _box = GetStorage();
@@ -25,7 +25,7 @@ class PresenceController extends GetxController {
       String nim = _box.read("user_nim");
       log.d(nim);
       final result = await presensiMahasiswaService.tampilPresensi(nim);
-      log.d(result);
+      log.d(result.data);
 
       if (result.status == "success" && result.data != null) {
         final List<PresensiModelApi> updatedList = result.data!.map((presence) {

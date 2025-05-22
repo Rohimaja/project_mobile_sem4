@@ -13,7 +13,7 @@ class ReusableButton extends StatelessWidget {
       required this.textStyle});
 
   final String label;
-  final Function() onPressed;
+  final void Function()? onPressed;
   final ButtonStyle buttonStyle;
   final TextStyle textStyle;
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/features_lecturer/account/profile_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/dashboard.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';
 

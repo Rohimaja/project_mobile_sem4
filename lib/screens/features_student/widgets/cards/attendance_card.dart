@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stipres/models/student/rekap_model.dart';
+import 'package:stipres/models/students/rekap_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/attendance/attendance_content_card.dart';
 
@@ -11,7 +11,6 @@ class KehadiranCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Color(0xFFCFE9FF), // background terang

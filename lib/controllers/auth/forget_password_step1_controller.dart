@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/services/forget_password_service.dart';
 
@@ -13,7 +13,7 @@ class ForgetPasswordStep1Controller extends GetxController {
   final delayedSnackbar = 1;
   var isSnackbarOpen = false.obs;
 
-  final String urlOtp = '${ApiManager.globalUrl}auth/forgetPassword.php';
+  final String urlOtp = '${ApiConstants.globalUrl}auth/forgetPassword.php';
 
   Future<void> sendOtp(String email) async {
     if (isProcessing.value) {

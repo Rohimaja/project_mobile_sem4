@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
+import 'package:stipres/constants/styles.dart';
 
 class OfflineScreen extends StatelessWidget {
   OfflineScreen({super.key});
@@ -17,53 +17,34 @@ class OfflineScreen extends StatelessWidget {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
-            width: width,
-            height: 80,
-            decoration: BoxDecoration(
-              color: blueColor,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-              ),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/bgheader.png'),
-                fit: BoxFit.cover,
+          CustomHeader(title: "Presensi Mata Kuliah"),
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Center(
+              child: Column(
+                mainAxisSize:
+                    MainAxisSize.min, // agar tidak memaksa full height
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/icons/ic_offlinepresence.png',
+                    height: 120,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Silahkan lakukan presensi secara offline',
+                    style: TextStyle(
+                      color: greyColor,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 23),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => Navigator.pop(context),
-                    borderRadius: BorderRadius.circular(100),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        'assets/icons/ic_back.png',
-                        height: 18,
-                        width: 18,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    "Presensi Mata Kuliah",
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Center(child: Text("OFFLINE"))
+          )
         ],
       ),
     );

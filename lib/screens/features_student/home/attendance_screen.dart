@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/controllers/features_student/home/rekap_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/attendance_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class AttendanceScreen extends StatefulWidget {
   AttendanceScreen({super.key});
@@ -21,7 +21,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
   bool _isSearching = false;
   final Logger log = Logger();
   final TextEditingController _searchController = TextEditingController();
-  final RekapController _controller = Get.put(RekapController());
+  final RekapController _controller = Get.find<RekapController>();
 
   @override
   void initState() {
@@ -61,9 +61,9 @@ class _AttendanceScreenState extends State<AttendanceScreen>
           return kehadiran.namaMatkul.toLowerCase().contains(query);
         }).toList();
 
-        return SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
+        return Stack(
+          children: [
+            Column(
               children: [
                 Stack(
                   clipBehavior: Clip.none,
@@ -71,7 +71,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                     // HEADER
                     Container(
                       width: width,
-                      height: 80,
+                      height: 110,
                       decoration: BoxDecoration(
                         color: blueColor,
                         borderRadius: const BorderRadius.only(
@@ -82,7 +82,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           fit: BoxFit.cover,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 23),
+                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -104,7 +104,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 5),
                           Expanded(
                             child: AnimatedSwitcher(
                               duration: const Duration(milliseconds: 300),
@@ -219,72 +219,69 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                     ),
                   ],
                 ),
-
-                // Body
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Tetap ditampilkan walaupun sedang searching
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          'Rekap Kehadiran Semester Ini',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: blueColor,
-                            fontWeight: FontWeight.w400,
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Tetap ditampilkan walaupun sedang searching
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            'Rekap Kehadiran Semester Ini',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: blueColor,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      filteredKehadiran.isEmpty
-                          ? Container(
-                              width: double
-                                  .infinity, // Biar bisa center dalam parent
-                              padding: const EdgeInsets.only(top: 30),
-                              alignment: Alignment.center,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/ic_noData.png',
-                                    height: 120,
+                        const Divider(height: 20, color: Color(0xFFDADADA)),
+                        Expanded(
+                          child: filteredKehadiran.isEmpty
+                              ? Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/ic_noData.png',
+                                        height: 120,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        _searchController.text.isEmpty
+                                            ? "Tidak ada data kehadiran"
+                                            : "Data mata kuliah tidak ditemukan",
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontStyle: FontStyle.italic,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    _searchController.text.isEmpty
-                                        ? "Tidak ada data kehadiran"
-                                        : "Data mata kuliah tidak ditemukan",
-                                    style: TextStyle(
-                                      color: greyColor,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: filteredKehadiran.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 0),
-                                  child: KehadiranCard(
-                                    rekap: filteredKehadiran[index],
-                                  ),
-                                );
-                              },
-                            ),
-                    ],
+                                )
+                              : ListView.builder(
+                                  itemCount: filteredKehadiran.length,
+                                  padding: const EdgeInsets.only(top: 0),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(bottom: 16),
+                                      child: KehadiranCard(
+                                        rekap: filteredKehadiran[index],
+                                      ),
+                                    );
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],
             ),
-          ),
+          ],
         );
       }),
     );

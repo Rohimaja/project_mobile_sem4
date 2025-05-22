@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/add_presence_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/presence/presence_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/presence/presence_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class PresenceScreen extends StatefulWidget {
   const PresenceScreen({super.key});
@@ -17,30 +18,7 @@ class _PresenceScreenState extends State<PresenceScreen>
   late double height, width;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
-
-  final List<PresensiModel> presensiHariIni = [
-    PresensiModel(
-      semester: 3,
-      jam: '08:00 - 10:00',
-      matkul: 'Pemrograman Dasar',
-      lokasi: 'Ruang 101',
-      durasi: '2 Jam',
-    ),
-    PresensiModel(
-      semester: 3,
-      jam: '10:00 - 12:00',
-      matkul: 'Struktur Data',
-      lokasi: 'Ruang 102',
-      durasi: '2 Jam',
-    ),
-    PresensiModel(
-      semester: 3,
-      jam: '13:00 - 15:00',
-      matkul: 'Algoritma',
-      lokasi: 'Ruang 103',
-      durasi: '2 Jam',
-    ),
-  ];
+  final _controller = Get.find<PresenceController>();
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -75,19 +53,18 @@ class _PresenceScreenState extends State<PresenceScreen>
     width = MediaQuery.of(context).size.width;
     bool _isPressed = false;
 
-    final filteredPresensi = presensiHariIni.where((presensi) {
-      final query = _searchController.text.toLowerCase();
-      return presensi.matkul.toLowerCase().contains(query);
-    }).toList();
-
     return Scaffold(
-      backgroundColor: mainColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: SingleChildScrollView(
-                child: Column(
+        backgroundColor: mainColor,
+        body: Obx(() {
+          final filteredPresensi = _controller.presenceList.where((presensi) {
+            final query = _searchController.text.toLowerCase();
+            return presensi.namaMatkul!.toLowerCase().contains(query);
+          }).toList();
+
+          return SafeArea(
+            child: Stack(
+              children: [
+                Column(
                   children: [
                     Stack(
                       clipBehavior: Clip.none,
@@ -112,7 +89,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                               Material(
                                 color: Colors.transparent,
                                 child: InkWell(
-                                  onTap: () => Navigator.pop(context),
+                                  onTap: () => Get.back(),
                                   borderRadius: BorderRadius.circular(100),
                                   customBorder: const CircleBorder(),
                                   child: Padding(
@@ -250,135 +227,136 @@ class _PresenceScreenState extends State<PresenceScreen>
                     ),
 
                     // Body Content
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Text(
-                              'Presensi Hari Ini',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: blueColor,
-                                fontWeight: FontWeight.normal,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Text(
+                                'Presensi Sedang Berlangsung',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: blueColor,
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 12),
-                          filteredPresensi.isEmpty
-                              ? Container(
-                                  width: double
-                                      .infinity, // Biar bisa center dalam parent
-                                  padding: const EdgeInsets.only(top: 30),
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/ic_noData.png',
-                                        height: 120,
+                            const SizedBox(height: 12),
+                            Expanded(
+                              child: filteredPresensi.isEmpty
+                                  ? Container(
+                                      width: double
+                                          .infinity, // Biar bisa center dalam parent
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/ic_noData.png',
+                                            height: 120,
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Text(
+                                            _searchController.text.isEmpty
+                                                ? "Tidak ada data presensi"
+                                                : "Data mata kuliah tidak ditemukan",
+                                            style: GoogleFonts.plusJakartaSans(
+                                              color: greyColor,
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(height: 16),
-                                      Text(
-                                        _searchController.text.isEmpty
-                                            ? "Tidak ada data presensi"
-                                            : "Data mata kuliah tidak ditemukan",
-                                        style: GoogleFonts.plusJakartaSans(
-                                          color: greyColor,
-                                          fontStyle: FontStyle.italic,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(height: 220),
-                                    ],
-                                  ),
-                                )
-                              : ListView.builder(
-                                  itemCount: filteredPresensi.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 15),
-                                      child: PresenceCard(
-                                        data: filteredPresensi[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-                        ],
+                                    )
+                                  : ListView.builder(
+                                      itemCount: filteredPresensi.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 15),
+                                          child: PresenceCard(
+                                            data: filteredPresensi[index],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Positioned(
-              bottom: 20,
-              right: 20,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTapDown: (_) => setState(() => _isPressed = true),
-                  onTapUp: (_) {
-                    setState(() => _isPressed = false);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AddPresenceScreen()),
-                    );
-                  },
-                  onTapCancel: () => setState(() => _isPressed = false),
-                  child: AnimatedScale(
-                    duration: const Duration(milliseconds: 150),
-                    scale: _isPressed ? 0.95 : 1.0,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: blueColor,
-                        borderRadius: BorderRadius.circular(7),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 8,
-                            offset: const Offset(2, 4),
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTapDown: (_) => setState(() => _isPressed = true),
+                      onTapUp: (_) {
+                        setState(() => _isPressed = false);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AddPresenceScreen()),
+                        );
+                      },
+                      onTapCancel: () => setState(() => _isPressed = false),
+                      child: AnimatedScale(
+                        duration: const Duration(milliseconds: 150),
+                        scale: _isPressed ? 0.95 : 1.0,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: blueColor,
+                            borderRadius: BorderRadius.circular(7),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: const Offset(2, 4),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            'assets/icons/ic_add_presence.png',
-                            height: 20,
-                            width: 20,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                'assets/icons/ic_add_presence.png',
+                                height: 25,
+                                width: 25,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Tambah Presensi",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 8),
-                          Text(
-                            "Tambah Presensi",
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        }));
   }
 }

@@ -1,198 +1,179 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/calendar_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/attendance/attendance_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart';
+import 'package:logger/logger.dart';
+import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
 import 'package:stipres/screens/features_lecturer/home/notification_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/presence/presence_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/account_data_model.dart';
-import 'package:stipres/screens/features_lecturer/models/schedule_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/weeklyCalendar_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/allSchedule_link.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/calendar_link.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class DashboardScreenLecturer extends StatelessWidget {
   DashboardScreenLecturer({super.key});
   var height, width;
 
-  final Akun dataAkun = Akun(
-    namaLengkap: "Nurhadi Aldo",
-    nip: "19930206 201805 1 035",
-  );
+  final _controller = Get.find<DashboardController>();
 
-  final List<ScheduleModel> jadwalHariIni = [
-    ScheduleModel(
-      waktu: '07.00 - 10.00 WIB',
-      mataKuliah: 'Pemrograman Dasar',
-      lokasi: 'Zoom Meeting',
-      durasi: '2 Jam',
-      keterangan: 'daring',
-    ),
-    ScheduleModel(
-      waktu: '10.15 - 12.00 WIB',
-      mataKuliah: 'Struktur Data',
-      lokasi: 'Gedung JTI Ruang 2.2',
-      durasi: '1.5 Jam',
-      keterangan: 'luring',
-    ),
-    ScheduleModel(
-      waktu: '13.00 - 15.00 WIB',
-      mataKuliah: 'Basis Data',
-      lokasi: 'Google Meet',
-      durasi: '2 Jam',
-      keterangan: 'daring',
-    ),
-    ScheduleModel(
-      waktu: '07.00 - 10.00 WIB',
-      mataKuliah: 'Kewirausahaan',
-      lokasi: 'Zoom Meeting',
-      durasi: '2 Jam',
-      keterangan: 'daring',
-    ),
-  ];
+  Logger log = Logger();
 
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
+    _controller.fetchSchedule();
+
     return Scaffold(
       backgroundColor: mainColor, // Set background putih ke seluruh layar
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  // HEADER
-                  Container(
-                    width: width,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: blueColor,
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                      ),
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/bgheader.png'),
-                        fit: BoxFit.cover, // agar penuh
-                      ),
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // HEADER
+                Container(
+                  width: width,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: blueColor,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
                     ),
-                    padding: const EdgeInsets.only(
-                        top: 16, left: 16, right: 16, bottom: 70),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/Logo_PantiWaluya.png',
-                          height: 30,
-                          width: 30,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/bgheader.png'),
+                      fit: BoxFit.cover, // agar penuh
+                    ),
+                  ),
+                  padding: const EdgeInsets.only(
+                      top: 16, left: 16, right: 16, bottom: 70),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/Logo_PantiWaluya.png',
+                        height: 30,
+                        width: 30,
+                      ),
+                      const SizedBox(
+                          width: 3), // jarak kecil antara logo dan teks
+                      Expanded(
+                        child: Text(
+                          "STIKES Panti Waluya Malang",
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(
-                            width: 3), // jarak kecil antara logo dan teks
-                        Expanded(
-                          child: Text(
-                            "STIKES Panti Waluya Malang",
-                            style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              fontWeight: FontWeight.normal,
+                      ),
+                      Material(
+                        color: Colors.transparent, // biar background transparan
+                        shape: const CircleBorder(), // biar ripple bulat
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationScreen()),
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(100),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.3),
+                              shape: BoxShape.circle,
+                            ),
+                            padding: const EdgeInsets.only(
+                                top: 3, bottom: 6, left: 6, right: 6),
+                            child: const Icon(
+                              Icons.notifications_none,
                               color: Colors.white,
+                              size: 26,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Material(
-                          color:
-                              Colors.transparent, // biar background transparan
-                          shape: const CircleBorder(), // biar ripple bulat
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationScreen()),
-                              );
-                            },
-                            borderRadius: BorderRadius.circular(100),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.3),
-                                shape: BoxShape.circle,
-                              ),
-                              padding: const EdgeInsets.only(
-                                  top: 3, bottom: 6, left: 6, right: 6),
-                              child: const Icon(
-                                Icons.notifications_none,
-                                color: Colors.white,
-                                size: 26,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                      )
+                    ],
+                  ),
+                ),
+
+                Positioned(
+                  bottom: -44,
+                  right: 0,
+                  child: Container(
+                    width: 40,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: blueColor, // warna ungu muda
                     ),
                   ),
+                ),
 
-                  Positioned(
-                    bottom: -44,
-                    right: 0,
-                    child: Container(
-                      width: 40,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: blueColor, // warna ungu muda
-                      ),
-                    ),
+                Positioned(
+                  bottom: -45,
+                  right: 0,
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                        color: mainColor,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(40),
+                        ) // warna ungu muda
+                        ),
                   ),
+                ),
 
-                  Positioned(
-                    bottom: -45,
-                    right: 0,
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
+                // PROFIL (MENJOROK KE PUTIH)
+                Positioned(
+                  top: 80,
+                  left: 30,
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
                           color: mainColor,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(40),
-                          ) // warna ungu muda
-                          ),
-                    ),
-                  ),
-
-                  // PROFIL (MENJOROK KE PUTIH)
-                  Positioned(
-                    top: 80,
-                    left: 30,
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: mainColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              "assets/images/foto_aldo.jpg",
-                              height: 70,
-                              width: 70,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                          shape: BoxShape.circle,
                         ),
-                        const SizedBox(width: 10),
-                        Column(
+                        child: ClipOval(child: Obx(() {
+                          final imageUrl = _controller.storedProfile.value;
+                          return (imageUrl.isNotEmpty)
+                              ? FadeInImage.assetNetwork(
+                                  placeholder: "assets/icons/ic_profile.jpeg",
+                                  image: imageUrl,
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                  imageErrorBuilder: (context, url, error) =>
+                                      Image.asset(
+                                    "assets/icons/ic_profile.jpeg",
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Image.asset(
+                                  "assets/icons/ic_profile.jpeg",
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                );
+                        })),
+                      ),
+                      const SizedBox(width: 10),
+                      Obx(() {
+                        return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              dataAkun.namaLengkap,
+                              _controller.storedName.value,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -201,24 +182,26 @@ class DashboardScreenLecturer extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              dataAkun.nip,
+                              _controller.storedNip.value,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14,
                                 color: blueColor,
                               ),
                             ),
                           ],
-                        ),
-                      ],
-                    ),
+                        );
+                      })
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
 
-              const SizedBox(height: 40), // Jarak agar profil tidak tertutup
+            const SizedBox(height: 40), // Jarak agar profil tidak tertutup
 
-              // KONTEN PUTIH DI BAWAH
-              Container(
+            Expanded(
+                child: SingleChildScrollView(
+              child: Container(
                 width: width,
                 decoration: const BoxDecoration(
                   color: Color(0XEDEBFB),
@@ -285,12 +268,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 235, 251),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AttendanceScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/attendance-screen");
                                 },
                               ),
 
@@ -303,11 +281,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 251, 193),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PresenceScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/presence-screen");
                                 },
                               ),
 
@@ -321,12 +295,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 251, 232, 187),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AllScheduleScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/all-schedule-screen");
                                 },
                               ),
 
@@ -339,11 +308,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 251, 187, 187),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => CalendarScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/calendar-screen");
                                 },
                               ),
 
@@ -356,11 +321,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                 bgColor:
                                     const Color.fromARGB(255, 187, 191, 251),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LectureScreen()),
-                                  );
+                                  Get.toNamed("/lecturer/lecture-screen");
                                 },
                               ),
                             ],
@@ -443,45 +404,47 @@ class DashboardScreenLecturer extends StatelessWidget {
                       ),
                     ),
 
-                    Container(
-                      alignment: Alignment.center,
-                      color: mainColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: jadwalHariIni.isEmpty
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 20),
-                                Image.asset(
-                                  'assets/icons/ic_noData.png',
-                                  height: 120,
-                                ),
-                                SizedBox(height: 15),
-                                Text(
-                                  'Tidak ada jadwal hari ini',
-                                  style: blackTextStyle.copyWith(
-                                      fontSize: 15,
-                                      fontFamily: 'poppins',
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ],
-                            )
-                          : ListView.builder(
-                              itemCount: jadwalHariIni.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return ScheduleCardLecturer(
-                                    jadwal: jadwalHariIni[index]);
-                              },
-                            ),
-                    ),
+                    Obx(() {
+                      return Container(
+                        alignment: Alignment.center,
+                        color: mainColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: _controller.jadwalList.isEmpty
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Image.asset(
+                                    'assets/icons/ic_noData.png',
+                                    height: 120,
+                                  ),
+                                  SizedBox(height: 15),
+                                  Text(
+                                    'Tidak ada jadwal hari ini',
+                                    style: blackTextStyle.copyWith(
+                                        fontSize: 15,
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              )
+                            : ListView.builder(
+                                itemCount: _controller.jadwalList.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return ScheduleCardLecturer(
+                                      jadwal: _controller.jadwalList[index]);
+                                },
+                              ),
+                      );
+                    })
                   ],
                 ),
               ),
-            ],
-          ),
+            ))
+          ],
         ),
       ),
     );

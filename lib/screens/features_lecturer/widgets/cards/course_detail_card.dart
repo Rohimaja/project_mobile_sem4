@@ -42,7 +42,7 @@ class CourseDetailCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
                       "Detail Mata Kuliah",
@@ -50,8 +50,7 @@ class CourseDetailCard extends StatelessWidget {
                         fontFamily: 'Poppins',
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 30, 136,
-                            228), 
+                        color: Color.fromARGB(255, 30, 136, 228),
                       ),
                     ),
                     const SizedBox(height: 16),

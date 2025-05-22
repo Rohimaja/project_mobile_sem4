@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/models/student/lecture_model.dart';
+import 'package:stipres/models/students/lecture_model.dart';
 
 class PerkuliahanCard extends StatelessWidget {
   final LectureModelApi data;
@@ -12,7 +12,6 @@ class PerkuliahanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Color(0xFFC0EFC9),
@@ -62,7 +61,7 @@ class PerkuliahanCard extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(width: 12),
+            const SizedBox(width: 8),
 
             // MAIN CONTENT
             Expanded(
@@ -119,7 +118,7 @@ class PerkuliahanCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_lecturer.png",
-                    text: data.namaDosen,
+                    text: data.namaDosen!,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
@@ -186,7 +185,9 @@ class PerkuliahanCard extends StatelessWidget {
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.normal)),
+                                        fontWeight: FontWeight
+                                            .normal, // Add a comma here
+                                        color: Color(0xFF168200))),
                               ],
                             ),
                           ),

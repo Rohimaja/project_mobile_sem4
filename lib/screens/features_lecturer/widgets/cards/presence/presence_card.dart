@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/presence/presence_model.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
+import 'package:stipres/models/lecturers/presence_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/dialog/presence/delete_presence_dialog.dart';
 import 'package:stipres/screens/features_lecturer/widgets/dialog/presence/edit_presence_dialog.dart';
 
 class PresenceCard extends StatelessWidget {
-  final PresensiModel data;
+  final PresensiDosenModel data;
 
-  const PresenceCard({
+  PresenceCard({
     super.key,
     required this.data,
   });
+
+  final _controller = Get.find<PresenceController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,7 @@ class PresenceCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PresenceDetailScreen(),
-            ),
-          );
+          Get.toNamed("/lecturer/presence-detail-screen");
         },
         borderRadius: BorderRadius.circular(12),
         splashColor: Colors.purple.withOpacity(0.2),
@@ -80,10 +77,10 @@ class PresenceCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PresensiChip(jam: data.jam),
+                    PresensiChip(jam: data.durasiPresensi!),
                     const SizedBox(height: 6),
                     Text(
-                      data.matkul,
+                      data.namaMatkul,
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -94,12 +91,12 @@ class PresenceCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     IconTextInfo(
                       iconPath: 'assets/icons/ic_location.png',
-                      text: data.lokasi,
+                      text: data.namaRuangan!,
                     ),
                     const SizedBox(height: 4),
                     IconTextInfo(
                       iconPath: 'assets/icons/ic_duration.png',
-                      text: data.durasi,
+                      text: data.durasiMatkul,
                     ),
                   ],
                 ),
@@ -119,8 +116,11 @@ class PresenceCard extends StatelessWidget {
                             onTap: () async {
                               final result = await showDialog(
                                 context: context,
-                                builder: (context) =>
-                                    const EditPresensiDialog(),
+                                builder: (context) => EditPresensiDialog(
+                                  presensisId: data.presensisId.toString(),
+                                  awal: data.jamAwal,
+                                  akhir: data.jamAkhir,
+                                ),
                               );
 
                               if (result != null) {
@@ -152,7 +152,13 @@ class PresenceCard extends StatelessWidget {
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: () async {
-                              await showDeleteConfirmationDialog(context);
+                              final confirm =
+                                  await showDeleteConfirmationDialog(context);
+
+                              confirm == true
+                                  ? _controller.deletePresence(
+                                      data.presensisId.toString())
+                                  : null;
                             },
                             borderRadius: BorderRadius.circular(24),
                             splashColor: Colors.purple.withOpacity(0.2),

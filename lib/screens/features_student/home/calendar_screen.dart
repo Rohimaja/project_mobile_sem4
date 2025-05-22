@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_student/home/calendar_controller.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -14,6 +16,7 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  final _controller = Get.find<CalendarController>();
 
   // Simulasi data dari database
   final Map<DateTime, List<Map<String, String>>> _events = {
@@ -52,9 +55,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     return Scaffold(
       backgroundColor: mainColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
+      body: Stack(
+        children: [
+          Column(
             children: [
               CustomHeader(title: "Kalender Akademik"),
               SizedBox(height: 10),
@@ -150,88 +153,94 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   },
                 ),
               ),
-
-              const SizedBox(height: 30),
-
-              // Daftar event berdasarkan selectedDay
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, 0.1),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: FadeTransition(opacity: animation, child: child),
-                  );
-                },
-                child: selectedEvents.isEmpty
-                    ? const Text(
-                        "Tidak ada acara pada hari ini.",
-                        key: ValueKey("no_event"),
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      )
-                    : Column(
-                        key: ValueKey("has_event"),
-                        children: selectedEvents.map((event) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 4),
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    "${_selectedDay!.day.toString().padLeft(2, '0')}\n${_getMonthName(_selectedDay!.month)}",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
+              const SizedBox(height: 20),
+              Expanded(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, 0.1),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: FadeTransition(opacity: animation, child: child),
+                    );
+                  },
+                  child: selectedEvents.isEmpty
+                      ? const Center(
+                          key: ValueKey("no_event"),
+                          child: Text(
+                            "Tidak ada acara pada hari ini.",
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        )
+                      : ListView.builder(
+                          key: const ValueKey("has_event"),
+                          itemCount: selectedEvents.length,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          itemBuilder: (context, index) {
+                            final event = selectedEvents[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 4),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: event['type'] == 'Libur'
-                                          ? Colors.lightGreen[100]
-                                          : Colors.orange[100],
+                                      color: Colors.orange,
+                                      shape: BoxShape.rectangle,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          event['title']!,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          event['type']!,
-                                          style: const TextStyle(fontSize: 12),
-                                        ),
-                                      ],
+                                    child: Text(
+                                      "${_selectedDay!.day.toString().padLeft(2, '0')}\n${_getMonthName(_selectedDay!.month)}",
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: event['type'] == 'Libur'
+                                            ? Colors.lightGreen[100]
+                                            : Colors.orange[100],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            event['title'] ?? '',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            event['type'] ?? '',
+                                            style:
+                                                const TextStyle(fontSize: 12),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                ),
               ),
-
               const SizedBox(height: 20),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

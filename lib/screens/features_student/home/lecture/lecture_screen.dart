@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/lecture_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/lecture_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class LectureScreen extends StatefulWidget {
   const LectureScreen({super.key});
@@ -17,7 +17,7 @@ class _LectureScreenState extends State<LectureScreen>
   late double height, width;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
-  final LectureController _controller = Get.put(LectureController());
+  final LectureController _controller = Get.find<LectureController>();
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -60,9 +60,9 @@ class _LectureScreenState extends State<LectureScreen>
             final query = _searchController.text.toLowerCase();
             return perkuliahan.namaMatkul.toLowerCase().contains(query);
           }).toList();
-          return SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
+          return Stack(
+            children: [
+              Column(
                 children: [
                   // HEADER + Search Bar
                   Stack(
@@ -70,7 +70,7 @@ class _LectureScreenState extends State<LectureScreen>
                     children: [
                       Container(
                         width: width,
-                        height: 80,
+                        height: 110,
                         decoration: BoxDecoration(
                           color: blueColor,
                           borderRadius: const BorderRadius.only(
@@ -81,7 +81,7 @@ class _LectureScreenState extends State<LectureScreen>
                             fit: BoxFit.cover,
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 23),
+                        padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -101,7 +101,7 @@ class _LectureScreenState extends State<LectureScreen>
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 5),
                             // Animated Search Bar dengan fade
                             Expanded(
                               child: AnimatedSwitcher(
@@ -221,70 +221,78 @@ class _LectureScreenState extends State<LectureScreen>
                   ),
 
                   // Body Content
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 5),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Perkuliahan Minggu Ini',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: blueColor,
-                              fontWeight: FontWeight.w400,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              'Perkuliahan Hari Ini',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: blueColor,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        filteredPerkuliahan.isEmpty
-                            ? Container(
-                                width: double
-                                    .infinity, // Biar bisa center dalam parent
-                                padding: const EdgeInsets.only(top: 30),
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/ic_noData.png',
-                                      height: 120,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      _searchController.text.isEmpty
-                                          ? "Tidak ada perkuliahan minggu ini."
-                                          : "Tidak ada mata kuliah ditemukan.",
-                                      style: TextStyle(
-                                        color: greyColor,
-                                        fontStyle: FontStyle.italic,
+                          const Divider(height: 20, color: Color(0xFFDADADA)),
+                          Expanded(
+                            child: filteredPerkuliahan.isEmpty
+                                ? SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize
+                                            .min, // agar tidak memaksa full height
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/ic_noData.png',
+                                            height: 120,
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Text(
+                                            _searchController.text.isEmpty
+                                                ? "Tidak ada perkuliahan hari ini"
+                                                : "Tidak ada mata kuliah ditemukan",
+                                            style: TextStyle(
+                                              color: greyColor,
+                                              fontStyle: FontStyle.italic,
+                                              fontSize: 16,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
-                                  ],
-                                ),
-                              )
-                            : ListView.builder(
-                                itemCount: filteredPerkuliahan.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: PerkuliahanCard(
-                                      data: filteredPerkuliahan[index],
-                                    ),
-                                  );
-                                },
-                              ),
-                      ],
+                                  )
+                                : ListView.builder(
+                                    itemCount: filteredPerkuliahan.length,
+                                    padding: const EdgeInsets.only(top: 0),
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(bottom: 16),
+                                        child: PerkuliahanCard(
+                                          data: filteredPerkuliahan[index],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
+            ],
           );
         }));
   }

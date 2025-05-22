@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class CustomHeader extends StatelessWidget {
   final String title;
@@ -17,7 +17,7 @@ class CustomHeader extends StatelessWidget {
       children: [
         Container(
           width: width,
-          height: 80,
+          height: 110,
           decoration: BoxDecoration(
             color: blueColor,
             borderRadius: const BorderRadius.only(
@@ -28,7 +28,7 @@ class CustomHeader extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 23),
+          padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

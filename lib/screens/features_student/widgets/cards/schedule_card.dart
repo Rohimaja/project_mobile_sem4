@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
-import 'package:stipres/models/student/jadwal_model.dart';
+import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class JadwalCard extends StatelessWidget {
   final JadwalModelApi jadwal;
@@ -101,6 +101,7 @@ class JadwalCard extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            SizedBox(width: 5),
                             Material(
                               color: Colors.transparent,
                               child: Ink(
@@ -153,6 +154,8 @@ class JadwalCard extends StatelessWidget {
                                     );
                                   },
                                   child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.24,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 4),
                                     child: const Text(
@@ -215,10 +218,10 @@ class JadwalCard extends StatelessWidget {
                               label: 'Zoom',
                               color: Color(0xFFF4D8FB),
                               onTap: () {
-                                (jadwal.lokasi == "Online")
+                                (jadwal.lokasi == "-")
                                     ? Get.toNamed(
                                         "/student/lecture-content-screen",
-                                      )
+                                        arguments: jadwal.presensisId)
                                     : Get.toNamed("/student/offline-screen");
                               },
                             ),
@@ -243,6 +246,9 @@ Widget _buildActionBox({
   required VoidCallback onTap,
   required Color color,
 }) {
+  final screenWidth = MediaQuery.of(context).size.width;
+  final screenHeight = MediaQuery.of(context).size.height;
+
   return Material(
     color: color,
     borderRadius: BorderRadius.circular(10),
@@ -251,8 +257,8 @@ Widget _buildActionBox({
       borderRadius: BorderRadius.circular(10),
       splashColor: Colors.purpleAccent.withOpacity(0.2),
       child: Container(
-        width: 120,
-        height: 30,
+        width: screenWidth * 0.25,
+        height: screenHeight * 0.04,
         alignment: Alignment.center,
         child: Text(
           label,

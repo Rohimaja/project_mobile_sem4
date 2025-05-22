@@ -4,7 +4,7 @@ import 'package:get/state_manager.dart';
 import 'package:stipres/controllers/features_student/base_screen_controller.dart';
 import 'package:stipres/screens/features_student/account/profile_screen.dart';
 import 'package:stipres/screens/features_student/home/dashboard.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';
 

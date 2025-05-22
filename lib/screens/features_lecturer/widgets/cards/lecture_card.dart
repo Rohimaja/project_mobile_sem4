@@ -2,12 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/models/lecture_model.dart';
+import 'package:stipres/models/students/lecture_model.dart';
 
 class PerkuliahanCard extends StatelessWidget {
-  final PerkuliahanModel data;
+  final LectureModelApi data;
+  final void Function(String linkZoom)? onEdit;
 
-  const PerkuliahanCard({super.key, required this.data});
+  const PerkuliahanCard({
+    super.key,
+    required this.data,
+    this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +91,7 @@ class PerkuliahanCard extends StatelessWidget {
                         ),
                         alignment: Alignment.centerLeft,
                         child: AutoSizeText(
-                          data.matkul,
+                          data.namaMatkul,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -114,17 +119,17 @@ class PerkuliahanCard extends StatelessWidget {
 
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_calendar2.png",
-                    text: data.tanggal,
+                    text: data.tglPresensi,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_lecturer.png",
-                    text: data.dosen,
+                    text: data.namaDosen!,
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
                     iconPath: "assets/icons/ic_clock.png",
-                    text: data.jam,
+                    text: "${data.durasiPresensi} WIB ",
                   ),
                   const SizedBox(height: 8),
 
@@ -158,8 +163,29 @@ class PerkuliahanCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        // Ripple animation button
+                        const SizedBox(width: 12),
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(24),
+                            onTap: () {
+                              if (onEdit != null) {
+                                onEdit!(data.linkZoom ?? '');
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 4),
+                              child: Row(
+                                children: [
+                                  Image.asset("assets/icons/ic_edit2.png",
+                                      width: 24),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 6),
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
@@ -170,7 +196,7 @@ class PerkuliahanCard extends StatelessWidget {
                               );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text("Link Zoom berhasil disalin!"),
+                                  content: Text("Link berhasil disalin!"),
                                 ),
                               );
                             },
@@ -180,13 +206,18 @@ class PerkuliahanCard extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Image.asset("assets/icons/ic_copy.png",
-                                      width: 20),
+                                      width: 24),
                                   const SizedBox(width: 4),
-                                  const Text("Salin",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.normal)),
+                                  const Text(
+                                    "Salin",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: 'Poppins',
+                                      fontWeight:
+                                          FontWeight.normal, // Add a comma here
+                                      color: Color(0xFF168200),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

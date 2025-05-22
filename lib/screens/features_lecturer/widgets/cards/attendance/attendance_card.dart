@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/models/attendance/attendance_model.dart';
-import 'package:stipres/screens/features_lecturer/home/attendance/attendance_content_screen.dart'; // pastikan path ini sesuai
+import 'package:stipres/models/lecturers/attendance_model.dart';
 
 class MahasiswaCard extends StatelessWidget {
   final DataMahasiswa mahasiswa;
@@ -16,7 +16,7 @@ class MahasiswaCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(
-          vertical: 8), // Tambah jarak bawah antar card
+          vertical: 3), // Tambah jarak bawah antar card
       child: Material(
         color: const Color(0xFFCFE9FF),
         elevation: 3,
@@ -26,12 +26,7 @@ class MahasiswaCard extends StatelessWidget {
           highlightColor: Colors.blue.withOpacity(0.1),
           borderRadius: BorderRadius.circular(7),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AttendanceContentScreen(),
-              ),
-            );
+            Get.toNamed("/student/attendance-screen", arguments: mahasiswa.nim);
           },
           child: Padding(
             padding: const EdgeInsets.all(16),

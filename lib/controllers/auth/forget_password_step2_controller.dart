@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 import 'package:stipres/services/forget_password_service.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
@@ -30,7 +30,7 @@ class ForgetPasswordStep2Controller extends GetxController {
 
   var logger = Logger();
 
-  final String urlOtp = '${ApiManager.globalUrl}auth/ForgetPassword.php';
+  final String urlOtp = '${ApiConstants.globalUrl}auth/ForgetPassword.php';
 
   String maskedEmail() {
     logger.d(email);
@@ -123,8 +123,6 @@ class ForgetPasswordStep2Controller extends GetxController {
     showLoadingPopup();
     bool success = await forgetPasswordService.checkOtp(email, otp);
     resetLoading();
-
-    logger.d(success);
 
     if (success) {
       // resetLoading();

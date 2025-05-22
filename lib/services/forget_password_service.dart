@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/basic_response.dart';
-import 'package:stipres/services/api_manager.dart';
+import 'package:stipres/constants/api.dart';
 
 class ForgetPasswordService extends GetxService {
-  final String _baseURL = "${ApiManager.globalUrl}auth/ForgetPassword.php";
+  final String _baseURL = "${ApiConstants.globalUrl}auth/ForgetPassword.php";
   final GetStorage _box = GetStorage();
-  final global = ApiManager.globalUrl;
+  final global = ApiConstants.globalUrl;
 
   var logger = Logger();
 
@@ -37,7 +37,7 @@ class ForgetPasswordService extends GetxService {
       throw Exception("Failed to send OTP: $e");
     }
 
-    return BaseResponse(status: "error", message: "Failed to send OTP");
+    return BaseResponse(status: "error", message: "Gagal mengirim OTP");
   }
 
   Future<bool> checkOtp(String email, String otp) async {
@@ -77,21 +77,4 @@ class ForgetPasswordService extends GetxService {
         status: "error", message: "Terjadi kesalahan saat mengganti password");
   }
 
-  // Future<ChangePasswordFPResponse> checkEmailSv(
-  //     String email, String password) async {
-  //   try {
-  //     final String newUrl = "auth/forgetPassword.php";
-  //     final response = await http.post(Uri.parse("$global$newUrl"),
-  //         body: {'email': email, 'new_password': password});
-  //     if (response.statusCode == 200) {
-  //       final body = jsonDecode(response.body);
-
-  //       return ChangePasswordFPResponse.fromJson(body);
-  //     }
-  //   } catch (e) {
-  //     logger.d("Error during checking email: $e");
-  //   }
-  //   return ChangePasswordFPResponse(
-  //       status: "error", message: "Terjadi kesalahan saat mengganti password");
-  // }
 }

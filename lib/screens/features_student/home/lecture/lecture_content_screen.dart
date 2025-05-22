@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/lecture_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/lecture_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
+import 'package:stipres/constants/styles.dart';
 
 class LectureContentScreen extends StatefulWidget {
   const LectureContentScreen({super.key});
@@ -28,64 +29,15 @@ class _LectureContentScreenState extends State<LectureContentScreen>
 
     return Scaffold(
       backgroundColor: mainColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
+      body: Stack(
+        children: [
+          Column(
             children: [
               // HEADER + Search Bar
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  Container(
-                    width: width,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: blueColor,
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                      ),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/bgheader.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 23),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () => Navigator.pop(context),
-                            borderRadius: BorderRadius.circular(100),
-                            customBorder: const CircleBorder(),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                'assets/icons/ic_back.png',
-                                height: 18,
-                                width: 18,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        // Animated Search Bar dengan fade
-                        Expanded(
-                          child: Text(
-                            "Perkuliahan Online",
-                            style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  const CustomHeader(title: "Perkuliahan Online"),
                   Positioned(
                     bottom: -44,
                     right: 0,
@@ -113,70 +65,78 @@ class _LectureContentScreenState extends State<LectureContentScreen>
               ),
 
               // Body Content
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Link Perkuliahan Online',
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          color: blueColor,
-                          fontWeight: FontWeight.w400,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          'Link Perkuliahan',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: blueColor,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Obx(() {
-                      return (_controller.lectureList.isEmpty)
-                          ? Container(
-                              width: double
-                                  .infinity, // Biar bisa center dalam parent
-                              padding: const EdgeInsets.only(top: 30),
-                              alignment: Alignment.center,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/ic_noData.png',
-                                    height: 120,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    'Link tidak tersedia',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: greyColor,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w400,
+                      const Divider(height: 20, color: Color(0xFFDADADA)),
+                      Expanded(
+                        child: Obx(() {
+                          return (_controller.lectureList.isEmpty)
+                              ? SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.5,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize
+                                          .min, // agar tidak memaksa full height
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/ic_noData.png',
+                                          height: 120,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          'Link tidak tersedia',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            color: greyColor,
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: _controller.lectureList.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: PerkuliahanCard(
-                                    data: _controller.lectureList[index],
-                                  ),
+                                )
+                              : ListView.builder(
+                                  itemCount: _controller.lectureList.length,
+                                  padding: const EdgeInsets.only(top: 0),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(bottom: 16),
+                                      child: PerkuliahanCard(
+                                        data: _controller.lectureList[index],
+                                      ),
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                    })
-                  ],
+                        }),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

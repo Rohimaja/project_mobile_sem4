@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_lecturer/home/attendances/attendance_controller.dart';
 import 'package:stipres/screens/features_lecturer/home/attendance/search_attendance_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/attendance/attendance_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/attendance/attendance_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -19,42 +20,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
   late Animation<double> _animation;
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
-
-  final List<DataMahasiswa> dummyDataMahasiswa = [
-    DataMahasiswa(
-      nim: 'E41231215',
-      nama: 'Izzul Islam Ramadhan',
-      email: 'e41231215@student.polije.ac.id',
-      jenisKelamin: 'laki-laki',
-    ),
-    DataMahasiswa(
-      nim: 'E41231299',
-      nama: 'Citra Rahayu Meigita N.',
-      email: 'e41231299@student.polije.ac.id',
-      jenisKelamin: 'perempuan',
-    ),
-    DataMahasiswa(
-      nim: 'E41231099',
-      nama: 'Bimaa Achmad Fiil Ardhi',
-      email: 'e41231099@student.polije.ac.id',
-      jenisKelamin: 'laki-laki',
-    ),
-    DataMahasiswa(
-      nim: 'E41231275',
-      nama: 'Edwin Kurniawan',
-      email: 'e41231275@student.polije.ac.id',
-      jenisKelamin: 'laki-laki',
-    ),
-    DataMahasiswa(
-      nim: 'E41231324',
-      nama: 'Muhammad Diega Syahputra',
-      email: 'e41231324@student.polije.ac.id',
-      jenisKelamin: 'laki-laki',
-    ),
-  ];
-
-  String? selectedSemester;
-  String? selectedProdi;
+  final _controller = Get.find<AttendanceController>();
 
   @override
   void initState() {
@@ -85,21 +51,19 @@ class _AttendanceScreenState extends State<AttendanceScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
-    final filteredMahasiswa = dummyDataMahasiswa.where((nama) {
-      final query = _searchController.text.toLowerCase();
-      return nama.nama.toLowerCase().contains(query) ||
-          nama.nim.toLowerCase().contains(query) ||
-          nama.email.toLowerCase().contains(query);
-    }).toList();
-
     return Scaffold(
-      backgroundColor: mainColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: SingleChildScrollView(
-                child: Column(
+        backgroundColor: mainColor,
+        body: Obx(() {
+          final filteredMahasiswa = _controller.studentList.where((nama) {
+            final query = _searchController.text.toLowerCase();
+            return nama.nama.toLowerCase().contains(query) ||
+                nama.nim.toLowerCase().contains(query) ||
+                nama.email.toLowerCase().contains(query);
+          }).toList();
+          return SafeArea(
+            child: Stack(
+              children: [
+                Column(
                   children: [
                     Stack(
                       clipBehavior: Clip.none,
@@ -125,10 +89,9 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                 color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    Get.back();
                                   },
                                   borderRadius: BorderRadius.circular(100),
-                                  customBorder: const CircleBorder(),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Image.asset(
@@ -149,12 +112,11 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: SizedBox(
-                                              width: width * 0.70,
+                                              width: width * 0.65,
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                  horizontal: 12,
-                                                ),
+                                                        horizontal: 12),
                                                 decoration: BoxDecoration(
                                                   color: Colors.white
                                                       .withOpacity(0.9),
@@ -165,15 +127,14 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                                   controller: _searchController,
                                                   style: GoogleFonts
                                                       .plusJakartaSans(
-                                                    color: Colors.black,
-                                                  ),
+                                                          color: Colors.black),
                                                   decoration: InputDecoration(
                                                     hintText:
                                                         'Cari data mahasiswa...',
                                                     hintStyle: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Colors.grey[600],
-                                                    ),
+                                                            color: Colors
+                                                                .grey[600]),
                                                     border: InputBorder.none,
                                                   ),
                                                   autofocus: true,
@@ -249,7 +210,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                             height: 45,
                             decoration: BoxDecoration(
                               color: mainColor,
-                              borderRadius: const BorderRadius.only(
+                              borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(40),
                               ),
                             ),
@@ -257,213 +218,161 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                         ),
                       ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                    // Konten Data Mahasiswa
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Data Mahasiswa',
+                              style: TextStyle(fontSize: 16, color: blueColor),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
                               children: [
-                                Text(
-                                  'Data Mahasiswa',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                    color: blueColor,
-                                  ),
-                                ),
-                                SizedBox(height: 12),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 100,
-                                      child: Text(
-                                        'Program Studi',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      ':',
+                                const SizedBox(
+                                    width: 100, child: Text('Program Studi')),
+                                const Text(' : '),
+                                const SizedBox(width: 10),
+                                Obx(() {
+                                  return Text(
+                                      _controller.prodiMap[_controller
+                                              .selectedProdi.value] ??
+                                          "-",
                                       style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      '${selectedProdi ?? "-"}',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 100,
-                                      child: Text(
-                                        'Semester',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      ':',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      '${selectedSemester ?? "-"}',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                const Divider(
-                                    height: 1, color: Color(0xFFDADADA)),
+                                          fontWeight: FontWeight.bold));
+                                })
                               ],
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          filteredMahasiswa.isEmpty
-                              ? Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.only(top: 30),
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/ic_noData.png',
-                                        height: 120,
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const SizedBox(
+                                    width: 100, child: Text('Semester')),
+                                const Text(' : '),
+                                const SizedBox(width: 10),
+                                Obx(() {
+                                  return Text(
+                                    _controller.selectedSemester.value.isEmpty
+                                        ? "-"
+                                        : _controller.selectedSemester.value,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  );
+                                })
+                              ],
+                            ),
+                            const Divider(height: 20, color: Color(0xFFDADADA)),
+
+                            // Scroll hanya untuk daftar card
+                            Expanded(
+                              child: filteredMahasiswa.isEmpty
+                                  ? Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                              'assets/icons/ic_noData.png',
+                                              height: 120),
+                                          const SizedBox(height: 16),
+                                          Text(
+                                            _searchController.text.isEmpty
+                                                ? "Tidak ada data mahasiswa"
+                                                : "Data mahasiswa tidak ditemukan",
+                                            style: TextStyle(
+                                                color: greyColor,
+                                                fontStyle: FontStyle.italic),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(height: 16),
-                                      Text(
-                                        _searchController.text.isEmpty
-                                            ? "Tidak ada data mahasiswa"
-                                            : "Data mahasiswa tidak ditemukan",
-                                        style: TextStyle(
-                                          color: greyColor,
-                                          fontStyle: FontStyle.italic,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(height: 150),
-                                    ],
-                                  ),
-                                )
-                              : ListView.builder(
-                                  itemCount: filteredMahasiswa.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 3),
-                                      child: MahasiswaCard(
-                                        mahasiswa: filteredMahasiswa[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-                        ],
+                                    )
+                                  : ListView.builder(
+                                      itemCount: filteredMahasiswa.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          child: MahasiswaCard(
+                                              mahasiswa:
+                                                  filteredMahasiswa[index]),
+                                        );
+                                      },
+                                    ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-
-            // Tombol Cari Data Tetap di Kanan Bawah
-            Positioned(
-              bottom: 20,
-              right: 20,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.white,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20)),
-                      ),
-                      builder: (context) {
-                        return CariDataScreen(
-                          onSearch: (semester, prodi) {
-                            setState(() {
-                              selectedSemester = semester;
-                              selectedProdi = prodi;
-                            });
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(20)),
+                          ),
+                          builder: (context) {
+                            return CariDataScreen(
+                              onSearch: (semester, prodi) {
+                                _controller.selectedSemester.value = semester;
+                                _controller.selectedProdi.value = prodi;
+                              },
+                            );
                           },
                         );
                       },
-                    );
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: blueColor,
-                      borderRadius: BorderRadius.circular(7),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 8,
-                          offset: const Offset(2, 4),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: blueColor,
+                          borderRadius: BorderRadius.circular(7),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: const Offset(2, 4)),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.search, color: Colors.white),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Cari Data",
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.search, color: Colors.white),
+                            const SizedBox(width: 8),
+                            Text(
+                              "Cari Data",
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        }));
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/models/allSchedule_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/allSchedule_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class AllScheduleScreen extends StatefulWidget {
   const AllScheduleScreen({super.key});
@@ -126,17 +126,16 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
 
     return Scaffold(
       backgroundColor: mainColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
+      body: Stack(
+        children: [
+          Column(
             children: [
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  // HEADER
                   Container(
                     width: width,
-                    height: 80,
+                    height: 110,
                     decoration: BoxDecoration(
                       color: blueColor,
                       borderRadius: const BorderRadius.only(
@@ -147,7 +146,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                         fit: BoxFit.cover,
                       ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 23),
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -169,7 +168,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 5),
                         Expanded(
                           child: AnimatedSwitcher(
                             duration: const Duration(milliseconds: 300),
@@ -208,7 +207,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                                 : Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Jadwal Perkuliahan Semester Ini",
+                                      "Jadwal Perkuliahan",
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
@@ -284,99 +283,129 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                   ),
                 ],
               ),
-
-              // Body
-              Container(
+              Expanded(
+                  child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    filteredSchedule.isEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 30),
-                            child: Center(
-                              child: Text(
-                                "Tidak ada mata kuliah ditemukan.",
-                                style: TextStyle(
-                                  color: greyColor,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ),
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: filteredDays.map((day) {
-                              final jadwal =
-                                  (jadwalPerHari[day] ?? []).where((jadwal) {
-                                final query =
-                                    _searchController.text.toLowerCase();
-                                return jadwal.mataKuliah
-                                    .toLowerCase()
-                                    .contains(query);
-                              }).toList();
-
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Text(
-                                      day,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: blueColor,
-                                        fontFamily: 'poppins',
-                                      ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Text(
+                        'Jadwal Perkuliahan Semester Ini',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: blueColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    const Divider(height: 20, color: Color(0xFFDADADA)),
+                    Expanded(
+                        child: SingleChildScrollView(
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            filteredSchedule.isEmpty
+                                ? Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/ic_noData.png',
+                                          height: 120,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          "Tidak ada mata kuliah ditemukan.",
+                                          style: TextStyle(
+                                            color: greyColor,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  if (jadwal.isEmpty)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 20),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/ic_noData.png',
-                                              height: 60,
-                                              width: 60,
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Text(
-                                              "Tidak ada perkuliahan",
+                                  )
+                                : Column(
+                                    children: filteredDays.map((day) {
+                                      final jadwal = (jadwalPerHari[day] ?? [])
+                                          .where((jadwal) {
+                                        final query = _searchController.text
+                                            .toLowerCase();
+                                        return jadwal.mataKuliah
+                                            .toLowerCase()
+                                            .contains(query);
+                                      }).toList();
+
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10),
+                                            child: Text(
+                                              day,
                                               style: TextStyle(
-                                                color: greyColor,
-                                                fontStyle: FontStyle.italic,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: blueColor,
+                                                fontFamily: 'poppins',
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  else
-                                    Column(
-                                      children: jadwal.map((jadwal) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 0),
-                                          child:
-                                              AllScheduleCard(jadwal: jadwal),
-                                        );
-                                      }).toList(),
-                                    ),
-                                ],
-                              );
-                            }).toList()),
+                                          ),
+                                          if (jadwal.isEmpty)
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/ic_noData.png',
+                                                    height: 60,
+                                                    width: 60,
+                                                  ),
+                                                  const SizedBox(height: 8),
+                                                  Text(
+                                                    "Tidak ada perkuliahan",
+                                                    style: TextStyle(
+                                                      color: greyColor,
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          else
+                                            Column(
+                                              children: jadwal.map((jadwal) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 10),
+                                                  child: AllScheduleCard(
+                                                      jadwal: jadwal),
+                                                );
+                                              }).toList(),
+                                            ),
+                                        ],
+                                      );
+                                    }).toList(),
+                                  ),
+                          ],
+                        ),
+                      ),
+                    )),
                   ],
                 ),
-              )
+              )),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

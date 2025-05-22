@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/student/rekap_model.dart';
-import 'package:stipres/services/rekap_mahasiswa_service.dart';
+import 'package:stipres/models/students/rekap_model.dart';
+import 'package:stipres/services/student/rekap_mahasiswa_service.dart';
 
 class RekapController extends GetxController {
   final _box = GetStorage();
@@ -15,40 +15,63 @@ class RekapController extends GetxController {
 
   var errorMessage = ''.obs;
 
+  String? nim;
+
   final RekapMahasiswaService rekapMahasiswaService = RekapMahasiswaService();
 
   @override
   void onInit() {
     super.onInit();
-    fetchRekap();
+    if (_box.read("user_nim") != null) {
+      nim = _box.read('user_nim');
+    } else {
+      nim = Get.arguments;
+    }
+    fetchRekap(nim);
   }
 
-  void fetchRekap() async {
+  void fetchRekap(String? nim) async {
     try {
-      String nim = _box.read('user_nim');
       log.d(nim);
       final result = await rekapMahasiswaService.tampilRekap(nim);
       log.d(result);
 
       if (result.status == "success" && result.data != null) {
-        final List<RekapModelApi> updatedList = result.data!.map((rekap) {
+        Map<String, RekapModelApi> groupedData = {};
+
+        for (var rekap in result.data!) {
+          String kode = rekap.kodeMatkul ?? '';
+
+          if (!groupedData.containsKey(kode)) {
+            groupedData[kode] = RekapModelApi(
+                mahasiswaId: rekap.mahasiswaId,
+                nim: rekap.nim,
+                namaMatkul: rekap.namaMatkul,
+                kodeMatkul: rekap.kodeMatkul,
+                status: rekap.status,
+                semester: rekap.semester);
+          }
+
           final statusPresensi = rekap.status;
 
           switch (statusPresensi) {
             case 1:
-              rekap.hadir = (rekap.hadir ?? 0) + 1;
+              groupedData[kode]!.hadir = (groupedData[kode]!.hadir ?? 0) + 1;
               break;
             case 2:
-              rekap.izin = (rekap.izin ?? 0) + 1;
+              groupedData[kode]!.izin = (groupedData[kode]!.izin ?? 0) + 1;
               break;
             case 3:
-              rekap.sakit = (rekap.sakit ?? 0) + 1;
+              groupedData[kode]!.sakit = (groupedData[kode]!.sakit ?? 0) + 1;
               break;
             case 0:
-              rekap.alpa = (rekap.alpa ?? 0) + 1;
+            default:
+              groupedData[kode]!.alpa = (groupedData[kode]!.alpa ?? 0) + 1;
               break;
           }
+        }
 
+        List<RekapModelApi> updatedList = groupedData.values.map((rekap) {
           final totalPertemuan = (rekap.hadir ?? 0) +
               (rekap.izin ?? 0) +
               (rekap.sakit ?? 0) +

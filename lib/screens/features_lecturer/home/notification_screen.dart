@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_lecturer/models/notification_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/notification_card.dart';
-import 'package:stipres/styles/constant.dart';
+import 'package:stipres/constants/styles.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -101,50 +101,77 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
-            Container(
-              width: width,
-              height: 80,
-              decoration: BoxDecoration(
-                color: blueColor,
-                borderRadius:
-                    const BorderRadius.only(bottomLeft: Radius.circular(30)),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/bgheader.png'),
-                  fit: BoxFit.cover,
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: width,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: blueColor,
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(30)),
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/bgheader.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 23),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          borderRadius: BorderRadius.circular(100),
+                          customBorder: const CircleBorder(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset('assets/icons/ic_back.png',
+                                height: 18, width: 18),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          "Notifikasi",
+                          style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 23),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => Navigator.pop(context),
-                      borderRadius: BorderRadius.circular(100),
-                      customBorder: const CircleBorder(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset('assets/icons/ic_back.png',
-                            height: 18, width: 18),
+                Positioned(
+                  bottom: -44,
+                  right: 0,
+                  child: Container(
+                    width: 40,
+                    height: 44,
+                    color: blueColor,
+                  ),
+                ),
+                Positioned(
+                  bottom: -45,
+                  right: 0,
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(40),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      "Notifikasi",
-                      style: GoogleFonts.poppins(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
 
             // Filter Buttons
@@ -180,7 +207,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset('assets/images/empty_state.png', height: 150),
+                            Image.asset('assets/images/empty_state.png',
+                                height: 150),
                             const SizedBox(height: 20),
                             Text(
                               "Tidak ada notifikasi",

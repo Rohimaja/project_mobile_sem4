@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/models/attendance/attendance_model.dart';
+import 'package:stipres/models/lecturers/attendance_model.dart';
 import 'package:stipres/screens/features_lecturer/home/attendance/attendance_content_screen.dart';
 import 'package:stipres/screens/features_lecturer/models/presence/presence_detail_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/detail_presence/presence_information.dart';
@@ -143,6 +143,7 @@ class PresenceDetailCard extends StatelessWidget {
                           keterangan: "sakit",
                           alasan:
                               "Saya tidak dapat menghadiri perkuliahan pada hari dan tanggal tersebut dikarenakan kondisi kesehatan saya yang menurun secara signifikan. Sejak malam sebelumnya, saya mulai merasakan gejala seperti demam tinggi, sakit kepala hebat, badan pegal-pegal, serta mual yang berkelanjutan. Setelah berkonsultasi dengan orang tua, saya segera dibawa ke klinik terdekat untuk diperiksa oleh tenaga medis. Berdasarkan hasil pemeriksaan, saya didiagnosis mengalami infeksi saluran pernapasan akut (ISPA) dan disarankan untuk beristirahat total selama beberapa hari ke depan agar tidak terjadi komplikasi lebih lanjut serta demi mencegah penularan kepada teman-teman di lingkungan kampus. Saya memahami pentingnya kehadiran dalam kegiatan perkuliahan, namun dalam kondisi ini saya memprioritaskan pemulihan agar dapat kembali mengikuti kegiatan akademik dengan optimal. Selama masa istirahat, saya tetap berusaha mengikuti materi yang diberikan melalui LMS dan catatan teman-teman. Saya juga bersedia menerima tugas tambahan jika diperlukan sebagai bentuk tanggung jawab saya. Demikian alasan ini saya buat dengan sebenar-benarnya dan saya mohon pengertiannya.",
+                          buktiFilePath: "assets/images/bgHalaman.png",
                         ),
                       ),
                     );

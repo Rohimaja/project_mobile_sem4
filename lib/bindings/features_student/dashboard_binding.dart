@@ -4,6 +4,6 @@ import 'package:stipres/controllers/features_student/home/dashboard_controller.d
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DashboardController>(() => DashboardController());
+    Get.put(DashboardController());
   }
 }
