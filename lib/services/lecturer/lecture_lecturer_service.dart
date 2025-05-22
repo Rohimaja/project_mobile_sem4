@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:stipres/constants/api.dart';
 import 'package:stipres/models/base_response.dart';
-import 'package:stipres/models/lecturers/lecture_model.dart';
+import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/models/students/lecture_model.dart';
 
 class LectureLecturerService extends GetxService {
@@ -15,7 +15,7 @@ class LectureLecturerService extends GetxService {
 
   Future<BaseResponse<List<LectureModelApi>>> tampilZoom(String dosenId) async {
     try {
-      final action = 'dataLecture';
+      const action = 'dataLecture';
       final url = Uri.parse("$_baseUrl?dosen_id=$dosenId&action=$action");
       log.d(url);
       final response = await http.get(url);
@@ -53,7 +53,7 @@ class LectureLecturerService extends GetxService {
   Future<BaseResponse<LectureModelApi>> tampilZoomContent(
       String presensisId) async {
     try {
-      final action = "dataContentLecture";
+      const action = "dataContentLecture";
       final url =
           Uri.parse("$_baseUrl?presensis_id=$presensisId&action=$action");
       log.d(url);
@@ -71,6 +71,30 @@ class LectureLecturerService extends GetxService {
       log.f("Error: $e");
       return BaseResponse(
           status: "error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
+
+  Future<BasicResponse> updateLecture(
+      String presensisId, String linkZoom) async {
+    try {
+      const action = "updateLecture";
+      final url = Uri.parse(_baseUrl);
+      final response = await http.post(url, body: {
+        'action': action,
+        'presensis_id': presensisId,
+        'link_zoom': linkZoom,
+      });
+      log.d(url);
+      log.d(presensisId);
+      log.d(linkZoom);
+
+      final body = jsonDecode(response.body);
+      log.d(body);
+
+      return BasicResponse.fromJson(body);
+    } catch (e) {
+      log.f("Error: $e");
+      return BasicResponse(status: "Error", message: "Terjadi kesalahan $e");
     }
   }
 }

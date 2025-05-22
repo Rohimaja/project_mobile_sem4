@@ -83,4 +83,6 @@ class DashboardController extends GetxController {
       Get.toNamed("/student/offline-screen");
     }
   }
+
+  
 }

@@ -29,7 +29,7 @@ class ProfileController extends GetxController {
     String? email = _box.read("user_email");
     String? namaProdi = _box.read("nama_prodi");
     int? idProdi = _box.read("id_prodi");
-    String profile = _box.read("foto");
+    String? profile = _box.read("foto");
 
     storedName.value = nama ?? 'No name found';
     storedNim.value = nim ?? 'No nim found';

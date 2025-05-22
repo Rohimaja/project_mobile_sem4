@@ -79,9 +79,9 @@ class DashboardController extends GetxController {
   }
 
   void buttonAction(JadwalModelApi jadwal) {
-    if (jadwal.lokasi == '') {
-      Get.toNamed("lecturer/presence-content-screen",
-          arguments: [jadwal.presensiId, jadwal.presensisId]);
+    if (jadwal.lokasi == '-') {
+      Get.toNamed("/lecturer/presence-detail-screen",
+          arguments: jadwal.presensisId);
     } else {
       Get.toNamed("/lecturer/offline-screen");
     }

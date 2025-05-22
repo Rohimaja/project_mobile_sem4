@@ -6,7 +6,7 @@ import 'package:stipres/models/students/lecture_model.dart';
 
 class PerkuliahanCard extends StatelessWidget {
   final LectureModelApi data;
-  final void Function(String linkZoom)? onEdit;
+  final void Function(String linkZoom, int presensisId)? onEdit;
 
   const PerkuliahanCard({
     super.key,
@@ -170,7 +170,7 @@ class PerkuliahanCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(24),
                             onTap: () {
                               if (onEdit != null) {
-                                onEdit!(data.linkZoom ?? '');
+                                onEdit!(data.linkZoom, data.presensisId);
                               }
                             },
                             child: Padding(

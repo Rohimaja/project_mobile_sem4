@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/students/lecture_model.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/lecturer/lecture_lecturer_service.dart';
 
 class LectureController extends GetxController {
@@ -66,10 +68,8 @@ class LectureController extends GetxController {
 
   void fetchContentLecture(String presensisId) async {
     try {
-      log.d("Check presensisId: $presensisId");
       final result =
           await lectureLecturerService.tampilZoomContent(presensisId);
-      log.d("Test");
 
       if (result.status == "success" && result.data != null) {
         final lecture = result.data!;
@@ -82,5 +82,49 @@ class LectureController extends GetxController {
     } catch (e) {
       log.d("Error : $e");
     }
+  }
+
+  void submitUpdateLecture(int presensisId, String newLink, String currentLink,
+      LectureModelApi? currentData) {
+    if (newLink == currentLink) {
+      null;
+    } else if (newLink.isEmpty) {
+      Get.snackbar("Gagal", "Link perkuliahan tidak boleh kosong");
+    } else {
+      updateLecture(presensisId, newLink);
+      onInit();
+    }
+  }
+
+  void updateLecture(int presensisId, String linkZoom) async {
+    try {
+      showLoading();
+      final result = await lectureLecturerService.updateLecture(
+          presensisId.toString(), linkZoom);
+
+      if (result.status == "success") {
+        Get.back();
+        Get.snackbar("Berhasil", "Link zoom berhasil diperbarui",
+            duration: Duration(seconds: 1));
+      } else {
+        Get.back();
+        Get.snackbar("Gagal", result.message, duration: Duration(seconds: 1));
+        return;
+      }
+    } catch (e) {
+      Get.back();
+      Get.snackbar("Gagal", "Terjadi kesalahan $e",
+          duration: Duration(seconds: 1));
+      log.f("Error: $e");
+      return;
+    }
+  }
+
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

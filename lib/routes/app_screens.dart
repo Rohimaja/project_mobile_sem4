@@ -34,6 +34,7 @@ import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/screens/features_lecturer/account/view_profile.dart';
 import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart'
     as lecturer;
+import 'package:stipres/screens/features_lecturer/home/offline_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart'
     as student;
@@ -121,6 +122,7 @@ class AppScreens {
       name: "/lecturer/calendar-screen",
       page: () => lecturer.CalendarScreen(),
     ),
+        GetPage(name: "/lecturer/offline-screen", page: () => LecturerOfflineScreen()),
     GetPage(
         name: "/lecturer/lecture-screen",
         page: () => lecturer.LectureScreen(),

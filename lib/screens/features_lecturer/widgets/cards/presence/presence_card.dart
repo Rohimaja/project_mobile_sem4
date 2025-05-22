@@ -23,7 +23,7 @@ class PresenceCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
-          Get.toNamed("/lecturer/presence-detail-screen");
+          Get.toNamed("/lecturer/presence-detail-screen", arguments: data.presensisId);
         },
         borderRadius: BorderRadius.circular(12),
         splashColor: Colors.purple.withOpacity(0.2),
@@ -95,9 +95,8 @@ class PresenceCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     IconTextInfo(
-                      iconPath: 'assets/icons/ic_duration.png',
-                      text: data.durasiMatkul,
-                    ),
+                        iconPath: 'assets/icons/ic_duration.png',
+                        text: "${data.durasiMatkul} JAM"),
                   ],
                 ),
               ),
@@ -154,7 +153,6 @@ class PresenceCard extends StatelessWidget {
                             onTap: () async {
                               final confirm =
                                   await showDeleteConfirmationDialog(context);
-
                               confirm == true
                                   ? _controller.deletePresence(
                                       data.presensisId.toString())

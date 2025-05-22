@@ -91,7 +91,8 @@ class _LectureScreenState extends State<LectureScreen>
     return Scaffold(
         backgroundColor: mainColor,
         body: Obx(() {
-          final filteredPerkuliahan = _controller.lectureList.where((perkuliahan) {
+          final filteredPerkuliahan =
+              _controller.lectureList.where((perkuliahan) {
             final query = _searchController.text.toLowerCase();
             return perkuliahan.namaMatkul.toLowerCase().contains(query);
           }).toList();
@@ -312,13 +313,17 @@ class _LectureScreenState extends State<LectureScreen>
                                           const EdgeInsets.only(bottom: 12),
                                       child: PerkuliahanCard(
                                         data: currentData,
-                                        onEdit: (String currentLink) {
+                                        onEdit: (String currentLink,
+                                            int presensisId) {
                                           showEditLinkDialog(
                                             context,
                                             currentLink,
                                             (String newLink) {
                                               // ✅ Tangani perubahan di sini
-                                              print("Link baru: $newLink");
+                                              _controller.submitUpdateLecture(
+                                                  presensisId,
+                                                  newLink,
+                                                  currentLink, currentData);
                                             },
                                           );
                                         },

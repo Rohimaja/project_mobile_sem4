@@ -58,8 +58,6 @@ class PresenceController extends GetxController {
 
     if (newAwal == awal && newAkhir == akhir) {
       Get.back();
-      Get.snackbar("Gagal", "Harus ada perbedaan jam",
-          duration: Duration(seconds: 1));
       return false;
     } else if (!isAfter(jamAkhir.value!, jamAwal.value!)) {
       Get.back();
@@ -82,8 +80,11 @@ class PresenceController extends GetxController {
           presensisId, awal, akhir);
       if (result.status == "success") {
         Get.back();
+        Get.back();
         String dosenId = _box.read("dosen_id").toString();
         fetchPresence(dosenId);
+        Get.snackbar("Berhasil", "Waktu presensi berhasil diperbarui",
+            duration: Duration(seconds: 1));
       } else {
         Get.back();
         Get.snackbar("Error", result.message, duration: Duration(seconds: 1));
@@ -104,6 +105,8 @@ class PresenceController extends GetxController {
         Get.back();
         String dosenId = _box.read("dosen_id").toString();
         fetchPresence(dosenId);
+        Get.snackbar("Berhasil", "Presensi berhasil dihapus",
+            duration: Duration(seconds: 1));
       } else {
         Get.back();
         Get.snackbar("Error", result.message, duration: Duration(seconds: 1));
