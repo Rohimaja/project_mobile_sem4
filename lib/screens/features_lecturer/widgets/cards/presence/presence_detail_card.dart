@@ -1,21 +1,21 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/models/lecturers/attendance_model.dart';
-import 'package:stipres/screens/features_lecturer/home/attendance/attendance_content_screen.dart';
-import 'package:stipres/screens/features_lecturer/models/presence/presence_detail_model.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_detail_controller.dart';
+import 'package:stipres/models/lecturers/list_detail_presence_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/detail_presence/presence_information.dart';
-import 'package:stipres/screens/features_lecturer/widgets/dialog/detail_presence/student_biodata_dialog.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/detail_presence/student_biodata_card.dart'; // pastikan path ini sesuai
 
 class PresenceDetailCard extends StatelessWidget {
-  final PresenceDetailModel mahasiswa;
+  final ListDetailPresensi mahasiswa;
 
-  const PresenceDetailCard({super.key, required this.mahasiswa});
+  PresenceDetailCard({super.key, required this.mahasiswa});
+
+  final _controller = Get.find<PresenceDetailController>();
 
   @override
   Widget build(BuildContext context) {
-    String iconPath = mahasiswa.jeniskelamin.toLowerCase() == "perempuan"
+    String iconPath = mahasiswa.jenisKelamin!.toLowerCase() == "perempuan"
         ? 'assets/icons/ic_mahasiswi2.png'
         : 'assets/icons/ic_mahasiswa2.png';
 
@@ -43,7 +43,7 @@ class PresenceDetailCard extends StatelessWidget {
                           width: 70,
                         ),
                         const SizedBox(height: 8),
-                        _buildModeChip(mahasiswa.keterangan),
+                        _buildModeChip(mahasiswa.keterangan!),
                       ],
                     ),
                     const SizedBox(width: 16),
@@ -54,7 +54,7 @@ class PresenceDetailCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              mahasiswa.nim,
+                              mahasiswa.nim!,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -63,7 +63,7 @@ class PresenceDetailCard extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              mahasiswa.nama,
+                              mahasiswa.nama!,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -91,7 +91,8 @@ class PresenceDetailCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await _controller.fetchBiodata(mahasiswa.nim!);
                     showDialog(
                       context: context,
                       builder: (context) => Dialog(
@@ -99,11 +100,12 @@ class PresenceDetailCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: StudentBiodataCard(
-                          nama: "Izzul Islam Ramadhan",
-                          nim: "E41231215",
-                          semester: "4",
-                          prodi: "Teknik Informatika",
-                          fotoAssetPath: "assets/images/foto_izzul.jpg",
+                          nama: _controller.biodata.value!.nama!,
+                          nim: _controller.biodata.value!.nim!,
+                          semester:
+                              _controller.biodata.value!.semester.toString(),
+                          prodi: _controller.biodata.value!.namaProdi!,
+                          fotoAssetPath: _controller.biodata.value!.foto,
                         ),
                       ),
                     );
@@ -131,7 +133,8 @@ class PresenceDetailCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await _controller.fetchDetailMahasiswa(mahasiswa.nim!);
                     showDialog(
                       context: context,
                       builder: (context) => Dialog(
@@ -139,11 +142,11 @@ class PresenceDetailCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: PresenceInformationCard(
-                          waktuPresensi: "09.45 WIB",
-                          keterangan: "sakit",
-                          alasan:
-                              "Saya tidak dapat menghadiri perkuliahan pada hari dan tanggal tersebut dikarenakan kondisi kesehatan saya yang menurun secara signifikan. Sejak malam sebelumnya, saya mulai merasakan gejala seperti demam tinggi, sakit kepala hebat, badan pegal-pegal, serta mual yang berkelanjutan. Setelah berkonsultasi dengan orang tua, saya segera dibawa ke klinik terdekat untuk diperiksa oleh tenaga medis. Berdasarkan hasil pemeriksaan, saya didiagnosis mengalami infeksi saluran pernapasan akut (ISPA) dan disarankan untuk beristirahat total selama beberapa hari ke depan agar tidak terjadi komplikasi lebih lanjut serta demi mencegah penularan kepada teman-teman di lingkungan kampus. Saya memahami pentingnya kehadiran dalam kegiatan perkuliahan, namun dalam kondisi ini saya memprioritaskan pemulihan agar dapat kembali mengikuti kegiatan akademik dengan optimal. Selama masa istirahat, saya tetap berusaha mengikuti materi yang diberikan melalui LMS dan catatan teman-teman. Saya juga bersedia menerima tugas tambahan jika diperlukan sebagai bentuk tanggung jawab saya. Demikian alasan ini saya buat dengan sebenar-benarnya dan saya mohon pengertiannya.",
-                          buktiFilePath: "assets/images/bgHalaman.png",
+                          waktuPresensi:
+                              _controller.detail.value!.waktu.toString(),
+                          keterangan: _controller.detail.value!.keterangan,
+                          alasan: _controller.detail.value!.alasan,
+                          buktiFilePath: _controller.detail.value!.bukti,
                         ),
                       ),
                     );

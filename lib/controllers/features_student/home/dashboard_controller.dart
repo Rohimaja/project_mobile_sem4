@@ -9,7 +9,7 @@ class DashboardController extends GetxController {
   final storedName = ''.obs;
   final storedNim = ''.obs;
   var storedProfile = ''.obs;
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   final _box = GetStorage();
   final statusOffline = false.obs;
@@ -83,6 +83,4 @@ class DashboardController extends GetxController {
       Get.toNamed("/student/offline-screen");
     }
   }
-
-  
 }

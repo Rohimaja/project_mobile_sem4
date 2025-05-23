@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_detail_controller.dart';
 
 class PresenceInformationCard extends StatelessWidget {
-  final String waktuPresensi;
-  final String keterangan;
-  final String alasan;
+  final String? waktuPresensi;
+  final String? keterangan;
+  final String? alasan;
   final String? buktiFilePath;
 
-  const PresenceInformationCard({
+  PresenceInformationCard({
     super.key,
     required this.waktuPresensi,
     required this.keterangan,
     required this.alasan,
     this.buktiFilePath,
   });
+
+  final _controller = Get.find<PresenceDetailController>();
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +73,11 @@ class PresenceInformationCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildRowInfo('Waktu Presensi', waktuPresensi),
+                        _buildRowInfo('Waktu Presensi', waktuPresensi ?? '-'),
                         const SizedBox(height: 12),
-                        _buildRowInfo('Keterangan', keterangan),
+                        _buildRowInfo('Keterangan', keterangan ?? '-'),
                         const SizedBox(height: 12),
-                        _buildRowInfo('Alasan', alasan),
+                        _buildRowInfo('Alasan', alasan ?? '-'),
                         SizedBox(
                           height: 16,
                         ),
@@ -109,7 +113,7 @@ class PresenceInformationCard extends StatelessWidget {
                                           0.25,
                                       child: InkWell(
                                         onTap: () {
-                                          // TODO: tambahkan aksi buka file
+                                          _controller.openBukti(buktiFilePath!);
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(

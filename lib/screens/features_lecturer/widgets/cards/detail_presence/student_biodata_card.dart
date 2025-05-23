@@ -6,7 +6,7 @@ class StudentBiodataCard extends StatelessWidget {
   final String nim;
   final String semester;
   final String prodi;
-  final String fotoAssetPath;
+  final String? fotoAssetPath;
 
   const StudentBiodataCard({
     super.key,
@@ -75,7 +75,17 @@ class StudentBiodataCard extends StatelessWidget {
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
                   radius: 46,
-                  backgroundImage: AssetImage(fotoAssetPath),
+                  backgroundImage: fotoAssetPath == null
+                      ? const AssetImage("assets/icons/ic_profile.jpeg")
+                      : FadeInImage.assetNetwork(
+                          placeholder: "assets/icons/ic_profile.jpeg",
+                          image: fotoAssetPath!,
+                          fit: BoxFit.cover,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset("assets/icons/ic_profile.jpeg",
+                                fit: BoxFit.cover);
+                          },
+                        ).image,
                 ),
               ),
             ),

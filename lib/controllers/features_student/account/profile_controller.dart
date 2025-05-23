@@ -11,7 +11,7 @@ class ProfileController extends GetxController {
   final storedNamaProdi = ''.obs;
   var storedProfile = ''.obs;
 
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   final _box = GetStorage();
 

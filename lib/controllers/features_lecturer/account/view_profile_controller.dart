@@ -32,7 +32,7 @@ class ViewProfileController extends GetxController {
   final ImagePicker pickedImage = ImagePicker();
   final profilePic = Rxn<File>();
   var storedProfiles = ''.obs;
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   final conDashboard = Get.find<DashboardController>();
   final conProfile = Get.find<ProfileController>();

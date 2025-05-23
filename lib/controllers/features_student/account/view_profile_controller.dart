@@ -27,7 +27,7 @@ class StudentViewProfileController extends GetxController {
   final storedProdi = ''.obs;
   final storedNoTelp = ''.obs;
   var storedProfile = ''.obs;
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   static const int maxSizeInBytes = 2 * 1024 * 1024;
 

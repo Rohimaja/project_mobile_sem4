@@ -16,7 +16,7 @@ class DashboardController extends GetxController {
   var jadwalList = <JadwalModelApi>[].obs;
   var errorMessage = ''.obs;
 
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   final DashboardLecturerService dashboardLecturerService =
       DashboardLecturerService();

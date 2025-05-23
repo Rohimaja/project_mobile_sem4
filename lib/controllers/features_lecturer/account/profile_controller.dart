@@ -9,7 +9,7 @@ class ProfileController extends GetxController {
   final storedEmail = ''.obs;
   var storedProfile = ''.obs;
 
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   final _box = GetStorage();
   final log = Logger();

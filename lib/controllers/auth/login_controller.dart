@@ -70,7 +70,6 @@ class LoginController extends GetxController {
 
       if (result != null) {
         dosen.value = result;
-        Get.snackbar("Berhasil", "Login berhasil sebagai ${result.nama}");
         _box.write("logged", true);
         _box.write("role", "dosen");
         Get.offAllNamed("/lecturer/base-screen");
@@ -85,7 +84,6 @@ class LoginController extends GetxController {
 
       if (result != null) {
         mahasiswa.value = result;
-        Get.snackbar("Berhasil", 'Login berhasil sebagai ${result.nama}');
         log.d("nama log ${_box.read("user_name")}");
         _box.write("logged", true);
         _box.write("role", "mahasiswa");

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/presences/presence_detail_controller.dart';
-import 'package:stipres/screens/features_lecturer/models/presence/presence_detail_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/presence/presence_detail_card.dart';
 import 'package:stipres/constants/styles.dart';
 
@@ -21,48 +20,6 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
   final _controller = Get.find<PresenceDetailController>();
-
-  final List<PresenceDetailModel> dummyPresenceDetailModel = [
-    PresenceDetailModel(
-      nim: 'E41231215',
-      nama: 'Izzul Islam Ramadhan',
-      keterangan: 'hadir',
-      jeniskelamin: 'laki-laki',
-    ),
-    PresenceDetailModel(
-      nim: 'E41231299',
-      nama: 'Citra Rahayu Meigita N.',
-      keterangan: 'izin',
-      jeniskelamin: 'perempuan',
-    ),
-    PresenceDetailModel(
-      nim: 'E41231099',
-      nama: 'Bimaa Achmad Fiil Ardhi',
-      keterangan: 'hadir',
-      jeniskelamin: 'laki-laki',
-    ),
-    PresenceDetailModel(
-      nim: 'E41231275',
-      nama: 'Edwin Kurniawan',
-      keterangan: 'hadir',
-      jeniskelamin: 'laki-laki',
-    ),
-    PresenceDetailModel(
-      nim: 'E41231324',
-      nama: 'Muhammad Diega Syahputra',
-      keterangan: 'sakit',
-      jeniskelamin: 'laki-laki',
-    ),
-    PresenceDetailModel(
-      nim: 'E41231222',
-      nama: 'Aldo Gaming',
-      keterangan: 'alpa',
-      jeniskelamin: 'laki-laki',
-    ),
-  ];
-
-  String? selectedSemester;
-  String? selectedProdi;
 
   @override
   void initState() {
@@ -97,11 +54,11 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
     return Scaffold(
         backgroundColor: mainColor,
         body: Obx(() {
-          final filteredMahasiswa = dummyPresenceDetailModel.where((nama) {
+          final filteredMahasiswa = _controller.studentList.where((nama) {
             final query = _searchController.text.toLowerCase();
-            return nama.nama.toLowerCase().contains(query) ||
-                nama.nim.toLowerCase().contains(query) ||
-                nama.keterangan.toLowerCase().contains(query);
+            return nama.nama!.toLowerCase().contains(query) ||
+                nama.nim!.toLowerCase().contains(query) ||
+                nama.keterangan!.toLowerCase().contains(query);
           }).toList();
           return SafeArea(
             child: Stack(
@@ -430,7 +387,8 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 3),
                                         child: PresenceDetailCard(
-                                          mahasiswa: filteredMahasiswa[index],
+                                          mahasiswa:
+                                              _controller.studentList[index],
                                         ),
                                       );
                                     },
