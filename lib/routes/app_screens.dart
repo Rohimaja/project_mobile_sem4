@@ -10,6 +10,7 @@ import 'package:stipres/bindings/features_lecturer/lecture_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_detail_binding.dart';
 import 'package:stipres/bindings/features_lecturer/view_profile_binding.dart';
+import 'package:stipres/bindings/features_student/all_schedule_binding.dart';
 import 'package:stipres/bindings/features_student/attendance_binding.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart' as student;
 import 'package:stipres/bindings/features_lecturer/base_binding.dart';
@@ -122,7 +123,8 @@ class AppScreens {
       name: "/lecturer/calendar-screen",
       page: () => lecturer.CalendarScreen(),
     ),
-        GetPage(name: "/lecturer/offline-screen", page: () => LecturerOfflineScreen()),
+    GetPage(
+        name: "/lecturer/offline-screen", page: () => LecturerOfflineScreen()),
     GetPage(
         name: "/lecturer/lecture-screen",
         page: () => lecturer.LectureScreen(),
@@ -166,7 +168,9 @@ class AppScreens {
         page: () => LectureScreen(),
         binding: LectureBinding()),
     GetPage(
-        name: "/student/all-schedule-screen", page: () => AllScheduleScreen()),
+        name: "/student/all-schedule-screen",
+        page: () => AllScheduleScreen(),
+        binding: StudentAllScheduleBinding()),
     GetPage(
         name: "/student/view-profile-screen",
         page: () => student.ViewProfilePage(),
