@@ -100,12 +100,13 @@ class PresenceDetailCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: StudentBiodataCard(
-                          nama: _controller.biodata.value!.nama!,
-                          nim: _controller.biodata.value!.nim!,
+                          nama: _controller.biodata.value?.nama ?? "-",
+                          nim: _controller.biodata.value?.nim ?? "-",
                           semester:
-                              _controller.biodata.value!.semester.toString(),
-                          prodi: _controller.biodata.value!.namaProdi!,
-                          fotoAssetPath: _controller.biodata.value!.foto,
+                              _controller.biodata.value?.semester.toString() ??
+                                  "-",
+                          prodi: _controller.biodata.value?.namaProdi ?? "-",
+                          fotoAssetPath: _controller.biodata.value?.foto,
                         ),
                       ),
                     );
@@ -142,11 +143,11 @@ class PresenceDetailCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: PresenceInformationCard(
-                          waktuPresensi:
-                              _controller.detail.value!.waktu.toString(),
-                          keterangan: _controller.detail.value!.keterangan,
-                          alasan: _controller.detail.value!.alasan,
-                          buktiFilePath: _controller.detail.value!.bukti,
+                          waktuPresensi: _controller.detail.value?.waktu ?? '-',
+                          keterangan:
+                              _controller.detail.value?.keterangan ?? '-',
+                          alasan: _controller.detail.value?.alasan ?? '-',
+                          buktiFilePath: _controller.detail.value?.bukti ?? '-',
                         ),
                       ),
                     );

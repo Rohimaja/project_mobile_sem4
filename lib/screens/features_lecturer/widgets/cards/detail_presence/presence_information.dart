@@ -109,43 +109,52 @@ class PresenceInformationCard extends StatelessWidget {
                                 ? Align(
                                     alignment: Alignment.centerLeft,
                                     child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.25,
-                                      child: InkWell(
-                                        onTap: () {
-                                          _controller.openBukti(buktiFilePath!);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 6),
-                                          decoration: BoxDecoration(
-                                            color: blueColor,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                'assets/icons/ic_document.png',
-                                                height: 15,
-                                                width: 15,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        child: Obx(() {
+                                          return InkWell(
+                                            onTap: (!_controller
+                                                    .isButtonEnabled.value)
+                                                ? null
+                                                : () {
+                                                    _controller.openBukti(
+                                                        buktiFilePath!);
+                                                  },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 6),
+                                              decoration: BoxDecoration(
+                                                color: blueColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                "Lihat Bukti",
-                                                style: TextStyle(
-                                                  color: whiteColor,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/ic_document.png',
+                                                    height: 15,
+                                                    width: 15,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    "Lihat Bukti",
+                                                    style: TextStyle(
+                                                      color: whiteColor,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                            ),
+                                          );
+                                        })),
                                   )
                                 : Text(
                                     "-",
