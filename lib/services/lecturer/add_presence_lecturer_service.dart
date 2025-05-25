@@ -9,7 +9,7 @@ import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
-import 'package:stipres/models/lecturers/presence_requrest_model.dart';
+import 'package:stipres/models/lecturers/presence_request_model.dart';
 
 class AddPresenceLecturerService extends GetxService {
   final String _baseUrl =
@@ -84,7 +84,7 @@ class AddPresenceLecturerService extends GetxService {
     }
   }
 
-  Future<BasicResponse> uploadPresensi(PresensiRequest presensiRequest) async {
+  Future<BasicResponse> uploadPresensi(PresenceRequest presensiRequest) async {
     try {
       const action = 'uploadPresensi';
       final url = Uri.parse("$_baseUrl?action=$action");

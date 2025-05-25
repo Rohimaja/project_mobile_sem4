@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/all_schedule_controller.dart';
 import 'package:stipres/models/lecturers/all_schedule_model.dart';
-import 'package:stipres/screens/features_lecturer/models/allSchedule_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/allSchedule_card.dart';
 import 'package:stipres/constants/styles.dart';
 

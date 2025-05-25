@@ -305,11 +305,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                       onTapDown: (_) => setState(() => _isPressed = true),
                       onTapUp: (_) {
                         setState(() => _isPressed = false);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AddPresenceScreen()),
-                        );
+                        Get.toNamed("/lecturer/add-presence-screen");
                       },
                       onTapCancel: () => setState(() => _isPressed = false),
                       child: AnimatedScale(

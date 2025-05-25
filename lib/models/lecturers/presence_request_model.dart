@@ -1,4 +1,4 @@
-class PresensiRequest {
+class PresenceRequest {
   final String presensiId;
   final String tglPresensi;
   final String jamAwal;
@@ -10,7 +10,7 @@ class PresensiRequest {
   final int tahunAjaranId;
   final String linkZoom;
 
-  PresensiRequest({
+  PresenceRequest({
     required this.presensiId,
     required this.tglPresensi,
     required this.jamAwal,
@@ -22,7 +22,7 @@ class PresensiRequest {
     required this.tahunAjaranId,
     required this.linkZoom,
   });
-  
+
   Map<String, dynamic> toJson() {
     return {
       'presensi_id': presensiId,

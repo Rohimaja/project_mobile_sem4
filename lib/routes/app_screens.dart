@@ -5,6 +5,7 @@ import 'package:stipres/bindings/auth/activation_step3_binding.dart';
 import 'package:stipres/bindings/auth/forget_password_step1_binding.dart';
 import 'package:stipres/bindings/auth/forget_password_step2_binding.dart';
 import 'package:stipres/bindings/auth/forget_password_step3_binding.dart';
+import 'package:stipres/bindings/features_lecturer/add_presence_binding.dart';
 import 'package:stipres/bindings/features_lecturer/all_schedule_binding.dart';
 import 'package:stipres/bindings/features_lecturer/attendance_binding.dart';
 import 'package:stipres/bindings/features_lecturer/lecture_binding.dart';
@@ -37,6 +38,7 @@ import 'package:stipres/screens/features_lecturer/account/view_profile.dart';
 import 'package:stipres/screens/features_lecturer/home/all_schedule_screen.dart'
     as lecturer;
 import 'package:stipres/screens/features_lecturer/home/offline_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/presence/add_presence_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/presence_detail_screen.dart';
 import 'package:stipres/screens/features_student/account/alamat_email.dart'
     as student;
@@ -116,6 +118,10 @@ class AppScreens {
         name: "/lecturer/presence-screen",
         page: () => lecturer.PresenceScreen(),
         binding: LecturerPresenceBinding()),
+    GetPage(
+        name: "/lecturer/add-presence-screen",
+        page: () => AddPresenceScreen(),
+        binding: AddPresenceBinding()),
     GetPage(
         name: "/lecturer/all-schedule-screen",
         page: () => lecturer.AllScheduleScreen(),
