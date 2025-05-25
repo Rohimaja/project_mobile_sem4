@@ -23,7 +23,8 @@ class PresenceCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
-          Get.toNamed("/lecturer/presence-detail-screen", arguments: data.presensisId);
+          Get.toNamed("/lecturer/presence-detail-screen",
+              arguments: data.presensisId);
         },
         borderRadius: BorderRadius.circular(12),
         splashColor: Colors.purple.withOpacity(0.2),
@@ -96,7 +97,7 @@ class PresenceCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     IconTextInfo(
                         iconPath: 'assets/icons/ic_duration.png',
-                        text: "${data.durasiMatkul} JAM"),
+                        text: "${data.durasiMatkul} Jam"),
                   ],
                 ),
               ),

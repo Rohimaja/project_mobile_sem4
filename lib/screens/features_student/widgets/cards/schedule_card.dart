@@ -140,12 +140,11 @@ class JadwalCard extends StatelessWidget {
                                               insetPadding:
                                                   const EdgeInsets.all(20),
                                               child: CourseDetailCard(
-                                                namaMatkul: "Pemrograman Dasar",
-                                                idMatkul: "TIF3333",
-                                                tanggal: "Rabu, 23 April 2025",
-                                                jam: "07.00–09.00 WIB",
-                                                dosen:
-                                                    "Aldo Rayhan Radittyanuh S.Kom, M.Kom",
+                                                namaMatkul: jadwal.mataKuliah,
+                                                idMatkul: jadwal.kodeMatkul!,
+                                                tanggal: jadwal.tglPresensi!,
+                                                jam: jadwal.waktu,
+                                                dosen: jadwal.namaDosen!,
                                               ),
                                             ),
                                           ),

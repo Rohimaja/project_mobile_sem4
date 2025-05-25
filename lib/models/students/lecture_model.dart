@@ -23,7 +23,7 @@ class LectureModelApi {
       presensisId: json["presensis_id"],
       semester: json["semester"],
       durasiPresensi: json["durasi_presensi"],
-      namaDosen: json["nama_dosen"] ?? "",
+      namaDosen: json["nama_dosen"],
       linkZoom: json["link_zoom"],
       tglPresensi: json["tgl_presensi"],
     );

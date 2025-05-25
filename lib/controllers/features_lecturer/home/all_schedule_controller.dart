@@ -1,32 +1,33 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/models/students/all_schedule_model.dart';
-import 'package:stipres/services/student/all_schedules_service.dart';
+import 'package:stipres/models/lecturers/all_schedule_model.dart';
+import 'package:stipres/services/lecturer/all_schedules_service.dart';
 
-class AllScheduleController extends GetxController {
+class LecturerAllScheduleController extends GetxController {
   final _box = GetStorage();
   Logger log = Logger();
 
   final errorMessage = ''.obs;
 
-  var scheduleList = <AllScheduleModelApi>[].obs;
-  final AllSchedulesService allSchedulesService = AllSchedulesService();
+  var scheduleList = <LecturerAllScheduleModel>[].obs;
+  final LecturerAllSchedulesService lecturerAllSchedulesService =
+      LecturerAllSchedulesService();
 
   @override
   void onInit() {
     super.onInit();
-    final mahasiswaId = _box.read("mahasiswa_id");
-    fetchAllSchedule(mahasiswaId.toString());
+    final dosenId = _box.read("dosen_id");
+    fetchAllSchedule(dosenId.toString());
   }
 
-  void fetchAllSchedule(String mahasiswaId) async {
+  void fetchAllSchedule(String dosenId) async {
     try {
-      log.d("Check mahasiswa Id: $mahasiswaId");
-      final result = await allSchedulesService.fetchSchedule(mahasiswaId);
+      log.d("Check dosen Id: $dosenId");
+      final result = await lecturerAllSchedulesService.fetchSchedule(dosenId);
 
       if (result.status == "success" && result.data != null) {
-        final List<AllScheduleModelApi> updatedList =
+        final List<LecturerAllScheduleModel> updatedList =
             result.data!.map((schedule) {
           schedule.durasiPerkuliahan = formatDurasiPerkuliahan(
               schedule.jam!, int.parse(schedule.durasi!));
@@ -41,7 +42,7 @@ class AllScheduleController extends GetxController {
     }
   }
 
-  String formatDurasiPerkuliahan(String jamMulaiStr, int durasiJam) {
+    String formatDurasiPerkuliahan(String jamMulaiStr, int durasiJam) {
     final bagianJam = jamMulaiStr.split(":");
     final jam = int.parse(bagianJam[0]);
     final menit = int.parse(bagianJam[1]);

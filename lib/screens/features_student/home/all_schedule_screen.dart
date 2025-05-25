@@ -22,51 +22,6 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
   final TextEditingController _searchController = TextEditingController();
   final _controller = Get.find<AllScheduleController>();
 
-  // final List<AllScheduleModel> JadwalSemester = [
-  //   AllScheduleModel(
-  //     day: 'Senin',
-  //     waktu: '08:00 - 10:00',
-  //     mataKuliah: 'Matematika Dasar',
-  //     lokasi: 'Ruang 101',
-  //     durasi: '2 Jam',
-  //   ),
-  //   AllScheduleModel(
-  //     day: 'Senin',
-  //     waktu: '08:00 - 10:00',
-  //     mataKuliah: 'Logika Algoritma',
-  //     lokasi: 'Ruang 101',
-  //     durasi: '2 Jam',
-  //   ),
-  //   AllScheduleModel(
-  //     day: 'Selasa',
-  //     waktu: '08:00 - 10:00',
-  //     mataKuliah: 'Pemrograman Dasar',
-  //     lokasi: 'Ruang 101',
-  //     durasi: '2 Jam',
-  //   ),
-  //   AllScheduleModel(
-  //     day: 'Rabu',
-  //     waktu: '08:00 - 10:00',
-  //     mataKuliah: 'Basis Data',
-  //     lokasi: 'Ruang 101',
-  //     durasi: '2 Jam',
-  //   ),
-  //   AllScheduleModel(
-  //     day: 'Jumat',
-  //     waktu: '08:00 - 10:00',
-  //     mataKuliah: 'Kewirausahaan',
-  //     lokasi: 'Ruang 101',
-  //     durasi: '2 Jam',
-  //   ),
-  //   AllScheduleModel(
-  //     day: 'Jumat',
-  //     waktu: '08:00 - 10:00',
-  //     mataKuliah: 'Agama',
-  //     lokasi: 'Ruang 101',
-  //     durasi: '2 Jam',
-  //   ),
-  // ];
-
   @override
   void initState() {
     super.initState();

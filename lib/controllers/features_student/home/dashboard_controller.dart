@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/constants/api.dart';
 import 'package:stipres/models/jadwal_model.dart';
@@ -44,6 +45,18 @@ class DashboardController extends GetxController {
     log.d("Profile: ${storedProfile.value}");
   }
 
+  String formatTanggal(String tanggal) {
+    try {
+      DateTime date = DateFormat('yyyy-MM-dd').parse(tanggal);
+
+      return DateFormat('EEEE, d MMMM yyyy', 'id_ID').format(date);
+    } catch (e) {
+      log.d("Error: $e");
+      Get.snackbar("Error", "Terjadi error: $e");
+      return tanggal;
+    }
+  }
+
   Future<void> fetchJadwal() async {
     int mahasiswaId = _box.read("mahasiswa_id");
     log.d(mahasiswaId);
@@ -63,6 +76,8 @@ class DashboardController extends GetxController {
           statusOffline.value = true;
           jadwal.keterangan = "Luring";
         }
+
+        jadwal.tglPresensi = formatTanggal(jadwal.tglPresensi!);
 
         log.d("Status offline: ${statusOffline.value}");
 
