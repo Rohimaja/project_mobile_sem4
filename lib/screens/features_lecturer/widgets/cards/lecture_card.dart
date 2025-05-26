@@ -17,7 +17,6 @@ class PerkuliahanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Color(0xFFC0EFC9),

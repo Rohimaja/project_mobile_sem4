@@ -24,11 +24,10 @@ class ViewProfilePage extends StatelessWidget {
           ],
         ),
         Positioned(
-          top: 110, // atur posisi agar setengah berada di header
-          left: 0,
-          right: 0,
-          child: _buildProfilePicture(),
-        ),
+            top: 110, // atur posisi agar setengah berada di header
+            left: 0,
+            right: 0,
+            child: _buildProfilePicture())
       ]),
     );
   }

@@ -80,84 +80,95 @@ class PresenceDetailCard extends StatelessWidget {
               ),
               // Tombol Biodata
               Positioned(
-                top: 8,
-                right: 112,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF6D0082),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  ),
-                  onPressed: () async {
-                    await _controller.fetchBiodata(mahasiswa.nim!);
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
+                  top: 8,
+                  right: 90,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF6D0082),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: StudentBiodataCard(
-                          nama: _controller.biodata.value?.nama ?? "-",
-                          nim: _controller.biodata.value?.nim ?? "-",
-                          semester:
-                              _controller.biodata.value?.semester.toString() ??
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
+                        minimumSize: Size(0, 32),
+                      ),
+                      onPressed: () async {
+                        await _controller.fetchBiodata(mahasiswa.nim!);
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: StudentBiodataCard(
+                              nama: _controller.biodata.value?.nama ?? "-",
+                              nim: _controller.biodata.value?.nim ?? "-",
+                              semester: _controller.biodata.value?.semester
+                                      .toString() ??
                                   "-",
-                          prodi: _controller.biodata.value?.namaProdi ?? "-",
-                          fotoAssetPath: _controller.biodata.value?.foto,
+                              prodi:
+                                  _controller.biodata.value?.namaProdi ?? "-",
+                              fotoAssetPath:
+                                  _controller.biodata.value?.foto ?? "",
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Biodata',
+                        style: GoogleFonts.plusJakartaSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
                         ),
                       ),
-                    );
-                  },
-                  child: Text(
-                    'Biodata',
-                    style: GoogleFonts.plusJakartaSans(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
                     ),
-                  ),
-                ),
-              ),
+                  )),
 
               Positioned(
                 top: 8,
                 right: 8,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF6D0082),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  ),
-                  onPressed: () async {
-                    await _controller.fetchDetailMahasiswa(mahasiswa.nim!);
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: PresenceInformationCard(
-                          waktuPresensi: _controller.detail.value?.waktu ?? '-',
-                          keterangan:
-                              _controller.detail.value?.keterangan ?? '-',
-                          alasan: _controller.detail.value?.alasan ?? '-',
-                          buktiFilePath: _controller.detail.value?.bukti ?? '-',
-                        ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF6D0082),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    );
-                  },
-                  child: Text(
-                    'Lihat Detail',
-                    style: GoogleFonts.plusJakartaSans(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      minimumSize: Size(0, 32),
+                    ),
+                    onPressed: () async {
+                      await _controller.fetchDetailMahasiswa(mahasiswa.nim!);
+                      showDialog(
+                        context: context,
+                        builder: (context) => Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: PresenceInformationCard(
+                            waktuPresensi:
+                                _controller.detail.value?.waktu ?? '-',
+                            keterangan:
+                                _controller.detail.value?.keterangan ?? '-',
+                            alasan: _controller.detail.value?.alasan ?? '-',
+                            buktiFilePath:
+                                _controller.detail.value?.bukti ?? '',
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Lihat Detail',
+                      style: GoogleFonts.plusJakartaSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10),
+                    ),
                   ),
                 ),
               ),

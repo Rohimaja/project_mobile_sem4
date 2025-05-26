@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
 
 class SidikJari extends StatefulWidget {
   SidikJari({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _SidikJariState extends State<SidikJari> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomHeader(title: "Login dengan Sidik Jari"),
+            CustomHeader(title: "Sidik Jari"),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
               child: Column(

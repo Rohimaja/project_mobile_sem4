@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
-	    <key>NSCameraUsageDescription</key>
-	    <string>App ini membutuhkan akses ke kamera untuk dapat mengambil foto.</string>
-	    <key>NSPhotoLibraryUsageDescription</key>
-	    <string>App ini membutuhkan akses ke galeri untuk dapat mengambil gambar.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>App ini membutuhkan akses ke kamera untuk dapat mengambil foto.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>App ini membutuhkan akses ke galeri untuk dapat mengambil gambar.</string>
 		<key>NSFaceIDUsageDescription</key>
 		<string>We use Face ID to protect your data</string>
 		<key>CFBundleDevelopmentRegion</key>

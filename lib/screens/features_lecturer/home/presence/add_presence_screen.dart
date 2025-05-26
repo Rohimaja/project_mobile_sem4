@@ -152,7 +152,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(2020),
-                lastDate: DateTime(2030),
+                lastDate: DateTime(2035),
               );
               if (picked != null) _controller.selectedDate.value = picked;
             },
@@ -452,29 +452,31 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                               ),
                               const SizedBox(height: 30),
                               SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  onPressed: (_controller.isEnabled.value)
-                                      ? _controller.submitPresence
-                                      : null,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: blueColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
-                                  ),
-                                  child: Text(
-                                    'Submit',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                  width: double.infinity,
+                                  child: Obx(() {
+                                    return ElevatedButton(
+                                      onPressed: (_controller.isEnabled.value)
+                                          ? _controller.submitPresence
+                                          : null,
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: blueColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12),
+                                      ),
+                                      child: Text(
+                                        'Submit',
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  })),
                             ],
                           ),
                         ),

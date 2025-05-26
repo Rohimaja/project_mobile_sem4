@@ -25,15 +25,16 @@ class PresenceRequest {
 
   Map<String, dynamic> toJson() {
     return {
+      'action': "uploadPresensi",
       'presensi_id': presensiId,
       'tgl_presensi': tglPresensi,
       'jam_awal': jamAwal,
       'jam_akhir': jamAkhir,
-      'dosen_id': dosenId,
-      'prodi_id': prodiId,
-      'semester': semester,
-      'matkul_id': matkulId,
-      'tahun_ajaran_id': tahunAjaranId,
+      'dosen_id': dosenId.toString(),
+      'prodi_id': prodiId.toString(),
+      'semester': semester.toString(),
+      'matkul_id': matkulId.toString(),
+      'tahun_ajaran_id': tahunAjaranId.toString(),
       'link_zoom': linkZoom,
     };
   }

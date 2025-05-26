@@ -60,347 +60,343 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                 nama.nim!.toLowerCase().contains(query) ||
                 nama.keterangan!.toLowerCase().contains(query);
           }).toList();
-          return SafeArea(
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        // HEADER (tidak berubah)
-                        Container(
-                          width: width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: blueColor,
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                            ),
-                            image: const DecorationImage(
-                              image: AssetImage('assets/images/bgheader.png'),
-                              fit: BoxFit.cover,
-                            ),
+          return Stack(
+            children: [
+              Column(
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        width: width,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          color: blueColor,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 23),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Material(
-                                color: Colors.transparent,
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/bgheader.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                borderRadius: BorderRadius.circular(100),
+                                customBorder: const CircleBorder(),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    'assets/icons/ic_back.png',
+                                    height: 18,
+                                    width: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 300),
+                                child: _isSearching
+                                    ? FadeTransition(
+                                        opacity: _animation,
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: SizedBox(
+                                            width: width * 0.65,
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(0.9),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: TextField(
+                                                controller: _searchController,
+                                                style: const TextStyle(
+                                                    color: Colors.black),
+                                                decoration: InputDecoration(
+                                                  hintText:
+                                                      'Cari data mahasiswa...',
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.grey[600]),
+                                                  border: InputBorder.none,
+                                                ),
+                                                autofocus: true,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Presensi Mata Kuliah",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                              ),
+                            ),
+                            Material(
+                              color: Colors.transparent,
+                              shape: const CircleBorder(),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  shape: BoxShape.circle,
+                                ),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pop(context);
+                                    setState(() {
+                                      _isSearching = !_isSearching;
+                                      if (_isSearching) {
+                                        _animationController.forward();
+                                      } else {
+                                        _animationController.reverse();
+                                        _searchController.clear();
+                                      }
+                                    });
                                   },
-                                  borderRadius: BorderRadius.circular(100),
                                   customBorder: const CircleBorder(),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(6.0),
                                     child: Image.asset(
-                                      'assets/icons/ic_back.png',
+                                      'assets/icons/ic_search.png',
                                       height: 18,
                                       width: 18,
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 300),
-                                  child: _isSearching
-                                      ? FadeTransition(
-                                          opacity: _animation,
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: SizedBox(
-                                              width: width * 0.70,
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white
-                                                      .withOpacity(0.9),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: TextField(
-                                                  controller: _searchController,
-                                                  style: const TextStyle(
-                                                      color: Colors.black),
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Cari data mahasiswa...',
-                                                    hintStyle: TextStyle(
-                                                        color:
-                                                            Colors.grey[600]),
-                                                    border: InputBorder.none,
-                                                  ),
-                                                  autofocus: true,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Presensi Mata Kuliah",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.white,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Corner Bottom-Right U Shape
+                      Positioned(
+                        bottom: -44,
+                        right: 0,
+                        child: Container(
+                          width: 40,
+                          height: 44,
+                          color: blueColor,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: -45,
+                        right: 0,
+                        child: Container(
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: mainColor,
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(40),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // Body Konten
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Detail Presensi Mahasiswa',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                  color: blueColor,
                                 ),
                               ),
-                              Material(
-                                color: Colors.transparent,
-                                shape: const CircleBorder(),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                    color: whiteColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        _isSearching = !_isSearching;
-                                        if (_isSearching) {
-                                          _animationController.forward();
-                                        } else {
-                                          _animationController.reverse();
-                                          _searchController.clear();
-                                        }
-                                      });
-                                    },
-                                    customBorder: const CircleBorder(),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: Image.asset(
-                                        'assets/icons/ic_search.png',
-                                        height: 18,
-                                        width: 18,
+                              SizedBox(height: 12),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100, // Set the desired width
+                                    child: Text(
+                                      'Program Studi',
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
-                                ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    ':',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    _controller.storedProdi.value,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100, // Set the desired width
+                                    child: Text(
+                                      'Mata Kuliah',
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    ':',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    _controller.storedMatkul.value,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100, // Set the desired width
+                                    child: Text(
+                                      'Jam Presensi',
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    ':',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    "${_controller.storedDurasiPresensi.value} WIB",
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              const Divider(
+                                  height: 1, color: Color(0xFFDADADA)),
                             ],
                           ),
                         ),
-
-                        // Corner Bottom-Right U Shape
-                        Positioned(
-                          bottom: -44,
-                          right: 0,
-                          child: Container(
-                            width: 40,
-                            height: 44,
-                            color: blueColor,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -45,
-                          right: 0,
-                          child: Container(
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              color: mainColor,
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(40),
-                              ),
-                            ),
-                          ),
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: filteredMahasiswa.isEmpty
+                              ? Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.only(top: 30),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/ic_noData.png',
+                                        height: 120,
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        _searchController.text.isEmpty
+                                            ? "Tidak ada data mahasiswa"
+                                            : "Data mahasiswa tidak ditemukan",
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontStyle: FontStyle.italic,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(height: 150),
+                                    ],
+                                  ),
+                                )
+                              : ListView.builder(
+                                  itemCount: filteredMahasiswa.length,
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.only(top: 0),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 3),
+                                      child: PresenceDetailCard(
+                                        mahasiswa:
+                                            _controller.studentList[index],
+                                      ),
+                                    );
+                                  },
+                                ),
                         ),
                       ],
                     ),
-
-                    // Body Konten
-                    Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Detail Presensi Mahasiswa',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                    color: blueColor,
-                                  ),
-                                ),
-                                SizedBox(height: 12),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 100, // Set the desired width
-                                      child: Text(
-                                        'Program Studi',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      ':',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      _controller.storedProdi.value,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 100, // Set the desired width
-                                      child: Text(
-                                        'Mata Kuliah',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      ':',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      _controller.storedMatkul.value,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 100, // Set the desired width
-                                      child: Text(
-                                        'Jam Presensi',
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      ':',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "${_controller.storedDurasiPresensi.value} WIB",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 12),
-                                const Divider(
-                                    height: 1, color: Color(0xFFDADADA)),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Expanded(
-                            child: filteredMahasiswa.isEmpty
-                                ? Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.only(top: 30),
-                                    alignment: Alignment.center,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          'assets/icons/ic_noData.png',
-                                          height: 120,
-                                        ),
-                                        const SizedBox(height: 16),
-                                        Text(
-                                          _searchController.text.isEmpty
-                                              ? "Tidak ada data mahasiswa"
-                                              : "Data mahasiswa tidak ditemukan",
-                                          style: TextStyle(
-                                            color: greyColor,
-                                            fontStyle: FontStyle.italic,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(height: 150),
-                                      ],
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    itemCount: filteredMahasiswa.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 3),
-                                        child: PresenceDetailCard(
-                                          mahasiswa:
-                                              _controller.studentList[index],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                          ),
-                        ],
-                      ),
-                    )),
-                  ],
-                ),
-              ],
-            ),
+                  )),
+                ],
+              ),
+            ],
           );
         }));
   }

@@ -136,7 +136,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: SizedBox(
-                                            width: width * 0.70,
+                                            width: width * 0.65,
                                             child: Container(
                                               padding:
                                                   const EdgeInsets.symmetric(

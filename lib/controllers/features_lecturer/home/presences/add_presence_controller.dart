@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
+import 'package:stipres/models/lecturers/presence_id_model.dart';
 import 'package:stipres/models/lecturers/presence_request_model.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/lecturer/add_presence_lecturer_service.dart';
 
 class AddPresenceController extends GetxController {
@@ -13,11 +16,13 @@ class AddPresenceController extends GetxController {
   final selectedSemester = ''.obs;
   final idMatkul = ''.obs;
   final tahunAjaran = ''.obs;
-  final tahunAjaranId = ''.obs;
+  final tahunAjaranId = 0.obs;
   final isEnabled = true.obs;
   final selectedDate = Rx<DateTime?>(null);
   final jamAwal = Rx<TimeOfDay?>(null);
+  final jamAwalStr = ''.obs;
   final jamAkhir = Rx<TimeOfDay?>(null);
+  final jamAkhirStr = ''.obs;
   final TextEditingController linkZoomController = TextEditingController();
 
   final selectedProdiName = ''.obs;
@@ -100,6 +105,7 @@ class AddPresenceController extends GetxController {
         final tahunList = result.data!;
         tahunAjaran.value =
             "${tahunList.tahunAwal}/${tahunList.tahunAkhir} ${tahunList.keterangan}";
+        tahunAjaranId.value = tahunList.id ?? 0;
       }
     } catch (e) {
       log.f("Error: $e");
@@ -119,63 +125,154 @@ class AddPresenceController extends GetxController {
     }
   }
 
-  // void uploadPresence() async {
-  //   try {
-  //     final result = await addPresenceLecturerService.uploadPresensi(
-  //         PresenceRequest(
-  //             presensiId: presensiId,
-  //             tglPresensi: selectedDate.value!.toString(),
-  //             jamAwal: jamAwal.value.toString(),
-  //             jamAkhir: jamAkhir.value.toString(),
-  //             dosenId: dosenId.value,
-  //             prodiId: int.parse(selectedProdiMap['id']!),
-  //             semester: int.parse(selectedSemester.value),
-  //             matkulId: int.parse(selectedMatkulMap['id']!),
-  //             tahunAjaranId: int.parse(tahunAjaranId.value),
-  //             linkZoom: linkZoomController.text));
-  //   } catch (e) {
-  //     log.f("Error: $e");
-  //   }
-  // }
+  Future<String> getPresensiId() async {
+    try {
+      final result = await addPresenceLecturerService.getPresensiId();
 
-  void submitPresence() {
+      if (result.status == "success" && result.data != null) {
+        final responPresence = result.data!;
+        final year = responPresence.tahun;
+        final lastInc = responPresence.lastIncrement! + (1);
+        final presenceId = "TR$year${lastInc.toString().padLeft(4, '0')}";
+        return presenceId;
+      } else {
+        return '';
+      }
+    } catch (e) {
+      log.f("Error: $e");
+      return '';
+    }
+  }
+
+  Future<bool> checkPresence(int prodiId, int semester, String jamAwal,
+      String jamAkhir, String tglPresensi) async {
+    try {
+      final result = await addPresenceLecturerService.checkPresence(
+          prodiId, semester, jamAwal, jamAkhir, tglPresensi);
+
+      if (result.status == "conflict") {
+        final statusPresence = result.data;
+        final tgl = statusPresence!.tanggalPresensi!.toString();
+        final durasi = statusPresence.durasiPresensi;
+
+        Get.snackbar("Conflict",
+            "Pada tanggal $tgl sudah terdapat absensi di jam $durasi");
+
+        return false;
+      } else if (result.status == "no_conflict") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log.f("Error: $e");
+      return false;
+    }
+  }
+
+  void uploadPresence(String presensiId) async {
+    try {
+      showLoading();
+      final result = await addPresenceLecturerService.uploadPresensi(
+          PresenceRequest(
+              presensiId: presensiId,
+              tglPresensi: selectedDate.value!.toString(),
+              jamAwal: jamAwalStr.value,
+              jamAkhir: jamAkhirStr.value,
+              dosenId: dosenId.value,
+              prodiId: int.parse(selectedProdiMap['id']!),
+              semester: int.parse(selectedSemester.value),
+              matkulId: int.parse(selectedMatkulMap['id']!),
+              tahunAjaranId: tahunAjaranId.value,
+              linkZoom: linkZoomController.text));
+
+      if (result.status == "success") {
+        Get.back();
+        Get.back();
+        isEnabled.value = false;
+        Get.snackbar("Sukses", "Data Presensi berhasil ditambahkan");
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isEnabled.value = true,
+        );
+      } else {
+        Get.back();
+        isEnabled.value = false;
+        Get.snackbar("Gagal", result.message);
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isEnabled.value = true,
+        );
+      }
+    } catch (e) {
+      log.f("Error: $e");
+    }
+  }
+
+  void submitPresence() async {
     if (validatePresence() == true) {
-      // uploadPresence();
+      final isConflictFree = await checkPresence(
+          int.parse(selectedProdiMap['id']!),
+          int.parse(selectedSemester.value),
+          jamAwalStr.value,
+          jamAkhirStr.value,
+          selectedDate.value!.toString());
+
+      if (isConflictFree) {
+        final presensiId = await getPresensiId();
+        log.d("Presensi Id : $presensiId");
+        uploadPresence(presensiId);
+      }
     }
   }
 
   bool validatePresence() {
-    log.d("SelectedProdi: ${selectedProdiName.value}");
-    log.d("SelectedProdi: ${selectedProdiMap['id']}");
-    log.d("SelectedMatkul: ${selectedMatkulMap['id']}");
-    log.d("TahunAjar Id: ${tahunAjaranId.value}");
-    if (selectedProdiName.isEmpty ||
-        selectedSemester.isEmpty ||
-        tahunAjaranId.isEmpty ||
-        selectedMatkul.isEmpty ||
-        idMatkul.isEmpty ||
-        selectedDate.value == null ||
-        jamAwal.value == null ||
-        jamAkhir.value == null ||
-        linkZoomController.text.isEmpty) {
-      Get.snackbar("Gagal", "Mohon lengkapi semua data wajib");
-      return false;
-    }
-
+    jamAwalStr.value = timeOfDayToString(jamAwal.value!);
+    jamAkhirStr.value = timeOfDayToString(jamAkhir.value!);
     final awal = timeOfDayToString(jamAwal.value!);
     final akhir = timeOfDayToString(jamAkhir.value!);
 
-    if (awal == akhir) {
-      Get.snackbar("Gagal", "Jam akhir harus setelah jam awal",
-          duration: Duration(seconds: 1));
+    log.d("Dosen ID:  ${dosenId.value}");
+    log.d("SelectedProdi id: ${selectedProdiMap['id']}");
+    log.d("SelectedMatkul id: ${selectedMatkulMap['id']}");
+    log.d("semester: ${selectedSemester.value}");
+    log.d("TahunAjar Id: ${tahunAjaranId.value}");
+    log.d("selectedDate : ${selectedDate.value}");
+    log.d("Jam Awal : ${jamAwal.value}");
+    log.d("Jam Akhir : ${jamAkhir.value}");
+    log.d("Jam Awal Str : ${jamAwalStr.value}");
+    log.d("Jam Akhir Str: ${jamAkhirStr.value}");
+    log.d("LinkZoom : ${linkZoomController.text}");
+    if (selectedProdiMap['id'] == null ||
+        selectedSemester.isEmpty ||
+        selectedMatkulMap['id'] == null ||
+        tahunAjaranId.value == 0 ||
+        selectedDate.value == null ||
+        jamAwal.value == null ||
+        jamAkhir.value == null ||
+        jamAwalStr.value.isEmpty ||
+        jamAkhirStr.value.isEmpty ||
+        linkZoomController.text.isEmpty) {
+      isEnabled.value = false;
+      Get.snackbar("Gagal", "Mohon lengkapi semua data wajib",
+          duration: Duration(seconds: 2));
+      Future.delayed(
+        Duration(seconds: 3),
+        () => isEnabled.value = true,
+      );
       return false;
-    } else if (!isAfter(jamAkhir.value!, jamAwal.value!)) {
+    } else if (!isAfter(jamAkhir.value!, jamAwal.value!) || awal == akhir) {
+      isEnabled.value = false;
       Get.snackbar("Gagal", "Jam akhir harus setelah jam awal",
-          duration: Duration(seconds: 1));
+          duration: Duration(seconds: 2));
+      Future.delayed(
+        Duration(seconds: 3),
+        () => isEnabled.value = true,
+      );
       return false;
+    } else {
+      return true;
     }
-
-    return true;
   }
 
   bool isAfter(TimeOfDay a, TimeOfDay b) {
@@ -193,5 +290,13 @@ class AddPresenceController extends GetxController {
   TimeOfDay stringToTimeOfDay(String time) {
     final parts = time.split(':');
     return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+  }
+
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

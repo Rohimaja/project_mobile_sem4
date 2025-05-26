@@ -15,9 +15,6 @@ class ScheduleCardLecturer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -246,8 +243,8 @@ Widget _buildActionBox({
       borderRadius: BorderRadius.circular(10),
       splashColor: Colors.purpleAccent.withOpacity(0.2),
       child: Container(
-        width: screenWidth * 0.3,
-        height: screenHeight * 0.06,
+        width: screenWidth * 0.25,
+        height: screenHeight * 0.04,
         alignment: Alignment.center,
         child: Text(
           label,

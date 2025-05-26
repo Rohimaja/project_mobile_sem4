@@ -67,7 +67,12 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
         TextButton(
           onPressed: () async {
             if (_controller.validateUpdate(widget.awal, widget.akhir) == true) {
-              (await _controller.updatePresence(widget.presensisId));
+              final isConflictFree = await _controller.checkPresence(
+                      widget.presensisId, widget.awal, widget.akhir) ==
+                  true;
+              if (isConflictFree) {
+                (await _controller.updatePresence(widget.presensisId));
+              }
             }
           },
           child: const Text("SUBMIT",

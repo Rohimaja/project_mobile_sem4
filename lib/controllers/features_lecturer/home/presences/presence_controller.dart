@@ -14,6 +14,8 @@ class PresenceController extends GetxController {
   var jamAwal = Rx<TimeOfDay?>(null);
   var jamAkhir = Rx<TimeOfDay?>(null);
 
+  final dosenId = ''.obs;
+
   var presenceList = <PresensiDosenModel>[].obs;
   final PresenceLecturerService presenceLecturerService =
       PresenceLecturerService();
@@ -21,13 +23,13 @@ class PresenceController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    String dosenId = _box.read("dosen_id").toString();
-    fetchPresence(dosenId);
+    dosenId.value = _box.read("dosen_id").toString();
+    fetchPresence();
   }
 
-  void fetchPresence(String dosenId) async {
+  Future<void> fetchPresence() async {
     try {
-      final result = await presenceLecturerService.fetchPresence(dosenId);
+      final result = await presenceLecturerService.fetchPresence(dosenId.value);
       log.d(result.data);
 
       if (result.status == "success" && result.data != null) {
@@ -68,6 +70,32 @@ class PresenceController extends GetxController {
     return true;
   }
 
+  Future<bool> checkPresence(
+      String presensisId, String jamAwal, String jamAkhir) async {
+    try {
+      final result = await presenceLecturerService.checkPresence(
+          presensisId, jamAwal, jamAkhir);
+
+      if (result.status == "conflict") {
+        final statusPresence = result.data;
+        final tgl = statusPresence!.tanggalPresensi!.toString();
+        final durasi = statusPresence.durasiPresensi;
+
+        Get.snackbar("Conflict",
+            "Pada tanggal $tgl sudah terdapat absensi di jam $durasi");
+
+        return false;
+      } else if (result.status == "no_conflict") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log.f("Error: $e");
+      return false;
+    }
+  }
+
   Future<void> updatePresence(String presensisId) async {
     try {
       final awal = timeOfDayToString(jamAwal.value!);
@@ -81,8 +109,7 @@ class PresenceController extends GetxController {
       if (result.status == "success") {
         Get.back();
         Get.back();
-        String dosenId = _box.read("dosen_id").toString();
-        fetchPresence(dosenId);
+        fetchPresence();
         Get.snackbar("Berhasil", "Waktu presensi berhasil diperbarui",
             duration: Duration(seconds: 1));
       } else {
@@ -103,8 +130,7 @@ class PresenceController extends GetxController {
       final result = await presenceLecturerService.deletePresence(presensisId);
       if (result.status == "success") {
         Get.back();
-        String dosenId = _box.read("dosen_id").toString();
-        fetchPresence(dosenId);
+        fetchPresence();
         Get.snackbar("Berhasil", "Presensi berhasil dihapus",
             duration: Duration(seconds: 1));
       } else {

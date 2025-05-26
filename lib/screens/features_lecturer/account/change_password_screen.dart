@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/constants/styles.dart';
 import 'package:stipres/main.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/constants/styles.dart';
 
 class ChangePassword extends StatelessWidget {
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/account_menu.dart';
-import 'package:stipres/screens/features_student/account/bantuan.dart';
-import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/screens/features_student/account/bantuan.dart';
+import 'package:stipres/screens/features_student/account/sidik_jari.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
 
 class Pengaturan extends StatefulWidget {
   Pengaturan({Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class _PengaturanState extends State<Pengaturan> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(Akun());
+                            Get.to(SidikJari());
                           },
                           borderRadius: BorderRadius.circular(
                               10), // opsional, supaya ripple-nya lebih bagus
@@ -64,14 +64,14 @@ class _PengaturanState extends State<Pengaturan> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset('assets/icons/ic_key.png',
+                                Image.asset('assets/icons/ic_fingerprint.png',
                                     height: 30, width: 30),
                                 const SizedBox(width: 16),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Akun",
+                                      "Sidik Jari",
                                       style: GoogleFonts.plusJakartaSans(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -79,7 +79,7 @@ class _PengaturanState extends State<Pengaturan> {
                                     ),
                                     SizedBox(height: 3),
                                     Text(
-                                      "Ganti akun, ganti email",
+                                      "Login dengan sidik jari",
                                       style: blackTextStyle.copyWith(
                                         fontSize: 12,
                                         color:
