@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_detail_controller.dart';
 
 class PresenceInformationCard extends StatelessWidget {
   final String waktuPresensi;
@@ -8,7 +11,7 @@ class PresenceInformationCard extends StatelessWidget {
   final String alasan;
   final String? buktiFilePath;
 
-  const PresenceInformationCard({
+  PresenceInformationCard({
     super.key,
     required this.waktuPresensi,
     required this.keterangan,
@@ -16,15 +19,22 @@ class PresenceInformationCard extends StatelessWidget {
     this.buktiFilePath,
   });
 
+  final _controller = Get.find<PresenceDetailController>();
+  final isExpanded = false.obs;
+
+  Logger log = Logger();
+
   @override
   Widget build(BuildContext context) {
+    log.d(buktiFilePath);
     return SizedBox(
-      height: 330,
+      height: 395,
+      width: 350,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        elevation: 6,
+        elevation: 3,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Stack(
@@ -57,104 +67,96 @@ class PresenceInformationCard extends StatelessWidget {
                 top: 60,
                 left: 20,
                 right: 20,
-                bottom: 20, // Tambahkan batas bawah agar konten tidak terpotong
+                bottom: 20,
                 child: Container(
-                  height: 230,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.all(20),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildRowInfo('Waktu Presensi', waktuPresensi),
-                        const SizedBox(height: 12),
-                        _buildRowInfo('Keterangan', keterangan),
-                        const SizedBox(height: 12),
-                        _buildRowInfo('Alasan', alasan),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 120,
-                              child: Text(
-                                'Bukti',
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                  color: const Color(0xFF005095),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              ":",
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildRowInfo('Waktu Presensi', waktuPresensi),
+                      const SizedBox(height: 12),
+                      _buildRowInfo('Keterangan', keterangan),
+                      const SizedBox(height: 12),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 110,
+                            child: Text(
+                              'Bukti',
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 15,
                                 fontWeight: FontWeight.normal,
                                 color: const Color(0xFF005095),
                               ),
                             ),
-                            SizedBox(width: 8),
-
-                            buktiFilePath != null && buktiFilePath!.isNotEmpty
-                                ? Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.25,
-                                      child: InkWell(
-                                        onTap: () {
-                                          // TODO: tambahkan aksi buka file
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 6),
-                                          decoration: BoxDecoration(
-                                            color: blueColor,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                'assets/icons/ic_document.png',
-                                                height: 15,
-                                                width: 15,
+                          ),
+                          Text(
+                            ":",
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                              color: const Color(0xFF005095),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          buktiFilePath != null && buktiFilePath!.isNotEmpty
+                              ? Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    child: InkWell(
+                                      onTap: (!_controller
+                                              .isButtonEnabled.value)
+                                          ? null
+                                          : () {
+                                              _controller
+                                                  .openBukti(buktiFilePath!);
+                                            },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: blueColor,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Lihat Bukti",
+                                              style: TextStyle(
+                                                color: whiteColor,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
                                               ),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                "Lihat Bukti",
-                                                style: TextStyle(
-                                                  color: whiteColor,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  )
-                                : Text(
-                                    "-",
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                      color: const Color(0xFF005095),
-                                    ),
-                                  ), // jika tidak ada file
-                          ],
-                        ),
-                      ],
-                    ),
+                                  ),
+                                )
+                              : Text(
+                                  "-",
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                    color: const Color(0xFF005095),
+                                  ),
+                                ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      _buildExpandableAlasan('Alasan', alasan),
+                    ],
                   ),
                 ),
               ),
@@ -165,26 +167,16 @@ class PresenceInformationCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRowInfo(String label, String value,
-      {bool isScrollable = false}) {
-    Widget valueWidget = Text(
-      value,
-      style: GoogleFonts.plusJakartaSans(
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
-        color: const Color(0xFF005095),
-      ),
-    );
-
+  Widget _buildRowInfo(String label, String value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 120,
+          width: 110,
           child: Text(
             label,
             style: GoogleFonts.plusJakartaSans(
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: FontWeight.normal,
               color: const Color(0xFF005095),
             ),
@@ -192,15 +184,82 @@ class PresenceInformationCard extends StatelessWidget {
         ),
         const Text(": "),
         Expanded(
-          child: isScrollable
-              ? SizedBox(
-                  height: 100, // Atur tinggi maksimal
-                  child: SingleChildScrollView(
-                    child: valueWidget,
-                  ),
-                )
-              : valueWidget,
+          child: Text(
+            value,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xFF005095),
+            ),
+          ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildExpandableAlasan(String label, String value) {
+    final maxLines = 4;
+    final textStyle = GoogleFonts.plusJakartaSans(
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+      color: const Color(0xFF005095),
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 110,
+              child: Text(
+                label,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: const Color(0xFF005095),
+                ),
+              ),
+            ),
+            const Text(": "),
+            Expanded(child: Obx(() {
+              return isExpanded.value
+                  ? SizedBox(
+                      height: 110,
+                      child: SingleChildScrollView(
+                        child: Text(
+                          value,
+                          style: textStyle,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      value,
+                      style: textStyle,
+                      maxLines: maxLines,
+                      overflow: TextOverflow.ellipsis,
+                    );
+            })),
+          ],
+        ),
+        if (value.length > 100)
+          Align(
+              alignment: Alignment.centerRight,
+              child: Obx(() {
+                return TextButton(
+                  onPressed: () {
+                    isExpanded.value = !isExpanded.value;
+                  },
+                  child: Text(
+                    isExpanded.value ? 'Sembunyikan' : 'Lihat Selengkapnya',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.blue,
+                    ),
+                  ),
+                );
+              })),
       ],
     );
   }

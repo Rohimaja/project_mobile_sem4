@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_lecturer/models/allSchedule_model.dart';
+import 'package:stipres/models/lecturers/all_schedule_model.dart';
 
 class AllScheduleCard extends StatelessWidget {
-  final AllScheduleModel jadwal;
+  final LecturerAllScheduleModel jadwal;
 
   const AllScheduleCard({Key? key, required this.jadwal}) : super(key: key);
 
@@ -21,7 +21,7 @@ class AllScheduleCard extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Text(
-              jadwal.waktu,
+              "${jadwal.durasiPerkuliahan!} WIB",
               style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w600),
             ),
           ],
@@ -59,7 +59,7 @@ class AllScheduleCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          jadwal.kodeMatkul,
+                          jadwal.kodeMatkul!,
                           style: GoogleFonts.plusJakartaSans(
                               fontWeight: FontWeight.w600,
                               fontSize: 13,
@@ -67,7 +67,7 @@ class AllScheduleCard extends StatelessWidget {
                         ),
                         SizedBox(height: 6),
                         Text(
-                          jadwal.mataKuliah,
+                          jadwal.namaMatkul!,
                           style: GoogleFonts.plusJakartaSans(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -82,7 +82,7 @@ class AllScheduleCard extends StatelessWidget {
                               width: 16,
                             ),
                             const SizedBox(width: 6),
-                            Text(jadwal.semester,
+                            Text("Semester ${jadwal.semester.toString()}",
                                 style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
@@ -98,7 +98,7 @@ class AllScheduleCard extends StatelessWidget {
                               width: 16,
                             ),
                             const SizedBox(width: 6),
-                            Text(jadwal.lokasi,
+                            Text(jadwal.namaRuangan!,
                                 style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
@@ -114,7 +114,7 @@ class AllScheduleCard extends StatelessWidget {
                               width: 16,
                             ),
                             const SizedBox(width: 6),
-                            Text(jadwal.durasi,
+                            Text("${jadwal.durasi!} Jam",
                                 style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,

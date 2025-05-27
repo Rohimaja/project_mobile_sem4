@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
-import 'package:stipres/screens/features_lecturer/home/presence/add_presence_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/presence/presence_card.dart';
 import 'package:stipres/constants/styles.dart';
 
@@ -52,310 +51,305 @@ class _PresenceScreenState extends State<PresenceScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     bool _isPressed = false;
+    _controller.fetchPresence();
 
     return Scaffold(
         backgroundColor: mainColor,
         body: Obx(() {
           final filteredPresensi = _controller.presenceList.where((presensi) {
             final query = _searchController.text.toLowerCase();
-            return presensi.namaMatkul!.toLowerCase().contains(query);
+            return presensi.namaMatkul.toLowerCase().contains(query);
           }).toList();
 
-          return SafeArea(
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: width,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: blueColor,
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                            ),
-                            image: const DecorationImage(
-                              image: AssetImage('images/bgheader.png'),
-                              fit: BoxFit.cover,
-                            ),
+          return Stack(
+            children: [
+              Column(
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        width: width,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          color: blueColor,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 23),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Material(
-                                color: Colors.transparent,
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/bgheader.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () => Navigator.pop(context),
+                                borderRadius: BorderRadius.circular(100),
+                                customBorder: const CircleBorder(),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    'assets/icons/ic_back.png',
+                                    height: 18,
+                                    width: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            // Animated Search Bar dengan fade
+                            Expanded(
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 300),
+                                child: _isSearching
+                                    ? FadeTransition(
+                                        opacity: _animation,
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: SizedBox(
+                                            width: width * 0.65,
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 12,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(0.9),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: TextField(
+                                                controller: _searchController,
+                                                style:
+                                                    GoogleFonts.plusJakartaSans(
+                                                  color: Colors.black,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  hintText:
+                                                      'Cari mata kuliah...',
+                                                  hintStyle: GoogleFonts
+                                                      .plusJakartaSans(
+                                                    color: Colors.grey[600],
+                                                  ),
+                                                  border: InputBorder.none,
+                                                ),
+                                                autofocus: true,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Presensi Mata Kuliah",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            // Tombol pencarian tetap di posisi yang sama
+                            Material(
+                              color: Colors.transparent,
+                              shape: const CircleBorder(),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  shape: BoxShape.circle,
+                                ),
                                 child: InkWell(
-                                  onTap: () => Get.back(),
-                                  borderRadius: BorderRadius.circular(100),
+                                  onTap: () {
+                                    setState(() {
+                                      _isSearching = !_isSearching;
+                                      if (_isSearching) {
+                                        _animationController
+                                            .forward(); // Fade-in saat search aktif
+                                      } else {
+                                        _animationController
+                                            .reverse(); // Fade-out saat search non-aktif
+                                        _searchController.clear();
+                                      }
+                                    });
+                                  },
                                   customBorder: const CircleBorder(),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(6.0),
                                     child: Image.asset(
-                                      'assets/icons/ic_back.png',
+                                      'assets/icons/ic_search.png',
                                       height: 18,
                                       width: 18,
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              // Animated Search Bar dengan fade
-                              Expanded(
-                                child: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 300),
-                                  child: _isSearching
-                                      ? FadeTransition(
-                                          opacity: _animation,
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: SizedBox(
-                                              width: width * 0.70,
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 12,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white
-                                                      .withOpacity(0.9),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: TextField(
-                                                  controller: _searchController,
-                                                  style: GoogleFonts
-                                                      .plusJakartaSans(
-                                                    color: Colors.black,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        'Cari mata kuliah...',
-                                                    hintStyle: GoogleFonts
-                                                        .plusJakartaSans(
-                                                      color: Colors.grey[600],
-                                                    ),
-                                                    border: InputBorder.none,
-                                                  ),
-                                                  autofocus: true,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Presensi Mata Kuliah",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.white,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              // Tombol pencarian tetap di posisi yang sama
-                              Material(
-                                color: Colors.transparent,
-                                shape: const CircleBorder(),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                    color: whiteColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        _isSearching = !_isSearching;
-                                        if (_isSearching) {
-                                          _animationController
-                                              .forward(); // Fade-in saat search aktif
-                                        } else {
-                                          _animationController
-                                              .reverse(); // Fade-out saat search non-aktif
-                                          _searchController.clear();
-                                        }
-                                      });
-                                    },
-                                    customBorder: const CircleBorder(),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: Image.asset(
-                                        'assets/icons/ic_search.png',
-                                        height: 18,
-                                        width: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        Positioned(
-                          bottom: -44,
-                          right: 0,
-                          child: Container(
-                            width: 40,
-                            height: 44,
-                            color: blueColor,
-                          ),
+                      ),
+                      Positioned(
+                        bottom: -44,
+                        right: 0,
+                        child: Container(
+                          width: 40,
+                          height: 44,
+                          color: blueColor,
                         ),
-                        Positioned(
-                          bottom: -45,
-                          right: 0,
-                          child: Container(
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              color: mainColor,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(40),
-                              ),
+                      ),
+                      Positioned(
+                        bottom: -45,
+                        right: 0,
+                        child: Container(
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: mainColor,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(40),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
 
-                    // Body Content
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Text(
-                                'Presensi Sedang Berlangsung',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: blueColor,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                  // Body Content
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              'Presensi Hari Ini',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: blueColor,
+                                fontWeight: FontWeight.normal,
                               ),
                             ),
-                            const SizedBox(height: 12),
-                            Expanded(
-                              child: filteredPresensi.isEmpty
-                                  ? Container(
-                                      width: double
-                                          .infinity, // Biar bisa center dalam parent
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            'assets/icons/ic_noData.png',
-                                            height: 120,
+                          ),
+                          Divider(height: 20, color: Color(0xFFDADADA)),
+                          Expanded(
+                            child: filteredPresensi.isEmpty
+                                ? Container(
+                                    width: double
+                                        .infinity, // Biar bisa center dalam parent
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/ic_noData.png',
+                                          height: 120,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          _searchController.text.isEmpty
+                                              ? "Tidak ada data presensi"
+                                              : "Data mata kuliah tidak ditemukan",
+                                          style: GoogleFonts.plusJakartaSans(
+                                            color: greyColor,
+                                            fontStyle: FontStyle.italic,
                                           ),
-                                          const SizedBox(height: 16),
-                                          Text(
-                                            _searchController.text.isEmpty
-                                                ? "Tidak ada data presensi"
-                                                : "Data mata kuliah tidak ditemukan",
-                                            style: GoogleFonts.plusJakartaSans(
-                                              color: greyColor,
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : ListView.builder(
-                                      itemCount: filteredPresensi.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 15),
-                                          child: PresenceCard(
-                                            data: filteredPresensi[index],
-                                          ),
-                                        );
-                                      },
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
                                     ),
+                                  )
+                                : ListView.builder(
+                                    itemCount: filteredPresensi.length,
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.only(top: 0),
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 15),
+                                        child: PresenceCard(
+                                          data: filteredPresensi[index],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTapDown: (_) => setState(() => _isPressed = true),
+                    onTapUp: (_) {
+                      setState(() => _isPressed = false);
+                      Get.toNamed("/lecturer/add-presence-screen");
+                    },
+                    onTapCancel: () => setState(() => _isPressed = false),
+                    child: AnimatedScale(
+                      duration: const Duration(milliseconds: 150),
+                      scale: _isPressed ? 0.95 : 1.0,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: blueColor,
+                          borderRadius: BorderRadius.circular(7),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 8,
+                              offset: const Offset(2, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              'assets/icons/ic_add_presence.png',
+                              height: 25,
+                              width: 25,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              "Tambah Presensi",
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-                Positioned(
-                  bottom: 20,
-                  right: 20,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTapDown: (_) => setState(() => _isPressed = true),
-                      onTapUp: (_) {
-                        setState(() => _isPressed = false);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AddPresenceScreen()),
-                        );
-                      },
-                      onTapCancel: () => setState(() => _isPressed = false),
-                      child: AnimatedScale(
-                        duration: const Duration(milliseconds: 150),
-                        scale: _isPressed ? 0.95 : 1.0,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: blueColor,
-                            borderRadius: BorderRadius.circular(7),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 8,
-                                offset: const Offset(2, 4),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Image.asset(
-                                'assets/icons/ic_add_presence.png',
-                                height: 25,
-                                width: 25,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                "Tambah Presensi",
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }));
   }

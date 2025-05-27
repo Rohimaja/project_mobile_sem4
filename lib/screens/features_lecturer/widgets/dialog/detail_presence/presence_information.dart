@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/detail_presence/presence_information.dart';
-import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
 
 class PresenceDetailDialog extends StatelessWidget {
   final String waktuPresensi;

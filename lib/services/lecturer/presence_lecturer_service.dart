@@ -6,11 +6,13 @@ import 'package:logger/logger.dart';
 import 'package:stipres/constants/api.dart';
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/basic_response.dart';
+import 'package:stipres/models/lecturers/check_presence_model.dart';
 import 'package:stipres/models/lecturers/presence_model.dart';
 
 class PresenceLecturerService extends GetxService {
   final String _baseUrl =
       "${ApiConstants.globalUrl}listview/getPresenceLecturer.php";
+  final global = ApiConstants.globalUrl;
 
   var log = Logger();
 
@@ -58,6 +60,33 @@ class PresenceLecturerService extends GetxService {
     } catch (e) {
       log.f("Error: $e");
       return BasicResponse(status: "Error", message: "Terjadi kesalahan $e");
+    }
+  }
+
+  Future<BaseResponse<CheckPresenceModel>> checkPresence(
+      String presensisId, String jamAwal, String jamAkhir) async {
+    try {
+      const action = "presensiD";
+      final url = Uri.parse("$global/activityLecturer/checkPresensi.php");
+      log.d(url);
+      final response = await http.post(url, body: {
+        "action": action,
+        "jam_awal": jamAwal,
+        "jam_akhir": jamAkhir,
+        "presensis_id": presensisId
+      });
+
+      final body = jsonDecode(response.body);
+      log.d(body);
+
+      return BaseResponse.fromJson(
+          body,
+          (dataJson) =>
+              CheckPresenceModel.fromJson(dataJson as Map<String, dynamic>));
+    } catch (e) {
+      log.f("Error: $e");
+      return BaseResponse(
+          status: "Error", message: "Terjadi kesalahan $e", data: null);
     }
   }
 

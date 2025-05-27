@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/screens/auth/login_screen.dart';
 
 class ProfileScreenLecturer extends StatelessWidget {
   ProfileScreenLecturer({Key? key}) : super(key: key);
@@ -18,9 +19,9 @@ class ProfileScreenLecturer extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(
           255, 237, 235, 251), // Set background putih ke seluruh layar
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
+      body: Stack(
+        children: [
+          Column(
             children: [
               Stack(
                 clipBehavior: Clip.none,
@@ -28,7 +29,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                   // HEADER
                   Container(
                     width: width,
-                    height: 120,
+                    height: 150,
                     decoration: BoxDecoration(
                       color: blueColor,
                       borderRadius: const BorderRadius.only(
@@ -40,7 +41,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                       ),
                     ),
                     padding: const EdgeInsets.only(
-                        top: 16, left: 16, right: 16, bottom: 70),
+                        top: 24, left: 16, right: 16, bottom: 70),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -50,7 +51,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                           width: 30,
                         ),
                         const SizedBox(
-                            width: 5), // jarak kecil antara logo dan teks
+                            width: 3), // jarak kecil antara logo dan teks
                         Expanded(
                           child: Text(
                             "STIKES PANTI WALUYA MALANG",
@@ -109,7 +110,7 @@ class ProfileScreenLecturer extends StatelessWidget {
 
                   // PROFIL (TENGAH)
                   Positioned(
-                    top: 80,
+                    top: 105,
                     left: 0,
                     right: 0,
                     child: Column(
@@ -126,14 +127,15 @@ class ProfileScreenLecturer extends StatelessWidget {
                               child: ClipOval(child: Obx(() {
                                 final foto = _controller.storedProfile.value;
                                 return (foto.isNotEmpty)
-                                    ? FadeInImage.assetNetwork( 
-                                      placeholder: "assets/icons/ic_profile.jpeg",
-                                      image: 
-                                        foto,
+                                    ? FadeInImage.assetNetwork(
+                                        placeholder:
+                                            "assets/icons/ic_profile.jpeg",
+                                        image: foto,
                                         height: 90,
                                         width: 90,
                                         fit: BoxFit.cover,
-                                        imageErrorBuilder: (context, url, error) {
+                                        imageErrorBuilder:
+                                            (context, url, error) {
                                           return Image.asset(
                                             "assets/icons/ic_profile.jpeg",
                                             height: 90,
@@ -149,26 +151,6 @@ class ProfileScreenLecturer extends StatelessWidget {
                                         fit: BoxFit.cover,
                                       );
                               })),
-                            ),
-                            // Ikon tambah foto
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF0D0063),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Image.asset(
-                                    "assets/icons/ic_addpicture.png", // Pastikan path ini sesuai
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
                             ),
                           ],
                         ),
@@ -361,52 +343,48 @@ class ProfileScreenLecturer extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_ketentuanlayanan.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Ketentuan Layanan",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
-                            ),
-                            SizedBox(height: 20), // Jarak antar item
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_kebijakanprivasi.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Kebijakan Privasi",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed("/student/settings-screen");
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset('assets/icons/ic_settings.png',
+                                      height: 30, width: 30),
+                                  SizedBox(width: 16),
+                                  Text("Pengaturan",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/icons/ic_gantipassword.png',
-                                    height: 30, width: 30),
-                                SizedBox(width: 10),
-                                Text("Ganti Password",
-                                    style: blackTextStyle.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    textAlign: TextAlign.center),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed("/auth/forget-password/step3");
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      'assets/icons/ic_gantipassword.png',
+                                      height: 30,
+                                      width: 30),
+                                  SizedBox(width: 16),
+                                  Text("Ganti Password",
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
                             ),
                           ],
                         )),
@@ -417,7 +395,7 @@ class ProfileScreenLecturer extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              _controller.logout();
+                              _showLogoutDialog(context);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: redColor,
@@ -448,8 +426,118 @@ class ProfileScreenLecturer extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
+}
+
+void _showLogoutDialog(BuildContext context) {
+  bool saveLoginInfo = true;
+  final _controller = Get.find<ProfileController>();
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            contentPadding: const EdgeInsets.all(20),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    'KONFIRMASI LOGOUT',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Center(
+                  child: Text(
+                    'Apakah anda yakin ingin keluar?',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Simpan informasi login anda',
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Checkbox(
+                      value: saveLoginInfo,
+                      activeColor: Colors.blue, // warna kotak ketika dicentang
+                      checkColor: Colors.white, // warna centangnya
+                      onChanged: (bool? value) {
+                        setState(() {
+                          saveLoginInfo = value ?? true;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Colors.blue),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Handle logout action
+                          _controller.logout();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
 }

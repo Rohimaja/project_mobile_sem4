@@ -6,6 +6,9 @@ class JadwalModelApi {
   String? lokasi;
   String durasiMatkul;
   String? keterangan;
+  String? namaDosen;
+  String? kodeMatkul;
+  String? tglPresensi;
 
   JadwalModelApi({
     required this.presensiId,
@@ -15,6 +18,9 @@ class JadwalModelApi {
     this.lokasi,
     required this.durasiMatkul,
     this.keterangan,
+    required this.namaDosen,
+    required this.kodeMatkul,
+    required this.tglPresensi,
   });
 
   factory JadwalModelApi.fromJson(Map<String, dynamic> json) {
@@ -24,6 +30,10 @@ class JadwalModelApi {
         waktu: json['durasi_presensi'],
         mataKuliah: json['nama_matkul'],
         lokasi: json['nama_ruangan'],
-        durasiMatkul: json['durasi_matkul']);
+        durasiMatkul: json['durasi_matkul'],
+        namaDosen: json['nama_dosen'],
+        kodeMatkul: json['kode_matkul'],
+        tglPresensi: json['tgl_presensi']
+        );
   }
 }

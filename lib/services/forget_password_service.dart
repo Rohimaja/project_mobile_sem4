@@ -66,7 +66,7 @@ class ForgetPasswordService extends GetxService {
           body: {'email': email, 'new_password': password});
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
-        logger.d(response.body);
+        logger.d(body);
 
         return BasicResponse.fromJson(body);
       }

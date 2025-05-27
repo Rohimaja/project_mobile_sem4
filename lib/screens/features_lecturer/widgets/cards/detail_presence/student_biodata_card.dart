@@ -20,10 +20,11 @@ class StudentBiodataCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 330,
+      height: 370,
+      width: 350,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        elevation: 6,
+        elevation: 3,
         clipBehavior: Clip.antiAlias,
         child: Stack(
           alignment: Alignment.topCenter,
@@ -46,7 +47,7 @@ class StudentBiodataCard extends StatelessWidget {
               right: 20,
               child: Container(
                 padding: const EdgeInsets.only(
-                    top: 60, left: 16, right: 16, bottom: 20),
+                    top: 60, left: 12, right: 12, bottom: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -71,13 +72,23 @@ class StudentBiodataCard extends StatelessWidget {
             Positioned(
               top: 60,
               child: CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                  radius: 46,
-                  backgroundImage: AssetImage(fotoAssetPath),
-                ),
-              ),
+                  radius: 50,
+                  backgroundColor: Colors.white,
+                  child: ClipOval(
+                    child: SizedBox(
+                      width: 92,
+                      height: 92,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: "assets/icons/ic_profile.jpeg",
+                        image: fotoAssetPath,
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (context, url, error) => Image.asset(
+                          "assets/icons/ic_profile.jpeg",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  )),
             ),
 
             // Judul
@@ -108,7 +119,7 @@ class StudentBiodataCard extends StatelessWidget {
             style: GoogleFonts.plusJakartaSans(
                 fontWeight: FontWeight.normal,
                 color: Color(0xFF005095),
-                fontSize: 15),
+                fontSize: 14),
           ),
         ),
         const Text(": "),
@@ -118,7 +129,7 @@ class StudentBiodataCard extends StatelessWidget {
             style: GoogleFonts.plusJakartaSans(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF005095),
-                fontSize: 15),
+                fontSize: 14),
           ),
         ),
       ],

@@ -9,7 +9,7 @@ class ProfileController extends GetxController {
   final storedEmail = ''.obs;
   var storedProfile = ''.obs;
 
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   final _box = GetStorage();
   final log = Logger();
@@ -25,7 +25,7 @@ class ProfileController extends GetxController {
     String? nama = _box.read("user_nama");
     String? nip = _box.read("user_nip");
     String? email = _box.read("user_email");
-    String profile = _box.read("foto");
+    String? profile = _box.read("foto");
     log.d("profile: $profile");
 
     storedName.value = nama ?? 'No name found';

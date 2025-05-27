@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/constants/api.dart';
 import 'package:stipres/models/jadwal_model.dart';
@@ -16,7 +17,7 @@ class DashboardController extends GetxController {
   var jadwalList = <JadwalModelApi>[].obs;
   var errorMessage = ''.obs;
 
-  final url = ApiConstants.pathProfile;
+  final url = ApiConstants.path;
 
   final DashboardLecturerService dashboardLecturerService =
       DashboardLecturerService();
@@ -44,6 +45,18 @@ class DashboardController extends GetxController {
     log.d("Profile: ${storedProfile.value}");
   }
 
+  String formatTanggal(String tanggal) {
+    try {
+      DateTime date = DateFormat('yyyy-MM-dd').parse(tanggal);
+
+      return DateFormat('EEEE, d MMMM yyyy', 'id_ID').format(date);
+    } catch (e) {
+      log.d("Error: $e");
+      Get.snackbar("Error", "Terjadi error: $e");
+      return tanggal;
+    }
+  }
+
   Future<void> fetchSchedule() async {
     try {
       int dosenId = _box.read("dosen_id");
@@ -66,6 +79,8 @@ class DashboardController extends GetxController {
             jadwal.keterangan = "Luring";
           }
 
+          jadwal.tglPresensi = formatTanggal(jadwal.tglPresensi!);
+
           log.d(jadwal);
           return jadwal;
         }).toList();
@@ -79,9 +94,9 @@ class DashboardController extends GetxController {
   }
 
   void buttonAction(JadwalModelApi jadwal) {
-    if (jadwal.lokasi == '') {
-      Get.toNamed("lecturer/presence-content-screen",
-          arguments: [jadwal.presensiId, jadwal.presensisId]);
+    if (jadwal.lokasi == '-') {
+      Get.toNamed("/lecturer/presence-detail-screen",
+          arguments: jadwal.presensisId);
     } else {
       Get.toNamed("/lecturer/offline-screen");
     }

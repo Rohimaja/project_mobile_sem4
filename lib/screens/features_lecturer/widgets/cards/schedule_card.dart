@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
 import 'package:stipres/models/jadwal_model.dart';
-import 'package:stipres/screens/features_lecturer/home/lecture/lecture_content_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/course_detail_card.dart';
 import 'package:stipres/constants/styles.dart';
 
 class ScheduleCardLecturer extends StatelessWidget {
   final JadwalModelApi jadwal;
 
-  const ScheduleCardLecturer({Key? key, required this.jadwal})
-      : super(key: key);
+  ScheduleCardLecturer({Key? key, required this.jadwal}) : super(key: key);
+
+  final _controller = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -127,13 +125,12 @@ class ScheduleCardLecturer extends StatelessWidget {
                                           backgroundColor: Colors.transparent,
                                           insetPadding:
                                               const EdgeInsets.all(20),
-                                          child: const CourseDetailCard(
-                                            namaMatkul: "Pemrograman Dasar",
-                                            idMatkul: "TIF3333",
-                                            tanggal: "Rabu, 23 April 2025",
-                                            jam: "07.00–09.00 WIB",
-                                            dosen:
-                                                "Aldo Rayhan Radittyanuh S.Kom, M.Kom",
+                                          child: CourseDetailCard(
+                                            namaMatkul: jadwal.mataKuliah,
+                                            idMatkul: jadwal.kodeMatkul!,
+                                            tanggal: jadwal.tglPresensi!,
+                                            jam: jadwal.waktu,
+                                            dosen: jadwal.namaDosen!,
                                           ),
                                         ),
                                       ),
@@ -199,7 +196,7 @@ class ScheduleCardLecturer extends StatelessWidget {
                           label: 'Presensi',
                           color: const Color(0xFFF4D8FB),
                           onTap: () {
-                            Get.toNamed("/lecturer/presence-detail-screen");
+                            _controller.buttonAction(jadwal);
                           },
                         ),
                         const SizedBox(width: 8),
@@ -208,7 +205,11 @@ class ScheduleCardLecturer extends StatelessWidget {
                           label: 'Zoom',
                           color: const Color(0xFFF4D8FB),
                           onTap: () {
-                            Get.toNamed("/lecturer/lecture-content-screen", arguments: jadwal.presensisId);
+                            (jadwal.lokasi == "-")
+                                ? Get.toNamed(
+                                    "/lecturer/lecture-content-screen",
+                                    arguments: jadwal.presensisId)
+                                : Get.toNamed("/lecturer/offline-screen");
                           },
                         ),
                       ],
@@ -242,8 +243,8 @@ Widget _buildActionBox({
       borderRadius: BorderRadius.circular(10),
       splashColor: Colors.purpleAccent.withOpacity(0.2),
       child: Container(
-        width: screenWidth * 0.3,
-        height: screenHeight * 0.06,
+        width: screenWidth * 0.25,
+        height: screenHeight * 0.04,
         alignment: Alignment.center,
         child: Text(
           label,

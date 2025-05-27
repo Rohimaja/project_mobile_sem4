@@ -27,7 +27,7 @@ class LectureController extends GetxController {
 
   String formatTanggal(String tanggal) {
     try {
-      DateTime date = DateFormat('dd-MM-yyyy').parse(tanggal);
+      DateTime date = DateFormat('yyyy-MM-dd').parse(tanggal);
 
       return DateFormat('EEEE, d MMMM yyyy', 'id_ID').format(date);
     } catch (e) {
@@ -45,6 +45,7 @@ class LectureController extends GetxController {
 
       if (result.status == "success" && result.data != null) {
         final List<LectureModelApi> updatedList = result.data!.map((lecture) {
+          log.d("tgl: ${lecture.tglPresensi}");
           lecture.tglPresensi = formatTanggal(lecture.tglPresensi);
 
           return lecture;

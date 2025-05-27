@@ -114,7 +114,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: SizedBox(
-                                          width: width * 0.70,
+                                          width: width * 0.65,
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 12),
