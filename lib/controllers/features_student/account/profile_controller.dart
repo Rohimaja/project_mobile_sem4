@@ -12,6 +12,9 @@ class ProfileController extends GetxController {
   var storedProfile = ''.obs;
 
   final url = ApiConstants.path;
+  final isBiometricAvailable = false.obs;
+  final isBiometricEnabled = false.obs;
+  final saveLoginInfo = true.obs;
 
   final _box = GetStorage();
 
@@ -41,9 +44,21 @@ class ProfileController extends GetxController {
     storedProfile.value = profileUrl;
   }
 
+  Future<void> checkBiometric() async {
+    isBiometricAvailable.value = _box.read("isBiometricAvailable") ?? true;
+    isBiometricEnabled.value = _box.read("isBiometricEnabled") ?? true;
+    log.d("status biometric: $isBiometricAvailable");
+    log.d("status Enabledc: $isBiometricEnabled");
+  }
+
   void logout() {
     _box.erase();
     Get.offAllNamed("/");
-    log.d(_box.read("user_name"));
+    if (saveLoginInfo.value) {
+      _box.write("isBiometricEnabled", isBiometricEnabled.value);
+      _box.write("isSaveLoginInfo", saveLoginInfo.value);
+      log.d("isBiometricEnabled: ${isBiometricEnabled.value}");
+      log.d("isSaveLoginInfo: ${saveLoginInfo.value}");
+    }
   }
 }

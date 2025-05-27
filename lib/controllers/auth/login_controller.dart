@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
+import 'package:stipres/services/biometric_auth_service.dart';
 import 'package:stipres/services/login_service.dart';
 
 class LoginController extends GetxController {
@@ -20,6 +21,9 @@ class LoginController extends GetxController {
   final mahasiswa = Rxn<Mahasiswa>();
   final dosen = Rxn<Dosen>();
   final loginService = LoginService();
+  final biometricService = BiometricAuthService();
+  final isBiometricEnabled = false.obs;
+  final isSaveLoginInfo = false.obs;
 
   void checkVisible() => isPasswordVisible.toggle();
 
@@ -28,7 +32,41 @@ class LoginController extends GetxController {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkStatusLogin();
+      isBiometricEnabled.value = _box.read('isBiometricEnabled') ?? false;
+      checkBiometricAvailability();
     });
+  }
+
+  void checkBiometricAvailability() async {
+    final isAvailable = await biometricService.isBiometricAvailable();
+
+    if (!isAvailable) {
+      _box.write("isBiometricAvailable", false);
+    }
+  }
+
+  Future<void> loginWithBiometric() async {
+    final canUse = await biometricService.isBiometricAvailable();
+    isBiometricEnabled.value = _box.read('isBiometricEnabled') ?? false;
+    final enabled = isBiometricEnabled.value;
+    isSaveLoginInfo.value = _box.read("isSaveLoginInfo") ?? false;
+
+    log.d("canuse: $canUse");
+    log.d("enabled: $enabled");
+
+    if (!canUse || !enabled || !isSaveLoginInfo.value) {
+      Get.snackbar("Biometrik tidak tersedia", "Pastikan fitur diaktifkan");
+      return;
+    }
+
+    final success = await biometricService.authenticate();
+    if (!success) {
+      Get.snackbar("Gagal", "Autentikasi biometrik gagal");
+      return;
+    }
+
+    final token = await biometricService.getBiometricToken();
+    if (token != null) {}
   }
 
   void checkStatusLogin() {

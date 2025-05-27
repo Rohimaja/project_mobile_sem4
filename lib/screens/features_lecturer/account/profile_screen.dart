@@ -498,7 +498,7 @@ void _showLogoutDialog(BuildContext context) {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Get.back();
                         },
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(color: Colors.blue),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_student/account/settings_controller.dart';
 import 'package:stipres/screens/features_student/account/bantuan.dart';
-import 'package:stipres/screens/features_student/account/sidik_jari.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 
 class Pengaturan extends StatefulWidget {
@@ -16,6 +16,7 @@ class Pengaturan extends StatefulWidget {
 class _PengaturanState extends State<Pengaturan> {
   var height, width;
   bool _isNotifOn = true;
+  final _controller = Get.find<SettingsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _PengaturanState extends State<Pengaturan> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(SidikJari());
+                            _controller.checkAvalaiblityBiometric();
                           },
                           borderRadius: BorderRadius.circular(
                               10), // opsional, supaya ripple-nya lebih bagus

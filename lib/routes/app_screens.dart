@@ -17,6 +17,7 @@ import 'package:stipres/bindings/features_student/attendance_binding.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart' as student;
 import 'package:stipres/bindings/features_lecturer/base_binding.dart';
 import 'package:stipres/bindings/features_lecturer/dashboard_binding.dart';
+import 'package:stipres/bindings/features_student/biometric_binding.dart';
 import 'package:stipres/bindings/features_student/calendar_binding.dart';
 import 'package:stipres/bindings/features_student/dashboard_binding.dart'
     as student;
@@ -26,6 +27,7 @@ import 'package:stipres/bindings/features_student/presence_content_binding.dart'
 import 'package:stipres/bindings/features_student/profile_binding.dart'
     as student;
 import 'package:stipres/bindings/features_lecturer/profile_binding.dart';
+import 'package:stipres/bindings/features_student/settings_binding.dart';
 import 'package:stipres/bindings/features_student/view_profile_binding.dart';
 import 'package:stipres/screens/auth/activation_account_screen_1.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
@@ -47,6 +49,7 @@ import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart'
 import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 import 'package:stipres/screens/features_student/account/pengaturan.dart'
     as student;
+import 'package:stipres/screens/features_student/account/sidik_jari.dart';
 
 import 'package:stipres/screens/features_student/account/view_profile.dart'
     as student;
@@ -182,7 +185,14 @@ class AppScreens {
         name: "/student/view-profile-screen",
         page: () => student.ViewProfilePage(),
         binding: ViewProfileBinding()),
-    GetPage(name: "/student/settings-screen", page: () => student.Pengaturan()),
+    GetPage(
+        name: "/student/settings-screen",
+        page: () => student.Pengaturan(),
+        binding: SettingsBinding()),
+    GetPage(
+        name: "/student/biometric-screen",
+        page: () => SidikJari(),
+        binding: BiometricBinding()),
     GetPage(
         name: "/student/change-email-screen",
         page: () => student.AlamatEmail()),

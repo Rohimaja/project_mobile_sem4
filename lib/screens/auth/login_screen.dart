@@ -231,7 +231,9 @@ class LoginScreen extends StatelessWidget {
                                               minimumSize: const Size(
                                                   double.infinity, 50),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              loginC.loginWithBiometric();
+                                            },
                                             label: Text(
                                               "Login",
                                               style: whiteTextStyle.copyWith(
