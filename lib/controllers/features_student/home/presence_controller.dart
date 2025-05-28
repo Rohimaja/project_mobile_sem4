@@ -22,9 +22,9 @@ class PresenceController extends GetxController {
 
   void fetchPresence() async {
     try {
-      String nim = _box.read("user_nim");
-      log.d(nim);
-      final result = await presensiMahasiswaService.tampilPresensi(nim);
+      String mahasiswaId = _box.read("mahasiswa_id").toString();
+      log.d(mahasiswaId);
+      final result = await presensiMahasiswaService.tampilPresensi(mahasiswaId);
       log.d(result.data);
 
       if (result.status == "success" && result.data != null) {

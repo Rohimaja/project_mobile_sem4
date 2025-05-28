@@ -1,28 +1,47 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/students/full_student_model.dart';
 import 'package:stipres/constants/api.dart';
+import 'package:stipres/services/token_service.dart';
 
 class ProfileMahasiswaService extends GetxService {
-  final String _baseURL = "${ApiConstants.globalUrl}activity/viewProfile.php";
+  final String _baseURL = "${ApiConstants.globalUrl}activity/viewProfile";
   final global = ApiConstants.globalUrl;
+  // final FlutterSecureStorage storage = FlutterSecureStorage();
+  final GetStorage _box = GetStorage();
+  final tokenService = Get.find<TokenService>();
 
   var log = Logger();
 
   Future<BaseResponse<FullStudentModelApi>> tampilFullProfile(
       String nim) async {
     try {
+      final token = await _box.read("auth_token");
+
       final url = Uri.parse("$_baseURL?nim=$nim");
-      final response = await http.get(url);
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
       log.d(url);
 
       final body = jsonDecode(response.body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await tampilFullProfile(nim);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,
