@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
@@ -45,6 +44,8 @@ class ActivationStep3Controller extends GetxController {
     if (passwordController.text.length <= 7) {
       valuePassword.value = true;
       passwordErrorMessage.value = "Masukkan password lebih dari 7 huruf";
+    } else {
+      valuePassword.value = false;
     }
   }
 
@@ -57,6 +58,8 @@ class ActivationStep3Controller extends GetxController {
       valueConfirmPassword.value = true;
       confirmPasswordErrorMessage.value =
           "Konfirmasi password tidak sesuai dengan password";
+    } else {
+      valueConfirmPassword.value = false;
     }
   }
 

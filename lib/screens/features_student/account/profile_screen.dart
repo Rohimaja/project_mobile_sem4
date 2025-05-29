@@ -509,118 +509,110 @@ void _showLogoutDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        contentPadding: const EdgeInsets.all(20),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                'KONFIRMASI LOGOUT',
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            contentPadding: const EdgeInsets.all(20),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    'KONFIRMASI LOGOUT',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            const SizedBox(height: 15),
+            Center(
+              child: Text(
+                'Apakah anda yakin ingin keluar?',
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
                 ),
-                const SizedBox(height: 15),
-                Center(
-                  child: Text(
-                    'Apakah anda yakin ingin keluar?',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                Obx(() {
-                  return (_controller.isBiometricAvailable.value &&
-                          _controller.isBiometricEnabled.value)
-                      ? Column(
+              ),
+            ),
+            Obx(() {
+              final showBiometric = _controller.isBiometricAvailable.value &&
+                  _controller.isBiometricEnabled.value;
+
+              return showBiometric
+                  ? Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
                           children: [
-                            SizedBox(height: 20),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    'Simpan informasi login anda',
-                                    style: GoogleFonts.plusJakartaSans(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                Obx(() {
-                                  return Checkbox(
-                                    value: _controller.saveLoginInfo.value,
-                                    activeColor: Colors
-                                        .blue, // warna kotak ketika dicentang
-                                    checkColor:
-                                        Colors.white, // warna centangnya
-                                    onChanged: (bool? value) {
-                                      _controller.saveLoginInfo.value =
-                                          value ?? true;
-                                      print(_controller.saveLoginInfo.value);
-                                    },
-                                  );
-                                })
-                              ],
-                            )
+                            Expanded(
+                              child: Text(
+                                'Simpan informasi login anda',
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 14, fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            Checkbox(
+                              value: _controller.saveLoginInfo.value,
+                              activeColor: Colors.blue,
+                              checkColor: Colors.white,
+                              onChanged: (bool? value) {
+                                _controller.saveLoginInfo.value = value ?? true;
+                                print(_controller.saveLoginInfo.value);
+                              },
+                            ),
                           ],
                         )
-                      : SizedBox.shrink();
-                }),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Colors.blue),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.blue),
-                        ),
+                      ],
+                    )
+                  : SizedBox.shrink();
+            }),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.blue),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle logout action
-                          _controller.logout();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          'Logout',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle logout action
+                      _controller.logout();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ],
+                    child: const Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
               ],
             ),
-          );
-        },
+          ],
+        ),
       );
     },
   );

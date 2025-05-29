@@ -51,6 +51,7 @@ class _PresenceScreenState extends State<PresenceScreen>
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+    _controller.fetchPresence();
 
     return Scaffold(
         backgroundColor: mainColor,

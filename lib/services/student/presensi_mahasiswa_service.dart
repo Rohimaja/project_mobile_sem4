@@ -12,7 +12,6 @@ import 'package:stipres/services/token_service.dart';
 class PresensiMahasiswaService extends GetxService {
   final String _baseUrl = "${ApiConstants.globalUrl}listview/getPresence";
   final tokenService = Get.find<TokenService>();
-  // final FlutterSecureStorage storage = FlutterSecureStorage();
   final GetStorage _box = GetStorage();
   var log = Logger();
 

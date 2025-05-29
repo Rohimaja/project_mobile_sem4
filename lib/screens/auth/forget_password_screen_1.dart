@@ -87,11 +87,7 @@ class ForgetPassword1 extends StatelessWidget {
                                         Obx(
                                           () => ElevatedButton(
                                             onPressed: (forgetPass1C
-                                                        .isLoading.value ||
-                                                    forgetPass1C
-                                                        .isProcessing.value ||
-                                                    forgetPass1C
-                                                        .isSnackbarOpen.value)
+                                                    .isSnackbarOpen.value)
                                                 ? null
                                                 : () async {
                                                     await forgetPass1C.sendOtp(

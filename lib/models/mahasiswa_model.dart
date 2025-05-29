@@ -4,9 +4,13 @@ class Mahasiswa {
   final String email;
   final int idProdi;
   final int semester;
+  final String? status;
+  final String? message;
 
   Mahasiswa(
-      {required this.nim,
+      {this.status,
+      this.message,
+      required this.nim,
       required this.nama,
       required this.email,
       required this.idProdi,
@@ -19,6 +23,8 @@ class Mahasiswa {
       email: json['email'],
       idProdi: json['prodi_id'],
       semester: json['semester'],
+      status: json['status'], // Ambil dari root JSON
+      message: json['message'], // Ambil dari root JSON
     );
   }
 

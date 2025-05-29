@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/constants/api.dart';
 import 'package:stipres/services/forget_password_service.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -78,12 +78,11 @@ class ForgetPasswordStep2Controller extends GetxController {
     try {
       isLoading.value = true;
 
-      showLoadingPopup();
+      showLoading();
       final result = await ForgetPasswordService().sendOtpSv(email);
-      resetLoading();
 
       if (result.status == "success") {
-        resetLoading();
+        Get.back();
         isSnackbarOpen.value = true;
         Get.snackbar("Berhasil", "OTP baru telah dikirim ke $email",
             duration: Duration(seconds: delaySnackbar));
@@ -92,12 +91,13 @@ class ForgetPasswordStep2Controller extends GetxController {
         });
       }
     } catch (e) {
-      resetLoading();
+      Get.back();
       isSnackbarOpen.value = true;
       Get.snackbar("Error", e.toString(),
           duration: Duration(seconds: delaySnackbar));
       Future.delayed(Duration(seconds: 2), () {
         isSnackbarOpen.value = false;
+        isLoading.value = false;
       });
     }
   }
@@ -110,36 +110,40 @@ class ForgetPasswordStep2Controller extends GetxController {
     logger.d(otp);
 
     if (otp.length < 4) {
-      resetLoading();
       isSnackbarOpen.value = true;
       Get.snackbar("Error", "OTP harus lengkap",
           duration: Duration(seconds: delaySnackbar));
       Future.delayed(Duration(seconds: 2), () {
         isSnackbarOpen.value = false;
+        isLoading.value = false;
       });
       return;
     }
 
-    showLoadingPopup();
+    showLoading();
     bool success = await forgetPasswordService.checkOtp(email, otp);
-    resetLoading();
 
     if (success) {
-      // resetLoading();
+      Get.back();
       Get.offNamed("/auth/forget-password/step3", arguments: email);
       logger.d(email);
     } else {
-      resetLoading();
+      Get.back();
       isSnackbarOpen.value = true;
-      Get.snackbar("Gagal", "OTP salah atau kadaluwarsa");
+      Get.snackbar("Gagal", "OTP salah atau kadaluwarsa",
+          duration: Duration(seconds: 1));
       Future.delayed(Duration(seconds: 2), () {
         isSnackbarOpen.value = false;
+        isLoading.value = false;
       });
     }
   }
 
-  void resetLoading() {
-    hideLoadingPopup();
-    isLoading.value = false;
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

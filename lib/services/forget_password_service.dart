@@ -9,7 +9,7 @@ import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/constants/api.dart';
 
 class ForgetPasswordService extends GetxService {
-  final String _baseURL = "${ApiConstants.globalUrl}auth/ForgetPassword.php";
+  final String _baseURL = "${ApiConstants.globalUrl}auth/";
   final GetStorage _box = GetStorage();
   final global = ApiConstants.globalUrl;
 
@@ -17,8 +17,10 @@ class ForgetPasswordService extends GetxService {
 
   Future<BaseResponse> sendOtpSv(String email) async {
     try {
-      final response =
-          await http.post(Uri.parse(_baseURL), body: {'email': email});
+      final response = await http.post(
+          Uri.parse("${_baseURL}forgetPassword/otp/send"),
+          body: {'email': email},
+          headers: {"Accept": "application/json"});
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
@@ -42,8 +44,10 @@ class ForgetPasswordService extends GetxService {
 
   Future<bool> checkOtp(String email, String otp) async {
     try {
-      final response = await http.post(Uri.parse(_baseURL),
-          body: {'email': email, 'otp': otp, 'action': 'checkOtp'});
+      final response = await http.post(
+          Uri.parse("${_baseURL}forgetPassword/otp/check"),
+          body: {'email': email, 'otp': otp},
+          headers: {"Accept": "application/json"});
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
@@ -61,9 +65,13 @@ class ForgetPasswordService extends GetxService {
 
   Future<BasicResponse> changePasswordSv(String email, String password) async {
     try {
-      final String newUrl = "auth/forgetPassword.php";
-      final response = await http.post(Uri.parse("$global$newUrl"),
-          body: {'email': email, 'new_password': password});
+      final String newUrl = "changePassword";
+
+      final response = await http.post(Uri.parse("$_baseURL$newUrl"),
+          body: {'email': email, 'new_password': password},
+          headers: {"Accept": "application/json"});
+
+      logger.d(response.statusCode);
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
         logger.d(body);
@@ -76,5 +84,4 @@ class ForgetPasswordService extends GetxService {
     return BasicResponse(
         status: "error", message: "Terjadi kesalahan saat mengganti password");
   }
-
 }

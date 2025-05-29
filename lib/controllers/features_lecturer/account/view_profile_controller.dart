@@ -48,7 +48,7 @@ class ViewProfileController extends GetxController {
   }
 
   Future<void> loadHeader() async {
-    String profile = _box.read('foto');
+    String profile = _box.read('foto') ?? '';
     final profileUrl =
         "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
     storedProfiles.value = profileUrl;

@@ -63,10 +63,37 @@ class LoginService extends GetxService {
 
           logger.d(_box.read("id_prodi"));
 
-          return Mahasiswa.fromJson(data);
+          logger.d(body['status']);
+
+          return Mahasiswa.fromJson({
+            ...data,
+            'status': body['status'],
+            'message': body['message'],
+          });
+        } else {
+          return Mahasiswa(
+            nim: '',
+            nama: '',
+            email: '',
+            idProdi: 0,
+            semester: 0,
+            status: body['status'],
+            message: body['message'],
+          );
         }
+      } else {
+        final body = jsonDecode(response.body);
+
+        return Mahasiswa(
+          nim: '',
+          nama: '',
+          email: '',
+          idProdi: 0,
+          semester: 0,
+          status: body['status'],
+          message: body['message'],
+        );
       }
-      return null;
     } catch (e) {
       logger.e("Error during login: $e");
       return null;
@@ -110,8 +137,22 @@ class LoginService extends GetxService {
 
           logger.d(body);
 
-          return Dosen.fromJson(data);
+          return Dosen.fromJson({
+            ...data,
+            'status': body['status'],
+            'message': body['message'],
+          });
         }
+      } else {
+        final body = jsonDecode(response.body);
+
+        return Dosen(
+          nip: '',
+          nama: '',
+          email: '',
+          status: body['status'],
+          message: body['message'],
+        );
       }
       return null;
     } catch (e) {

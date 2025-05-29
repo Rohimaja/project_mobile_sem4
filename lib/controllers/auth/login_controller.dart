@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/biometric_auth_service.dart';
 import 'package:stipres/services/login_service.dart';
 
@@ -11,6 +13,7 @@ class LoginController extends GetxController {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  final isSnackbarOpen = false.obs;
   final isLoading = false.obs;
   final isPasswordVisible = false.obs;
 
@@ -55,13 +58,23 @@ class LoginController extends GetxController {
     log.d("enabled: $enabled");
 
     if (!canUse || !enabled || !isSaveLoginInfo.value) {
-      Get.snackbar("Biometrik tidak tersedia", "Pastikan fitur diaktifkan");
+      isSnackbarOpen.value = true;
+      Get.snackbar("Biometrik tidak tersedia", "Pastikan fitur diaktifkan",
+          duration: Duration(seconds: 1));
+      Future.delayed(Duration(seconds: 2), () {
+        isSnackbarOpen.value = false;
+      });
       return;
     }
 
     final success = await biometricService.authenticate();
     if (!success) {
-      Get.snackbar("Gagal", "Autentikasi biometrik gagal");
+      isSnackbarOpen.value = true;
+      Get.snackbar("Gagal", "Autentikasi biometrik gagal",
+          duration: Duration(seconds: 1));
+      Future.delayed(Duration(seconds: 2), () {
+        isSnackbarOpen.value = false;
+      });
       return;
     }
 
@@ -89,48 +102,82 @@ class LoginController extends GetxController {
     final password = passwordController.text.trim();
 
     if (username.isEmpty || password.isEmpty) {
-      Get.snackbar("Error", "NIM dan Password tidak boleh kosong");
+      isSnackbarOpen.value = true;
+      Get.snackbar("Error", "NIM dan Password tidak boleh kosong",
+          duration: Duration(seconds: 1));
+      Future.delayed(Duration(seconds: 2), () {
+        isSnackbarOpen.value = false;
+      });
       isLoading.value = false;
       return;
     }
 
     final pass = password.length;
     if (pass <= 7) {
+      isSnackbarOpen.value = true;
       Get.snackbar(
         "Gagal",
         "Masukkan lebih dari 7 huruf password",
+        duration: Duration(seconds: 1),
       );
+      Future.delayed(Duration(seconds: 2), () {
+        isSnackbarOpen.value = false;
+      });
       return;
     }
 
     if (username.contains('@')) {
+      showLoading();
       final result = await loginService.loginDosen(username, password);
 
-      if (result != null) {
+      if (result!.status == "success") {
+        Get.back();
         dosen.value = result;
         _box.write("logged", true);
         _box.write("role", "dosen");
         Get.offAllNamed("/lecturer/base-screen");
         return;
       } else {
-        Get.snackbar("Gagal", "Login gagal");
+        Get.back();
+        isSnackbarOpen.value = true;
+        Get.snackbar("Gagal", result.message ?? "Login Gagal",
+            duration: Duration(seconds: 2));
+        Future.delayed(Duration(seconds: 3), () {
+          isSnackbarOpen.value = false;
+        });
       }
 
       isLoading.value = false;
     } else {
+      showLoading();
       final result = await loginService.loginMahasiswa(username, password);
 
-      if (result != null) {
+      if (result!.status == "success") {
+        Get.back();
         mahasiswa.value = result;
         log.d("nama log ${_box.read("user_name")}");
         _box.write("logged", true);
         _box.write("role", "mahasiswa");
         Get.offAllNamed("/student/base-screen");
       } else {
-        Get.snackbar("Gagal", "Login gagal");
+        Get.back();
+        isSnackbarOpen.value = true;
+        Get.snackbar("Gagal", result.message ?? "Login Gagal",
+            duration: Duration(seconds: 2));
+        Future.delayed(Duration(seconds: 3), () {
+          isSnackbarOpen.value = false;
+        });
       }
 
       isLoading.value = false;
     }
+  }
+
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

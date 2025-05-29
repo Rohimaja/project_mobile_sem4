@@ -22,6 +22,7 @@ class PresenceContentController extends GetxController {
   final alasanController = TextEditingController();
   var jumlahKarakter = 0.obs;
   final int maksKarakter = 200;
+  final isSnackbarOpen = false.obs;
 
   final statusAbsen = 0.obs;
 
@@ -57,7 +58,7 @@ class PresenceContentController extends GetxController {
     super.onReady();
     if (presensiId.value.isNotEmpty) {
       checkAttendanceTime();
-    } else {}
+    }
   }
 
   @override
@@ -109,6 +110,28 @@ class PresenceContentController extends GetxController {
   Future<void> uploadPresence() async {
     try {
       var mahasiswaId = _box.read("mahasiswa_id");
+
+      // Validasi waktu presensi sebelum upload
+      if (presence.value.tglPresensi != null &&
+          presence.value.durasiPresensi != null) {
+        final isOnSchedule = await checkPresenceTime(
+            presence.value.tglPresensi!, presence.value.durasiPresensi!);
+
+        if (!isOnSchedule) {
+          Get.back();
+          isSnackbarOpen.value = true;
+          Get.snackbar("Waktu Presensi Habis",
+              "Anda tidak dapat melakukan presensi di luar jadwal yang ditentukan",
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+              duration: Duration(seconds: 3));
+          Future.delayed(
+            Duration(seconds: 4),
+            () => isSnackbarOpen.value = false,
+          );
+          return;
+        }
+      }
 
       if (status.value == StatusPresensi.hadir) {
         statusAbsen.value = 1;
@@ -258,7 +281,13 @@ class PresenceContentController extends GetxController {
       int fileSize = await file.length();
 
       if (fileSize > maxSizeInBytes) {
-        Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+        isSnackbarOpen.value = true;
+        Get.snackbar("Error", "Ukuran gambar melebihi 5MB",
+            duration: Duration(seconds: 2));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isSnackbarOpen.value = false,
+        );
         return;
       }
       bukti.value = File(image.path);
@@ -274,14 +303,26 @@ class PresenceContentController extends GetxController {
         int fileSize = await file.length();
 
         if (fileSize > maxSizeInBytes) {
-          Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+          isSnackbarOpen.value = true;
+          Get.snackbar("Error", "Ukuran gambar melebihi 5MB",
+              duration: Duration(seconds: 2));
+          Future.delayed(
+            Duration(seconds: 3),
+            () => isSnackbarOpen.value = false,
+          );
           return;
         }
 
         bukti.value = File(image.path);
       }
     } catch (e) {
-      Get.snackbar("Gagal", "Kamera tidak tersedia: $e");
+      isSnackbarOpen.value = true;
+      Get.snackbar("Gagal", "Kamera tidak tersedia: $e",
+          duration: Duration(seconds: 2));
+      Future.delayed(
+        Duration(seconds: 3),
+        () => isSnackbarOpen.value = false,
+      );
     }
   }
 
@@ -297,12 +338,24 @@ class PresenceContentController extends GetxController {
 
       if (extension == null ||
           !['pdf', 'png', 'jpg', 'jpeg', 'docx'].contains(extension)) {
-        Get.snackbar("Error", "Formal file tidak diizinkan");
+        isSnackbarOpen.value = true;
+        Get.snackbar("Error", "Formal file tidak diizinkan",
+            duration: Duration(seconds: 2));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isSnackbarOpen.value = false,
+        );
         return;
       }
 
       if (fileSize > maxSizeInBytes) {
-        Get.snackbar("Error", "Ukuran file melebihi 5MB");
+        isSnackbarOpen.value = true;
+        Get.snackbar("Error", "Ukuran file melebihi 5MB",
+            duration: Duration(seconds: 2));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isSnackbarOpen.value = false,
+        );
         return;
       }
 

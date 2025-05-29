@@ -270,7 +270,9 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      _controller.submitPresence();
+                                      (!_controller.isSnackbarOpen.value)
+                                          ? _controller.submitPresence()
+                                          : null;
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: blueColor,

@@ -141,16 +141,13 @@ class ForgetPassword2 extends StatelessWidget {
                                         const SizedBox(height: 20),
                                         Obx(
                                           () => ElevatedButton(
-                                            onPressed:
-                                                (forgetPass2C.isLoading.value ||
-                                                        forgetPass2C
-                                                            .isSnackbarOpen
-                                                            .value)
-                                                    ? null
-                                                    : () async {
-                                                        await forgetPass2C
-                                                            .checkOtp();
-                                                      },
+                                            onPressed: (forgetPass2C
+                                                    .isSnackbarOpen.value)
+                                                ? null
+                                                : () async {
+                                                    await forgetPass2C
+                                                        .checkOtp();
+                                                  },
                                             style: ElevatedButton.styleFrom(
                                               elevation: 5,
                                               backgroundColor: blueColor,
