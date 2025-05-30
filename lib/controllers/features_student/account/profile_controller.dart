@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
@@ -17,6 +18,7 @@ class ProfileController extends GetxController {
   final saveLoginInfo = true.obs;
 
   final _box = GetStorage();
+  final FlutterSecureStorage storage = FlutterSecureStorage();
 
   final log = Logger();
 
@@ -51,7 +53,7 @@ class ProfileController extends GetxController {
     log.d("status Enabledc: $isBiometricEnabled");
   }
 
-  void logout() {
+  void logout() async {
     _box.erase();
     Get.offAllNamed("/");
     if (saveLoginInfo.value) {
@@ -59,6 +61,8 @@ class ProfileController extends GetxController {
       _box.write("isSaveLoginInfo", saveLoginInfo.value);
       log.d("isBiometricEnabled: ${isBiometricEnabled.value}");
       log.d("isSaveLoginInfo: ${saveLoginInfo.value}");
+    } else {
+      await storage.deleteAll();
     }
   }
 }

@@ -35,11 +35,6 @@ class PresenceController extends GetxController {
       if (result.status == "success" && result.data != null) {
         final List<PresensiDosenModel> updatedList =
             result.data!.map((presence) {
-          if (presence.namaRuangan == null) {
-            presence.namaRuangan = "-";
-          } else {
-            presence.namaRuangan = presence.namaRuangan;
-          }
           presence.durasiPresensi =
               "${presence.jamAwal} - ${presence.jamAkhir} WIB";
           return presence;
@@ -80,7 +75,7 @@ class PresenceController extends GetxController {
         final statusPresence = result.data;
         final tgl = statusPresence!.tanggalPresensi!.toString();
         final durasi = statusPresence.durasiPresensi;
-
+        Get.back();
         Get.snackbar("Conflict",
             "Pada tanggal $tgl sudah terdapat absensi di jam $durasi");
 

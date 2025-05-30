@@ -331,7 +331,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                   ),
                                   SizedBox(width: 10),
                                   Text(
-                                    "${_controller.storedDurasiPresensi.value} WIB",
+                                    _controller.storedDurasiPresensi.value,
                                     style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,

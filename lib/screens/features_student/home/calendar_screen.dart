@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/calendar_controller.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
@@ -19,27 +18,27 @@ class _CalendarScreenState extends State<CalendarScreen> {
   final _controller = Get.find<CalendarController>();
 
   // Simulasi data dari database
-  final Map<DateTime, List<Map<String, String>>> _events = {
-    DateTime.utc(2025, 4, 1): [
-      {'title': 'Hari Raya Idul Fitri 1446 H', 'type': 'Libur'},
-    ],
-    DateTime.utc(2025, 4, 10): [
-      {'title': 'Ujian Akhir Semester 2024/2025', 'type': 'Kegiatan'},
-    ],
-    DateTime.utc(2025, 4, 14): [
-      {'title': 'Libur Kenaikan Semester', 'type': 'Libur'},
-    ],
-    DateTime.utc(2025, 4, 24): [
-      {'title': 'Batas Pembayaran UKT Semester Genap', 'type': 'Kegiatan'},
-      {'title': 'Perbaikan Nilai', 'type': 'Kegiatan'},
-    ],
-    DateTime.utc(2025, 4, 30): [
-      {'title': 'Perkuliahan Semester Genap', 'type': 'Kegiatan'},
-    ],
-  };
+  // final Map<DateTime, List<Map<String, String>>> _events = {
+  //   DateTime.utc(2025, 4, 1): [
+  //     {'title': 'Hari Raya Idul Fitri 1446 H', 'type': 'Libur'},
+  //   ],
+  //   DateTime.utc(2025, 4, 10): [
+  //     {'title': 'Ujian Akhir Semester 2024/2025', 'type': 'Kegiatan'},
+  //   ],
+  //   DateTime.utc(2025, 4, 14): [
+  //     {'title': 'Libur Kenaikan Semester', 'type': 'Libur'},
+  //   ],
+  //   DateTime.utc(2025, 4, 24): [
+  //     {'title': 'Batas Pembayaran UKT Semester Genap', 'type': 'Kegiatan'},
+  //     {'title': 'Perbaikan Nilai', 'type': 'Kegiatan'},
+  //   ],
+  //   DateTime.utc(2025, 4, 30): [
+  //     {'title': 'Perkuliahan Semester Genap', 'type': 'Kegiatan'},
+  //   ],
+  // };
 
   List<Map<String, String>> _getEventsForDay(DateTime day) {
-    return _events[DateTime.utc(day.year, day.month, day.day)] ?? [];
+    return _controller.getEventsForDay(day);
   }
 
   @override

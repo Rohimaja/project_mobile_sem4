@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
 import 'package:stipres/constants/api.dart';
@@ -17,7 +18,7 @@ class LoginService extends GetxService {
 
   var logger = Logger(printer: PrettyPrinter(methodCount: 0));
 
-  Future<Mahasiswa?> loginMahasiswa(String nim, String password) async {
+  Future<Mahasiswa> loginMahasiswa(String nim, String password) async {
     try {
       final response = await http.post(
         Uri.parse(_baseURL),
@@ -61,9 +62,8 @@ class LoginService extends GetxService {
           _box.write("foto", data['foto']);
           _box.write("role", "mahasiswa");
 
-          logger.d(_box.read("id_prodi"));
-
-          logger.d(body['status']);
+          await _secure.write(key: "role", value: "mahasiswa");
+          await _secure.write(key: "mahasiswa_id", value: data['mahasiswa_id']);
 
           return Mahasiswa.fromJson({
             ...data,
@@ -96,11 +96,19 @@ class LoginService extends GetxService {
       }
     } catch (e) {
       logger.e("Error during login: $e");
-      return null;
+      return Mahasiswa(
+        nim: '',
+        nama: '',
+        email: '',
+        idProdi: 0,
+        semester: 0,
+        status: "error",
+        message: "Terjadi kesalahan $e",
+      );
     }
   }
 
-  Future<Dosen?> loginDosen(String email, String password) async {
+  Future<Dosen> loginDosen(String email, String password) async {
     try {
       final response = await http.post(Uri.parse(_baseURL),
           body: {'email': email, 'password': password, 'role': 'dosen'});
@@ -135,6 +143,9 @@ class LoginService extends GetxService {
           _box.write("foto", data['foto']);
           _box.write("role", 'dosen');
 
+          await _secure.write(key: "role", value: "dosen");
+          await _secure.write(key: "dosen_id", value: data['dosen_id']);
+
           logger.d(body);
 
           return Dosen.fromJson({
@@ -142,6 +153,14 @@ class LoginService extends GetxService {
             'status': body['status'],
             'message': body['message'],
           });
+        } else {
+          return Dosen(
+            nip: '',
+            nama: '',
+            email: '',
+            status: body['status'],
+            message: body['message'],
+          );
         }
       } else {
         final body = jsonDecode(response.body);
@@ -154,10 +173,19 @@ class LoginService extends GetxService {
           message: body['message'],
         );
       }
-      return null;
     } catch (e) {
       logger.e('Error during login: $e');
-      return null;
+      return Dosen(
+        nip: '',
+        nama: '',
+        email: '',
+        status: "error",
+        message: "Gagal terjadi kesalahan $e",
+      );
     }
   }
+
+  // Future<BaseResponse<String>> loginBiometric(String role, String id) async {
+
+  // }
 }

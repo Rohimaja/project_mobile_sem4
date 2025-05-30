@@ -21,7 +21,7 @@ class PresenceContentController extends GetxController {
 
   final alasanController = TextEditingController();
   var jumlahKarakter = 0.obs;
-  final int maksKarakter = 200;
+  final int maksKarakter = 250;
   final isSnackbarOpen = false.obs;
 
   final statusAbsen = 0.obs;
@@ -151,7 +151,7 @@ class PresenceContentController extends GetxController {
       log.d(alasanController.text);
 
       final alasan =
-          alasanController.text.isEmpty ? null : alasanController.text;
+          alasanController.text.isEmpty ? null : alasanController.text.trim();
 
       final buktiFinal = bukti() == null ? null : bukti.value;
 

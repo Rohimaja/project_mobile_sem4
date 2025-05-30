@@ -56,10 +56,17 @@ class ProfileMahasiswaService extends GetxService {
   Future<BaseResponse<String>> sendImage(
       int mahasiswaId, File? profilePic) async {
     try {
-      final url = Uri.parse("${global}activity/upProfileImage.php");
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("${global}activity/upProfile");
       final request = http.MultipartRequest('POST', url)
         ..fields['role'] = "mahasiswa"
         ..fields['mahasiswa_id'] = mahasiswaId.toString();
+
+      request.headers.addAll({
+        'Accept': 'application/json', // Header Accept
+        'Authorization': 'Bearer $token', // Header Authorization
+      });
 
       if (profilePic != null) {
         var stream = http.ByteStream(profilePic.openRead());
@@ -75,6 +82,15 @@ class ProfileMahasiswaService extends GetxService {
       log.d(respStr.body);
 
       final body = jsonDecode(respStr.body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await sendImage(mahasiswaId, profilePic);
+        }
+      }
+
       return BaseResponse<String>.fromJson(body, (data) => data['foto']);
     } catch (e) {
       log.e("Error: $e");

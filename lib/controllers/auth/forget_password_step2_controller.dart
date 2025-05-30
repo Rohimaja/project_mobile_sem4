@@ -30,8 +30,6 @@ class ForgetPasswordStep2Controller extends GetxController {
 
   var logger = Logger();
 
-  final String urlOtp = '${ApiConstants.globalUrl}auth/ForgetPassword.php';
-
   String maskedEmail() {
     logger.d(email);
     final parts = email.split('@');

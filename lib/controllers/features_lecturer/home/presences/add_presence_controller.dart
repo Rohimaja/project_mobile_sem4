@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
-import 'package:stipres/models/lecturers/presence_id_model.dart';
 import 'package:stipres/models/lecturers/presence_request_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/lecturer/add_presence_lecturer_service.dart';
@@ -184,7 +182,7 @@ class AddPresenceController extends GetxController {
               semester: int.parse(selectedSemester.value),
               matkulId: int.parse(selectedMatkulMap['id']!),
               tahunAjaranId: tahunAjaranId.value,
-              linkZoom: linkZoomController.text));
+              linkZoom: linkZoomController.text.trim()));
 
       if (result.status == "success") {
         Get.back();
@@ -243,9 +241,13 @@ class AddPresenceController extends GetxController {
     log.d("Jam Awal Str : ${jamAwalStr.value}");
     log.d("Jam Akhir Str: ${jamAkhirStr.value}");
     log.d("LinkZoom : ${linkZoomController.text}");
-    if (selectedProdiMap['id'] == null ||
+    if (!selectedProdiMap.containsKey('id') ||
+        selectedProdiMap['id'] == null ||
+        selectedProdiMap['id']!.isEmpty ||
         selectedSemester.isEmpty ||
+        !selectedMatkulMap.containsKey('id') ||
         selectedMatkulMap['id'] == null ||
+        selectedMatkulMap['id']!.isEmpty ||
         tahunAjaranId.value == 0 ||
         selectedDate.value == null ||
         jamAwal.value == null ||

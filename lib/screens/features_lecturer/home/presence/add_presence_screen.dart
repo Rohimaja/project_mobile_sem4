@@ -77,6 +77,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
         TextFormField(
           controller: controller,
           onChanged: onChanged,
+          maxLength: 254,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey),

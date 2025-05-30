@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/home/calendar_screen.dart';
 import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_student/widgets/cards/weekly_calendar_card.dart';
 import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';

@@ -8,7 +8,6 @@ import 'package:stipres/constants/api.dart';
 import 'package:http/http.dart' as http;
 
 class TokenService extends GetxService {
-  final String _baseURL = "${ApiConstants.globalUrl}auth/login";
   final String global = ApiConstants.globalUrl;
   final GetStorage _box = GetStorage();
   final FlutterSecureStorage _secure = FlutterSecureStorage();
@@ -41,7 +40,7 @@ class TokenService extends GetxService {
     } else {
       await _secure.deleteAll();
       _box.erase();
-      Get.offAllNamed("/login");
+      Get.offAllNamed("/");
       return false;
     }
   }

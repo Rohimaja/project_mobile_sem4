@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
@@ -18,6 +19,7 @@ class LoginController extends GetxController {
   final isPasswordVisible = false.obs;
 
   final GetStorage _box = GetStorage();
+  final FlutterSecureStorage storage = FlutterSecureStorage();
 
   final Logger log = Logger();
 
@@ -78,8 +80,8 @@ class LoginController extends GetxController {
       return;
     }
 
-    final token = await biometricService.getBiometricToken();
-    if (token != null) {}
+    // final result = await loginService.getBiometricToken();
+    // if (result) {}
   }
 
   void checkStatusLogin() {
@@ -130,7 +132,7 @@ class LoginController extends GetxController {
       showLoading();
       final result = await loginService.loginDosen(username, password);
 
-      if (result!.status == "success") {
+      if (result.status == "success") {
         Get.back();
         dosen.value = result;
         _box.write("logged", true);
@@ -152,7 +154,7 @@ class LoginController extends GetxController {
       showLoading();
       final result = await loginService.loginMahasiswa(username, password);
 
-      if (result!.status == "success") {
+      if (result.status == "success") {
         Get.back();
         mahasiswa.value = result;
         log.d("nama log ${_box.read("user_name")}");

@@ -318,7 +318,7 @@ class DashboardScreenLecturer extends StatelessWidget {
                                   bgColor:
                                       const Color.fromARGB(255, 251, 187, 187),
                                   onTap: () {
-                                    Get.toNamed("/lecturer/calendar-screen");
+                                    Get.toNamed("/student/calendar-screen");
                                   },
                                 ),
 

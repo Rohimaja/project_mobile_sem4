@@ -3,10 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/constants/api.dart';
 
 class BiometricAuthService extends GetxService {
-  final String _baseURL = "${ApiConstants.globalUrl}auth/login.php";
   final GetStorage _box = GetStorage();
   final FlutterSecureStorage _secure = FlutterSecureStorage();
   final Logger log = Logger();
@@ -37,10 +35,6 @@ class BiometricAuthService extends GetxService {
     await _secure.write(key: 'access_token', value: accessToken);
     await _secure.write(key: 'biometric_token', value: accessToken);
     await _box.write('isBiometricEnabled', true);
-  }
-
-  Future<String?> getBiometricToken() async {
-    return await _secure.read(key: "biometric_token");
   }
 
   Future<void> clearAccessToken() async {
