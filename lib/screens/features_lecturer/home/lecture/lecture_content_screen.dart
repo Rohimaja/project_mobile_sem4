@@ -82,7 +82,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      Divider(height: 20, color: Color(0xFFDADADA)),
                       Obx(() {
                         return Expanded(
                             child: _controller.lectureList.isEmpty

@@ -242,10 +242,10 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: 100, // Set the desired width
+                                    width: 120, // Set the desired width
                                     child: Text(
                                       'Program Studi',
-                                      style: const TextStyle(
+                                      style: GoogleFonts.plusJakartaSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         color: Colors.black,
@@ -264,7 +264,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                   SizedBox(width: 10),
                                   Text(
                                     _controller.storedProdi.value,
-                                    style: const TextStyle(
+                                    style: GoogleFonts.plusJakartaSans(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
@@ -276,10 +276,10 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: 100, // Set the desired width
+                                    width: 120, // Set the desired width
                                     child: Text(
                                       'Mata Kuliah',
-                                      style: const TextStyle(
+                                      style: GoogleFonts.plusJakartaSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         color: Colors.black,
@@ -298,7 +298,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                   SizedBox(width: 10),
                                   Text(
                                     _controller.storedMatkul.value,
-                                    style: const TextStyle(
+                                    style: GoogleFonts.plusJakartaSans(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
@@ -310,10 +310,10 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: 100, // Set the desired width
+                                    width: 120, // Set the desired width
                                     child: Text(
                                       'Jam Presensi',
-                                      style: const TextStyle(
+                                      style: GoogleFonts.plusJakartaSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
                                         color: Colors.black,

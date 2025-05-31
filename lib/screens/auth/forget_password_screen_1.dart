@@ -82,8 +82,7 @@ class ForgetPassword1 extends StatelessWidget {
                                                   borderSide: BorderSide(
                                                       color: blueColor)),
                                             )),
-                                        const SizedBox(height: 20),
-                                        const SizedBox(height: 20),
+                                        const SizedBox(height: 40),
                                         Obx(
                                           () => ElevatedButton(
                                             onPressed: (forgetPass1C

@@ -20,41 +20,6 @@ class _LectureScreenState extends State<LectureScreen>
   final TextEditingController _searchController = TextEditingController();
   final _controller = Get.find<LectureController>();
 
-  // final List<PerkuliahanModel> perkuliahanHariIni = [
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Pemrograman Mobile',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Pemrograman Website',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Izzul Islam Ramadhan S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Logika Algoritma',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Bima Achmad Fiil A. S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Machine Learning',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Edwin Kurniawan S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  // ];
-
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -275,7 +240,7 @@ class _LectureScreenState extends State<LectureScreen>
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          Divider(height: 20, color: Color(0xFFDADADA)),
                           Expanded(
                             child: filteredPerkuliahan.isEmpty
                                 ? Container(

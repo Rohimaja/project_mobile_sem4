@@ -268,23 +268,34 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 filteredSchedule.isEmpty
-                                    ? Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/ic_noData.png',
-                                              height: 120,
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Text(
-                                              "Tidak ada mata kuliah ditemukan.",
-                                              style: TextStyle(
-                                                color: greyColor,
-                                                fontStyle: FontStyle.italic,
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.5,
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize
+                                                .min, // agar tidak memaksa full height
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/ic_noData.png',
+                                                height: 120,
                                               ),
-                                            ),
-                                          ],
+                                              const SizedBox(height: 16),
+                                              Text(
+                                                "Tidak ada mata kuliah ditemukan.",
+                                                style: TextStyle(
+                                                  color: greyColor,
+                                                  fontStyle: FontStyle.italic,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       )
                                     : Column(

@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                                       height: 40,
                                       child: TextField(
                                         controller: loginC.usernameController,
-                                        style: TextStyle(fontSize: 18),
+                                        style: TextStyle(fontSize: 16),
                                         cursorHeight: 18,
                                         decoration: InputDecoration(
                                           contentPadding:
@@ -94,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                                           () => TextField(
                                             controller:
                                                 loginC.passwordController,
-                                            style: TextStyle(fontSize: 18),
+                                            style: TextStyle(fontSize: 16),
                                             cursorHeight: 18,
                                             obscureText:
                                                 !loginC.isPasswordVisible.value,

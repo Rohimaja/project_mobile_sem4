@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:stipres/bindings/auth/auth_binding.dart';
+import 'package:stipres/theme/app_theme.dart';
 import 'package:stipres/routes/app_screens.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/theme/theme_controller.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 
 void main() async {
@@ -14,6 +16,7 @@ void main() async {
   AuthBinding().dependencies();
 
   await GetStorage.init();
+  Get.put(ThemeController());
 
   runApp(MyApp());
 }
@@ -23,8 +26,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = ThemeController();
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeController.getThemeModeFromStorage(),
       getPages: AppScreens.screens,
       home: LoginScreen(),
     );
