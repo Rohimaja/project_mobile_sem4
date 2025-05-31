@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stipres/screens/features_student/account/view_profile.dart';
 import 'package:stipres/screens/features_student/home/calendar_screen.dart';
 import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_student/widgets/cards/weekly_calendar_card.dart';
@@ -131,36 +132,45 @@ class DashboardScreenStudent extends StatelessWidget {
                     left: 30,
                     child: Row(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: mainColor,
-                            shape: BoxShape.circle,
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed("/student/view-profile-screen");
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: mainColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipOval(
+                              child: Obx(() {
+                                final imageUrl = dashboardC.storedProfile.value;
+                                return (imageUrl.isNotEmpty)
+                                    ? FadeInImage.assetNetwork(
+                                        placeholder:
+                                            "assets/icons/ic_profile.jpeg",
+                                        image: imageUrl,
+                                        height: 70,
+                                        width: 70,
+                                        fit: BoxFit.cover,
+                                        imageErrorBuilder:
+                                            (context, url, error) =>
+                                                Image.asset(
+                                          "assets/icons/ic_profile.jpeg",
+                                          height: 70,
+                                          width: 70,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : Image.asset(
+                                        "assets/icons/ic_profile.jpeg",
+                                        height: 70,
+                                        width: 70,
+                                        fit: BoxFit.cover,
+                                      );
+                              }),
+                            ),
                           ),
-                          child: ClipOval(child: Obx(() {
-                            final imageUrl = dashboardC.storedProfile.value;
-                            return (imageUrl.isNotEmpty)
-                                ? FadeInImage.assetNetwork(
-                                    placeholder: "assets/icons/ic_profile.jpeg",
-                                    image: imageUrl,
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
-                                    imageErrorBuilder: (context, url, error) =>
-                                        Image.asset(
-                                      "assets/icons/ic_profile.jpeg",
-                                      height: 70,
-                                      width: 70,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : Image.asset(
-                                    "assets/icons/ic_profile.jpeg",
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
-                                  );
-                          })),
                         ),
                         const SizedBox(width: 10),
                         SizedBox(

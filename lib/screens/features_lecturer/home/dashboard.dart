@@ -138,36 +138,42 @@ class DashboardScreenLecturer extends StatelessWidget {
                     left: 30,
                     child: Row(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            color: mainColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipOval(child: Obx(() {
-                            final imageUrl = _controller.storedProfile.value;
-                            return (imageUrl.isNotEmpty)
-                                ? FadeInImage.assetNetwork(
-                                    placeholder: "assets/icons/ic_profile.jpeg",
-                                    image: imageUrl,
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
-                                    imageErrorBuilder: (context, url, error) =>
-                                        Image.asset(
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed("/lecturer/view-profile-screen");
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: mainColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipOval(child: Obx(() {
+                              final imageUrl = _controller.storedProfile.value;
+                              return (imageUrl.isNotEmpty)
+                                  ? FadeInImage.assetNetwork(
+                                      placeholder:
+                                          "assets/icons/ic_profile.jpeg",
+                                      image: imageUrl,
+                                      height: 70,
+                                      width: 70,
+                                      fit: BoxFit.cover,
+                                      imageErrorBuilder:
+                                          (context, url, error) => Image.asset(
+                                        "assets/icons/ic_profile.jpeg",
+                                        height: 70,
+                                        width: 70,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Image.asset(
                                       "assets/icons/ic_profile.jpeg",
                                       height: 70,
                                       width: 70,
                                       fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : Image.asset(
-                                    "assets/icons/ic_profile.jpeg",
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
-                                  );
-                          })),
+                                    );
+                            })),
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Obx(() {
