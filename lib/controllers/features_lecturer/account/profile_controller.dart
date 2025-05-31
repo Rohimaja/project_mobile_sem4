@@ -57,7 +57,7 @@ class ProfileController extends GetxController {
       log.d("isBiometricEnabled: ${isBiometricEnabled.value}");
       log.d("isSaveLoginInfo: ${saveLoginInfo.value}");
     } else {
-      await storage.delet();
+      await storage.deleteAll();
     }
   }
 }

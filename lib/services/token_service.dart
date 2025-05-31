@@ -16,14 +16,20 @@ class TokenService extends GetxService {
 
   Future<bool> refreshToken() async {
     final refreshToken = await _secure.read(key: "refresh_token");
+    logger.d(refreshToken);
+
+    final url = Uri.parse("${global}auth/refresh");
+    logger.d("URl token refresh: $url");
 
     final response = await http.post(
-      Uri.parse("$global/auth/refresh"),
+      url,
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $refreshToken',
       },
     );
+
+    logger.d(response.statusCode);
 
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);

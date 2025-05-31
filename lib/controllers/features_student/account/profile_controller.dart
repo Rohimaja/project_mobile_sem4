@@ -61,6 +61,8 @@ class ProfileController extends GetxController {
       _box.write("isSaveLoginInfo", saveLoginInfo.value);
       log.d("isBiometricEnabled: ${isBiometricEnabled.value}");
       log.d("isSaveLoginInfo: ${saveLoginInfo.value}");
+      final mahasiswaId = await storage.read(key: "mahasiswa_id");
+      log.f("check logout mahasiswaId: ${mahasiswaId}");
     } else {
       await storage.deleteAll();
     }

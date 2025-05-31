@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,6 +8,7 @@ import 'package:stipres/models/mahasiswa_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/biometric_auth_service.dart';
 import 'package:stipres/services/login_service.dart';
+import 'package:stipres/services/token_service.dart';
 
 class LoginController extends GetxController {
   final usernameController = TextEditingController();
@@ -25,6 +25,7 @@ class LoginController extends GetxController {
 
   final mahasiswa = Rxn<Mahasiswa>();
   final dosen = Rxn<Dosen>();
+  final tokenService = Get.find<TokenService>();
   final loginService = LoginService();
   final biometricService = BiometricAuthService();
   final isBiometricEnabled = false.obs;
@@ -80,8 +81,60 @@ class LoginController extends GetxController {
       return;
     }
 
-    // final result = await loginService.getBiometricToken();
-    // if (result) {}
+    final status = await tokenService.refreshToken();
+    log.w("fetch value status: $status");
+
+    final role = await storage.read(key: 'role');
+    if (role != null && role == "dosen") {
+      final dosenId = await storage.read(key: "dosen_id");
+      if (dosenId != null) {
+        showLoading();
+        final result = await loginService.loginBiometricDosen(role, dosenId);
+        if (result.status == "success") {
+          Get.back();
+          dosen.value = result.data!;
+          _box.write("logged", true);
+          _box.write("role", "dosen");
+          Get.offAllNamed("/lecturer/base-screen");
+          return;
+        } else {
+          Get.back();
+          isSnackbarOpen.value = true;
+          Get.snackbar("Gagal", result.message, duration: Duration(seconds: 2));
+          Future.delayed(Duration(seconds: 3), () {
+            isSnackbarOpen.value = false;
+          });
+        }
+      }
+    } else if (role != null && role == "mahasiswa") {
+      try {
+        final mahasiswaId = await storage.read(key: "mahasiswa_id");
+        // log.d("check mahasiswa ID : $mahasiswaId");
+        if (mahasiswaId != null) {
+          showLoading();
+          final result =
+              await loginService.loginBiometricMahasiswa(role, mahasiswaId);
+          if (result.status == "success") {
+            Get.back();
+            mahasiswa.value = result.data;
+            log.d("nama log ${_box.read("user_name")}");
+            _box.write("logged", true);
+            _box.write("role", "mahasiswa");
+            Get.offAllNamed("/student/base-screen");
+          } else {
+            Get.back();
+            isSnackbarOpen.value = true;
+            Get.snackbar("Gagal", result.message,
+                duration: Duration(seconds: 2));
+            Future.delayed(Duration(seconds: 3), () {
+              isSnackbarOpen.value = false;
+            });
+          }
+        }
+      } catch (e) {
+        log.f("error: $e");
+      }
+    }
   }
 
   void checkStatusLogin() {

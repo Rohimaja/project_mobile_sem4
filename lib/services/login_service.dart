@@ -9,12 +9,15 @@ import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
 import 'package:stipres/constants/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:stipres/services/token_service.dart';
 
 class LoginService extends GetxService {
   final String _baseURL = "${ApiConstants.globalUrl}auth/login";
   final String global = ApiConstants.globalUrl;
   final GetStorage _box = GetStorage();
+  final tokenService = Get.find<TokenService>();
   final FlutterSecureStorage _secure = FlutterSecureStorage();
+  final Logger log = Logger();
 
   var logger = Logger(printer: PrettyPrinter(methodCount: 0));
 
@@ -63,7 +66,11 @@ class LoginService extends GetxService {
           _box.write("role", "mahasiswa");
 
           await _secure.write(key: "role", value: "mahasiswa");
-          await _secure.write(key: "mahasiswa_id", value: data['mahasiswa_id']);
+          await _secure.write(
+              key: "mahasiswa_id", value: data['mahasiswa_id'].toString());
+
+          log.f(
+              "Check mahasiswa idddddddd: ${data['mahasiswa_id'].toString()}");
 
           return Mahasiswa.fromJson({
             ...data,
@@ -144,7 +151,8 @@ class LoginService extends GetxService {
           _box.write("role", 'dosen');
 
           await _secure.write(key: "role", value: "dosen");
-          await _secure.write(key: "dosen_id", value: data['dosen_id']);
+          await _secure.write(
+              key: "dosen_id", value: data['dosen_id'].toString());
 
           logger.d(body);
 
@@ -185,7 +193,103 @@ class LoginService extends GetxService {
     }
   }
 
-  // Future<BaseResponse<String>> loginBiometric(String role, String id) async {
+  Future<BaseResponse<Dosen>> loginBiometricDosen(
+      String role, String id) async {
+    try {
+      final token = await _box.read("auth_token");
 
-  // }
+      final url = Uri.parse("${global}auth/loginByBiometric");
+      log.d(url);
+
+      final response = await http.post(url, body: {
+        'role': role,
+        'dosen_id': id
+      }, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+
+      final body = jsonDecode(response.body);
+      log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await loginBiometricDosen(role, id);
+        }
+      }
+
+      final data = body['data'];
+
+      _box.write("user_nip", data['nip']);
+      _box.write("dosen_id", data['dosen_id']);
+      _box.write("user_nama", data['nama']);
+      _box.write("user_email", data['email']);
+      _box.write("foto", data['foto']);
+      _box.write("role", 'dosen');
+
+      return BaseResponse.fromJson(
+          body, (dataJson) => Dosen.fromJson(dataJson as Map<String, dynamic>));
+    } catch (e) {
+      log.f("Error: $e");
+      return BaseResponse(
+          status: "Error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
+
+  Future<BaseResponse<Mahasiswa>> loginBiometricMahasiswa(
+      String role, String id) async {
+    try {
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("${global}auth/loginByBiometric");
+      log.d(url);
+
+      final response = await http.post(url, body: {
+        'role': role,
+        'mahasiswa_id': id
+      }, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+
+      final body = jsonDecode(response.body);
+      log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await loginBiometricMahasiswa(role, id);
+        }
+      }
+
+      final data = body['data'];
+
+      log.d("data 1: ${data['nim']}");
+      log.d("data 1: ${data['mahasiswa_id']}");
+      log.d("data 1: ${data['nama']}");
+      log.d("data 1: ${data['email']}");
+      log.d("data 1: ${data['prodi_id']}");
+      log.d("data 1: ${data['nama_prodi']}");
+      log.d("data 1: ${data['semester']}");
+
+      _box.write("user_nim", data['nim']);
+      _box.write("mahasiswa_id", data['mahasiswa_id']);
+      _box.write("user_nama", data['nama']);
+      _box.write("user_email", data['email']);
+      _box.write("id_prodi", data['prodi_id']);
+      _box.write("nama_prodi", data['nama_prodi']);
+      _box.write("semester", data['semester']);
+      _box.write("foto", data['foto']);
+      _box.write("role", "mahasiswa");
+      return BaseResponse.fromJson(body,
+          (dataJson) => Mahasiswa.fromJson(dataJson as Map<String, dynamic>));
+    } catch (e) {
+      log.f("Error: $e");
+      return BaseResponse(
+          status: "Error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
 }

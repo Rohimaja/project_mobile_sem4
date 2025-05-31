@@ -22,8 +22,8 @@ class BiometricLoginService {
     final authenticated = await biometricService.authenticate();
     if (!authenticated) return false;
 
-    final refreshToken = await biometricService.getBiometricToken();
-    if (refreshToken == null) return false;
+    // final refreshToken = await biometricService.getBiometricToken();
+    // if (refreshToken == null) return false;
 
     // Ambil role
     final role = _box.read("role");
