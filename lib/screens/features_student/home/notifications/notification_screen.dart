@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/models/notification_model.dart';
-import 'package:stipres/screens/features_student/widgets/cards/notification_card.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/screens/features_student/home/notifications/detail_notification_screen.dart';
+import 'package:stipres/screens/features_student/models/notifications/detail_notification_model.dart';
+import 'package:stipres/screens/features_student/models/notifications/notification_model.dart';
+import 'package:stipres/screens/features_student/widgets/cards/notification_card.dart';
+import 'package:stipres/screens/reusable/custom_header.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -16,36 +19,62 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   final List<NotificationModel> allNotifications = [
     NotificationModel(
-      title: 'Presensi Gagal!',
-      message:
-          'Presensi anda pada jam 11.45 WIB pada mata kuliah Pemrograman Dasar gagal dilakukan.',
-      time: '2 jam yang lalu',
+      title: "Presensi Berhasil!",
+      message: "Presensi Anda berhasil direkam.",
+      time: "Baru saja",
+      type: NotificationType.presensiBerhasil,
+      iconAssetPath: "assets/icons/ic_presence.png",
+      namaUser: "Bagus",
+      tanggal: "29 Mei 2025",
+      jam: "08.00 WIB",
+      mataKuliah: "Struktur Data",
+    ),
+
+    // PRESENSI GAGAL
+    NotificationModel(
+      title: "Presensi Gagal!",
+      message: "Presensi Anda gagal dilakukan.",
+      time: "10 menit yang lalu",
       type: NotificationType.presensiGagal,
-      iconAssetPath: 'assets/icons/ic_warning.png',
+      iconAssetPath: "assets/icons/ic_warning.png",
+      namaUser: "Bagus",
+      tanggal: "29 Mei 2025",
+      jam: "10.15 WIB",
+      mataKuliah: "Basis Data",
     ),
+
+    // BATAS PRESENSI
     NotificationModel(
-      title: 'Pengumuman Perubahan Jadwal!',
+      title: "Presensi Hampir Ditutup!",
+      message: "Waktu presensi Anda akan segera berakhir.",
+      time: "30 menit yang lalu",
+      type: NotificationType.presensiAkanHabis,
+      iconAssetPath: "assets/icons/ic_time.png",
+      namaUser: "Bagus",
+      tanggal: "29 Mei 2025",
+      jam: "09.00 WIB",
+      mataKuliah: "Pemrograman Mobile",
+    ),
+
+    // PENGUMUMAN UMUM
+    NotificationModel(
+      title: "Perubahan Jadwal!",
       message:
-          'Terdapat perubahan jadwal perkuliahan minggu depan, silahkan periksa pada fitur jadwal.',
-      time: '6 jam yang lalu',
+          "Jadwal perkuliahan minggu ini mengalami perubahan. Silakan cek di menu Jadwal.",
+      time: "1 jam yang lalu",
       type: NotificationType.pengumuman,
-      iconAssetPath: 'assets/icons/ic_announcement.png',
+      iconAssetPath: "assets/icons/ic_announcement.png",
+      namaUser: "Bagus", // bisa kosong juga
     ),
+
+    // PENGUMUMAN UMUM LAINNYA
     NotificationModel(
-      title: 'Presensi Berhasil!',
-      message:
-          'Anda telah melakukan presensi pada 09.00 WIB di mata kuliah Pemrograman Dasar.',
-      time: 'Kemarin',
-      type: NotificationType.presensiSukses,
-      iconAssetPath: 'assets/icons/ic_presence.png',
-    ),
-    NotificationModel(
-      title: 'Batas Presensi Hampir Tercapai!',
-      message:
-          'Anda belum melakukan presensi mata kuliah Kewirausahaan hari ini.',
-      time: '16 Maret',
-      type: NotificationType.batasPresensi,
-      iconAssetPath: 'assets/icons/ic_time.png',
+      title: "Update Keamanan Akun",
+      message: "Segera ubah password akun Anda untuk menjaga keamanan akun.",
+      time: "3 jam yang lalu",
+      type: NotificationType.pengumuman,
+      iconAssetPath: "assets/icons/ic_announcement.png",
+      namaUser: "Bagus",
     ),
   ];
 
@@ -53,8 +82,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
     if (selectedCategory == 'Semua') return allNotifications;
     return allNotifications.where((notif) {
       if (selectedCategory == 'Presensi') {
-        return notif.type == NotificationType.batasPresensi ||
-            notif.type == NotificationType.presensiSukses ||
+        return notif.type == NotificationType.presensiAkanHabis ||
+            notif.type == NotificationType.presensiBerhasil ||
             notif.type == NotificationType.presensiGagal;
       } else if (selectedCategory == 'Pengumuman') {
         return notif.type == NotificationType.pengumuman;
@@ -105,50 +134,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  Container(
-                    width: width,
-                    height: 110,
-                    decoration: BoxDecoration(
-                      color: blueColor,
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(30)),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/bgheader.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () => Navigator.pop(context),
-                            borderRadius: BorderRadius.circular(100),
-                            customBorder: const CircleBorder(),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('assets/icons/ic_back.png',
-                                  height: 18, width: 18),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            "Notifikasi",
-                            style: GoogleFonts.poppins(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  CustomHeader(title: "Notifikasi"),
                   Positioned(
                     bottom: -44,
                     right: 0,
@@ -230,7 +216,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             final notif = filteredNotifications[index];
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 0),
-                              child: NotificationCard(notification: notif),
+                              child: GestureDetector(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled:
+                                        true, // agar bisa tinggi penuh jika perlu
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20)),
+                                    ),
+                                    backgroundColor: Colors.white,
+                                    builder: (_) =>
+                                        DetailNotificationScreen(notif: notif),
+                                  );
+                                },
+                                child: NotificationCard(notification: notif),
+                              ),
                             );
                           },
                         ),

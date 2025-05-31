@@ -4,10 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/notifications/notification_screen.dart';
 
-class ProfileScreenLecturer extends StatelessWidget {
+class ProfileScreenLecturer extends StatefulWidget {
   ProfileScreenLecturer({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreenLecturer> createState() => _ProfileScreenLecturerState();
+}
+
+class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
   var height, width;
+  bool hasNotification = true;
 
   final _controller = Get.find<ProfileController>();
 
@@ -64,19 +72,58 @@ class ProfileScreenLecturer extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
-                            shape: BoxShape.circle,
-                          ),
-                          padding: const EdgeInsets.only(
-                              top: 3, bottom: 6, left: 6, right: 6),
-                          child: const Icon(
-                            Icons.notifications_none,
-                            color: Colors.white,
-                            size: 26,
-                          ),
-                        ),
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              shape: const CircleBorder(),
+                              child: InkWell(
+                                onTap: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const NotificationScreen(),
+                                    ),
+                                  );
+
+                                  if (result != null && result is bool) {
+                                    setState(() {
+                                      hasNotification = result;
+                                    });
+                                  }
+                                },
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.3),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: const EdgeInsets.all(6),
+                                  child: Icon(
+                                    hasNotification
+                                        ? Icons.notifications
+                                        : Icons.notifications_none,
+                                    color: Colors.white,
+                                    size: 26,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // Badge merah
+                            if (hasNotification)
+                              const Positioned(
+                                top: 2,
+                                right: 2,
+                                child: CircleAvatar(
+                                  radius: 5,
+                                  backgroundColor: Colors.red,
+                                ),
+                              ),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -162,268 +209,287 @@ class ProfileScreenLecturer extends StatelessWidget {
 
               const SizedBox(height: 60), // Jarak agar profil tidak tertutup
 
-              // KONTEN PUTIH DI BAWAH
-              Container(
-                width: width,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 237, 235, 251),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 48, left: 30, right: 30),
+              Expanded(
+                  child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Nama Lengkap",
-                        style: blackTextStyle.copyWith(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.start),
-                    const SizedBox(height: 7),
                     Container(
-                      height: 50,
                       width: width,
-                      decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Obx(() {
-                              return Text(
-                                _controller.storedName.value,
-                                style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 161, 161, 161),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            })),
-                      ),
-                    ),
-                    const SizedBox(height: 9),
-                    Text("NIP",
-                        style: blackTextStyle.copyWith(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 237, 235, 251),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(40),
                         ),
-                        textAlign: TextAlign.start),
-                    const SizedBox(height: 7),
-                    Container(
-                      height: 50,
-                      width: width,
-                      decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Obx(() {
-                              return Text(
-                                _controller.storedNip.value,
-                                style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 161, 161, 161),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            })),
-                      ),
-                    ),
-                    const SizedBox(height: 9),
-                    Text("Email",
-                        style: blackTextStyle.copyWith(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.start),
-                    const SizedBox(height: 7),
-                    Container(
-                      height: 50,
-                      width: width,
-                      decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Obx(() {
-                              return Text(
-                                _controller.storedEmail.value,
-                                style: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 161, 161, 161),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            })),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed("/lecturer/view-profile-screen");
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: blueColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                      padding: const EdgeInsets.only(
+                          top: 10, bottom: 48, left: 30, right: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Nama Lengkap",
+                              style: blackTextStyle.copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
                               ),
-                              minimumSize: const Size(double.infinity, 50),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/icons/ic_view.png',
-                                    height: 20, width: 20),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Lihat Profil",
-                                  style: TextStyle(
-                                      color: whiteColor,
-                                      fontWeight: bold,
-                                      fontSize: 14),
+                              textAlign: TextAlign.start),
+                          const SizedBox(height: 7),
+                          Container(
+                            height: 50,
+                            width: width,
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
                                 ),
                               ],
-                            )),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                        width: width,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
                             ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.toNamed("/student/settings-screen");
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset('assets/icons/ic_settings.png',
-                                      height: 30, width: 30),
-                                  SizedBox(width: 16),
-                                  Text("Pengaturan",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Obx(() {
+                                    return Text(
+                                      _controller.storedName.value,
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 161, 161, 161),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                      textAlign: TextAlign.center),
-                                ],
-                              ),
+                                    );
+                                  })),
                             ),
-                            SizedBox(height: 20),
-                            InkWell(
-                              onTap: () {
-                                Get.toNamed("/auth/forget-password/step3");
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                      'assets/icons/ic_gantipassword.png',
-                                      height: 30,
-                                      width: 30),
-                                  SizedBox(width: 16),
-                                  Text("Ganti Password",
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                      textAlign: TextAlign.center),
-                                ],
+                          ),
+                          const SizedBox(height: 9),
+                          Text("NIP",
+                              style: blackTextStyle.copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
                               ),
-                            ),
-                          ],
-                        )),
-                    SizedBox(height: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              _showLogoutDialog(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: redColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              minimumSize: const Size(double.infinity, 50),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/icons/ic_logout.png',
-                                    height: 20, width: 20),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Logout",
-                                  style: TextStyle(
-                                      color: whiteColor,
-                                      fontWeight: bold,
-                                      fontSize: 14),
+                              textAlign: TextAlign.start),
+                          const SizedBox(height: 7),
+                          Container(
+                            height: 50,
+                            width: width,
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
                                 ),
                               ],
-                            )),
-                      ],
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Obx(() {
+                                    return Text(
+                                      _controller.storedNip.value,
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 161, 161, 161),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    );
+                                  })),
+                            ),
+                          ),
+                          const SizedBox(height: 9),
+                          Text("Email",
+                              style: blackTextStyle.copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.start),
+                          const SizedBox(height: 7),
+                          Container(
+                            height: 50,
+                            width: width,
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Obx(() {
+                                    return Text(
+                                      _controller.storedEmail.value,
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 161, 161, 161),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    );
+                                  })),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Get.toNamed(
+                                        "/lecturer/view-profile-screen");
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: blueColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset('assets/icons/ic_view.png',
+                                          height: 20, width: 20),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Lihat Profil",
+                                        style: TextStyle(
+                                            color: whiteColor,
+                                            fontWeight: bold,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  )),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                              width: width,
+                              padding: EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.toNamed("/student/settings-screen");
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                            'assets/icons/ic_settings.png',
+                                            height: 30,
+                                            width: 30),
+                                        SizedBox(width: 16),
+                                        Text("Pengaturan",
+                                            style: blackTextStyle.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                            textAlign: TextAlign.center),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.toNamed(
+                                          "/auth/forget-password/step3");
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                            'assets/icons/ic_gantipassword.png',
+                                            height: 30,
+                                            width: 30),
+                                        SizedBox(width: 16),
+                                        Text("Ganti Password",
+                                            style: blackTextStyle.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                            textAlign: TextAlign.center),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _showLogoutDialog(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: redColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset('assets/icons/ic_logout.png',
+                                          height: 20, width: 20),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Logout",
+                                        style: TextStyle(
+                                            color: whiteColor,
+                                            fontWeight: bold,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  )),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
+              )),
             ],
           ),
         ],

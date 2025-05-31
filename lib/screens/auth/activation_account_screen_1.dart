@@ -18,7 +18,7 @@ class ActivationAccount1 extends StatelessWidget {
             ReusableBackground(),
             Center(
                 child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    margin: const EdgeInsets.only(top: 60),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -27,9 +27,6 @@ class ActivationAccount1 extends StatelessWidget {
                           width: 140,
                           height: 140,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
                         Expanded(
                           child: SingleChildScrollView(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -37,21 +34,21 @@ class ActivationAccount1 extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     "assets/images/picture_book.png",
-                                    width: 178,
-                                    height: 178,
+                                    width: 193,
+                                    height: 193,
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 20,
                                   ),
                                   Text("Validasi Akun!",
                                       style: blackTextStyle.copyWith(
-                                          fontSize: 20, fontWeight: bold)),
+                                          fontSize: 16, fontWeight: bold)),
                                   const SizedBox(height: 10),
                                   Text("Silahkan masukkan alamat email anda",
                                       style: blackTextStyle.copyWith(
-                                          fontSize: 16)),
+                                          fontSize: 14)),
                                   SizedBox(
-                                    height: 20,
+                                    height: 30,
                                   ),
                                   Container(
                                     margin:
@@ -88,8 +85,7 @@ class ActivationAccount1 extends StatelessWidget {
                                                     color: blueColor)),
                                           ),
                                         ),
-                                        const SizedBox(height: 20),
-                                        const SizedBox(height: 20),
+                                        const SizedBox(height: 40),
                                       ],
                                     ),
                                   ),

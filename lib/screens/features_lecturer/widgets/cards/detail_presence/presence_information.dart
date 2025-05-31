@@ -56,7 +56,7 @@ class PresenceInformationCard extends StatelessWidget {
                 child: Text(
                   "Detail Presensi Mahasiswa",
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                   ),
@@ -198,7 +198,7 @@ class PresenceInformationCard extends StatelessWidget {
   }
 
   Widget _buildExpandableAlasan(String label, String value) {
-    final maxLines = 4;
+    final maxLines = 5;
     final textStyle = GoogleFonts.plusJakartaSans(
       fontSize: 14,
       fontWeight: FontWeight.bold,
@@ -212,6 +212,7 @@ class PresenceInformationCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
+              height: 100,
               width: 110,
               child: Text(
                 label,
@@ -226,7 +227,7 @@ class PresenceInformationCard extends StatelessWidget {
             Expanded(child: Obx(() {
               return isExpanded.value
                   ? SizedBox(
-                      height: 110,
+                      height: 130,
                       child: SingleChildScrollView(
                         child: Text(
                           value,

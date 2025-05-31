@@ -27,9 +27,7 @@ class ViewProfilePage extends StatelessWidget {
             top: 110, // atur posisi agar setengah berada di header
             left: 0,
             right: 0,
-            child: 
-               _buildProfilePicture()
-            ),
+            child: _buildProfilePicture()),
       ]),
     );
   }
@@ -169,8 +167,8 @@ class ViewProfilePage extends StatelessWidget {
                 child: Ink(
                   width: 32,
                   height: 32,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF0D0063),
+                  decoration: BoxDecoration(
+                    color: blueColor,
                     shape: BoxShape.circle,
                   ),
                   child: const Padding(

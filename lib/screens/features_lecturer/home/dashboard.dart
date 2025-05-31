@@ -4,16 +4,24 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
-import 'package:stipres/screens/features_lecturer/home/notification_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/notifications/notification_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/weeklyCalendar_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/allSchedule_link.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/calendar_link.dart';
 import 'package:stipres/constants/styles.dart';
 
-class DashboardScreenLecturer extends StatelessWidget {
+class DashboardScreenLecturer extends StatefulWidget {
   DashboardScreenLecturer({super.key});
+
+  @override
+  State<DashboardScreenLecturer> createState() =>
+      _DashboardScreenLecturerState();
+}
+
+class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
   var height, width;
+  bool hasNotification = true;
 
   final _controller = Get.find<DashboardController>();
 
@@ -73,33 +81,57 @@ class DashboardScreenLecturer extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Material(
-                          color:
-                              Colors.transparent, // biar background transparan
-                          shape: const CircleBorder(), // biar ripple bulat
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationScreen()),
-                              );
-                            },
-                            borderRadius: BorderRadius.circular(100),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.3),
-                                shape: BoxShape.circle,
-                              ),
-                              padding: const EdgeInsets.only(
-                                  top: 3, bottom: 6, left: 6, right: 6),
-                              child: const Icon(
-                                Icons.notifications_none,
-                                color: Colors.white,
-                                size: 26,
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              shape: const CircleBorder(),
+                              child: InkWell(
+                                onTap: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const NotificationScreen(),
+                                    ),
+                                  );
+
+                                  if (result != null && result is bool) {
+                                    setState(() {
+                                      hasNotification = result;
+                                    });
+                                  }
+                                },
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.3),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: const EdgeInsets.all(6),
+                                  child: Icon(
+                                    hasNotification
+                                        ? Icons.notifications
+                                        : Icons.notifications_none,
+                                    color: Colors.white,
+                                    size: 26,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+
+                            // Badge merah
+                            if (hasNotification)
+                              const Positioned(
+                                top: 2,
+                                right: 2,
+                                child: CircleAvatar(
+                                  radius: 5,
+                                  backgroundColor: Colors.red,
+                                ),
+                              ),
+                          ],
                         )
                       ],
                     ),
@@ -418,8 +450,8 @@ class DashboardScreenLecturer extends StatelessWidget {
                         return Container(
                           alignment: Alignment.center,
                           color: mainColor,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                          padding: EdgeInsets.fromLTRB(
+                              20, 10, 20, 20), // Padding untuk konten jadwal
                           child: _controller.jadwalList.isEmpty
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -432,10 +464,11 @@ class DashboardScreenLecturer extends StatelessWidget {
                                     SizedBox(height: 15),
                                     Text(
                                       'Tidak ada jadwal hari ini',
-                                      style: blackTextStyle.copyWith(
+                                      style: greyTextStyle.copyWith(
                                           fontSize: 15,
                                           fontFamily: 'poppins',
-                                          fontWeight: FontWeight.w400),
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.italic),
                                     ),
                                   ],
                                 )

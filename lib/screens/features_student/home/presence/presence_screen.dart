@@ -243,7 +243,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                             child: filteredPresensi.isEmpty
                                 ? SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.6, // setengah tinggi layar
+                                        0.5, // setengah tinggi layar
                                     child: Center(
                                       child: Column(
                                         mainAxisSize: MainAxisSize

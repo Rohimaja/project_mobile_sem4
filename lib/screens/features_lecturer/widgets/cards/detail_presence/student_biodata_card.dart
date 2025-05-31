@@ -46,24 +46,27 @@ class StudentBiodataCard extends StatelessWidget {
               left: 20,
               right: 20,
               child: Container(
+                height: 230,
                 padding: const EdgeInsets.only(
                     top: 60, left: 12, right: 12, bottom: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min, // <--- ini penting
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildRowInfo('Nama', nama),
-                    const SizedBox(height: 8),
-                    _buildRowInfo('NIM', nim),
-                    const SizedBox(height: 8),
-                    _buildRowInfo('Semester', semester),
-                    const SizedBox(height: 8),
-                    _buildRowInfo('Program Studi', prodi),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildRowInfo('Nama', nama),
+                      SizedBox(height: 12),
+                      _buildRowInfo('NIM', nim),
+                      SizedBox(height: 12),
+                      _buildRowInfo('Semester', semester),
+                      SizedBox(height: 12),
+                      _buildRowInfo('Program Studi', prodi),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -97,7 +100,7 @@ class StudentBiodataCard extends StatelessWidget {
               child: Text(
                 "Biodata Mahasiswa",
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue,
                 ),

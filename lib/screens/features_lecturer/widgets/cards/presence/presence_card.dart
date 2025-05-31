@@ -91,7 +91,7 @@ class PresenceCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     IconTextInfo(
-                      iconPath: 'assets/icons/ic_location.png',
+                      iconPath: 'assets/icons/ic_matakuliah.png',
                       text: data.namaRuangan!,
                     ),
                     const SizedBox(height: 4),

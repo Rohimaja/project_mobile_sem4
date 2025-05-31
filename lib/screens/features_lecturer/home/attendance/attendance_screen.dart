@@ -233,7 +233,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           Row(
                             children: [
                               const SizedBox(
-                                  width: 100, child: Text('Program Studi')),
+                                  width: 120, child: Text('Program Studi')),
                               const Text(' : '),
                               const SizedBox(width: 10),
                               Obx(() {
@@ -250,7 +250,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           Row(
                             children: [
                               const SizedBox(
-                                  width: 100, child: Text('Semester')),
+                                  width: 120, child: Text('Semester')),
                               const Text(' : '),
                               const SizedBox(width: 10),
                               Obx(() {

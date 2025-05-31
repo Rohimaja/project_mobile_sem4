@@ -5,6 +5,7 @@ import 'package:stipres/screens/features_student/account/bantuan.dart';
 import 'package:stipres/screens/features_student/account/sidik_jari.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_controller.dart';
 
 class Pengaturan extends StatefulWidget {
   Pengaturan({Key? key}) : super(key: key);
@@ -294,7 +295,6 @@ class _PengaturanState extends State<Pengaturan> {
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
-                                            // TODO: Simpan tema
                                             Navigator.pop(context);
                                           },
                                           style: ElevatedButton.styleFrom(

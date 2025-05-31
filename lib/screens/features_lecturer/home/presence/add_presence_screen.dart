@@ -286,7 +286,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                         "Mohon isi data dibawah ini",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: 15,
                         ),
                       ),
                       Divider(

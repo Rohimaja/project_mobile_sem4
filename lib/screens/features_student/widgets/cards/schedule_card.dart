@@ -153,8 +153,6 @@ class JadwalCard extends StatelessWidget {
                                     );
                                   },
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.24,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 4),
                                     child: const Text(

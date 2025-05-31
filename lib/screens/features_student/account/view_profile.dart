@@ -208,6 +208,7 @@ class ViewProfilePage extends StatelessWidget {
           _buildProfileItem("Program Studi", _controller.storedProdi.value),
           _buildDivider(),
           _buildProfileItem("No. Telp", _controller.storedNoTelp.value),
+          _buildDivider(),
         ],
       ),
     );
