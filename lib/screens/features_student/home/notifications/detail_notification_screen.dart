@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/screens/features_student/models/notifications/detail_notification_model.dart';
 import 'package:stipres/screens/features_student/models/notifications/notification_model.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class DetailNotificationScreen extends StatelessWidget {
   final NotificationModel notif;
@@ -36,14 +37,14 @@ class DetailNotificationScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
-        top: 12,
-        left: 16,
-        right: 16,
+        top: 0,
+        left: 0,
+        right: 0,
       ),
       child: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: styles.getTextField(context),
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -99,12 +100,16 @@ class DetailNotificationScreen extends StatelessWidget {
                       children: [
                         Text(
                           notif.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: styles.getTextColor(context)),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           notif.message,
-                          style: const TextStyle(fontSize: 13),
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: styles.getTextColor(context)),
                         ),
                         const SizedBox(height: 6),
                         Text(
@@ -126,7 +131,7 @@ class DetailNotificationScreen extends StatelessWidget {
                   _generateDetailMessage(notif),
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.black54,
+                    color: styles.getTextColor(context).withOpacity(0.8),
                   ),
                 ),
               ),

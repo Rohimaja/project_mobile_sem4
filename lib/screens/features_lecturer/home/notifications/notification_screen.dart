@@ -8,6 +8,7 @@ import 'package:stipres/screens/features_lecturer/models/notifications/detail_no
 import 'package:stipres/screens/features_lecturer/widgets/cards/notification_card.dart';
 import 'package:stipres/screens/features_lecturer/models/notifications/notification_model.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -132,7 +133,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Stack(
           children: [
             Column(
@@ -147,7 +148,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       child: Container(
                         width: 40,
                         height: 44,
-                        color: blueColor,
+                        color: styles.getBlueColor(context),
                       ),
                     ),
                     Positioned(
@@ -157,7 +158,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         width: 45,
                         height: 45,
                         decoration: BoxDecoration(
-                          color: mainColor,
+                          color: styles.getMainColor(context),
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(40),
                           ),

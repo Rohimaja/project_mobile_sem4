@@ -4,6 +4,7 @@ import 'package:stipres/controllers/features_student/home/calendar_controller.da
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -15,7 +16,6 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  final _controller = Get.find<CalendarController>();
 
   // Simulasi data dari database
   // final Map<DateTime, List<Map<String, String>>> _events = {
@@ -57,7 +57,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Stack(
           children: [
             Column(
@@ -143,7 +143,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                   style: TextStyle(
                                     color: isSelected || isToday
                                         ? Colors.white
-                                        : Colors.black,
+                                        : styles.getTextColor(context),
                                     fontWeight: isSelected
                                         ? FontWeight.bold
                                         : FontWeight.normal,
@@ -172,11 +172,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       );
                     },
                     child: selectedEvents.isEmpty
-                        ? const Center(
+                        ? Center(
                             key: ValueKey("no_event"),
                             child: Text(
                               "Tidak ada acara pada hari ini.",
-                              style: TextStyle(fontStyle: FontStyle.italic),
+                              style: TextStyle(
+                                fontStyle: FontStyle.italic, color: greyColor),
                             ),
                           )
                         : ListView.builder(

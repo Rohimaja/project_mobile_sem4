@@ -19,3 +19,9 @@ TextStyle greenTextStyle = GoogleFonts.poppins(color: greenColor);
 TextStyle linkTextStyle = GoogleFonts.poppins(color: linkColor);
 
 FontWeight bold = FontWeight.bold;
+
+Color mainColorLight = const Color(0xFFEDEBFB);
+Color blueColorLight = const Color(0xFF1E88E4);
+
+Color mainColorDark = const Color(0xFF121212);
+Color blueColorDark = const Color.fromARGB(255, 0, 25, 45);

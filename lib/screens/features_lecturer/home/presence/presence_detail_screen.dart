@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/presences/presence_detail_controller.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/presence/presence_detail_card.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class PresenceDetailScreen extends StatefulWidget {
   const PresenceDetailScreen({super.key});
@@ -52,7 +53,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Obx(() {
           final filteredMahasiswa = _controller.studentList.where((nama) {
             final query = _searchController.text.toLowerCase();
@@ -71,7 +72,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                         width: width,
                         height: 110,
                         decoration: BoxDecoration(
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                           ),
@@ -198,7 +199,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                         child: Container(
                           width: 40,
                           height: 44,
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                         ),
                       ),
                       Positioned(
@@ -208,7 +209,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: mainColor,
+                            color: styles.getMainColor(context),
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(40),
                             ),
@@ -248,17 +249,17 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                       style: GoogleFonts.plusJakartaSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
-                                        color: Colors.black,
+                                        color: styles.getTextColor(context),
                                       ),
                                     ),
                                   ),
                                   SizedBox(width: 5),
                                   Text(
                                     ':',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: styles.getTextColor(context),
                                     ),
                                   ),
                                   SizedBox(width: 10),
@@ -267,7 +268,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                      color: styles.getTextColor(context),
                                     ),
                                   ),
                                 ],
@@ -282,17 +283,17 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                       style: GoogleFonts.plusJakartaSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
-                                        color: Colors.black,
+                                        color: styles.getTextColor(context),
                                       ),
                                     ),
                                   ),
                                   SizedBox(width: 5),
                                   Text(
                                     ':',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: styles.getTextColor(context),
                                     ),
                                   ),
                                   SizedBox(width: 10),
@@ -301,7 +302,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                      color: styles.getTextColor(context),
                                     ),
                                   ),
                                 ],
@@ -316,17 +317,17 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                       style: GoogleFonts.plusJakartaSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal,
-                                        color: Colors.black,
+                                        color: styles.getTextColor(context),
                                       ),
                                     ),
                                   ),
                                   SizedBox(width: 5),
                                   Text(
                                     ':',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: styles.getTextColor(context),
                                     ),
                                   ),
                                   SizedBox(width: 10),
@@ -335,7 +336,7 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                     style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                      color: styles.getTextColor(context),
                                     ),
                                   ),
                                 ],

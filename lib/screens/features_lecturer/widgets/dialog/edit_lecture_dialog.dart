@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 void showEditLinkDialog(
     BuildContext context, String currentLink, Function(String) onSubmit) {
@@ -10,11 +11,15 @@ void showEditLinkDialog(
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
+      backgroundColor: styles.getTextField(context),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       title: Text(
         "Edit Link Perkuliahan",
         style: GoogleFonts.plusJakartaSans(
-            fontWeight: FontWeight.bold, fontSize: 16),
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+          color: styles.getTextColor(context),
+        ),
       ),
       content: SizedBox(
         width: 300,
@@ -27,6 +32,8 @@ void showEditLinkDialog(
             TextField(
               controller: linkController,
               decoration: InputDecoration(
+                filled: true,
+                fillColor: styles.getTextColor(context),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: blueColor),
                   borderRadius: BorderRadius.circular(10),

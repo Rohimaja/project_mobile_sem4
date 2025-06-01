@@ -8,6 +8,7 @@ import 'package:stipres/screens/features_student/models/notifications/detail_not
 import 'package:stipres/screens/features_student/models/notifications/notification_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/notification_card.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -128,57 +129,62 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: mainColor,
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  CustomHeader(title: "Notifikasi"),
-                  Positioned(
-                    bottom: -44,
-                    right: 0,
-                    child: Container(
-                      width: 40,
-                      height: 44,
-                      color: blueColor,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, allNotifications.isNotEmpty); // BENAR
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: styles.getMainColor(context),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    CustomHeader(title: "Notifikasi"),
+                    Positioned(
+                      bottom: -44,
+                      right: 0,
+                      child: Container(
+                        width: 40,
+                        height: 44,
+                        color: styles.getBlueColor(context),
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: -45,
-                    right: 0,
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(40),
+                    Positioned(
+                      bottom: -45,
+                      right: 0,
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: styles.getMainColor(context),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(40),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-
-              // Filter Buttons
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 30, right: 30, top: 20, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start, // Align ke kiri
-                  children: [
-                    buildCategoryButton("Semua"),
-                    const SizedBox(width: 20), // Spasi antar tombol
-                    buildCategoryButton("Presensi"),
-                    const SizedBox(width: 20),
-                    buildCategoryButton("Pengumuman"),
                   ],
                 ),
-              ),
+
+                // Filter Buttons
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 30, right: 30, top: 20, bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start, // Align ke kiri
+                    children: [
+                      buildCategoryButton("Semua"),
+                      const SizedBox(width: 20), // Spasi antar tombol
+                      buildCategoryButton("Presensi"),
+                      const SizedBox(width: 20),
+                      buildCategoryButton("Pengumuman"),
+                    ],
+                  ),
+                ),
 
               // Animated List or Empty Placeholder
               Expanded(child: Obx(() {
@@ -245,6 +251,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

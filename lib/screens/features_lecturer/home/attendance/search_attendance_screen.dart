@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/controllers/features_lecturer/home/attendances/attendance_controller.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class CariDataScreen extends StatefulWidget {
   final void Function(String semester, String prodi) onSearch;
@@ -37,6 +39,7 @@ class _CariDataScreenState extends State<CariDataScreen> {
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          color: styles.getTextColor(context),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -74,7 +77,9 @@ class _CariDataScreenState extends State<CariDataScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text('Semester',
-                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: styles.getTextColor(context))),
             ),
             const SizedBox(height: 8),
             Obx(() {
@@ -100,7 +105,9 @@ class _CariDataScreenState extends State<CariDataScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text('Program Studi',
-                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: styles.getTextColor(context))),
             ),
             const SizedBox(height: 8),
             Obx(() {

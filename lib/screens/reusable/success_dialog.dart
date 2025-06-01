@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class SuccessDialog extends StatelessWidget {
   final String title;
@@ -20,7 +21,7 @@ class SuccessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: whiteColor,
+      backgroundColor: styles.getTextField(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -35,10 +36,10 @@ class SuccessDialog extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: styles.getTextColor(context)),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),

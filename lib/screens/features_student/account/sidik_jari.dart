@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/controllers/features_student/account/biometric_controller.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class SidikJari extends StatefulWidget {
   SidikJari({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _SidikJariState extends State<SidikJari> {
         .size
         .width; // Pastikan variabel width terdefinisi
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 237, 235, 251),
+      backgroundColor: styles.getMainColor(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -104,9 +105,10 @@ class _SidikJariState extends State<SidikJari> {
                                           child: Text(
                                             "Login dengan sidik jari",
                                             style: GoogleFonts.plusJakartaSans(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: styles
+                                                    .getTextColor(context)),
                                             overflow: TextOverflow
                                                 .ellipsis, // Tambahkan jika perlu memotong teks panjang
                                           ),

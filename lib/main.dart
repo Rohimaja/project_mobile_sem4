@@ -35,17 +35,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = ThemeController();
+    final themeController = Get.find<ThemeController>();
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
+    return Obx(() => GetMaterialApp(
+          debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeController.getThemeModeFromStorage(),
-      getPages: AppScreens.screens,
-      home: LoginScreen(),
-    );
+          themeMode: themeController.themeMode.value,
+          getPages: AppScreens.screens,
+          home: LoginScreen(),
+        ));
   }
 }
 

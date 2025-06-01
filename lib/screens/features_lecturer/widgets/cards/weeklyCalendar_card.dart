@@ -53,10 +53,6 @@ class WeeklyCalendar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: Colors.grey.shade300,
-            width: 1.2,
-          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
