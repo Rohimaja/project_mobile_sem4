@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart' show Logger;
 import 'package:stipres/constants/api.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/fcm_service.dart';
 
 class ProfileController extends GetxController {
@@ -59,12 +61,14 @@ class ProfileController extends GetxController {
   }
 
   void logout() async {
+    showLoading();
     final tokenfcm = await FcmService.getToken();
     log.d(tokenfcm);
     await fcmService.deleteFcmToken(tokenfcm!);
     await _box.erase();
     Get.offAllNamed("/");
     if (saveLoginInfo.value) {
+      Get.back();
       _box.write("isBiometricEnabled", isBiometricEnabled.value);
       _box.write("isNotificationEnabled", isNotificationEnabled.value);
       _box.write("isSaveLoginInfo", saveLoginInfo.value);
@@ -73,6 +77,15 @@ class ProfileController extends GetxController {
       log.d("isNotificationEnabled: ${isNotificationEnabled.value}");
     } else {
       await storage.deleteAll();
+      Get.back();
     }
+  }
+
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

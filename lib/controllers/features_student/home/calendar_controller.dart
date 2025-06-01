@@ -20,33 +20,34 @@ class CalendarController extends GetxController {
   final RxBool isLoading = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    fetchCalendar();
+    await fetchCalendar();
+    log.d("Fetch calendar");
   }
 
-  void fetchCalendar() async {
+  Future<void> fetchCalendar() async {
     try {
-      showLoading();
+      isLoading.value = true;
+
       final result = await academicCalendarService.fetchCalendar();
 
       if (result.status == 'success') {
         final calendar = result.data ?? []; // default empty list
-        Get.back();
+        // Get.back();
         calenderList.assignAll(calendar);
         log.d(result.data);
         eventsMap.assignAll(_generateEventMap(calendar));
-        isLoading.value = true;
         log.d(isLoading.value);
       } else {
-        Get.back();
+        // Get.back();
 
         log.w("Fetch calendar failed: ${result.message}");
       }
     } catch (e) {
-      Get.back();
-
       log.f("Error: $e");
+    } finally {
+      isLoading.value = false;
     }
   }
 

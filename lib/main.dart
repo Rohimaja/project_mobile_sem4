@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:stipres/bindings/auth/auth_binding.dart';
 import 'package:stipres/services/notification_service.dart';
-import 'package:stipres/theme/app_theme.dart';
 import 'package:stipres/routes/app_screens.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/theme/theme_controller.dart';
