@@ -432,7 +432,9 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                   InkWell(
                                     onTap: () {
                                       Get.toNamed(
-                                          "/auth/forget-password/step3");
+                                        "/auth/forget-password/step3",
+                                        arguments: {"fromProfile": true},
+                                      );
                                     },
                                     child: Row(
                                       mainAxisAlignment:

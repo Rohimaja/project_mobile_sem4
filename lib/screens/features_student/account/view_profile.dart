@@ -194,7 +194,7 @@ class ViewProfilePage extends StatelessWidget {
       child: Column(
         children: [
           _buildProfileItem(
-              context, "Full Name", _controller.storedFullName.value),
+              context, "Nama Lengkap", _controller.storedFullName.value),
           _buildDivider(),
           _buildProfileItem(context, "NIM", _controller.storedNim.value),
           _buildDivider(),
@@ -239,6 +239,7 @@ class ViewProfilePage extends StatelessWidget {
                 style: TextStyle(
                   color: styles.getTextColor(context),
                   fontWeight: FontWeight.w600,
+                  fontSize: 14,
                 ),
                 overflow: TextOverflow
                     .ellipsis, // Tetap ada untuk label jika terlalu panjang

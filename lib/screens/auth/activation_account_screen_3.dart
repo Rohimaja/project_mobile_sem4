@@ -14,6 +14,7 @@ class ActivationAccount3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
@@ -24,21 +25,13 @@ class ActivationAccount3 extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 130,
-                          height: 130,
-                        ),
+                        styles.getLogoImage(context),
                         Expanded(
                           child: SingleChildScrollView(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/picture_book.png",
-                                    width: 193,
-                                    height: 193,
-                                  ),
+                                  styles.getLogoImage(context),
                                   SizedBox(
                                     height: 20,
                                   ),

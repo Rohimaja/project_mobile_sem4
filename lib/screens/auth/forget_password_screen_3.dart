@@ -7,7 +7,10 @@ import 'package:stipres/constants/styles.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ForgetPassword3 extends StatelessWidget {
-  ForgetPassword3({super.key});
+  final bool fromProfile;
+  ForgetPassword3({Key? key})
+      : fromProfile = Get.arguments?['fromProfile'] ?? false,
+        super(key: key);
 
   final _controller = Get.find<ForgetPasswordStep3Controller>();
 
@@ -21,15 +24,46 @@ class ForgetPassword3 extends StatelessWidget {
             ReusableBackground(),
             Center(
                 child: Container(
-                    margin: EdgeInsets.only(top: 60),
+                    margin: EdgeInsets.only(top: 40),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 130,
-                          height: 130,
-                        ),
+                        if (fromProfile) ...[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 10),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 32,
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                    color: blueColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    iconSize: 22,
+                                    icon: Icon(Icons.arrow_back,
+                                        color: whiteColor),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  "Ganti Password",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: blueColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                        styles.getLogoImage(context),
                         Expanded(
                           child: SingleChildScrollView(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -37,9 +71,10 @@ class ForgetPassword3 extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     "assets/images/reset_password_1.png",
-                                    width: 160,
-                                    height: 160,
+                                    width: 140,
+                                    height: 140,
                                   ),
+                                  SizedBox(height: 20),
                                   Text("Ubah Password",
                                       style: GoogleFonts.plusJakartaSans(
                                           fontSize: 18,
