@@ -281,7 +281,7 @@ class _LectureScreenState extends State<LectureScreen>
 
                                       return Padding(
                                         padding:
-                                            const EdgeInsets.only(bottom: 12),
+                                            const EdgeInsets.only(bottom: 16),
                                         child: PerkuliahanCard(
                                           data: currentData,
                                           onEdit: (String currentLink,

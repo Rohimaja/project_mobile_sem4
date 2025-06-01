@@ -103,7 +103,7 @@ class PresenceInformationCard extends StatelessWidget {
                               color: const Color(0xFF005095),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 4),
                           buktiFilePath != null && buktiFilePath!.isNotEmpty
                               ? Align(
                                   alignment: Alignment.centerLeft,
@@ -148,7 +148,7 @@ class PresenceInformationCard extends StatelessWidget {
                                   "-",
                                   style: GoogleFonts.plusJakartaSans(
                                     fontSize: 15,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.bold,
                                     color: const Color(0xFF005095),
                                   ),
                                 ),
@@ -182,7 +182,7 @@ class PresenceInformationCard extends StatelessWidget {
             ),
           ),
         ),
-        const Text(": "),
+        Text(": "),
         Expanded(
           child: Text(
             value,

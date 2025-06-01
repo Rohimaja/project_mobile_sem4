@@ -54,3 +54,19 @@ Color getTextField(BuildContext context) {
 Color getOutlined(BuildContext context) {
   return isDarkMode(context) ? greyColor : Color.fromARGB(255, 79, 176, 255);
 }
+
+Image getLogoImage(BuildContext context) {
+  return isDarkMode(context)
+      ? Image.asset("assets/images/stipres_logo_dark.png",
+          width: 150, height: 150)
+      : Image.asset("assets/images/stipres_logo_light.png",
+          width: 150, height: 150);
+}
+
+Image getLogoImage2(BuildContext context) {
+  return isDarkMode(context)
+      ? Image.asset("assets/images/stipres_logo_dark.png",
+          width: 200, height: 200)
+      : Image.asset("assets/images/stipres_logo_light.png",
+          width: 200, height: 200);
+}

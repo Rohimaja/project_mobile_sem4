@@ -57,14 +57,14 @@ class DetailNotificationScreen extends StatelessWidget {
                   Text(
                     "Notifikasi",
                     style: GoogleFonts.plusJakartaSans(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.blue),
                   ),
                   IconButton(
                     icon: Container(
-                      width: 32,
-                      height: 32,
+                      width: 28,
+                      height: 28,
                       decoration: BoxDecoration(
                         color: blueColor, // Background color
                         shape: BoxShape.circle, // Makes the background circular
@@ -78,7 +78,7 @@ class DetailNotificationScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

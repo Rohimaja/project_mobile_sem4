@@ -366,6 +366,7 @@ class ViewProfilePage extends StatelessWidget {
                 style: TextStyle(
                   color: styles.getTextColor(context),
                   fontWeight: FontWeight.w600,
+                  fontSize: 14,
                 ),
                 overflow: TextOverflow
                     .ellipsis, // Tetap ada untuk label jika terlalu panjang

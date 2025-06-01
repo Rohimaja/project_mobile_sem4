@@ -25,11 +25,7 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 200,
-                          height: 200,
-                        ),
+                        styles.getLogoImage2(context),
                         SizedBox(
                           height: 20,
                         ),

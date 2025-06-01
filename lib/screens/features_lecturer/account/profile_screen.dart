@@ -22,6 +22,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
 
   final _controller = Get.find<ProfileController>();
 
+  final profileC = Get.find<ProfileController>();
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -427,7 +429,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                   SizedBox(height: 20),
                                   InkWell(
                                     onTap: () {
-                                      _controller.changePassword();
+                                      profileC.changePassword();
                                     },
                                     child: Row(
                                       mainAxisAlignment:
@@ -545,42 +547,44 @@ void _showLogoutDialog(BuildContext context) {
                           ),
                     ),
                   ),
-                              Obx(() {
-              final showBiometric = _controller.isBiometricAvailable.value &&
-                  _controller.isBiometricEnabled.value;
+                  Obx(() {
+                    final showBiometric =
+                        _controller.isBiometricAvailable.value &&
+                            _controller.isBiometricEnabled.value;
 
-              return showBiometric
-                  ?
-                  Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Simpan informasi login anda',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                    return showBiometric
+                        ? Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Simpan informasi login anda',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                   ),
-                            ),
-                          ),
-                          Checkbox(
-                              value: _controller.saveLoginInfo.value,
-                              activeColor: Colors.blue,
-                              checkColor: Colors.white,
-                              onChanged: (bool? value) {
-                                _controller.saveLoginInfo.value = value ?? true;
-                                print(_controller.saveLoginInfo.value);
-                              },
-                            ),
-                        ],
-                      ),
-                    ],
-                  ) : SizedBox.shrink();
-                              }),
+                                  Checkbox(
+                                    value: _controller.saveLoginInfo.value,
+                                    activeColor: Colors.blue,
+                                    checkColor: Colors.white,
+                                    onChanged: (bool? value) {
+                                      _controller.saveLoginInfo.value =
+                                          value ?? true;
+                                      print(_controller.saveLoginInfo.value);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : SizedBox.shrink();
+                  }),
                   const SizedBox(height: 20),
                   Row(
                     children: [
