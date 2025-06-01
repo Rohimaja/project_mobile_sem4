@@ -8,7 +8,7 @@ class UploadDialog extends StatelessWidget {
   final String gifAssetPath;
   final VoidCallback? onOkPressed;
 
-  const UploadDialog({
+  const   UploadDialog({
     super.key,
     required this.title,
     required this.subtitle,

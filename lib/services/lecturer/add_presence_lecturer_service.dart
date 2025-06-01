@@ -29,7 +29,7 @@ class AddPresenceLecturerService extends GetxService {
 
       final url = Uri.parse(
           "$_baseUrl/presence/matkuls?prodi_id=$prodiId&semester=$semester");
-      log.d(url);
+      log.d(url); 
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'

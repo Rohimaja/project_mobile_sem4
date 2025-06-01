@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:stipres/bindings/auth/auth_binding.dart';
+import 'package:stipres/controllers/network_controller.dart';
 import 'package:stipres/services/notification_service.dart';
 import 'package:stipres/routes/app_screens.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
@@ -18,6 +19,7 @@ void main() async {
   await initializeDateFormatting("id_ID", null);
   tzdata.initializeTimeZones();
   AuthBinding().dependencies();
+  Get.put(NetworkController());
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await NotificationService.initialize();
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
 
     return Obx(() => GetMaterialApp(
           debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
+          navigatorKey: navigatorKey,
           themeMode: themeController.themeMode.value,
           getPages: AppScreens.screens,
           home: LoginScreen(),

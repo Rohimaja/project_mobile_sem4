@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:stipres/screens/reusable/failed_dialog.dart';
+import 'package:stipres/screens/reusable/upload_data_dialog.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class LoadingPopup extends StatefulWidget {
@@ -26,8 +28,11 @@ class _LoadingPopupState extends State<LoadingPopup>
     _timeoutTimer = Timer(const Duration(seconds: 10), () {
       if (mounted && (Get.isDialogOpen ?? false)) {
         Get.back();
-        Get.snackbar("Timeout", "Operasi terlalu lama, coba lagi.",
-            duration: const Duration(seconds: 2));
+        showUploadDialog(
+            context: context,
+            title: "Timeout",
+            subtitle: "Operasi terlalu lama, coba lagi.",
+            gifAssetPath: "assets/gif/failed_animation.gif");
         return;
       }
     });

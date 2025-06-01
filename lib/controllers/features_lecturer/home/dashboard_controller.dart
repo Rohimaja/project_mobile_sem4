@@ -10,6 +10,11 @@ class DashboardController extends GetxController {
   final storedName = ''.obs;
   final storedNip = ''.obs;
   var storedProfile = ''.obs;
+  final storedKehadiran = 0.obs;
+  final storedPresensi = 0.obs;
+  final storedJadwal = 0.obs;
+  final storedKalender = 0.obs;
+  final storedPerkuliahanOnline = 0.obs;
   final _box = GetStorage();
 
   final statusOffline = false.obs;
@@ -26,6 +31,8 @@ class DashboardController extends GetxController {
   void onInit() {
     super.onInit();
     loadHeader();
+    final dosenId = _box.read("dosen_id").toString();
+    loadSummary(dosenId);
   }
 
   Future<void> loadHeader() async {
@@ -43,6 +50,26 @@ class DashboardController extends GetxController {
 
     log.f("fetch header");
     log.d("Profile: ${storedProfile.value}");
+  }
+
+  Future<void> loadSummary(String dosenId) async {
+    try {
+      final result = await dashboardLecturerService.tampilSummary(dosenId);
+
+      if (result.status == "success" && result.data != null) {
+        final summary = result.data;
+
+        storedKehadiran.value = summary!.jumlahMahasiswa;
+        storedPresensi.value = summary.presensiHariIni;
+        storedJadwal.value = summary.jumlahJadwalAktif;
+        storedKalender.value = summary.jumlahKalenderAkademik;
+        storedPerkuliahanOnline.value = summary.perkuliahanOnlineHariIni;
+      } else {
+        errorMessage.value = result.message;
+      }
+    } catch (e) {
+      log.f("Error: $e");
+    }
   }
 
   String formatTanggal(String tanggal) {

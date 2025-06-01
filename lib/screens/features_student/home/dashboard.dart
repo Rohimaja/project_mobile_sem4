@@ -2,8 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stipres/screens/features_student/account/view_profile.dart';
-import 'package:stipres/screens/features_student/home/calendar_screen.dart';
 import 'package:stipres/screens/features_student/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_student/widgets/cards/weekly_calendar_card.dart';
 import 'package:stipres/screens/features_student/widgets/link/allSchedule_link.dart';
@@ -158,31 +156,30 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
                         child: Row(
                           children: [
                             GestureDetector(
-                          onTap: () {
-                            Get.toNamed("/student/view-profile-screen");
-                          },
-                          child: Container(
+                              onTap: () {
+                                Get.toNamed("/student/view-profile-screen");
+                              },
+                              child: Container(
                                 padding: const EdgeInsets.all(2),
                                 decoration: BoxDecoration(
                                   color: styles.getCircleColor(context),
                                   shape: BoxShape.circle,
                                 ),
                                 child: ClipOval(
-                              child: Obx(() {
-                                    final imageUrl = dashboardC.storedProfile.value;
+                                  child: Obx(() {
+                                    final imageUrl =
+                                        dashboardC.storedProfile.value;
                                     return (imageUrl.isNotEmpty)
                                         ? FadeInImage.assetNetwork(
                                             placeholder:
-                                           
-                                            "assets/icons/ic_profile.jpeg",
+                                                "assets/icons/ic_profile.jpeg",
                                             image: imageUrl,
                                             height: 70,
                                             width: 70,
                                             fit: BoxFit.cover,
                                             imageErrorBuilder:
-                                           
-                                            (context, url, error) =>
-                                                        Image.asset(
+                                                (context, url, error) =>
+                                                    Image.asset(
                                               "assets/icons/ic_profile.jpeg",
                                               height: 70,
                                               width: 70,
@@ -196,8 +193,8 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
                                             fit: BoxFit.cover,
                                           );
                                   }),
-                            ),
-                          ),
+                                ),
+                              ),
                             ),
                             const SizedBox(width: 10),
                             SizedBox(
@@ -307,7 +304,7 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
                                       // === Card dengan Navigasi + Ripple ===
                                       CategoryCard(
                                         title: 'Kehadiran',
-                                        items: 4,
+                                        items: dashboardC.storedKehadiran.value,
                                         imagePath:
                                             'assets/icons/ic_kehadiran.png',
                                         bgColor: const Color.fromARGB(
@@ -322,7 +319,7 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
 
                                       CategoryCard(
                                         title: 'Presensi',
-                                        items: 4,
+                                        items: dashboardC.storedPresensi.value,
                                         imagePath:
                                             'assets/icons/rekap_kehadiran.png',
                                         bgColor: const Color.fromARGB(
@@ -337,7 +334,7 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
 
                                       CategoryCard(
                                         title: 'Jadwal Perkuliahan',
-                                        items: 4,
+                                        items: dashboardC.storedJadwal.value,
                                         imagePath:
                                             'assets/icons/ic_jadwal_perkuliahan.png',
                                         bgColor: const Color.fromARGB(
@@ -352,7 +349,7 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
 
                                       CategoryCard(
                                         title: 'Kalender Akademik',
-                                        items: 4,
+                                        items: dashboardC.storedKalender.value,
                                         imagePath:
                                             'assets/icons/kalender_akademik.png',
                                         bgColor: const Color.fromARGB(
@@ -367,7 +364,8 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
 
                                       CategoryCard(
                                         title: 'Perkuliahan Online',
-                                        items: 4,
+                                        items: dashboardC
+                                            .storedPerkuliahanOnline.value,
                                         imagePath: 'assets/icons/zoom.png',
                                         bgColor: const Color.fromARGB(
                                             255, 187, 191, 251),

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
-import 'package:stipres/screens/features_lecturer/home/notifications/notification_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/schedule_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/weeklyCalendar_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/link/allSchedule_link.dart';
@@ -90,7 +89,7 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                                   child: InkWell(
                                     onTap: () async {
                                       final result = await Get.toNamed(
-                                      "/lecturer/notification-screen");
+                                          "/lecturer/notification-screen");
 
                                       if (result != null && result is bool) {
                                         setState(() {
@@ -165,10 +164,10 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                         child: Row(
                           children: [
                             GestureDetector(
-                          onTap: () {
-                            Get.toNamed("/lecturer/view-profile-screen");
-                          },
-                          child: Container(
+                              onTap: () {
+                                Get.toNamed("/lecturer/view-profile-screen");
+                              },
+                              child: Container(
                                 padding: const EdgeInsets.all(2),
                                 decoration: BoxDecoration(
                                   color: styles.getCircleColor(context),
@@ -176,19 +175,18 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                                 ),
                                 child: ClipOval(child: Obx(() {
                                   final imageUrl =
-                                    _controller.storedProfile.value;
+                                      _controller.storedProfile.value;
                                   return (imageUrl.isNotEmpty)
                                       ? FadeInImage.assetNetwork(
                                           placeholder:
-                                         
-                                            "assets/icons/ic_profile.jpeg",
+                                              "assets/icons/ic_profile.jpeg",
                                           image: imageUrl,
                                           height: 70,
                                           width: 70,
                                           fit: BoxFit.cover,
                                           imageErrorBuilder:
-                                           
-                                                  (context, url, error) => Image.asset(
+                                              (context, url, error) =>
+                                                  Image.asset(
                                             "assets/icons/ic_profile.jpeg",
                                             height: 70,
                                             width: 70,
@@ -202,7 +200,7 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                                           fit: BoxFit.cover,
                                         );
                                 })),
-                          ),
+                              ),
                             ),
                             const SizedBox(width: 10),
                             Obx(() {
@@ -310,7 +308,7 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                                     // === Card dengan Navigasi + Ripple ===
                                     CategoryCard(
                                       title: 'Kehadiran',
-                                      items: 4,
+                                      items: _controller.storedKehadiran.value,
                                       imagePath:
                                           'assets/icons/ic_kehadiran.png',
                                       bgColor: const Color.fromARGB(
@@ -325,7 +323,7 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
 
                                     CategoryCard(
                                       title: 'Presensi',
-                                      items: 4,
+                                      items: _controller.storedPresensi.value,
                                       imagePath:
                                           'assets/icons/rekap_kehadiran.png',
                                       bgColor: const Color.fromARGB(
@@ -340,7 +338,7 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
 
                                     CategoryCard(
                                       title: 'Jadwal Mengajar',
-                                      items: 4,
+                                      items: _controller.storedJadwal.value,
                                       imagePath:
                                           'assets/icons/ic_jadwal_perkuliahan.png',
                                       bgColor: const Color.fromARGB(
@@ -353,23 +351,24 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
 
                                     SizedBox(width: 12),
 
-                                CategoryCard(
-                                  title: 'Kalender Akademik',
-                                  items: 4,
-                                  imagePath:
-                                      'assets/icons/kalender_akademik.png',
-                                  bgColor:
-                                      const Color.fromARGB(255, 251, 187, 187),
-                                  onTap: () {
-                                    Get.toNamed("/student/calendar-screen");
-                                  },
-                                ),
+                                    CategoryCard(
+                                      title: 'Kalender Akademik',
+                                      items: _controller.storedKalender.value,
+                                      imagePath:
+                                          'assets/icons/kalender_akademik.png',
+                                      bgColor: const Color.fromARGB(
+                                          255, 251, 187, 187),
+                                      onTap: () {
+                                        Get.toNamed("/student/calendar-screen");
+                                      },
+                                    ),
 
                                     const SizedBox(width: 12),
 
                                     CategoryCard(
                                       title: 'Perkuliahan Online',
-                                      items: 4,
+                                      items: _controller
+                                          .storedPerkuliahanOnline.value,
                                       imagePath: 'assets/icons/zoom.png',
                                       bgColor: const Color.fromARGB(
                                           255, 187, 191, 251),

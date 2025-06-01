@@ -160,21 +160,21 @@ class ViewProfilePage extends StatelessWidget {
                                       placeholder:
                                           "assets/icons/ic_profile.jpeg",
                                       image: imageUrl,
-                                      height: 110,
-                                      width: 110,
+                                      height: 300,
+                                      width: 300,
                                       fit: BoxFit.cover,
                                       imageErrorBuilder:
                                           (context, url, error) => Image.asset(
                                         "assets/icons/ic_profile.jpeg",
-                                        height: 110,
-                                        width: 110,
+                                        height: 300,
+                                        width: 300,
                                         fit: BoxFit.cover,
                                       ),
                                     )
                                   : Image.asset(
                                       "assets/icons/ic_profile.jpeg",
-                                      height: 110,
-                                      width: 110,
+                                      height: 300,
+                                      width: 300,
                                       fit: BoxFit.cover,
                                     );
                             })),
@@ -321,7 +321,7 @@ class ViewProfilePage extends StatelessWidget {
       child: Column(
         children: [
           _buildProfileItem(
-              context, "Full Name", _controller.storedFullName.value),
+              context, "Nama Lengkap", _controller.storedFullName.value),
           _buildDivider(),
           _buildProfileItem(context, "NIM", _controller.storedNim.value),
           _buildDivider(),
