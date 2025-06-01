@@ -31,6 +31,8 @@ class ForgetPasswordStep3Controller extends GetxController {
 
   int waktu = 2;
 
+  get isLoading => null;
+
   void checkVisible() => isPasswordVisible.toggle();
   void checkVisible2() => isPasswordVisible2.toggle();
 

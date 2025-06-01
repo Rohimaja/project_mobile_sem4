@@ -448,14 +448,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   SizedBox(height: 20), // Jarak antar item
                                   InkWell(
                                     onTap: () {
-                                      profileC
-                                          .changePassword(); // Panggil fungsi dulu jika perlu
-                                      Get.toNamed(
-                                        "/auth/forget-password/step3",
-                                        arguments: {
-                                          "fromProfile": true
-                                        }, // Kirim argumen
-                                      );
+                                      profileC.changePassword();
                                     },
                                     child: Row(
                                       mainAxisAlignment:

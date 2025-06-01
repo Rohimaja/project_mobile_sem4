@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 
     return Obx(() => GetMaterialApp(
           debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
+          navigatorKey: navigatorKey,
           themeMode: themeController.themeMode.value,
           getPages: AppScreens.screens,
           home: LoginScreen(),
