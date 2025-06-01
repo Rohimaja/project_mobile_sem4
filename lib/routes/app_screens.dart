@@ -69,7 +69,6 @@ import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.da
     as lecturer;
 import 'package:stipres/screens/features_student/home/notifications/notification_screen.dart';
 import 'package:stipres/screens/features_student/home/offline_screen.dart';
-import 'package:stipres/screens/features_student/home/presence/fallback_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/presence/presence_screen.dart'
@@ -165,7 +164,6 @@ class AppScreens {
         page: () => PresenceScreen(),
         binding: PresenceBinding()),
     GetPage(name: "/student/offline-screen", page: () => OfflineScreen()),
-    GetPage(name: "/student/fallback-screen", page: () => FallbackScreen()),
     GetPage(
         name: "/student/calendar-screen",
         page: () => CalendarScreen(),

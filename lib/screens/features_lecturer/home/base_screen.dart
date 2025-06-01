@@ -4,6 +4,7 @@ import 'package:stipres/screens/features_lecturer/home/dashboard.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/styles/icons.dart';
 import 'package:stipres/styles/size.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class BaseScreenLecturer extends StatefulWidget {
   const BaseScreenLecturer({Key? key}) : super(key: key);
@@ -26,40 +27,40 @@ class _BaseScreenLecturerState extends State<BaseScreenLecturer> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: blueColor,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(
-                icHomeClicked,
-                height: kBottomNavigationBarItemSize,
-              ),
-              icon: Image.asset(
-                icHome,
-                height: kBottomNavigationBarItemSize,
-              ),
-              label: "Beranda",
-            ),
-            BottomNavigationBarItem(
-              activeIcon: Image.asset(
-                icProfileClicked,
-                height: kBottomNavigationBarItemSize,
-              ),
-              icon: Image.asset(
-                icProfile,
-                height: kBottomNavigationBarItemSize,
-              ),
-              label: "Akun",
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: (int index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          }),
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: styles.getTextField(context),
+        currentIndex: _selectedIndex,
+        elevation: 0,
+        selectedItemColor: styles.getItemSelected(context),
+        unselectedItemColor: styles.getTextColor(context),
+        selectedLabelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: blueColor,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+          color: styles.getTextColor(context),
+        ),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: "Beranda",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: "Akun",
+          ),
+        ],
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
     );
   }
 }

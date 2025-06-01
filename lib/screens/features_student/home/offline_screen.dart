@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class OfflineScreen extends StatelessWidget {
   OfflineScreen({super.key});
@@ -13,7 +14,7 @@ class OfflineScreen extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: styles.getMainColor(context),
       body: Stack(
         clipBehavior: Clip.none,
         children: [

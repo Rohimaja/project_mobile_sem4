@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/screens/features_student/models/notifications/detail_notification_model.dart';
 import 'package:stipres/screens/features_student/models/notifications/notification_model.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notification;
@@ -37,10 +37,10 @@ class NotificationCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: styles.getTextField(context),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -70,10 +70,10 @@ class NotificationCard extends StatelessWidget {
                 children: [
                   Text(
                     notification.title,
-                    style: GoogleFonts.plusJakartaSans(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: styles.getTextColor(context)),
                   ),
                   const SizedBox(height: 4),
                   Text(

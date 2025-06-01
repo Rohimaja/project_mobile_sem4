@@ -83,15 +83,6 @@ class ReusableBackground extends StatelessWidget {
           ),
         ),
         Positioned(
-            top: MediaQuery.of(context).size.height / 2,
-            left: getMediumDiameter(context) * 0.8,
-            child: Container(
-              width: getMediumDiameter(context),
-              height: getMediumDiameter(context),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: Color(0xFFFAFF00)),
-            )),
-        Positioned(
             top: getSmallDiameter(context) * 3.5,
             right: getSmallDiameter(context) * 5.3,
             child: Container(

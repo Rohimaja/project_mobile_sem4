@@ -5,6 +5,7 @@ import 'package:stipres/controllers/features_lecturer/home/lectures/lecture_cont
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/dialog/edit_lecture_dialog.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class LectureScreen extends StatefulWidget {
   const LectureScreen({super.key});
@@ -54,7 +55,7 @@ class _LectureScreenState extends State<LectureScreen>
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Obx(() {
           final filteredPerkuliahan =
               _controller.lectureList.where((perkuliahan) {
@@ -73,7 +74,7 @@ class _LectureScreenState extends State<LectureScreen>
                         width: width,
                         height: 110,
                         decoration: BoxDecoration(
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                           ),
@@ -201,7 +202,7 @@ class _LectureScreenState extends State<LectureScreen>
                         child: Container(
                           width: 40,
                           height: 44,
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                         ),
                       ),
                       Positioned(
@@ -211,7 +212,7 @@ class _LectureScreenState extends State<LectureScreen>
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: mainColor,
+                            color: styles.getMainColor(context),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                             ),

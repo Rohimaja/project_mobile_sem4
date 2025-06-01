@@ -5,6 +5,7 @@ import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.
 import 'package:stipres/models/jadwal_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/course_detail_card.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ScheduleCardLecturer extends StatelessWidget {
   final JadwalModelApi jadwal;
@@ -28,7 +29,9 @@ class ScheduleCardLecturer extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               jadwal.waktu,
-              style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
+              style: GoogleFonts.plusJakartaSans(
+                  fontWeight: FontWeight.bold,
+                  color: styles.getTextColor(context)),
             ),
           ],
         ),

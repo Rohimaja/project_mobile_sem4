@@ -6,6 +6,7 @@ import 'package:stipres/screens/features_student/models/notifications/detail_not
 import 'package:stipres/screens/features_student/models/notifications/notification_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/notification_card.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -19,7 +20,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   final List<NotificationModel> allNotifications = [
     NotificationModel(
-      title: "Presensi Berhasil!",
+      title: "Presensi Berhasil Ditambahkan!",
       message: "Presensi Anda berhasil direkam.",
       time: "Baru saja",
       type: NotificationType.presensiBerhasil,
@@ -32,7 +33,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     // PRESENSI GAGAL
     NotificationModel(
-      title: "Presensi Gagal!",
+      title: "Presensi Gagal Ditambahkan!",
       message: "Presensi Anda gagal dilakukan.",
       time: "10 menit yang lalu",
       type: NotificationType.presensiGagal,
@@ -43,7 +44,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       mataKuliah: "Basis Data",
     ),
 
-    // BATAS PRESENSI
     NotificationModel(
       title: "Presensi Hampir Ditutup!",
       message: "Waktu presensi Anda akan segera berakhir.",
@@ -56,7 +56,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       mataKuliah: "Pemrograman Mobile",
     ),
 
-    // PENGUMUMAN UMUM
     NotificationModel(
       title: "Perubahan Jadwal!",
       message:
@@ -67,7 +66,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       namaUser: "Bagus", // bisa kosong juga
     ),
 
-    // PENGUMUMAN UMUM LAINNYA
     NotificationModel(
       title: "Update Keamanan Akun",
       message: "Segera ubah password akun Anda untuk menjaga keamanan akun.",
@@ -125,122 +123,128 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: mainColor,
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  CustomHeader(title: "Notifikasi"),
-                  Positioned(
-                    bottom: -44,
-                    right: 0,
-                    child: Container(
-                      width: 40,
-                      height: 44,
-                      color: blueColor,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, allNotifications.isNotEmpty); // BENAR
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: styles.getMainColor(context),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    CustomHeader(title: "Notifikasi"),
+                    Positioned(
+                      bottom: -44,
+                      right: 0,
+                      child: Container(
+                        width: 40,
+                        height: 44,
+                        color: styles.getBlueColor(context),
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: -45,
-                    right: 0,
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: mainColor,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(40),
+                    Positioned(
+                      bottom: -45,
+                      right: 0,
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: styles.getMainColor(context),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(40),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-
-              // Filter Buttons
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 30, right: 30, top: 20, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start, // Align ke kiri
-                  children: [
-                    buildCategoryButton("Semua"),
-                    const SizedBox(width: 20), // Spasi antar tombol
-                    buildCategoryButton("Presensi"),
-                    const SizedBox(width: 20),
-                    buildCategoryButton("Pengumuman"),
                   ],
                 ),
-              ),
 
-              // Animated List or Empty Placeholder
-              Expanded(
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  transitionBuilder: (child, animation) {
-                    final offsetAnimation = Tween<Offset>(
-                            begin: const Offset(-1, 0), end: Offset.zero)
-                        .animate(animation);
-                    return SlideTransition(
-                        position: offsetAnimation, child: child);
-                  },
-                  child: filteredNotifications.isEmpty
-                      ? Center(
-                          key: const ValueKey('empty'),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset('assets/images/empty_state.png',
-                                  height: 150),
-                              const SizedBox(height: 20),
-                              Text(
-                                "Tidak ada notifikasi",
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      : ListView.builder(
-                          key: ValueKey<String>(selectedCategory),
-                          padding: const EdgeInsets.fromLTRB(10, 0, 20, 10),
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: filteredNotifications.length,
-                          itemBuilder: (context, index) {
-                            final notif = filteredNotifications[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled:
-                                        true, // agar bisa tinggi penuh jika perlu
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20)),
-                                    ),
-                                    backgroundColor: Colors.white,
-                                    builder: (_) =>
-                                        DetailNotificationScreen(notif: notif),
-                                  );
-                                },
-                                child: NotificationCard(notification: notif),
-                              ),
-                            );
-                          },
-                        ),
+                // Filter Buttons
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 30, right: 30, top: 20, bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start, // Align ke kiri
+                    children: [
+                      buildCategoryButton("Semua"),
+                      const SizedBox(width: 20), // Spasi antar tombol
+                      buildCategoryButton("Presensi"),
+                      const SizedBox(width: 20),
+                      buildCategoryButton("Pengumuman"),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+
+                // Animated List or Empty Placeholder
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, animation) {
+                      final offsetAnimation = Tween<Offset>(
+                              begin: const Offset(-1, 0), end: Offset.zero)
+                          .animate(animation);
+                      return SlideTransition(
+                          position: offsetAnimation, child: child);
+                    },
+                    child: filteredNotifications.isEmpty
+                        ? Center(
+                            key: const ValueKey('empty'),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/icons/ic_noData.png',
+                                    height: 120),
+                                const SizedBox(height: 16),
+                                Text(
+                                  "Tidak ada notifikasi",
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            key: ValueKey<String>(selectedCategory),
+                            padding: const EdgeInsets.fromLTRB(10, 0, 20, 10),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: filteredNotifications.length,
+                            itemBuilder: (context, index) {
+                              final notif = filteredNotifications[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled:
+                                          true, // agar bisa tinggi penuh jika perlu
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20)),
+                                      ),
+                                      backgroundColor: Colors.white,
+                                      builder: (_) => DetailNotificationScreen(
+                                          notif: notif),
+                                    );
+                                  },
+                                  child: NotificationCard(notification: notif),
+                                ),
+                              );
+                            },
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

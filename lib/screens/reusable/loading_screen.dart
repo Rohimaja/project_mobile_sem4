@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class LoadingPopup extends StatefulWidget {
   const LoadingPopup({super.key});
@@ -44,7 +45,7 @@ class _LoadingPopupState extends State<LoadingPopup>
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: styles.getTextField(context),
           borderRadius: BorderRadius.circular(16),
         ),
         child: SizedBox(

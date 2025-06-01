@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class EditPresensiDialog extends StatefulWidget {
   final String presensisId;
@@ -30,11 +31,14 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: styles.getTextField(context),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       title: Text(
         "Edit Presensi",
         style: GoogleFonts.plusJakartaSans(
-            fontWeight: FontWeight.bold, fontSize: 16),
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: styles.getTextColor(context)),
       ),
       content: SizedBox(
         width: 300, // Ganti ini sesuai kebutuhan kamu
@@ -106,6 +110,7 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             decoration: BoxDecoration(
+              color: styles.getTextColor(context),
               border: Border.all(color: Colors.blue),
               borderRadius: BorderRadius.circular(8),
             ),

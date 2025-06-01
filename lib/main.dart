@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:stipres/theme/app_theme.dart';
 import 'package:stipres/routes/app_screens.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/theme/theme_controller.dart';
@@ -13,7 +12,7 @@ void main() async {
   await initializeDateFormatting("id_ID", null);
   tzdata.initializeTimeZones();
   await GetStorage.init();
-  Get.put(ThemeController());
+  Get.put(ThemeController()); // simpan controller ke GetX
 
   runApp(MyApp());
 }
@@ -23,15 +22,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = ThemeController();
+    final themeController = Get.find<ThemeController>();
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeController.getThemeModeFromStorage(),
-      getPages: AppScreens.screens,
-      home: LoginScreen(),
-    );
+    return Obx(() => GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          themeMode: themeController.themeMode.value,
+          getPages: AppScreens.screens,
+          home: LoginScreen(),
+        ));
   }
 }

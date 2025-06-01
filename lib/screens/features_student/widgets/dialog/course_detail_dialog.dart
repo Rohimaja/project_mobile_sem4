@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stipres/screens/features_student/widgets/cards/course_detail_card.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class CourseDetailDialog extends StatelessWidget {
   final String namaMatkul;
@@ -22,7 +23,7 @@ class CourseDetailDialog extends StatelessWidget {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       contentPadding: const EdgeInsets.all(16),
-      backgroundColor: Colors.white,
+      backgroundColor: styles.getTextField(context),
       content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

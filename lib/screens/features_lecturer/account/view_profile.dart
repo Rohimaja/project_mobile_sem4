@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart';
 import 'package:stipres/controllers/features_lecturer/account/view_profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
@@ -12,24 +14,24 @@ class ViewProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: mainColor,
-      body: Stack(children: [
-        Column(
-          children: [
-            _buildHeader(context),
-            Obx(() {
-              return _buildProfileForm();
-            })
-          ],
-        ),
-        Positioned(
-            top: 110, // atur posisi agar setengah berada di header
-            left: 0,
-            right: 0,
-            child: _buildProfilePicture()),
-      ]),
-    );
+    return Obx(() => Scaffold(
+          backgroundColor: styles.getMainColor(context),
+          body: Stack(children: [
+            Column(
+              children: [
+                _buildHeader(context),
+                Obx(() {
+                  return _buildProfileForm(context);
+                })
+              ],
+            ),
+            Positioned(
+                top: 110, // atur posisi agar setengah berada di header
+                left: 0,
+                right: 0,
+                child: _buildProfilePicture(context)),
+          ]),
+        ));
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -42,7 +44,7 @@ class ViewProfilePage extends StatelessWidget {
           width: width,
           height: 170,
           decoration: BoxDecoration(
-            color: blueColor,
+            color: styles.getBlueColor(context),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(40),
             ),
@@ -97,7 +99,7 @@ class ViewProfilePage extends StatelessWidget {
             width: 40,
             height: 44,
             decoration: BoxDecoration(
-              color: blueColor,
+              color: styles.getBlueColor(context),
             ),
           ),
         ),
@@ -108,7 +110,7 @@ class ViewProfilePage extends StatelessWidget {
             width: 45,
             height: 45,
             decoration: BoxDecoration(
-              color: mainColor,
+              color: styles.getMainColor(context),
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(40),
               ),
@@ -119,14 +121,14 @@ class ViewProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfilePicture() {
+  Widget _buildProfilePicture(BuildContext context) {
     return Center(
       child: Stack(
         children: [
           Container(
             padding: const EdgeInsets.all(2),
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
+            decoration: BoxDecoration(
+              color: styles.getCircleColor(context),
               shape: BoxShape.circle,
             ),
             child: ClipOval(child: Obx(() {
@@ -168,7 +170,7 @@ class ViewProfilePage extends StatelessWidget {
                   width: 32,
                   height: 32,
                   decoration: BoxDecoration(
-                    color: blueColor,
+                    color: styles.getBlueColor(context),
                     shape: BoxShape.circle,
                   ),
                   child: const Padding(
@@ -187,37 +189,41 @@ class ViewProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileForm() {
+  Widget _buildProfileForm(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
         child: Column(
           children: [
-            _buildProfileItem("Full Name", _controller.storedFullName.value),
+            _buildProfileItem(
+                context, "Full Name", _controller.storedFullName.value),
             _buildDivider(),
-            _buildProfileItem("NIP", _controller.storedNip.value),
+            _buildProfileItem(context, "NIP", _controller.storedNip.value),
             _buildDivider(),
-            _buildProfileItem("Email", _controller.storedEmail.value),
+            _buildProfileItem(context, "Email", _controller.storedEmail.value),
             _buildDivider(),
             _buildProfileItem(
-                "Jenis Kelamin", _controller.storedJenisKelamin.value),
+                context, "Jenis Kelamin", _controller.storedJenisKelamin.value),
             _buildDivider(),
-            _buildProfileItem("Agama", _controller.storedAgama.value),
+            _buildProfileItem(context, "Agama", _controller.storedAgama.value),
+            _buildDivider(),
+            _buildProfileItem(context, "Tempat Tanggal Lahir",
+                _controller.storedTempatTglLahir.value),
             _buildDivider(),
             _buildProfileItem(
-                "Tempat Tanggal Lahir", _controller.storedTempatTglLahir.value),
+                context, "Alamat", _controller.storedAlamat.value),
             _buildDivider(),
-            _buildProfileItem("Alamat", _controller.storedAlamat.value),
+            _buildProfileItem(
+                context, "Program Studi", _controller.storedProdi.value),
             _buildDivider(),
-            _buildProfileItem("Program Studi", _controller.storedProdi.value),
-            _buildDivider(),
-            _buildProfileItem("No. Telp", _controller.storedNoTelp.value),
+            _buildProfileItem(
+                context, "No. Telp", _controller.storedNoTelp.value),
             _buildDivider(),
           ],
         ));
   }
 
   // Widget untuk menampilkan label dan nilai.
-  Widget _buildProfileItem(String label, String value) {
+  Widget _buildProfileItem(BuildContext context, String label, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -229,8 +235,8 @@ class ViewProfilePage extends StatelessWidget {
               width: 150,
               child: Text(
                 label,
-                style: const TextStyle(
-                  color: Colors.black,
+                style: TextStyle(
+                  color: styles.getTextColor(context),
                   fontWeight: FontWeight.w600,
                 ),
                 overflow: TextOverflow

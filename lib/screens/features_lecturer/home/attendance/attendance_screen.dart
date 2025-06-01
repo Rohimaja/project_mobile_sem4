@@ -5,6 +5,7 @@ import 'package:stipres/controllers/features_lecturer/home/attendances/attendanc
 import 'package:stipres/screens/features_lecturer/home/attendance/search_attendance_screen.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/attendance/attendance_card.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -52,7 +53,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Obx(() {
           final filteredMahasiswa = _controller.studentList.where((nama) {
             final query = _searchController.text.toLowerCase();
@@ -71,7 +72,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                         width: width,
                         height: 110,
                         decoration: BoxDecoration(
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                           ),
@@ -198,7 +199,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                         child: Container(
                           width: 40,
                           height: 44,
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                         ),
                       ),
                       Positioned(
@@ -208,7 +209,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: mainColor,
+                            color: styles.getMainColor(context),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                             ),
@@ -232,36 +233,52 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           const SizedBox(height: 12),
                           Row(
                             children: [
-                              const SizedBox(
-                                  width: 120, child: Text('Program Studi')),
-                              const Text(' : '),
-                              const SizedBox(width: 10),
+                              SizedBox(
+                                  width: 120,
+                                  child: Text(
+                                    'Program Studi',
+                                    style: TextStyle(
+                                        color: styles.getTextColor(context)),
+                                  )),
+                              Text(
+                                ' : ',
+                                style: TextStyle(
+                                    color: styles.getTextColor(context)),
+                              ),
+                              SizedBox(width: 10),
                               Obx(() {
                                 return Text(
                                     _controller.prodiMap[
                                             _controller.selectedProdi.value] ??
                                         "-",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold));
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: styles.getTextColor(context)));
                               })
                             ],
                           ),
                           const SizedBox(height: 8),
                           Row(
                             children: [
-                              const SizedBox(
-                                  width: 120, child: Text('Semester')),
-                              const Text(' : '),
-                              const SizedBox(width: 10),
+                              SizedBox(
+                                  width: 120,
+                                  child: Text('Semester',
+                                      style: TextStyle(
+                                          color:
+                                              styles.getTextColor(context)))),
+                              Text(' : ',
+                                  style: TextStyle(
+                                      color: styles.getTextColor(context))),
+                              SizedBox(width: 10),
                               Obx(() {
                                 return Text(
                                   _controller.selectedSemester.value.isEmpty
                                       ? "-"
                                       : _controller.selectedSemester.value,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    color: styles.getTextColor(context),
                                   ),
                                 );
                               })
@@ -323,8 +340,8 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                       showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
-                        backgroundColor: Colors.white,
-                        shape: const RoundedRectangleBorder(
+                        backgroundColor: styles.getTextField(context),
+                        shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.vertical(top: Radius.circular(20)),
                         ),
@@ -359,7 +376,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           Text(
                             "Cari Data",
                             style: GoogleFonts.poppins(
-                              color: Colors.white,
+                              color: whiteColor,
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/models/lecturers/all_schedule_model.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class AllScheduleCard extends StatelessWidget {
   final LecturerAllScheduleModel jadwal;
@@ -22,7 +23,9 @@ class AllScheduleCard extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               "${jadwal.durasiPerkuliahan!} WIB",
-              style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w600),
+              style: GoogleFonts.plusJakartaSans(
+                  fontWeight: FontWeight.w600,
+                  color: styles.getTextColor(context)),
             ),
           ],
         ),

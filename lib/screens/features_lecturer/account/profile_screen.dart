@@ -5,6 +5,9 @@ import 'package:stipres/controllers/features_lecturer/account/profile_controller
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/screens/features_lecturer/home/notifications/notification_screen.dart';
+import 'package:stipres/theme/dialog_theme_helper.dart';
+import 'package:stipres/theme/theme_controller.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ProfileScreenLecturer extends StatefulWidget {
   ProfileScreenLecturer({Key? key}) : super(key: key);
@@ -25,8 +28,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(
-          255, 237, 235, 251), // Set background putih ke seluruh layar
+      backgroundColor:
+          styles.getMainColor(context), // Set background putih ke seluruh layar
       body: Stack(
         children: [
           Column(
@@ -39,7 +42,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                     width: width,
                     height: 150,
                     decoration: BoxDecoration(
-                      color: blueColor,
+                      color: styles.getBlueColor(context),
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(40),
                       ),
@@ -62,9 +65,9 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                             width: 3), // jarak kecil antara logo dan teks
                         Expanded(
                           child: Text(
-                            "STIKES PANTI WALUYA MALANG",
+                            "STIKES Panti Waluya Malang",
                             style: GoogleFonts.poppins(
-                              fontSize: 12,
+                              fontSize: 13,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                             ),
@@ -83,8 +86,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                   final result = await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (_) =>
-                                          const NotificationScreen(),
+                                      builder: (_) => NotificationScreen(),
                                     ),
                                   );
 
@@ -106,7 +108,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                         ? Icons.notifications
                                         : Icons.notifications_none,
                                     color: Colors.white,
-                                    size: 26,
+                                    size: 24,
                                   ),
                                 ),
                               ),
@@ -135,7 +137,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                       width: 40,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: blueColor, // warna ungu muda
+                        color: styles.getBlueColor(context), // warna ungu muda
                       ),
                     ),
                   ),
@@ -147,7 +149,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                       width: 45,
                       height: 45,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 237, 235, 251),
+                          color: styles.getMainColor(context),
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(40),
                           ) // warna ungu muda
@@ -166,9 +168,9 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                         Stack(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 237, 235, 251),
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: styles.getCircleColor(context),
                                 shape: BoxShape.circle,
                               ),
                               child: ClipOval(child: Obx(() {
@@ -215,8 +217,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                   children: [
                     Container(
                       width: width,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 237, 235, 251),
+                      decoration: BoxDecoration(
+                        color: styles.getMainColor(context),
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(40),
                         ),
@@ -227,9 +229,10 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Nama Lengkap",
-                              style: blackTextStyle.copyWith(
+                              style: GoogleFonts.plusJakartaSans(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
+                                color: styles.getTextColor(context),
                               ),
                               textAlign: TextAlign.start),
                           const SizedBox(height: 7),
@@ -237,7 +240,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                             height: 50,
                             width: width,
                             decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: styles.getTextField(context),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -267,9 +270,10 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                           ),
                           const SizedBox(height: 9),
                           Text("NIP",
-                              style: blackTextStyle.copyWith(
+                              style: GoogleFonts.plusJakartaSans(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
+                                color: styles.getTextColor(context),
                               ),
                               textAlign: TextAlign.start),
                           const SizedBox(height: 7),
@@ -277,7 +281,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                             height: 50,
                             width: width,
                             decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: styles.getTextField(context),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -307,9 +311,10 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                           ),
                           const SizedBox(height: 9),
                           Text("Email",
-                              style: blackTextStyle.copyWith(
+                              style: GoogleFonts.plusJakartaSans(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
+                                color: styles.getTextColor(context),
                               ),
                               textAlign: TextAlign.start),
                           const SizedBox(height: 7),
@@ -317,7 +322,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                             height: 50,
                             width: width,
                             decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: styles.getTextField(context),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -385,7 +390,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                               width: width,
                               padding: EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: whiteColor,
+                                color: styles.getTextField(context),
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
@@ -414,10 +419,11 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                             width: 30),
                                         SizedBox(width: 16),
                                         Text("Pengaturan",
-                                            style: blackTextStyle.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                                            style: GoogleFonts.plusJakartaSans(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: styles
+                                                    .getTextColor(context)),
                                             textAlign: TextAlign.center),
                                       ],
                                     ),
@@ -440,10 +446,11 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                             width: 30),
                                         SizedBox(width: 16),
                                         Text("Ganti Password",
-                                            style: blackTextStyle.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                                            style: GoogleFonts.plusJakartaSans(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: styles
+                                                    .getTextColor(context)),
                                             textAlign: TextAlign.center),
                                       ],
                                     ),
@@ -501,108 +508,115 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
 void _showLogoutDialog(BuildContext context) {
   bool saveLoginInfo = true;
   final _controller = Get.find<ProfileController>();
+  final themeController = Get.find<ThemeController>();
+
+  final isDarkMode = themeController.currentTheme == ThemeMode.dark;
 
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            contentPadding: const EdgeInsets.all(20),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    'KONFIRMASI LOGOUT',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+      return Theme(
+        data: isDarkMode
+            ? customDarkDialogTheme(Colors.blue)
+            : customLightDialogTheme(Colors.blue),
+        child: StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              contentPadding: const EdgeInsets.all(20),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      'KONFIRMASI LOGOUT',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 15),
-                Center(
-                  child: Text(
-                    'Apakah anda yakin ingin keluar?',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey,
+                  const SizedBox(height: 15),
+                  Center(
+                    child: Text(
+                      'Apakah anda yakin ingin keluar?',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey,
+                          ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Simpan informasi login anda',
-                        style: GoogleFonts.plusJakartaSans(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Simpan informasi login anda',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
                       ),
-                    ),
-                    Checkbox(
-                      value: saveLoginInfo,
-                      activeColor: Colors.blue, // warna kotak ketika dicentang
-                      checkColor: Colors.white, // warna centangnya
-                      onChanged: (bool? value) {
-                        setState(() {
-                          saveLoginInfo = value ?? true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
+                      Checkbox(
+                        value: saveLoginInfo,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            saveLoginInfo = value ?? true;
+                          });
                         },
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Colors.blue),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: Colors.blue),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.blue),
                           ),
                         ),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.blue),
-                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle logout action
-                          _controller.logout();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _controller.logout();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            'Logout',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        child: const Text(
-                          'Logout',
-                          style: TextStyle(color: Colors.white),
-                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       );
     },
   );

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/auth/forget_password_step3_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ForgetPassword3 extends StatelessWidget {
   ForgetPassword3({super.key});
@@ -12,13 +14,14 @@ class ForgetPassword3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             ReusableBackground(),
             Center(
                 child: Container(
-                    margin: const EdgeInsets.only(top: 60),
+                    margin: EdgeInsets.only(top: 60),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -38,13 +41,17 @@ class ForgetPassword3 extends StatelessWidget {
                                     height: 160,
                                   ),
                                   Text("Ubah Password",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 20, fontWeight: bold)),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: styles.getTextColor(context))),
                                   const SizedBox(height: 10),
                                   Text("Silahkan masukkan password baru",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 16)),
-                                  const SizedBox(height: 40),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                          color: styles.getTextColor(context))),
+                                  SizedBox(height: 40),
                                   Container(
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 30),
@@ -63,6 +70,9 @@ class ForgetPassword3 extends StatelessWidget {
                                         const SizedBox(height: 7),
                                         Obx(
                                           () => TextField(
+                                            style: TextStyle(
+                                                color: styles
+                                                    .getTextColor(context)),
                                             obscureText: !_controller
                                                 .isPasswordVisible.value,
                                             controller:
@@ -116,6 +126,9 @@ class ForgetPassword3 extends StatelessWidget {
                                         const SizedBox(height: 7),
                                         Obx(
                                           () => TextField(
+                                            style: TextStyle(
+                                                color: styles
+                                                    .getTextColor(context)),
                                             obscureText: !_controller
                                                 .isPasswordVisible2.value,
                                             controller: _controller

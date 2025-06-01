@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/presence_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/presence/presence_card.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class PresenceScreen extends StatefulWidget {
   const PresenceScreen({super.key});
@@ -53,7 +55,7 @@ class _PresenceScreenState extends State<PresenceScreen>
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Obx(() {
           final filteredPresensi = _controller.presenceList.where((presensi) {
             final query = _searchController.text.toLowerCase();
@@ -71,7 +73,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                         width: width,
                         height: 110,
                         decoration: BoxDecoration(
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                           ),
@@ -202,7 +204,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                         child: Container(
                           width: 40,
                           height: 44,
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                         ),
                       ),
                       Positioned(
@@ -212,7 +214,7 @@ class _PresenceScreenState extends State<PresenceScreen>
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: mainColor,
+                            color: styles.getMainColor(context),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                             ),
