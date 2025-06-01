@@ -89,12 +89,8 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                                   shape: const CircleBorder(),
                                   child: InkWell(
                                     onTap: () async {
-                                      final result = await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => NotificationScreen(),
-                                        ),
-                                      );
+                                      final result = await Get.toNamed(
+                                      "/lecturer/notification-screen");
 
                                       if (result != null && result is bool) {
                                         setState(() {
@@ -168,39 +164,45 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                         left: 30,
                         child: Row(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: styles.getCircleColor(context),
-                                shape: BoxShape.circle,
-                              ),
-                              child: ClipOval(child: Obx(() {
-                                final imageUrl =
+                            GestureDetector(
+                          onTap: () {
+                            Get.toNamed("/lecturer/view-profile-screen");
+                          },
+                          child: Container(
+                                padding: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: styles.getCircleColor(context),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: ClipOval(child: Obx(() {
+                                  final imageUrl =
                                     _controller.storedProfile.value;
-                                return (imageUrl.isNotEmpty)
-                                    ? FadeInImage.assetNetwork(
-                                        placeholder:
+                                  return (imageUrl.isNotEmpty)
+                                      ? FadeInImage.assetNetwork(
+                                          placeholder:
+                                         
                                             "assets/icons/ic_profile.jpeg",
-                                        image: imageUrl,
-                                        height: 70,
-                                        width: 70,
-                                        fit: BoxFit.cover,
-                                        imageErrorBuilder:
-                                            (context, url, error) =>
-                                                Image.asset(
+                                          image: imageUrl,
+                                          height: 70,
+                                          width: 70,
+                                          fit: BoxFit.cover,
+                                          imageErrorBuilder:
+                                           
+                                                  (context, url, error) => Image.asset(
+                                            "assets/icons/ic_profile.jpeg",
+                                            height: 70,
+                                            width: 70,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                      : Image.asset(
                                           "assets/icons/ic_profile.jpeg",
                                           height: 70,
                                           width: 70,
                                           fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : Image.asset(
-                                        "assets/icons/ic_profile.jpeg",
-                                        height: 70,
-                                        width: 70,
-                                        fit: BoxFit.cover,
-                                      );
-                              })),
+                                        );
+                                })),
+                          ),
                             ),
                             const SizedBox(width: 10),
                             Obx(() {
@@ -351,18 +353,17 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
 
                                     SizedBox(width: 12),
 
-                                    CategoryCard(
-                                      title: 'Kalender Akademik',
-                                      items: 4,
-                                      imagePath:
-                                          'assets/icons/kalender_akademik.png',
-                                      bgColor: const Color.fromARGB(
-                                          255, 251, 187, 187),
-                                      onTap: () {
-                                        Get.toNamed(
-                                            "/lecturer/calendar-screen");
-                                      },
-                                    ),
+                                CategoryCard(
+                                  title: 'Kalender Akademik',
+                                  items: 4,
+                                  imagePath:
+                                      'assets/icons/kalender_akademik.png',
+                                  bgColor:
+                                      const Color.fromARGB(255, 251, 187, 187),
+                                  onTap: () {
+                                    Get.toNamed("/student/calendar-screen");
+                                  },
+                                ),
 
                                     const SizedBox(width: 12),
 

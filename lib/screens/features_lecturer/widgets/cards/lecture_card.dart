@@ -122,11 +122,6 @@ class PerkuliahanCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   PerkuliahanChip(
-                    iconPath: "assets/icons/ic_lecturer.png",
-                    text: data.namaDosen!,
-                  ),
-                  const SizedBox(height: 8),
-                  PerkuliahanChip(
                     iconPath: "assets/icons/ic_clock.png",
                     text: "${data.durasiPresensi} WIB ",
                   ),
@@ -191,7 +186,7 @@ class PerkuliahanCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                             onTap: () {
                               Clipboard.setData(
-                                ClipboardData(text: data.linkZoom ?? ''),
+                                ClipboardData(text: data.linkZoom),
                               );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

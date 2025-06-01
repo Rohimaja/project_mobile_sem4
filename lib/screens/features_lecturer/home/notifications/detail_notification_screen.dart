@@ -91,7 +91,7 @@ class DetailNotificationScreen extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.all(8),
                     child:
-                        Image.asset(notif.iconAssetPath, color: Colors.white),
+                        Image.asset(notif.iconAssetPath!, color: Colors.white),
                   ),
                   const SizedBox(width: 15),
                   Expanded(
@@ -113,7 +113,7 @@ class DetailNotificationScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          notif.time,
+                          notif.time!,
                           style:
                               TextStyle(fontSize: 12, color: Colors.grey[400]),
                         ),

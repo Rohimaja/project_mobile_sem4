@@ -186,7 +186,9 @@ class LoginScreen extends StatelessWidget {
                                           textStyle: whiteTextStyle.copyWith(
                                               fontSize: 17, fontWeight: bold),
                                           onPressed: () {
-                                            loginC.login();
+                                            (!loginC.isSnackbarOpen.value)
+                                                ? loginC.login()
+                                                : null;
                                           })),
                                   SizedBox(
                                     height: 10,
@@ -239,7 +241,9 @@ class LoginScreen extends StatelessWidget {
                                               minimumSize: const Size(
                                                   double.infinity, 50),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              loginC.loginWithBiometric();
+                                            },
                                             label: Text(
                                               "Login",
                                               style: whiteTextStyle.copyWith(

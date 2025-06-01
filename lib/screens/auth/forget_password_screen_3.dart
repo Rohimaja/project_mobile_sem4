@@ -228,9 +228,7 @@ class ForgetPassword3 extends StatelessWidget {
                                           child: Obx(
                                             () => ElevatedButton(
                                               onPressed: (_controller
-                                                          .isLoading.value ||
-                                                      _controller
-                                                          .isSnackbarOpen.value)
+                                                      .isSnackbarOpen.value)
                                                   ? null
                                                   : () async {
                                                       await _controller

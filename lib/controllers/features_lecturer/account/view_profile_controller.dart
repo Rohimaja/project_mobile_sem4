@@ -48,7 +48,7 @@ class ViewProfileController extends GetxController {
   }
 
   Future<void> loadHeader() async {
-    String profile = _box.read('foto') ?? "";
+    String profile = _box.read('foto') ?? '';
     final profileUrl =
         "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
     storedProfiles.value = profileUrl;
@@ -64,10 +64,15 @@ class ViewProfileController extends GetxController {
       final profile = result.data!;
       log.d(profile.agama);
 
+      if (profile.jenisKelamin == "L") {
+        storedJenisKelamin.value = "Laki-laki";
+      } else {
+        storedJenisKelamin.value = "Perempuan";
+      }
+
       storedFullName.value = profile.nama;
       storedNip.value = profile.nip;
       storedEmail.value = profile.email;
-      storedJenisKelamin.value = profile.jenisKelamin;
       storedAgama.value = profile.agama;
       storedTempatTglLahir.value =
           "${profile.tempatLahir}, ${formatTanggal(profile.tglLahir)}";

@@ -19,7 +19,7 @@ class _CalendarLinkState extends State<CalendarLink> {
     });
 
     // Navigasi ke halaman KalenderScreen
-    await Get.toNamed("/lecturer/calendar-screen");
+    await Get.toNamed("/student/calendar-screen");
 
     // Setelah kembali, hilangkan underline
     if (mounted) {

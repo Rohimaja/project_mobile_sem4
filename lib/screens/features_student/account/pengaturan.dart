@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_student/account/settings_controller.dart';
 import 'package:stipres/screens/features_student/account/bantuan.dart';
-import 'package:stipres/screens/features_student/account/sidik_jari.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/theme/dialog_theme_helper.dart';
 import 'package:stipres/theme/theme_controller.dart';
@@ -19,7 +19,7 @@ class Pengaturan extends StatefulWidget {
 
 class _PengaturanState extends State<Pengaturan> {
   var height, width;
-  bool _isNotifOn = true;
+  final _controller = Get.find<SettingsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +139,7 @@ class _PengaturanState extends State<Pengaturan> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Get.to(SidikJari());
+                                _controller.checkAvalaiblityBiometric();
                               },
                               borderRadius: BorderRadius.circular(
                                   10), // opsional, supaya ripple-nya lebih bagus
@@ -201,10 +201,10 @@ class _PengaturanState extends State<Pengaturan> {
                             SizedBox(height: 15),
                             InkWell(
                               onTap: () {
-                                setState(() {
-                                  _isNotifOn = !_isNotifOn;
-                                });
-                                print("Toggled: $_isNotifOn");
+                                () {
+                                  _controller.toggleNotification(
+                                      !_controller.isNotificationEnabled.value);
+                                };
                               },
                               borderRadius: BorderRadius.circular(10),
                               child: Padding(
@@ -251,24 +251,29 @@ class _PengaturanState extends State<Pengaturan> {
                                               left:
                                                   100), // Ganti angkanya sesuai kebutuhan
                                           child: Transform.scale(
-                                            scale: 0.75,
-                                            child: Switch(
-                                              value: _isNotifOn,
-                                              onChanged: (bool newValue) {
-                                                setState(() {
-                                                  _isNotifOn = newValue;
-                                                });
-                                              },
-                                              activeColor: Color.fromARGB(
-                                                  255, 30, 136, 228),
-                                              activeTrackColor: Color.fromARGB(
-                                                  255, 189, 222, 251),
-                                              inactiveThumbColor: Colors.grey,
-                                              inactiveTrackColor:
-                                                  Color.fromARGB(
-                                                      255, 224, 224, 224),
-                                            ),
-                                          ),
+                                              scale: 0.75,
+                                              child: Obx(() {
+                                                return Switch(
+                                                  value: _controller
+                                                      .isNotificationEnabled
+                                                      .value,
+                                                  onChanged: (bool newValue) {
+                                                    _controller
+                                                        .toggleNotification(
+                                                            newValue);
+                                                  },
+                                                  activeColor: Color.fromARGB(
+                                                      255, 30, 136, 228),
+                                                  activeTrackColor:
+                                                      Color.fromARGB(
+                                                          255, 189, 222, 251),
+                                                  inactiveThumbColor:
+                                                      Colors.grey,
+                                                  inactiveTrackColor:
+                                                      Color.fromARGB(
+                                                          255, 224, 224, 224),
+                                                );
+                                              })),
                                         ),
                                       ),
                                     ),

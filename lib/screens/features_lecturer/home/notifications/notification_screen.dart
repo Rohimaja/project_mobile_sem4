@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_lecturer/home/notification_controller.dart';
 import 'package:stipres/screens/features_lecturer/home/notifications/detail_notification_screen.dart';
 import 'package:stipres/screens/features_lecturer/models/notifications/detail_notification_model.dart';
-import 'package:stipres/screens/features_lecturer/models/notifications/notification_model.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/notification_card.dart';
+import 'package:stipres/screens/features_lecturer/models/notifications/notification_model.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
@@ -17,68 +19,69 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   String selectedCategory = 'Semua';
+  final _controller = Get.find<LecturerNotificationController>();
 
-  final List<NotificationModel> allNotifications = [
-    NotificationModel(
-      title: "Presensi Berhasil Ditambahkan!",
-      message: "Presensi Anda berhasil direkam.",
-      time: "Baru saja",
-      type: NotificationType.presensiBerhasil,
-      iconAssetPath: "assets/icons/ic_presence.png",
-      namaUser: "Bagus",
-      tanggal: "29 Mei 2025",
-      jam: "08.00 WIB",
-      mataKuliah: "Struktur Data",
-    ),
+  // final List<NotificationModel> allNotifications = [
+  //   NotificationModel(
+  //     title: "Presensi Berhasil Ditambahkan!",
+  //     message: "Presensi Anda berhasil direkam.",
+  //     time: "Baru saja",
+  //     type: NotificationType.presensiBerhasil,
+  //     iconAssetPath: "assets/icons/ic_presence.png",
+  //     namaUser: "Bagus",
+  //     tanggal: "29 Mei 2025",
+  //     jam: "08.00 WIB",
+  //     mataKuliah: "Struktur Data",
+  //   ),
 
-    // PRESENSI GAGAL
-    NotificationModel(
-      title: "Presensi Gagal Ditambahkan!",
-      message: "Presensi Anda gagal dilakukan.",
-      time: "10 menit yang lalu",
-      type: NotificationType.presensiGagal,
-      iconAssetPath: "assets/icons/ic_warning.png",
-      namaUser: "Bagus",
-      tanggal: "29 Mei 2025",
-      jam: "10.15 WIB",
-      mataKuliah: "Basis Data",
-    ),
+  //   // PRESENSI GAGAL
+  //   NotificationModel(
+  //     title: "Presensi Gagal Ditambahkan!",
+  //     message: "Presensi Anda gagal dilakukan.",
+  //     time: "10 menit yang lalu",
+  //     type: NotificationType.presensiGagal,
+  //     iconAssetPath: "assets/icons/ic_warning.png",
+  //     namaUser: "Bagus",
+  //     tanggal: "29 Mei 2025",
+  //     jam: "10.15 WIB",
+  //     mataKuliah: "Basis Data",
+  //   ),
 
-    NotificationModel(
-      title: "Presensi Hampir Ditutup!",
-      message: "Waktu presensi Anda akan segera berakhir.",
-      time: "30 menit yang lalu",
-      type: NotificationType.presensiAkanHabis,
-      iconAssetPath: "assets/icons/ic_time.png",
-      namaUser: "Bagus",
-      tanggal: "29 Mei 2025",
-      jam: "09.00 WIB",
-      mataKuliah: "Pemrograman Mobile",
-    ),
+  //   NotificationModel(
+  //     title: "Presensi Hampir Ditutup!",
+  //     message: "Waktu presensi Anda akan segera berakhir.",
+  //     time: "30 menit yang lalu",
+  //     type: NotificationType.presensiAkanHabis,
+  //     iconAssetPath: "assets/icons/ic_time.png",
+  //     namaUser: "Bagus",
+  //     tanggal: "29 Mei 2025",
+  //     jam: "09.00 WIB",
+  //     mataKuliah: "Pemrograman Mobile",
+  //   ),
 
-    NotificationModel(
-      title: "Perubahan Jadwal!",
-      message:
-          "Jadwal perkuliahan minggu ini mengalami perubahan. Silakan cek di menu Jadwal.",
-      time: "1 jam yang lalu",
-      type: NotificationType.pengumuman,
-      iconAssetPath: "assets/icons/ic_announcement.png",
-      namaUser: "Bagus", // bisa kosong juga
-    ),
+  //   NotificationModel(
+  //     title: "Perubahan Jadwal!",
+  //     message:
+  //         "Jadwal perkuliahan minggu ini mengalami perubahan. Silakan cek di menu Jadwal.",
+  //     time: "1 jam yang lalu",
+  //     type: NotificationType.pengumuman,
+  //     iconAssetPath: "assets/icons/ic_announcement.png",
+  //     namaUser: "Bagus", // bisa kosong juga
+  //   ),
 
-    NotificationModel(
-      title: "Update Keamanan Akun",
-      message: "Segera ubah password akun Anda untuk menjaga keamanan akun.",
-      time: "3 jam yang lalu",
-      type: NotificationType.pengumuman,
-      iconAssetPath: "assets/icons/ic_announcement.png",
-      namaUser: "Bagus",
-    ),
-  ];
+  //   NotificationModel(
+  //     title: "Update Keamanan Akun",
+  //     message: "Segera ubah password akun Anda untuk menjaga keamanan akun.",
+  //     time: "3 jam yang lalu",
+  //     type: NotificationType.pengumuman,
+  //     iconAssetPath: "assets/icons/ic_announcement.png",
+  //     namaUser: "Bagus",
+  //   ),
+  // ];
 
   List<NotificationModel> get filteredNotifications {
-    if (selectedCategory == 'Semua') return allNotifications;
-    return allNotifications.where((notif) {
+    if (selectedCategory == 'Semua') return _controller.notificationList;
+    return _controller.notificationList.where((notif) {
       if (selectedCategory == 'Presensi') {
         return notif.type == NotificationType.presensiAkanHabis ||
             notif.type == NotificationType.presensiBerhasil ||
@@ -125,7 +128,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, allNotifications.isNotEmpty); // BENAR
+        Navigator.pop(
+            context, _controller.notificationList.isNotEmpty); // BENAR
         return false;
       },
       child: Scaffold(
@@ -181,8 +185,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
 
                 // Animated List or Empty Placeholder
-                Expanded(
-                  child: AnimatedSwitcher(
+                Expanded(child: Obx(() {
+                  return AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     transitionBuilder: (child, animation) {
                       final offsetAnimation = Tween<Offset>(
@@ -239,8 +243,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               );
                             },
                           ),
-                  ),
-                ),
+                  );
+                })),
               ],
             ),
           ],

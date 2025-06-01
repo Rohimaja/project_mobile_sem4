@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/basic_response.dart';
-import 'package:stipres/screens/reusable/reusable_widget.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/forget_password_service.dart';
 
 class ForgetPasswordStep3Controller extends GetxController {
@@ -14,7 +14,6 @@ class ForgetPasswordStep3Controller extends GetxController {
   final forgetPasswordService = ForgetPasswordService();
 
   var isSnackbarOpen = false.obs;
-  var isLoading = false.obs;
 
   final passwordErrorMessage = ''.obs;
   final confirmPasswordErrorMessage = ''.obs;
@@ -39,6 +38,8 @@ class ForgetPasswordStep3Controller extends GetxController {
     if (passwordController.text.length <= 7) {
       valuePassword.value = true;
       passwordErrorMessage.value = "Masukkan password lebih dari 7 huruf";
+    } else {
+      valuePassword.value = false;
     }
   }
 
@@ -51,6 +52,8 @@ class ForgetPasswordStep3Controller extends GetxController {
       valueConfirmPassword.value = true;
       confirmPasswordErrorMessage.value =
           "Konfirmasi password tidak sesuai dengan password";
+    } else {
+      valueConfirmPassword.value = false;
     }
   }
 
@@ -76,26 +79,20 @@ class ForgetPasswordStep3Controller extends GetxController {
     validatePassword(passwordController.text);
     validateConfirmPassword(confirmPasswordController.text);
 
-    isLoading.value = true;
-
     if (passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty) {
-      // bisa juga kasih warning user
+      
       logger.e("Password atau confirm password kosong/null");
-      resetLoading();
       return;
     }
 
     if (valuePassword.value == true || valueConfirmPassword.value == true) {
-      isLoading.value = false;
-
       isSnackbarOpen.value = true;
       Get.snackbar("Gagal", "Penuhi validasi terlebih dahulu",
           duration: Duration(seconds: delaySnackbar));
       Future.delayed(Duration(seconds: 2), () {
         isSnackbarOpen.value = false;
       });
-      resetLoading();
       return;
     }
 
@@ -104,19 +101,19 @@ class ForgetPasswordStep3Controller extends GetxController {
       logger.d(email);
       logger.d(passwordController.text);
 
-      showLoadingPopup();
+      showLoading();
       BasicResponse response = await forgetPasswordService.changePasswordSv(
           email, passwordController.text);
-      resetLoading();
 
       logger.d(response.message);
 
       if (response.status == "success") {
+        Get.back();
         Get.snackbar("Success", "Password berhasil diubah",
             duration: Duration(seconds: 2));
         Get.offAllNamed("/");
       } else {
-        resetLoading();
+        Get.back();
         isSnackbarOpen.value = true;
         Get.snackbar("Gagal", response.message,
             duration: Duration(seconds: delaySnackbar));
@@ -128,8 +125,11 @@ class ForgetPasswordStep3Controller extends GetxController {
     }
   }
 
-  void resetLoading() {
-    hideLoadingPopup();
-    isLoading.value = false;
+  void showLoading() {
+    Get.dialog(
+      const LoadingPopup(),
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.3),
+    );
   }
 }

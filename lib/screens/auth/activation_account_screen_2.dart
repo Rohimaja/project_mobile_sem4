@@ -158,25 +158,27 @@ class ActivationAccount2 extends StatelessWidget {
                             SizedBox(
                                 height: 40,
                                 width: MediaQuery.of(context).size.width * 0.7,
-                                child: ReusableButton(
-                                    label: "Berikutnya",
-                                    buttonStyle: ElevatedButton.styleFrom(
-                                        elevation: 5,
-                                        backgroundColor: blueColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        minimumSize:
-                                            const Size(double.infinity, 50)),
-                                    textStyle: whiteTextStyle.copyWith(
-                                        fontSize: 17, fontWeight: bold),
-                                    onPressed:
-                                        (_controller.isSnackbarOpen.value)
-                                            ? null
-                                            : () async {
-                                                await _controller.checkOtp();
-                                              })),
+                                child: Obx(() {
+                                  return ReusableButton(
+                                      label: "Berikutnya",
+                                      buttonStyle: ElevatedButton.styleFrom(
+                                          elevation: 5,
+                                          backgroundColor: blueColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          minimumSize:
+                                              const Size(double.infinity, 50)),
+                                      textStyle: whiteTextStyle.copyWith(
+                                          fontSize: 17, fontWeight: bold),
+                                      onPressed:
+                                          (_controller.isSnackbarOpen.value)
+                                              ? null
+                                              : () async {
+                                                  await _controller.checkOtp();
+                                                });
+                                })),
                           ],
                         )
                       ],

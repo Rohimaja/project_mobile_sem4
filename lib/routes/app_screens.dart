@@ -9,6 +9,7 @@ import 'package:stipres/bindings/features_lecturer/add_presence_binding.dart';
 import 'package:stipres/bindings/features_lecturer/all_schedule_binding.dart';
 import 'package:stipres/bindings/features_lecturer/attendance_binding.dart';
 import 'package:stipres/bindings/features_lecturer/lecture_binding.dart';
+import 'package:stipres/bindings/features_lecturer/notification_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_binding.dart';
 import 'package:stipres/bindings/features_lecturer/presence_detail_binding.dart';
 import 'package:stipres/bindings/features_lecturer/view_profile_binding.dart';
@@ -17,15 +18,18 @@ import 'package:stipres/bindings/features_student/attendance_binding.dart';
 import 'package:stipres/bindings/features_student/base_binding.dart' as student;
 import 'package:stipres/bindings/features_lecturer/base_binding.dart';
 import 'package:stipres/bindings/features_lecturer/dashboard_binding.dart';
+import 'package:stipres/bindings/features_student/biometric_binding.dart';
 import 'package:stipres/bindings/features_student/calendar_binding.dart';
 import 'package:stipres/bindings/features_student/dashboard_binding.dart'
     as student;
 import 'package:stipres/bindings/features_student/lecture_binding.dart';
+import 'package:stipres/bindings/features_student/notification_binding.dart';
 import 'package:stipres/bindings/features_student/presence_binding.dart';
 import 'package:stipres/bindings/features_student/presence_content_binding.dart';
 import 'package:stipres/bindings/features_student/profile_binding.dart'
     as student;
 import 'package:stipres/bindings/features_lecturer/profile_binding.dart';
+import 'package:stipres/bindings/features_student/settings_binding.dart';
 import 'package:stipres/bindings/features_student/view_profile_binding.dart';
 import 'package:stipres/screens/auth/activation_account_screen_1.dart';
 import 'package:stipres/screens/auth/activation_account_screen_2.dart';
@@ -47,6 +51,7 @@ import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart'
 import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 import 'package:stipres/screens/features_student/account/pengaturan.dart'
     as student;
+import 'package:stipres/screens/features_student/account/sidik_jari.dart';
 
 import 'package:stipres/screens/features_student/account/view_profile.dart'
     as student;
@@ -68,6 +73,8 @@ import 'package:stipres/screens/features_student/home/lecture/lecture_screen.dar
 import 'package:stipres/screens/features_lecturer/home/lecture/lecture_screen.dart'
     as lecturer;
 import 'package:stipres/screens/features_student/home/notifications/notification_screen.dart';
+import 'package:stipres/screens/features_lecturer/home/notifications/notification_screen.dart'
+    as lecturer;
 import 'package:stipres/screens/features_student/home/offline_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_content_screen.dart';
 import 'package:stipres/screens/features_student/home/presence/presence_screen.dart';
@@ -140,6 +147,10 @@ class AppScreens {
         page: () => ViewProfilePage(),
         binding: LecturerViewProfileBinding()),
     GetPage(
+        name: "/lecturer/notification-screen",
+        page: () => lecturer.NotificationScreen(),
+        binding: LecturerNotificationBinding()),
+    GetPage(
         name: "/lecturer/presence-detail-screen",
         page: () => PresenceDetailScreen(),
         binding: PresenceDetailBinding()),
@@ -180,7 +191,14 @@ class AppScreens {
         name: "/student/view-profile-screen",
         page: () => student.ViewProfilePage(),
         binding: ViewProfileBinding()),
-    GetPage(name: "/student/settings-screen", page: () => student.Pengaturan()),
+    GetPage(
+        name: "/student/settings-screen",
+        page: () => student.Pengaturan(),
+        binding: SettingsBinding()),
+    GetPage(
+        name: "/student/biometric-screen",
+        page: () => SidikJari(),
+        binding: BiometricBinding()),
     GetPage(
         name: "/student/change-email-screen",
         page: () => student.AlamatEmail()),
@@ -191,7 +209,9 @@ class AppScreens {
         name: "/student/terms-of-service-screen",
         page: () => KebijakanPrivasi()),
     GetPage(
-        name: "/student/notification-screen", page: () => NotificationScreen()),
+        name: "/student/notification-screen",
+        page: () => NotificationScreen(),
+        binding: NotificationBinding()),
     GetPage(
         name: "/student/presence-content-screen",
         page: () => PresenceContentScreen(),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_student/account/biometric_controller.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
@@ -13,7 +16,7 @@ class SidikJari extends StatefulWidget {
 
 class _SidikJariState extends State<SidikJari> {
   var height, width;
-  bool _isNotifOn = true;
+  final _controller = Get.find<BiometricController>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,65 +81,65 @@ class _SidikJariState extends State<SidikJari> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              _isNotifOn = !_isNotifOn;
-                            });
-                            print("Toggled: $_isNotifOn");
-                          },
-                          borderRadius: BorderRadius.circular(10),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12.0, horizontal: 4),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                          'assets/icons/ic_fingerprint2.png',
-                                          height: 30,
-                                          width: 30),
-                                      const SizedBox(width: 16),
-                                      Expanded(
-                                        child: Text(
-                                          "Login dengan sidik jari",
-                                          style: GoogleFonts.plusJakartaSans(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color:
-                                                  styles.getTextColor(context)),
-                                          overflow: TextOverflow
-                                              .ellipsis, // Tambahkan jika perlu memotong teks panjang
+                        Obx(() {
+                          return InkWell(
+                            onTap: () {
+                              _controller.toggleBiometric(
+                                  !_controller.isBiometricEnabled.value);
+                            },
+                            borderRadius: BorderRadius.circular(10),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 4),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                            'assets/icons/ic_fingerprint2.png',
+                                            height: 30,
+                                            width: 30),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: Text(
+                                            "Login dengan sidik jari",
+                                            style: GoogleFonts.plusJakartaSans(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: styles
+                                                    .getTextColor(context)),
+                                            overflow: TextOverflow
+                                                .ellipsis, // Tambahkan jika perlu memotong teks panjang
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Transform.scale(
-                                        scale: 0.75,
-                                        child: Switch(
-                                          value: _isNotifOn,
-                                          onChanged: (bool newValue) {
-                                            setState(() {
-                                              _isNotifOn = newValue;
-                                            });
-                                          },
-                                          activeColor:
-                                              Color.fromARGB(255, 30, 136, 228),
-                                          activeTrackColor: Color.fromARGB(
-                                              255, 189, 222, 251),
-                                          inactiveThumbColor: Colors.grey,
-                                          inactiveTrackColor: Color.fromARGB(
-                                              255, 224, 224, 224),
+                                        const SizedBox(width: 10),
+                                        Transform.scale(
+                                          scale: 0.75,
+                                          child: Switch(
+                                            value: _controller
+                                                .isBiometricEnabled.value,
+                                            onChanged: (bool newValue) {
+                                              _controller
+                                                  .toggleBiometric(newValue);
+                                            },
+                                            activeColor: Color.fromARGB(
+                                                255, 30, 136, 228),
+                                            activeTrackColor: Color.fromARGB(
+                                                255, 189, 222, 251),
+                                            inactiveThumbColor: Colors.grey,
+                                            inactiveTrackColor: Color.fromARGB(
+                                                255, 224, 224, 224),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        }),
                         SizedBox(height: 15),
                       ],
                     ),

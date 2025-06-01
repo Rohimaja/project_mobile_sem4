@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:ui';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/account/view_profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
@@ -130,29 +132,91 @@ class ViewProfilePage extends StatelessWidget {
               color: styles.getCircleColor(context),
               shape: BoxShape.circle,
             ),
-            child: ClipOval(child: Obx(() {
-              final imageUrl = _controller.storedProfile.value;
-              return (imageUrl.isNotEmpty)
-                  ? FadeInImage.assetNetwork(
-                      placeholder: "assets/icons/ic_profile.jpeg",
-                      image: imageUrl,
-                      height: 110,
-                      width: 110,
-                      fit: BoxFit.cover,
-                      imageErrorBuilder: (context, url, error) => Image.asset(
+            child: ClipOval(
+              child: GestureDetector(onTap: () {
+                showDialog(
+                  context: Get.context!,
+                  barrierDismissible: true,
+                  builder: (context) => Dialog(
+                    backgroundColor: Colors.transparent,
+                    insetPadding: EdgeInsets.zero,
+                    child: Stack(
+                      children: [
+                        // Background blur
+                        BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ),
+                        // Centered Image
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40),
+                          child: Center(
+                            child: ClipOval(child: Obx(() {
+                              final imageUrl = _controller.storedProfile.value;
+                              return (imageUrl.isNotEmpty)
+                                  ? FadeInImage.assetNetwork(
+                                      placeholder:
+                                          "assets/icons/ic_profile.jpeg",
+                                      image: imageUrl,
+                                      height: 110,
+                                      width: 110,
+                                      fit: BoxFit.cover,
+                                      imageErrorBuilder:
+                                          (context, url, error) => Image.asset(
+                                        "assets/icons/ic_profile.jpeg",
+                                        height: 110,
+                                        width: 110,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Image.asset(
+                                      "assets/icons/ic_profile.jpeg",
+                                      height: 110,
+                                      width: 110,
+                                      fit: BoxFit.cover,
+                                    );
+                            })),
+                          ),
+                        ),
+                        // Close button
+                        Positioned(
+                          top: 40,
+                          right: 20,
+                          child: IconButton(
+                              icon: const Icon(Icons.close,
+                                  color: Colors.white, size: 30),
+                              onPressed: () => Get.back()),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }, child: Obx(() {
+                final imageUrl = _controller.storedProfile.value;
+                return (imageUrl.isNotEmpty)
+                    ? FadeInImage.assetNetwork(
+                        placeholder: "assets/icons/ic_profile.jpeg",
+                        image: imageUrl,
+                        height: 110,
+                        width: 110,
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (context, url, error) => Image.asset(
+                          "assets/icons/ic_profile.jpeg",
+                          height: 110,
+                          width: 110,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Image.asset(
                         "assets/icons/ic_profile.jpeg",
                         height: 110,
                         width: 110,
                         fit: BoxFit.cover,
-                      ),
-                    )
-                  : Image.asset(
-                      "assets/icons/ic_profile.jpeg",
-                      height: 110,
-                      width: 110,
-                      fit: BoxFit.cover,
-                    );
-            })),
+                      );
+              })),
+            ),
           ),
           Positioned(
             bottom: 10,
@@ -187,6 +251,69 @@ class ViewProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  // Widget _buildProfilePicture() {
+  //   return Center(
+  //     child: Stack(
+  //       children: [
+  //         Container(
+  //           padding: const EdgeInsets.all(2),
+  //           decoration: const BoxDecoration(
+  //             color: Color.fromARGB(255, 237, 235, 251),
+  //             shape: BoxShape.circle,
+  //           ),
+  //           child: ClipOval(child: Obx(() {
+  //             final imageUrl = _controller.storedProfile.value;
+  //             return (imageUrl.isNotEmpty)
+  //                 ? FadeInImage.assetNetwork(
+  //                     placeholder: "assets/icons/ic_profile.jpeg",
+  //                     image: imageUrl,
+  //                     height: 110,
+  //                     width: 110,
+  //                     fit: BoxFit.cover,
+  //                     imageErrorBuilder: (context, url, error) => Image.asset(
+  //                       "assets/icons/ic_profile.jpeg",
+  //                       height: 110,
+  //                       width: 110,
+  //                       fit: BoxFit.cover,
+  //                     ),
+  //                   )
+  //                 : Image.asset(
+  //                     "assets/icons/ic_profile.jpeg",
+  //                     height: 110,
+  //                     width: 110,
+  //                     fit: BoxFit.cover,
+  //                   );
+  //           })),
+  //         ),
+  //         Positioned(
+  //           bottom: 0,
+  //           right: 0,
+  //           child: GestureDetector(
+  //             onTap: () {
+  //               _controller.showFileOptions();
+  //             },
+  //             child: Container(
+  //               width: 32,
+  //               height: 32,
+  //               decoration: BoxDecoration(
+  //                 color: blueColor,
+  //                 shape: BoxShape.circle,
+  //               ),
+  //               child: const Padding(
+  //                 padding: EdgeInsets.all(8),
+  //                 child: Image(
+  //                   image: AssetImage("assets/icons/ic_addpicture.png"),
+  //                   fit: BoxFit.contain,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildProfileForm(BuildContext context) {
     return Padding(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:stipres/constants/api.dart';
@@ -9,24 +10,37 @@ import 'package:stipres/models/lecturers/detail_student_presence_model.dart';
 import 'package:stipres/models/lecturers/header_detail_presence_model.dart';
 import 'package:stipres/models/lecturers/list_detail_biodata.model.dart';
 import 'package:stipres/models/lecturers/list_detail_presence_model.dart';
+import 'package:stipres/services/token_service.dart';
 
 class PresenceDetailLecturerService extends GetxService {
-  final String _baseUrl =
-      "${ApiConstants.globalUrl}activityLecturer/getDetailPresensiDosen.php";
-
+  final String _baseUrl = "${ApiConstants.globalUrl}activityLecturer";
+  final GetStorage _box = GetStorage();
+  final tokenService = Get.find<TokenService>();
   var log = Logger();
 
   Future<BaseResponse<HeaderDetailPresensi>> fetchHeader(
       String presensisId) async {
     try {
-      const action = "dataHeader";
+      final token = await _box.read("auth_token");
+
       final url =
-          Uri.parse("$_baseUrl?action=$action&presensis_id=$presensisId");
-      final response = await http.get(url);
+          Uri.parse("$_baseUrl/presence/header?presensis_id=$presensisId");
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await fetchHeader(presensisId);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,
@@ -42,14 +56,26 @@ class PresenceDetailLecturerService extends GetxService {
   Future<BaseResponse<List<ListDetailPresensi>>> fetchStudent(
       String presensisId) async {
     try {
-      const action = "dataDetailPresensi";
+      final token = await _box.read("auth_token");
+
       final url =
-          Uri.parse("$_baseUrl?action=$action&presensis_id=$presensisId");
-      final response = await http.get(url);
+          Uri.parse("$_baseUrl/presence/detail?presensis_id=$presensisId");
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await fetchStudent(presensisId);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,
@@ -66,13 +92,25 @@ class PresenceDetailLecturerService extends GetxService {
 
   Future<BaseResponse<ListDetailBiodata>> fetchBiodata(String nim) async {
     try {
-      const action = "dataBiodataMahasiswa";
-      final url = Uri.parse("$_baseUrl?action=$action&nim=$nim");
-      final response = await http.get(url);
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("$_baseUrl/student/information?nim=$nim");
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await fetchBiodata(nim);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,
@@ -87,13 +125,25 @@ class PresenceDetailLecturerService extends GetxService {
   Future<BaseResponse<DetailMahasiswaPresensi>> fetchDetailStudent(
       String nim) async {
     try {
-      const action = "dataDetailMahasiswa";
-      final url = Uri.parse("$_baseUrl?action=$action&nim=$nim");
-      final response = await http.get(url);
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("$_baseUrl/student/detail?nim=$nim");
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await fetchDetailStudent(nim);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,

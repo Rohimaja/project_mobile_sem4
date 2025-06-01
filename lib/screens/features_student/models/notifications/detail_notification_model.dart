@@ -21,4 +21,6 @@ class NotificationDetailModel {
     required this.jenis,
     required this.namaUser,
   });
+
+
 }

@@ -47,7 +47,7 @@ class PresenceDetailController extends GetxController {
         final header = result.data!;
         storedMatkul.value = header.namaMatkul;
         storedProdi.value = header.namaProdi;
-        storedDurasiPresensi.value = header.durasiPresensi;
+        storedDurasiPresensi.value = "${header.durasiPresensi} WIB";
       }
     } catch (e) {
       log.f("Error: $e");
@@ -155,6 +155,7 @@ class PresenceDetailController extends GetxController {
   }
 
   void openBukti(String buktiPath) async {
+    log.d(buktiPath);
     final ext = buktiPath.toLowerCase();
     if (ext.endsWith('.png') || ext.endsWith('.jpg') || ext.endsWith('.jpeg')) {
     } else if (ext.endsWith('.pdf')) {
@@ -162,8 +163,8 @@ class PresenceDetailController extends GetxController {
       final buktiUrl = "${ApiConstants.path}$buktiPath";
       log.d("BuktiPath $buktiUrl");
       openBuktiFile(buktiUrl, jenis);
-    } else if (ext.endsWith('.docs')) {
-      final jenis = "docs";
+    } else if (ext.endsWith('.docx')) {
+      final jenis = "docx";
       final buktiUrl = "${ApiConstants.path}$buktiPath";
       log.d("BuktiPath $buktiUrl");
       openBuktiFile(buktiUrl, jenis);

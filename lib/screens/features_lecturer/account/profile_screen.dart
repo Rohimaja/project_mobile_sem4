@@ -22,6 +22,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
 
   final _controller = Get.find<ProfileController>();
 
+  final profileC = Get.find<ProfileController>();
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -83,12 +85,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                               shape: const CircleBorder(),
                               child: InkWell(
                                 onTap: () async {
-                                  final result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => NotificationScreen(),
-                                    ),
-                                  );
+                                  final result = await Get.toNamed(
+                                      "/lecturer/notification-screen");
 
                                   if (result != null && result is bool) {
                                     setState(() {
@@ -431,10 +429,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                   SizedBox(height: 20),
                                   InkWell(
                                     onTap: () {
-                                      Get.toNamed(
-                                        "/auth/forget-password/step3",
-                                        arguments: {"fromProfile": true},
-                                      );
+                                      profileC.changePassword();
                                     },
                                     child: Row(
                                       mainAxisAlignment:
@@ -508,8 +503,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
 }
 
 void _showLogoutDialog(BuildContext context) {
-  bool saveLoginInfo = true;
   final _controller = Get.find<ProfileController>();
+  _controller.checkBiometric();
   final themeController = Get.find<ThemeController>();
 
   final isDarkMode = themeController.currentTheme == ThemeMode.dark;
@@ -552,35 +547,51 @@ void _showLogoutDialog(BuildContext context) {
                           ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Simpan informasi login anda',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.w600,
+                  Obx(() {
+                    final showBiometric =
+                        _controller.isBiometricAvailable.value &&
+                            _controller.isBiometricEnabled.value;
+
+                    return showBiometric
+                        ? Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Simpan informasi login anda',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                   ),
-                        ),
-                      ),
-                      Checkbox(
-                        value: saveLoginInfo,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            saveLoginInfo = value ?? true;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                                  Checkbox(
+                                    value: _controller.saveLoginInfo.value,
+                                    activeColor: Colors.blue,
+                                    checkColor: Colors.white,
+                                    onChanged: (bool? value) {
+                                      _controller.saveLoginInfo.value =
+                                          value ?? true;
+                                      print(_controller.saveLoginInfo.value);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : SizedBox.shrink();
+                  }),
                   const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Get.back();
                           },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Colors.blue),

@@ -4,7 +4,7 @@ class PresensiDosenModel {
   final String jamAwal;
   final String jamAkhir;
   final String namaMatkul;
-  String? namaRuangan;
+  final String kodeMatkul;
   String? durasiPresensi;
   final String durasiMatkul;
 
@@ -14,7 +14,7 @@ class PresensiDosenModel {
     required this.jamAwal,
     required this.jamAkhir,
     required this.namaMatkul,
-    required this.namaRuangan,
+    required this.kodeMatkul,
     required this.durasiMatkul,
     this.durasiPresensi,
   });
@@ -26,7 +26,7 @@ class PresensiDosenModel {
       jamAwal: json["jam_awal"],
       jamAkhir: json["jam_akhir"],
       namaMatkul: json["nama_matkul"],
-      namaRuangan: json["nama_ruangan"],
+      kodeMatkul: json["kode_matkul"],
       durasiMatkul: json["durasi_matkul"],
     );
   }

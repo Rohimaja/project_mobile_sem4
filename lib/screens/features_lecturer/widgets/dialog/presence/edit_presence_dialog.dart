@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/screens/reusable/failed_dialog.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class EditPresensiDialog extends StatefulWidget {
@@ -72,10 +73,19 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
           onPressed: () async {
             if (_controller.validateUpdate(widget.awal, widget.akhir) == true) {
               final isConflictFree = await _controller.checkPresence(
-                      widget.presensisId, widget.awal, widget.akhir) ==
+                      widget.presensisId) ==
                   true;
               if (isConflictFree) {
                 (await _controller.updatePresence(widget.presensisId));
+              } else {
+                showFailedDialog(
+                  context: context,
+                  title: "Presensi gagal diunggah!",
+                  subtitle: "Terjadi kesalahan saat mengunggah data",
+                  gifAssetPath: 'assets/gif/failed_animation.gif',
+                  onDetailPressed: () =>
+                      Get.toNamed("/lecturer/notification-screen"),
+                );
               }
             }
           },

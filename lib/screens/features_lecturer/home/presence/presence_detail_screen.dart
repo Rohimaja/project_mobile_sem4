@@ -332,8 +332,8 @@ class _PresenceDetailScreenState extends State<PresenceDetailScreen>
                                   ),
                                   SizedBox(width: 10),
                                   Text(
-                                    "${_controller.storedDurasiPresensi.value} WIB",
-                                    style: GoogleFonts.plusJakartaSans(
+                                    _controller.storedDurasiPresensi.value,
+                                    style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                       color: styles.getTextColor(context),
