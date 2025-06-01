@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/calendar_model.dart';
+import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/academic_calendar_service.dart';
 
 class CalendarController extends GetxController {
@@ -12,6 +14,10 @@ class CalendarController extends GetxController {
   var calenderList = <EventCalendar>[].obs;
   final RxMap<DateTime, List<Map<String, String>>> eventsMap =
       <DateTime, List<Map<String, String>>>{}.obs;
+  final Rx<DateTime> focusedDay = DateTime.now().obs;
+  final Rx<DateTime?> selectedDay = Rx<DateTime?>(DateTime.now());
+  // Di CalendarController, tambahkan:
+  final RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -21,17 +27,25 @@ class CalendarController extends GetxController {
 
   void fetchCalendar() async {
     try {
+      showLoading();
       final result = await academicCalendarService.fetchCalendar();
 
       if (result.status == 'success') {
         final calendar = result.data ?? []; // default empty list
+        Get.back();
         calenderList.assignAll(calendar);
         log.d(result.data);
         eventsMap.assignAll(_generateEventMap(calendar));
+        isLoading.value = true;
+        log.d(isLoading.value);
       } else {
+        Get.back();
+
         log.w("Fetch calendar failed: ${result.message}");
       }
     } catch (e) {
+      Get.back();
+
       log.f("Error: $e");
     }
   }
@@ -67,5 +81,10 @@ class CalendarController extends GetxController {
   List<Map<String, String>> getEventsForDay(DateTime day) {
     final key = DateTime.utc(day.year, day.month, day.day);
     return eventsMap[key] ?? [];
+  }
+
+  void showLoading() {
+    Get.dialog(const LoadingPopup(),
+        barrierDismissible: false, barrierColor: Colors.black.withOpacity(0.3));
   }
 }

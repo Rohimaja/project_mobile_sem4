@@ -125,8 +125,13 @@ class AddPresenceLecturerService extends GetxService {
     }
   }
 
-  Future<BaseResponse<CheckPresenceModel>> checkPresence(int prodiId,
-      int semester, String jamAwal, String jamAkhir, String tglPresensi) async {
+  Future<BaseResponse<CheckPresenceModel>> checkPresence(
+      String dosenId,
+      int prodiId,
+      int semester,
+      String jamAwal,
+      String jamAkhir,
+      String tglPresensi) async {
     try {
       final token = await _box.read("auth_token");
       log.d("Param : $prodiId");
@@ -137,6 +142,7 @@ class AddPresenceLecturerService extends GetxService {
       final url = Uri.parse("$_baseUrl/presence/check-upload");
       log.d(url);
       final response = await http.post(url, body: {
+        'dosen_id': dosenId,
         "jam_awal": jamAwal,
         "jam_akhir": jamAkhir,
         "tgl_presensi": tglPresensi,
@@ -155,7 +161,7 @@ class AddPresenceLecturerService extends GetxService {
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
           return await checkPresence(
-              prodiId, semester, jamAwal, jamAkhir, tglPresensi);
+              dosenId, prodiId, semester, jamAwal, jamAkhir, tglPresensi);
         }
       }
 

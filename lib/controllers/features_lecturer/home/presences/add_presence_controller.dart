@@ -6,7 +6,10 @@ import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
 import 'package:stipres/models/lecturers/presence_request_model.dart';
+import 'package:stipres/screens/reusable/failed_dialog.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
+import 'package:stipres/screens/reusable/success_dialog.dart';
+import 'package:stipres/screens/reusable/upload_data_dialog.dart';
 import 'package:stipres/services/lecturer/add_presence_lecturer_service.dart';
 
 class AddPresenceController extends GetxController {
@@ -145,32 +148,46 @@ class AddPresenceController extends GetxController {
   Future<bool> checkPresence(int prodiId, int semester, String jamAwal,
       String jamAkhir, String tglPresensi) async {
     try {
+      showLoading();
       final result = await addPresenceLecturerService.checkPresence(
-          prodiId, semester, jamAwal, jamAkhir, tglPresensi);
+          dosenId.value.toString(),
+          prodiId,
+          semester,
+          jamAwal,
+          jamAkhir,
+          tglPresensi);
 
       if (result.status == "conflict") {
-        final statusPresence = result.data;
-        final tgl = statusPresence!.tanggalPresensi!.toString();
-        final durasi = statusPresence.durasiPresensi;
-
-        Get.snackbar("Conflict",
-            "Pada tanggal $tgl sudah terdapat absensi di jam $durasi");
+        Get.back();
+        isEnabled.value = false;
+        Get.dialog(FailedDialog(
+          title: "Presensi gagal diunggah!",
+          subtitle:
+              "Data presensi bentrok dengan matkul lain di kelas yang sama",
+          gifAssetPath: "assets/gif/failed_animation.gif",
+          onDetailPressed: () => Get.toNamed("/lecturer/notification-screen"),
+        ));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isEnabled.value = true,
+        );
 
         return false;
       } else if (result.status == "no_conflict") {
         return true;
       } else {
+        Get.back();
         return false;
       }
     } catch (e) {
       log.f("Error: $e");
+      Get.back();
       return false;
     }
   }
 
-  void uploadPresence(String presensiId) async {
+  Future<void> uploadPresence(String presensiId) async {
     try {
-      showLoading();
       final result = await addPresenceLecturerService.uploadPresensi(
           PresenceRequest(
               presensiId: presensiId,
@@ -188,7 +205,15 @@ class AddPresenceController extends GetxController {
         Get.back();
         Get.back();
         isEnabled.value = false;
-        Get.snackbar("Sukses", "Data Presensi berhasil ditambahkan");
+        Get.dialog(
+          SuccessDialog(
+            title: 'Presensi berhasil diunggah!',
+            subtitle: 'Data presensi berhasil ditambahkan',
+            gifAssetPath: 'assets/gif/success_animation.gif',
+            onDetailPressed: () => Get.toNamed("/lecturer/notification-screen"),
+          ),
+          barrierDismissible: false,
+        );
         Future.delayed(
           Duration(seconds: 3),
           () => isEnabled.value = true,
@@ -219,12 +244,26 @@ class AddPresenceController extends GetxController {
       if (isConflictFree) {
         final presensiId = await getPresensiId();
         log.d("Presensi Id : $presensiId");
-        uploadPresence(presensiId);
+        await uploadPresence(presensiId).timeout(Duration(seconds: 10),
+            onTimeout: () {
+          Get.back();
+          Get.snackbar("Timeout", "Operasi terlalu lama, coba lagi.",
+              duration: const Duration(seconds: 2));
+          return null;
+        });
       }
     }
   }
 
   bool validatePresence() {
+    if (jamAwal.value == null || jamAkhir.value == null) {
+      Get.dialog(UploadDialog(
+          title: "Validasi!",
+          subtitle: "Silahkan isi data terlebih dahulu",
+          gifAssetPath: "assets/gif/upload_data_animation.gif"));
+      return false;
+    }
+
     jamAwalStr.value = timeOfDayToString(jamAwal.value!);
     jamAkhirStr.value = timeOfDayToString(jamAkhir.value!);
     final awal = timeOfDayToString(jamAwal.value!);
@@ -256,8 +295,10 @@ class AddPresenceController extends GetxController {
         jamAkhirStr.value.isEmpty ||
         linkZoomController.text.isEmpty) {
       isEnabled.value = false;
-      Get.snackbar("Gagal", "Mohon lengkapi semua data wajib",
-          duration: Duration(seconds: 2));
+      Get.dialog(UploadDialog(
+          title: "Validasi!",
+          subtitle: "Silahkan isi data terlebih dahulu",
+          gifAssetPath: "assets/gif/upload_data_animation.gif"));
       Future.delayed(
         Duration(seconds: 3),
         () => isEnabled.value = true,
@@ -265,8 +306,10 @@ class AddPresenceController extends GetxController {
       return false;
     } else if (!isAfter(jamAkhir.value!, jamAwal.value!) || awal == akhir) {
       isEnabled.value = false;
-      Get.snackbar("Gagal", "Jam akhir harus setelah jam awal",
-          duration: Duration(seconds: 2));
+      Get.dialog(UploadDialog(
+          title: "Validasi!",
+          subtitle: "Jam akhir harus setelah jam awal",
+          gifAssetPath: "assets/gif/upload_data_animation.gif"));
       Future.delayed(
         Duration(seconds: 3),
         () => isEnabled.value = true,

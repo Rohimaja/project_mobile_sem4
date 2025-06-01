@@ -9,6 +9,7 @@ import 'package:stipres/models/dosen_model.dart';
 import 'package:stipres/models/mahasiswa_model.dart';
 import 'package:stipres/constants/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:stipres/services/fcm_service.dart';
 import 'package:stipres/services/token_service.dart';
 
 class LoginService extends GetxService {
@@ -17,6 +18,7 @@ class LoginService extends GetxService {
   final GetStorage _box = GetStorage();
   final tokenService = Get.find<TokenService>();
   final FlutterSecureStorage _secure = FlutterSecureStorage();
+  final FcmService fcmService = FcmService();
   final Logger log = Logger();
 
   var logger = Logger(printer: PrettyPrinter(methodCount: 0));
@@ -71,6 +73,10 @@ class LoginService extends GetxService {
 
           log.f(
               "Check mahasiswa idddddddd: ${data['mahasiswa_id'].toString()}");
+
+          final tokenfcm = await FcmService.getToken();
+          log.d(tokenfcm);
+          await fcmService.sendFcmToken(tokenfcm!);
 
           return Mahasiswa.fromJson({
             ...data,
@@ -154,6 +160,10 @@ class LoginService extends GetxService {
           await _secure.write(
               key: "dosen_id", value: data['dosen_id'].toString());
 
+          final tokenfcm = await FcmService.getToken();
+          log.d(tokenfcm);
+          await fcmService.sendFcmToken(tokenfcm!);
+
           logger.d(body);
 
           return Dosen.fromJson({
@@ -229,6 +239,10 @@ class LoginService extends GetxService {
       _box.write("foto", data['foto']);
       _box.write("role", 'dosen');
 
+      final tokenfcm = await FcmService.getToken();
+      log.d(tokenfcm);
+      await fcmService.sendFcmToken(tokenfcm!);
+
       return BaseResponse.fromJson(
           body, (dataJson) => Dosen.fromJson(dataJson as Map<String, dynamic>));
     } catch (e) {
@@ -284,6 +298,11 @@ class LoginService extends GetxService {
       _box.write("semester", data['semester']);
       _box.write("foto", data['foto']);
       _box.write("role", "mahasiswa");
+
+      final tokenfcm = await FcmService.getToken();
+      log.d(tokenfcm);
+      await fcmService.sendFcmToken(tokenfcm!);
+
       return BaseResponse.fromJson(body,
           (dataJson) => Mahasiswa.fromJson(dataJson as Map<String, dynamic>));
     } catch (e) {

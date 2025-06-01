@@ -55,12 +55,13 @@ class PresenceLecturerService extends GetxService {
   }
 
   Future<BasicResponse> updatePresence(
-      String presensisId, String jamAwal, String jamAkhir) async {
+      String dosenId, String presensisId, String jamAwal, String jamAkhir) async {
     try {
       final token = await _box.read("auth_token");
 
       final url = Uri.parse("$_baseUrl/updatePresence");
       final response = await http.post(url, body: {
+        'dosen_id': dosenId,
         'presensis_id': presensisId,
         'jam_awal': jamAwal,
         'jam_akhir': jamAkhir
@@ -77,7 +78,7 @@ class PresenceLecturerService extends GetxService {
         log.f("Response 401");
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
-          return await updatePresence(presensisId, jamAwal, jamAkhir);
+          return await updatePresence(dosenId, presensisId, jamAwal, jamAkhir);
         }
       }
 
@@ -88,7 +89,7 @@ class PresenceLecturerService extends GetxService {
     }
   }
 
-  Future<BaseResponse<CheckPresenceModel>> checkPresence(
+  Future<BaseResponse<CheckPresenceModel>> checkPresence(String dosenId,
       String presensisId, String jamAwal, String jamAkhir) async {
     try {
       final token = await _box.read("auth_token");
@@ -97,6 +98,7 @@ class PresenceLecturerService extends GetxService {
       log.d(url);
       final response = await http.post(url, body: {
         "jam_awal": jamAwal,
+        "dosen_id": dosenId,
         "jam_akhir": jamAkhir,
         "presensis_id": presensisId
       }, headers: {
@@ -111,7 +113,7 @@ class PresenceLecturerService extends GetxService {
         log.f("Response 401");
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
-          return await checkPresence(presensisId, jamAwal, jamAkhir);
+          return await checkPresence(dosenId, presensisId, jamAwal, jamAkhir);
         }
       }
 

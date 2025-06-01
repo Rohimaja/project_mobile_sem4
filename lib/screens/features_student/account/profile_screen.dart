@@ -71,11 +71,7 @@ class ProfileScreen extends StatelessWidget {
                           shape: const CircleBorder(), // biar ripple bulat
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationScreen()),
-                              );
+                              Get.toNamed("/student/notification-screen");
                             },
                             borderRadius: BorderRadius.circular(100),
                             child: Container(
@@ -228,6 +224,8 @@ class ProfileScreen extends StatelessWidget {
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
                                       ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     )),
                               ),
                             ),
@@ -428,8 +426,7 @@ class ProfileScreen extends StatelessWidget {
                                   SizedBox(height: 20), // Jarak antar item
                                   InkWell(
                                     onTap: () {
-                                      Get.toNamed(
-                                          "/auth/forget-password/step3");
+                                      profileC.changePassword();
                                     },
                                     child: Row(
                                       mainAxisAlignment:

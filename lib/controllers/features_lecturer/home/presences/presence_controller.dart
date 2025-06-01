@@ -4,6 +4,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/lecturers/presence_model.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
+import 'package:stipres/screens/reusable/success_dialog.dart';
+import 'package:stipres/screens/reusable/upload_data_dialog.dart';
 import 'package:stipres/services/lecturer/presence_lecturer_service.dart';
 
 class PresenceController extends GetxController {
@@ -58,26 +60,33 @@ class PresenceController extends GetxController {
       return false;
     } else if (!isAfter(jamAkhir.value!, jamAwal.value!)) {
       Get.back();
-      Get.snackbar("Gagal", "Jam akhir harus setelah jam awal",
-          duration: Duration(seconds: 1));
+      Get.dialog(
+          UploadDialog(
+            title: "Validasi!",
+            subtitle: "Jam akhir harus setelah jam awal",
+            gifAssetPath: "assets/gif/upload_data_animation.gif",
+          ),
+          barrierDismissible: false);
       return false;
     }
     return true;
   }
 
-  Future<bool> checkPresence(
-      String presensisId, String jamAwal, String jamAkhir) async {
+  Future<bool> checkPresence(String presensisId) async {
     try {
-      final result = await presenceLecturerService.checkPresence(
-          presensisId, jamAwal, jamAkhir);
+      log.d("Log Debug dosen id ${dosenId.value}");
+      final awal = timeOfDayToString(jamAwal.value!);
+      final akhir = timeOfDayToString(jamAkhir.value!);
+      final result =
+          await presenceLecturerService.checkPresence(dosenId.value, presensisId, awal, akhir);
+
+      log.d("hasil conflict: ${result.status}");
+      log.d("Data: $awal");
+      log.d("Data: $akhir");
+      log.d("Data: $presensisId");
 
       if (result.status == "conflict") {
-        final statusPresence = result.data;
-        final tgl = statusPresence!.tanggalPresensi!.toString();
-        final durasi = statusPresence.durasiPresensi;
         Get.back();
-        Get.snackbar("Conflict",
-            "Pada tanggal $tgl sudah terdapat absensi di jam $durasi");
 
         return false;
       } else if (result.status == "no_conflict") {
@@ -99,14 +108,21 @@ class PresenceController extends GetxController {
       log.d(akhir);
 
       showLoading();
-      final result = await presenceLecturerService.updatePresence(
+      final result = await presenceLecturerService.updatePresence(dosenId.value, 
           presensisId, awal, akhir);
       if (result.status == "success") {
         Get.back();
         Get.back();
         fetchPresence();
-        Get.snackbar("Berhasil", "Waktu presensi berhasil diperbarui",
-            duration: Duration(seconds: 1));
+        Get.dialog(
+          SuccessDialog(
+            title: 'Presensi berhasil diubah!',
+            subtitle: 'Data presensi berhasil diubah',
+            gifAssetPath: 'assets/gif/success_animation.gif',
+            onDetailPressed: () => Get.toNamed("/lecturer/notification-screen"),
+          ),
+          barrierDismissible: false,
+        );
       } else {
         Get.back();
         Get.snackbar("Error", result.message, duration: Duration(seconds: 1));
@@ -166,7 +182,7 @@ class PresenceController extends GetxController {
     Get.dialog(
       const LoadingPopup(),
       barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.3),
+      barrierColor: Colors.black.withOpacity(0.3)
     );
   }
 }

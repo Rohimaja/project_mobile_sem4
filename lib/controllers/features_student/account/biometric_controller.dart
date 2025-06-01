@@ -3,7 +3,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 class BiometricController extends GetxController {
-  final isNotifOn = true.obs;
   final GetStorage _box = GetStorage();
   final isBiometricEnabled = false.obs;
   final Logger log = Logger();

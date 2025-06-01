@@ -27,6 +27,7 @@ class _LoadingPopupState extends State<LoadingPopup>
         Get.back();
         Get.snackbar("Timeout", "Operasi terlalu lama, coba lagi.",
             duration: const Duration(seconds: 2));
+        return;
       }
     });
   }

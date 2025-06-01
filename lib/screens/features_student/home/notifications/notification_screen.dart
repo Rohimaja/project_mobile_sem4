@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_student/home/notification_controller.dart';
 import 'package:stipres/screens/features_student/home/notifications/detail_notification_screen.dart';
 import 'package:stipres/screens/features_student/models/notifications/detail_notification_model.dart';
 import 'package:stipres/screens/features_student/models/notifications/notification_model.dart';
@@ -16,71 +18,72 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   String selectedCategory = 'Semua';
+  final _controller = Get.find<NotificationController>();
 
-  final List<NotificationModel> allNotifications = [
-    NotificationModel(
-      title: "Presensi Berhasil!",
-      message: "Presensi Anda berhasil direkam.",
-      time: "Baru saja",
-      type: NotificationType.presensiBerhasil,
-      iconAssetPath: "assets/icons/ic_presence.png",
-      namaUser: "Bagus",
-      tanggal: "29 Mei 2025",
-      jam: "08.00 WIB",
-      mataKuliah: "Struktur Data",
-    ),
+  // final List<NotificationModel> allNotifications = [
+  //   NotificationModel(
+  //     title: "Presensi Berhasil!",
+  //     message: "Presensi Anda berhasil direkam.",
+  //     time: "Baru saja",
+  //     type: NotificationType.presensiBerhasil,
+  //     iconAssetPath: "assets/icons/ic_presence.png",
+  //     namaUser: "Bagus",
+  //     tanggal: "29 Mei 2025",
+  //     jam: "08.00 WIB",
+  //     mataKuliah: "Struktur Data",
+  //   ),
 
-    // PRESENSI GAGAL
-    NotificationModel(
-      title: "Presensi Gagal!",
-      message: "Presensi Anda gagal dilakukan.",
-      time: "10 menit yang lalu",
-      type: NotificationType.presensiGagal,
-      iconAssetPath: "assets/icons/ic_warning.png",
-      namaUser: "Bagus",
-      tanggal: "29 Mei 2025",
-      jam: "10.15 WIB",
-      mataKuliah: "Basis Data",
-    ),
+  //   // PRESENSI GAGAL
+  //   NotificationModel(
+  //     title: "Presensi Gagal!",
+  //     message: "Presensi Anda gagal dilakukan.",
+  //     time: "10 menit yang lalu",
+  //     type: NotificationType.presensiGagal,
+  //     iconAssetPath: "assets/icons/ic_warning.png",
+  //     namaUser: "Bagus",
+  //     tanggal: "29 Mei 2025",
+  //     jam: "10.15 WIB",
+  //     mataKuliah: "Basis Data",
+  //   ),
 
-    // BATAS PRESENSI
-    NotificationModel(
-      title: "Presensi Hampir Ditutup!",
-      message: "Waktu presensi Anda akan segera berakhir.",
-      time: "30 menit yang lalu",
-      type: NotificationType.presensiAkanHabis,
-      iconAssetPath: "assets/icons/ic_time.png",
-      namaUser: "Bagus",
-      tanggal: "29 Mei 2025",
-      jam: "09.00 WIB",
-      mataKuliah: "Pemrograman Mobile",
-    ),
+  //   // BATAS PRESENSI
+  //   NotificationModel(
+  //     title: "Presensi Hampir Ditutup!",
+  //     message: "Waktu presensi Anda akan segera berakhir.",
+  //     time: "30 menit yang lalu",
+  //     type: NotificationType.presensiAkanHabis,
+  //     iconAssetPath: "assets/icons/ic_time.png",
+  //     namaUser: "Bagus",
+  //     tanggal: "29 Mei 2025",
+  //     jam: "09.00 WIB",
+  //     mataKuliah: "Pemrograman Mobile",
+  //   ),
 
-    // PENGUMUMAN UMUM
-    NotificationModel(
-      title: "Perubahan Jadwal!",
-      message:
-          "Jadwal perkuliahan minggu ini mengalami perubahan. Silakan cek di menu Jadwal.",
-      time: "1 jam yang lalu",
-      type: NotificationType.pengumuman,
-      iconAssetPath: "assets/icons/ic_announcement.png",
-      namaUser: "Bagus", // bisa kosong juga
-    ),
+  //   // PENGUMUMAN UMUM
+  //   NotificationModel(
+  //     title: "Perubahan Jadwal!",
+  //     message:
+  //         "Jadwal perkuliahan minggu ini mengalami perubahan. Silakan cek di menu Jadwal.",
+  //     time: "1 jam yang lalu",
+  //     type: NotificationType.pengumuman,
+  //     iconAssetPath: "assets/icons/ic_announcement.png",
+  //     namaUser: "Bagus", // bisa kosong juga
+  //   ),
 
-    // PENGUMUMAN UMUM LAINNYA
-    NotificationModel(
-      title: "Update Keamanan Akun",
-      message: "Segera ubah password akun Anda untuk menjaga keamanan akun.",
-      time: "3 jam yang lalu",
-      type: NotificationType.pengumuman,
-      iconAssetPath: "assets/icons/ic_announcement.png",
-      namaUser: "Bagus",
-    ),
-  ];
+  //   // PENGUMUMAN UMUM LAINNYA
+  //   NotificationModel(
+  //     title: "Update Keamanan Akun",
+  //     message: "Segera ubah password akun Anda untuk menjaga keamanan akun.",
+  //     time: "3 jam yang lalu",
+  //     type: NotificationType.pengumuman,
+  //     iconAssetPath: "assets/icons/ic_announcement.png",
+  //     namaUser: "Bagus",
+  //   ),
+  // ];
 
   List<NotificationModel> get filteredNotifications {
-    if (selectedCategory == 'Semua') return allNotifications;
-    return allNotifications.where((notif) {
+    if (selectedCategory == 'Semua') return _controller.notificationList;
+    return _controller.notificationList.where((notif) {
       if (selectedCategory == 'Presensi') {
         return notif.type == NotificationType.presensiAkanHabis ||
             notif.type == NotificationType.presensiBerhasil ||
@@ -178,8 +181,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
 
               // Animated List or Empty Placeholder
-              Expanded(
-                child: AnimatedSwitcher(
+              Expanded(child: Obx(() {
+                return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   transitionBuilder: (child, animation) {
                     final offsetAnimation = Tween<Offset>(
@@ -194,7 +197,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset('assets/images/empty_state.png',
+                              Image.asset('assets/icons/ic_noData.png',
                                   height: 150),
                               const SizedBox(height: 20),
                               Text(
@@ -236,8 +239,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             );
                           },
                         ),
-                ),
-              ),
+                );
+              })),
             ],
           ),
         ],

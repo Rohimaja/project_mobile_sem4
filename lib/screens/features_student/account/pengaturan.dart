@@ -15,7 +15,6 @@ class Pengaturan extends StatefulWidget {
 
 class _PengaturanState extends State<Pengaturan> {
   var height, width;
-  bool _isNotifOn = true;
   final _controller = Get.find<SettingsController>();
 
   @override
@@ -110,10 +109,8 @@ class _PengaturanState extends State<Pengaturan> {
                         SizedBox(height: 15),
                         InkWell(
                           onTap: () {
-                            setState(() {
-                              _isNotifOn = !_isNotifOn;
-                            });
-                            print("Toggled: $_isNotifOn");
+                            _controller.toggleNotification(
+                                !_controller.isNotificationEnabled.value);
                           },
                           borderRadius: BorderRadius.circular(10),
                           child: Padding(
@@ -157,23 +154,25 @@ class _PengaturanState extends State<Pengaturan> {
                                           left:
                                               100), // Ganti angkanya sesuai kebutuhan
                                       child: Transform.scale(
-                                        scale: 0.75,
-                                        child: Switch(
-                                          value: _isNotifOn,
-                                          onChanged: (bool newValue) {
-                                            setState(() {
-                                              _isNotifOn = newValue;
-                                            });
-                                          },
-                                          activeColor:
-                                              Color.fromARGB(255, 30, 136, 228),
-                                          activeTrackColor: Color.fromARGB(
-                                              255, 189, 222, 251),
-                                          inactiveThumbColor: Colors.grey,
-                                          inactiveTrackColor: Color.fromARGB(
-                                              255, 224, 224, 224),
-                                        ),
-                                      ),
+                                          scale: 0.75,
+                                          child: Obx(() {
+                                            return Switch(
+                                              value: _controller
+                                                  .isNotificationEnabled.value,
+                                              onChanged: (bool newValue) {
+                                                _controller.toggleNotification(
+                                                    newValue);
+                                              },
+                                              activeColor: Color.fromARGB(
+                                                  255, 30, 136, 228),
+                                              activeTrackColor: Color.fromARGB(
+                                                  255, 189, 222, 251),
+                                              inactiveThumbColor: Colors.grey,
+                                              inactiveTrackColor:
+                                                  Color.fromARGB(
+                                                      255, 224, 224, 224),
+                                            );
+                                          })),
                                     ),
                                   ),
                                 ),

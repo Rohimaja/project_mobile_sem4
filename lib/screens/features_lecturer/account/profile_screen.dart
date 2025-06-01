@@ -80,13 +80,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                               shape: const CircleBorder(),
                               child: InkWell(
                                 onTap: () async {
-                                  final result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          const NotificationScreen(),
-                                    ),
-                                  );
+                                  final result = await Get.toNamed(
+                                      "/lecturer/notification-screen");
 
                                   if (result != null && result is bool) {
                                     setState(() {
@@ -425,8 +420,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                   SizedBox(height: 20),
                                   InkWell(
                                     onTap: () {
-                                      Get.toNamed(
-                                          "/auth/forget-password/step3");
+                                      _controller.changePassword();
                                     },
                                     child: Row(
                                       mainAxisAlignment:

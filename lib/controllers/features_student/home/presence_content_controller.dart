@@ -8,7 +8,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/students/get_presence_model.dart';
+import 'package:stipres/screens/reusable/failed_dialog.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
+import 'package:stipres/screens/reusable/success_dialog.dart';
+import 'package:stipres/screens/reusable/upload_data_dialog.dart';
 import 'package:stipres/services/student/presence_content_service.dart';
 
 import 'package:timezone/timezone.dart' as tz;
@@ -81,19 +84,37 @@ class PresenceContentController extends GetxController {
 
   bool validate() {
     if (status.value == null) {
-      showError("Silakan pilih status presensi terlebih dahulu.");
+      Get.dialog(
+          UploadDialog(
+            title: "Validasi!",
+            subtitle: "Silakan pilih status presensi terlebih dahulu",
+            gifAssetPath: "assets/gif/upload_data_animation.gif",
+          ),
+          barrierDismissible: false);
       return false;
     }
     if ((status.value == StatusPresensi.ijin ||
             status.value == StatusPresensi.sakit) &&
         alasanController.text.trim().isEmpty) {
-      showError("Silakan isi alasan ketidakhadiran.");
+      Get.dialog(
+          UploadDialog(
+            title: "Validasi!",
+            subtitle: "Silakan isi alasan ketidakhadiran",
+            gifAssetPath: "assets/gif/upload_data_animation.gif",
+          ),
+          barrierDismissible: false);
       return false;
     }
     if ((status.value == StatusPresensi.ijin ||
             status.value == StatusPresensi.sakit) &&
         bukti() == null) {
-      showError("Silakan upload bukti ketidakhadiran.");
+      Get.dialog(
+          UploadDialog(
+            title: "Validasi!",
+            subtitle: "Silakan upload bukti ketidakhadiran",
+            gifAssetPath: "assets/gif/upload_data_animation.gif",
+          ),
+          barrierDismissible: false);
       return false;
     }
 
@@ -104,7 +125,12 @@ class PresenceContentController extends GetxController {
     if (!validate()) return;
 
     showLoading();
-    await uploadPresence();
+    await uploadPresence().timeout(Duration(seconds: 10), onTimeout: () {
+      Get.back();
+      Get.snackbar("Timeout", "Operasi terlalu lama, coba lagi.",
+          duration: const Duration(seconds: 2));
+      return null;
+    });
   }
 
   Future<void> uploadPresence() async {
@@ -163,10 +189,20 @@ class PresenceContentController extends GetxController {
       if (result.status == "success") {
         Get.back();
         Get.back();
-        Get.snackbar("Berhasil", result.message,
-            duration: Duration(seconds: 1));
+        Get.dialog(
+          SuccessDialog(
+            title: 'Presensi berhasil diunggah!',
+            subtitle: 'Data presensi berhasil ditambahkan',
+            gifAssetPath: 'assets/gif/success_animation.gif',
+            onDetailPressed: () => Get.toNamed("/student/notification-screen"),
+          ),
+          barrierDismissible: false,
+        );
       } else {
-        showError(result.message);
+        Get.dialog(FailedDialog(
+            title: "Presensi gagal diunggah!",
+            subtitle: "Data presensi gagal ditambahkan",
+            gifAssetPath: "assets/gif/success_animation.gif"));
       }
     } catch (e) {
       log.d("Error: $e");
@@ -406,17 +442,6 @@ class PresenceContentController extends GetxController {
       barrierDismissible: false,
       // ignore: deprecated_member_use
       barrierColor: Colors.black.withOpacity(0.3),
-    );
-  }
-
-  void showError(String message) {
-    Get.defaultDialog(
-      title: "Validasi",
-      middleText: message,
-      textConfirm: "OK",
-      onConfirm: () {
-        Get.back();
-      },
     );
   }
 }

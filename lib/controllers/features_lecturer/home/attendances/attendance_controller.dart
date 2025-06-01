@@ -39,11 +39,10 @@ class AttendanceController extends GetxController {
           prodiMap[prodi.id] = prodi.namaProdi;
         }
       } else {
-        Get.snackbar("Gagal", result.message);
+        // Get.snackbar("Gagal", result.message);
       }
     } catch (e) {
       log.f("Error: $e");
-      Get.snackbar("Gagal", "Error: $e");
     }
   }
 
@@ -63,11 +62,10 @@ class AttendanceController extends GetxController {
           studentList.clear();
         }
       } else {
-        Get.snackbar("Gagal", result.message);
+        // Get.snackbar("Gagal", result.message);
       }
     } catch (e) {
       log.f("Error: $e");
-      Get.snackbar("Gagal", "Error: $e");
     }
   }
 }

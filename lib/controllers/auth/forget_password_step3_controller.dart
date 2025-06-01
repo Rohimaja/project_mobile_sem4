@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
-import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/services/forget_password_service.dart';
 
 class ForgetPasswordStep3Controller extends GetxController {
@@ -83,7 +81,7 @@ class ForgetPasswordStep3Controller extends GetxController {
 
     if (passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty) {
-      // bisa juga kasih warning user
+      
       logger.e("Password atau confirm password kosong/null");
       return;
     }

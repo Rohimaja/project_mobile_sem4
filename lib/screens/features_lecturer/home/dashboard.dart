@@ -89,14 +89,8 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                               shape: const CircleBorder(),
                               child: InkWell(
                                 onTap: () async {
-                                  final result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          const NotificationScreen(),
-                                    ),
-                                  );
-
+                                  final result = await Get.toNamed(
+                                      "/lecturer/notification-screen");
                                   if (result != null && result is bool) {
                                     setState(() {
                                       hasNotification = result;

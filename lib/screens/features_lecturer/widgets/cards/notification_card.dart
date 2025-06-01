@@ -84,7 +84,7 @@ class NotificationCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    notification.time,
+                    notification.time!,
                     style: TextStyle(
                       fontSize: 11,
                       color: Colors.grey,
