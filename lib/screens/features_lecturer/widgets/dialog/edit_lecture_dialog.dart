@@ -33,7 +33,7 @@ void showEditLinkDialog(
               controller: linkController,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: styles.getTextColor(context),
+                fillColor: styles.getTextField(context),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: blueColor),
                   borderRadius: BorderRadius.circular(10),

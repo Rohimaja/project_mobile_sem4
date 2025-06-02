@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/account/profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
 import 'package:stipres/screens/features_student/home/notifications/notification_screen.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
@@ -16,9 +17,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   var height, width;
-  bool hasNotification = true;
 
   final profileC = Get.find<ProfileController>();
+  final conDash = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   padding: const EdgeInsets.all(6),
                                   child: Icon(
-                                    hasNotification
+                                    conDash.hasNotification.value
                                         ? Icons.notifications
                                         : Icons.notifications_none,
                                     color: Colors.white,
@@ -99,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                             ),
-                            if (hasNotification)
+                            if (conDash.hasNotification.value)
                               const Positioned(
                                 top: 2,
                                 right: 2,

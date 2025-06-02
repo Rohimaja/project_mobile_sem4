@@ -16,6 +16,7 @@ class DashboardController extends GetxController {
   final storedKalender = 0.obs;
   final storedPerkuliahanOnline = 0.obs;
   final url = ApiConstants.path;
+  final hasNotification = false.obs;
 
   final _box = GetStorage();
   final statusOffline = false.obs;
@@ -28,11 +29,12 @@ class DashboardController extends GetxController {
       DashboardMahasiswaService();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     loadHeader();
     final mahasiswaId = _box.read("mahasiswa_id").toString();
-    loadSummary(mahasiswaId);
+    await loadSummary(mahasiswaId);
+    loadNotif(mahasiswaId);
   }
 
   Future<void> loadHeader() async {
@@ -67,6 +69,18 @@ class DashboardController extends GetxController {
       } else {
         errorMessage.value = result.message;
       }
+    } catch (e) {
+      log.f("Error: $e");
+    }
+  }
+
+  Future<void> loadNotif(String mahasiswaId) async {
+    try {
+      bool hasNotif = await dashboardMahasiswaService
+          .checkMahasiswaNotification(mahasiswaId);
+      hasNotification.value = hasNotif;
+      log.d("has ?? $hasNotif");
+      log.d("has ?? ${hasNotification.value}");
     } catch (e) {
       log.f("Error: $e");
     }

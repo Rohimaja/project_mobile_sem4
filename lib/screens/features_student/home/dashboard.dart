@@ -19,7 +19,6 @@ class DashboardScreenStudent extends StatefulWidget {
 
 class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
   var height, width;
-  bool hasNotification = true;
 
   final dashboardC = Get.find<DashboardController>();
 
@@ -97,7 +96,7 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
                                       ),
                                       padding: const EdgeInsets.all(6),
                                       child: Icon(
-                                        hasNotification
+                                        dashboardC.hasNotification.value
                                             ? Icons.notifications
                                             : Icons.notifications_none,
                                         color: Colors.white,
@@ -106,7 +105,7 @@ class _DashboardScreenStudentState extends State<DashboardScreenStudent> {
                                     ),
                                   ),
                                 ),
-                                if (hasNotification)
+                                if (dashboardC.hasNotification.value)
                                   const Positioned(
                                     top: 2,
                                     right: 2,

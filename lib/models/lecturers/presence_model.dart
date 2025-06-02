@@ -21,7 +21,7 @@ class PresensiDosenModel {
 
   factory PresensiDosenModel.fromJson(Map<String, dynamic> json) {
     return PresensiDosenModel(
-      semester: json["semester"],
+      semester: int.parse(json["semester"]),
       presensisId: json["presensis_id"],
       jamAwal: json["jam_awal"],
       jamAkhir: json["jam_akhir"],

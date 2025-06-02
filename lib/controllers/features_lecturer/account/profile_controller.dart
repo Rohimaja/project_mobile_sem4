@@ -57,7 +57,10 @@ class ProfileController extends GetxController {
 
   void changePassword() {
     String? email = _box.read("user_email");
-    Get.toNamed("/auth/forget-password/step3", arguments: email);
+    Get.toNamed(
+      "/auth/forget-password/step3",
+      arguments: {"fromProfile": true, "email": email},
+    );
   }
 
   void logout() async {

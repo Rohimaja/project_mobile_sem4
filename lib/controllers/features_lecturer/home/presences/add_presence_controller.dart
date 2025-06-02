@@ -264,6 +264,25 @@ class AddPresenceController extends GetxController {
       return false;
     }
 
+    final now = DateTime.now();
+    final selected = selectedDate.value;
+
+    if (selected != null &&
+        DateTime(selected.year, selected.month, selected.day)
+            .isBefore(DateTime(now.year, now.month, now.day))) {
+      isEnabled.value = false;
+      Get.dialog(UploadDialog(
+        title: "Validasi!",
+        subtitle: "Tanggal tidak boleh kurang dari hari ini.",
+        gifAssetPath: "assets/gif/upload_data_animation.gif",
+      ));
+      Future.delayed(
+        const Duration(seconds: 3),
+        () => isEnabled.value = true,
+      );
+      return false;
+    }
+
     jamAwalStr.value = timeOfDayToString(jamAwal.value!);
     jamAkhirStr.value = timeOfDayToString(jamAkhir.value!);
     final awal = timeOfDayToString(jamAwal.value!);

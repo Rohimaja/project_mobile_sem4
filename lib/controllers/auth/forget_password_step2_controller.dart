@@ -123,7 +123,10 @@ class ForgetPasswordStep2Controller extends GetxController {
 
     if (success) {
       Get.back();
-      Get.offNamed("/auth/forget-password/step3", arguments: email);
+      Get.offNamed(
+        "/auth/forget-password/step3",
+        arguments: {"fromProfile": false, "email": email},
+      );
       logger.d(email);
     } else {
       Get.back();

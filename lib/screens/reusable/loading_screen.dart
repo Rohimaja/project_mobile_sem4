@@ -28,6 +28,7 @@ class _LoadingPopupState extends State<LoadingPopup>
     _timeoutTimer = Timer(const Duration(seconds: 10), () {
       if (mounted && (Get.isDialogOpen ?? false)) {
         Get.back();
+        Get.back();
         showUploadDialog(
             context: context,
             title: "Timeout",

@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/account/profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
-import 'package:stipres/screens/auth/login_screen.dart';
-import 'package:stipres/screens/features_lecturer/home/notifications/notification_screen.dart';
+import 'package:stipres/controllers/features_lecturer/home/dashboard_controller.dart';
 import 'package:stipres/theme/dialog_theme_helper.dart';
 import 'package:stipres/theme/theme_controller.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
@@ -18,11 +17,9 @@ class ProfileScreenLecturer extends StatefulWidget {
 
 class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
   var height, width;
-  bool hasNotification = true;
 
   final _controller = Get.find<ProfileController>();
-
-  final profileC = Get.find<ProfileController>();
+  final dashboardCon = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +87,8 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
 
                                   if (result != null && result is bool) {
                                     setState(() {
-                                      hasNotification = result;
+                                      dashboardCon.hasNotification.value =
+                                          result;
                                     });
                                   }
                                 },
@@ -102,7 +100,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                   ),
                                   padding: const EdgeInsets.all(6),
                                   child: Icon(
-                                    hasNotification
+                                    dashboardCon.hasNotification.value
                                         ? Icons.notifications
                                         : Icons.notifications_none,
                                     color: Colors.white,
@@ -113,7 +111,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                             ),
 
                             // Badge merah
-                            if (hasNotification)
+                            if (dashboardCon.hasNotification.value)
                               const Positioned(
                                 top: 2,
                                 right: 2,
@@ -429,7 +427,7 @@ class _ProfileScreenLecturerState extends State<ProfileScreenLecturer> {
                                   SizedBox(height: 20),
                                   InkWell(
                                     onTap: () {
-                                      profileC.changePassword();
+                                      _controller.changePassword();
                                     },
                                     child: Row(
                                       mainAxisAlignment:

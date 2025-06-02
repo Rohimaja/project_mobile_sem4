@@ -21,7 +21,10 @@ class ForgetPasswordStep3Controller extends GetxController {
   final valueConfirmPassword = false.obs;
   final delaySnackbar = 1;
 
+  final email = ''.obs;
+
   Logger logger = Logger();
+  final fromProfile = false.obs;
 
   Timer? passwordTypingTimer;
   Timer? confirmPasswordTypingTimer;
@@ -32,6 +35,22 @@ class ForgetPasswordStep3Controller extends GetxController {
   int waktu = 2;
 
   get isLoading => null;
+
+  @override
+  void onInit() {
+    super.onInit();
+    final args = Get.arguments as Map;
+    final success = args['fromProfile'];
+    email.value = args['email'];
+
+    logger.d("From profile: $success");
+
+    if (success) {
+      fromProfile.value = true;
+    } else {
+      fromProfile.value = false;
+    }
+  }
 
   void checkVisible() => isPasswordVisible.toggle();
   void checkVisible2() => isPasswordVisible2.toggle();
@@ -83,7 +102,6 @@ class ForgetPasswordStep3Controller extends GetxController {
 
     if (passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty) {
-      
       logger.e("Password atau confirm password kosong/null");
       return;
     }
@@ -99,13 +117,12 @@ class ForgetPasswordStep3Controller extends GetxController {
     }
 
     if (valuePassword.value == false && valueConfirmPassword.value == false) {
-      final String email = Get.arguments;
-      logger.d(email);
+      logger.d(email.value);
       logger.d(passwordController.text);
 
       showLoading();
       BasicResponse response = await forgetPasswordService.changePasswordSv(
-          email, passwordController.text);
+          email.value, passwordController.text);
 
       logger.d(response.message);
 

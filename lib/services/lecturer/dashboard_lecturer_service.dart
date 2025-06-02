@@ -12,7 +12,7 @@ import 'package:stipres/services/token_service.dart';
 
 class DashboardLecturerService extends GetxService {
   final String _baseURL = "${ApiConstants.globalUrl}listview/getLessonLecturer";
-    final global = ApiConstants.globalUrl;
+  final global = ApiConstants.globalUrl;
   final GetStorage _box = GetStorage();
   final tokenService = Get.find<TokenService>();
 
@@ -59,7 +59,8 @@ class DashboardLecturerService extends GetxService {
     try {
       final token = await _box.read("auth_token");
 
-      final url = Uri.parse("${global}activity/presensi-summary/dosen/$dosenId");
+      final url =
+          Uri.parse("${global}activity/presensi-summary/dosen/$dosenId");
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
@@ -84,6 +85,35 @@ class DashboardLecturerService extends GetxService {
       log.d("Error: $e");
       return BaseResponse(
           status: "error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
+
+  Future<bool> checkDosenNotification(String dosenId) async {
+    try {
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse(
+          "${global}activityLecturer/checkNotificationDosen?dosen_id=$dosenId");
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+      log.d(url);
+
+      if (response.statusCode == 401) {
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await checkDosenNotification(dosenId);
+        } else {
+          return false;
+        }
+      }
+
+      final body = jsonDecode(response.body);
+      return body["hasNotification"] == true;
+    } catch (e) {
+      log.d("Error: $e");
+      return false;
     }
   }
 }

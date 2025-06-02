@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:stipres/controllers/auth/forget_password_step3_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ForgetPassword3 extends StatelessWidget {
-  final bool fromProfile;
-  ForgetPassword3({Key? key})
-      : fromProfile = Get.arguments?['fromProfile'] ?? false,
-        super(key: key);
+  ForgetPassword3({Key? key}) : super(key: key);
+
+  final log = Logger;
 
   final _controller = Get.find<ForgetPasswordStep3Controller>();
 
@@ -28,7 +28,7 @@ class ForgetPassword3 extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (fromProfile) ...[
+                        if (_controller.fromProfile.value) ...[
                           Padding(
                             padding: const EdgeInsets.only(left: 20, top: 10),
                             child: Row(

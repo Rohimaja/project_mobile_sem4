@@ -14,6 +14,7 @@ class DashboardMahasiswaService extends GetxService {
   final global = ApiConstants.globalUrl;
   // final FlutterSecureStorage storage = FlutterSecureStorage();
   final GetStorage _box = GetStorage();
+
   final tokenService = Get.find<TokenService>();
 
   var log = Logger();
@@ -22,15 +23,12 @@ class DashboardMahasiswaService extends GetxService {
       int mahasiswaId) async {
     try {
       final token = await _box.read("auth_token");
-      final tokenType = await _box.read("auth_token_type");
-      final tokenExp = await _box.read("auth_expires_in");
 
       log.d(token);
-      log.d("Expires in: $tokenExp");
       final url = Uri.parse("$_baseURL?mahasiswa_id=$mahasiswaId");
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
-        'Authorization': '$tokenType $token'
+        'Authorization': 'Bearer $token'
       });
       log.d(url);
 
@@ -82,12 +80,41 @@ class DashboardMahasiswaService extends GetxService {
 
       return BaseResponse.fromJson(
           body,
-          (dataJson) =>
-              MahasiswaDashboardModel.fromJson(dataJson as Map<String, dynamic>));
+          (dataJson) => MahasiswaDashboardModel.fromJson(
+              dataJson as Map<String, dynamic>));
     } catch (e) {
       log.d("Error: $e");
       return BaseResponse(
           status: "error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
+
+  Future<bool> checkMahasiswaNotification(String mahasiswaId) async {
+    try {
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse(
+          "${global}activityLecturer/checkNotificationMahasiswa?mahasiswa_id=$mahasiswaId");
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+      log.d(url);
+
+      if (response.statusCode == 401) {
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await checkMahasiswaNotification(mahasiswaId);
+        } else {
+          return false;
+        }
+      }
+
+      final body = jsonDecode(response.body);
+      return body["hasNotification"] == true;
+    } catch (e) {
+      log.d("Error: $e");
+      return false;
     }
   }
 }

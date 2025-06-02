@@ -21,7 +21,6 @@ class DashboardScreenLecturer extends StatefulWidget {
 
 class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
   var height, width;
-  bool hasNotification = true;
 
   final _controller = Get.find<DashboardController>();
 
@@ -93,7 +92,8 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
 
                                       if (result != null && result is bool) {
                                         setState(() {
-                                          hasNotification = result;
+                                          _controller.hasNotification.value =
+                                              result;
                                         });
                                       }
                                     },
@@ -105,7 +105,7 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                                       ),
                                       padding: const EdgeInsets.all(6),
                                       child: Icon(
-                                        hasNotification
+                                        _controller.hasNotification.value
                                             ? Icons.notifications
                                             : Icons.notifications_none,
                                         color: Colors.white,
@@ -114,7 +114,7 @@ class _DashboardScreenLecturerState extends State<DashboardScreenLecturer> {
                                     ),
                                   ),
                                 ),
-                                if (hasNotification)
+                                if (_controller.hasNotification.value)
                                   const Positioned(
                                     top: 2,
                                     right: 2,
