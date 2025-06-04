@@ -79,10 +79,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     color: Colors.blue,
                     shape: BoxShape.circle,
                   ),
-                  markerDecoration: BoxDecoration(
-                    color: Colors.orange,
-                    shape: BoxShape.circle,
-                  ),
                 ),
                 headerStyle: HeaderStyle(
                   headerPadding: EdgeInsets.symmetric(
@@ -148,7 +144,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     );
                   },
 
-                  // 👇 Tambahkan markerBuilder
                   markerBuilder: (context, day, events) {
                     final dateKey = DateTime.utc(day.year, day.month, day.day);
                     final eventList = _events[dateKey];

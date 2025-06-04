@@ -20,12 +20,13 @@ class DashboardMahasiswaService extends GetxService {
   var log = Logger();
 
   Future<BaseResponse<List<JadwalModelApi>>> tampilJadwalHariIni(
-      int mahasiswaId) async {
+      var mahasiswaId) async {
     try {
       final token = await _box.read("auth_token");
+      final mahasiswasId = mahasiswaId.toString();
 
       log.d(token);
-      final url = Uri.parse("$_baseURL?mahasiswa_id=$mahasiswaId");
+      final url = Uri.parse("$_baseURL?mahasiswa_id=$mahasiswasId");
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'

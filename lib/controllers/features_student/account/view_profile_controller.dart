@@ -206,7 +206,7 @@ class StudentViewProfileController extends GetxController {
 
   Future<void> uploadProfilePic(File? profilePicture) async {
     try {
-      int mahasiswaId = _box.read("mahasiswa_id");
+      var mahasiswaId = _box.read("mahasiswa_id");
       showLoading();
       final result =
           await profileMahasiswaService.sendImage(mahasiswaId, profilePicture);

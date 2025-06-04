@@ -6,7 +6,6 @@ import 'package:stipres/models/lecturers/data_prodi_model.dart';
 import 'package:stipres/services/lecturer/attendance_lecturer_service.dart';
 
 class AttendanceController extends GetxController {
-  final _box = GetStorage();
   final Logger log = Logger();
   final AttendanceLecturerService attendanceLecturerService =
       AttendanceLecturerService();
