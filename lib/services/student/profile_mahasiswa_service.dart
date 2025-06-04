@@ -54,7 +54,7 @@ class ProfileMahasiswaService extends GetxService {
   }
 
   Future<BaseResponse<String>> sendImage(
-      int mahasiswaId, File? profilePic) async {
+      var mahasiswaId, File? profilePic) async {
     try {
       final token = await _box.read("auth_token");
 

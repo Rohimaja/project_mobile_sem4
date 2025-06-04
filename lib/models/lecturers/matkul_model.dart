@@ -11,7 +11,7 @@ class MatkulModel {
 
   factory MatkulModel.fromJson(Map<String, dynamic> json) {
     return MatkulModel(
-      idMatkul: int.tryParse(json['id_matkul']),
+      idMatkul: json['id_matkul'],
       kodeMatkul: json["kode_matkul"],
       namaMatkul: json["nama_matkul"],
     );

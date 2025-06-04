@@ -21,67 +21,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   String selectedCategory = 'Semua';
   final _controller = Get.find<NotificationController>();
 
-  // final List<NotificationModel> allNotifications = [
-  //   NotificationModel(
-  //     title: "Presensi Berhasil!",
-  //     message: "Presensi Anda berhasil direkam.",
-  //     time: "Baru saja",
-  //     type: NotificationType.presensiBerhasil,
-  //     iconAssetPath: "assets/icons/ic_presence.png",
-  //     namaUser: "Bagus",
-  //     tanggal: "29 Mei 2025",
-  //     jam: "08.00 WIB",
-  //     mataKuliah: "Struktur Data",
-  //   ),
-
-  //   // PRESENSI GAGAL
-  //   NotificationModel(
-  //     title: "Presensi Gagal!",
-  //     message: "Presensi Anda gagal dilakukan.",
-  //     time: "10 menit yang lalu",
-  //     type: NotificationType.presensiGagal,
-  //     iconAssetPath: "assets/icons/ic_warning.png",
-  //     namaUser: "Bagus",
-  //     tanggal: "29 Mei 2025",
-  //     jam: "10.15 WIB",
-  //     mataKuliah: "Basis Data",
-  //   ),
-
-  //   // BATAS PRESENSI
-  //   NotificationModel(
-  //     title: "Presensi Hampir Ditutup!",
-  //     message: "Waktu presensi Anda akan segera berakhir.",
-  //     time: "30 menit yang lalu",
-  //     type: NotificationType.presensiAkanHabis,
-  //     iconAssetPath: "assets/icons/ic_time.png",
-  //     namaUser: "Bagus",
-  //     tanggal: "29 Mei 2025",
-  //     jam: "09.00 WIB",
-  //     mataKuliah: "Pemrograman Mobile",
-  //   ),
-
-  //   // PENGUMUMAN UMUM
-  //   NotificationModel(
-  //     title: "Perubahan Jadwal!",
-  //     message:
-  //         "Jadwal perkuliahan minggu ini mengalami perubahan. Silakan cek di menu Jadwal.",
-  //     time: "1 jam yang lalu",
-  //     type: NotificationType.pengumuman,
-  //     iconAssetPath: "assets/icons/ic_announcement.png",
-  //     namaUser: "Bagus", // bisa kosong juga
-  //   ),
-
-  //   // PENGUMUMAN UMUM LAINNYA
-  //   NotificationModel(
-  //     title: "Update Keamanan Akun",
-  //     message: "Segera ubah password akun Anda untuk menjaga keamanan akun.",
-  //     time: "3 jam yang lalu",
-  //     type: NotificationType.pengumuman,
-  //     iconAssetPath: "assets/icons/ic_announcement.png",
-  //     namaUser: "Bagus",
-  //   ),
-  // ];
-
   List<NotificationModel> get filteredNotifications {
     if (selectedCategory == 'Semua') return _controller.notificationList;
     return _controller.notificationList.where((notif) {

@@ -31,6 +31,7 @@ void showEditLinkDialog(
             const SizedBox(height: 8), // Jarak antara label dan TextField
             TextField(
               controller: linkController,
+              style: TextStyle(color: styles.getTextColor(context)),
               decoration: InputDecoration(
                 filled: true,
                 fillColor: styles.getTextField(context),

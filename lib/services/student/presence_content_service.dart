@@ -54,7 +54,7 @@ class PresenceContentService extends GetxService {
     }
   }
 
-  Future<BasicResponse> uploadPresence(int mahasiswaId, var presensiId,
+  Future<BasicResponse> uploadPresence(var mahasiswaId, var presensiId,
       int status, String waktuPresensi, String? alasan, File? bukti) async {
     try {
       final token = await _box.read("auth_token");

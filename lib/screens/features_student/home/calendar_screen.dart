@@ -87,10 +87,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         color: Colors.blue,
                         shape: BoxShape.circle,
                       ),
-                      markerDecoration: BoxDecoration(
-                        color: Colors.orange,
-                        shape: BoxShape.circle,
-                      ),
                     ),
                     headerStyle: HeaderStyle(
                       headerPadding: EdgeInsets.symmetric(
@@ -111,9 +107,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         color: blueColor,
                       ),
                     ),
-
-                    // 👇 Tambahkan bagian ini untuk ripple dan kursor tangan
                     calendarBuilders: CalendarBuilders(
+                      // existing defaultBuilder (biarkan tetap)
                       defaultBuilder: (context, day, focusedDay) {
                         final isSelected = isSameDay(day, _selectedDay);
                         final isToday = isSameDay(day, DateTime.now());
@@ -154,6 +149,36 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               ),
                             ),
                           ),
+                        );
+                      },
+
+                      markerBuilder: (context, day, events) {
+                        final dateKey =
+                            DateTime.utc(day.year, day.month, day.day);
+                        final eventList = _controller.getEventsForDay(day);
+                        [dateKey];
+
+                        if (eventList == null || eventList.isEmpty)
+                          return const SizedBox();
+
+                        // Cek apakah ada event Libur dan Kegiatan
+                        final hasHoliday =
+                            eventList.any((e) => e['type'] == 'Libur');
+                        final hasKegiatan =
+                            eventList.any((e) => e['type'] == 'Kegiatan');
+
+                        List<Widget> markers = [];
+
+                        if (hasHoliday) {
+                          markers.add(_buildDot(Colors.red));
+                        }
+                        if (hasKegiatan) {
+                          markers.add(_buildDot(Colors.green));
+                        }
+
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: markers,
                         );
                       },
                     ),
@@ -197,7 +222,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                       Container(
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
-                                          color: Colors.orange,
+                                          color: event['type'] == 'Libur'
+                                              ? Colors.red[400]
+                                              : Colors.green[400],
                                           shape: BoxShape.rectangle,
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -217,8 +244,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                           padding: const EdgeInsets.all(10),
                                           decoration: BoxDecoration(
                                             color: event['type'] == 'Libur'
-                                                ? Colors.lightGreen[100]
-                                                : Colors.orange[100],
+                                                ? Colors.red[300]
+                                                : Colors.green[300],
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
@@ -228,14 +255,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                             children: [
                                               Text(
                                                 event['title'] ?? '',
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: whiteColor),
                                               ),
                                               Text(
                                                 event['type'] ?? '',
-                                                style: const TextStyle(
-                                                    fontSize: 12),
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: whiteColor),
                                               ),
                                             ],
                                           ),
@@ -273,4 +301,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
     ];
     return months[month - 1];
   }
+}
+
+Widget _buildDot(Color color) {
+  return Container(
+    width: 6,
+    height: 6,
+    margin: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+    decoration: BoxDecoration(
+      color: color,
+      shape: BoxShape.circle,
+    ),
+  );
 }

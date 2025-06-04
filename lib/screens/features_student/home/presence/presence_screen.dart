@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/home/presence_controller.dart';
 import 'package:stipres/screens/features_student/widgets/cards/presence/presence_card.dart';
 import 'package:stipres/constants/styles.dart';
-import 'package:stipres/constants/styles.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class PresenceScreen extends StatefulWidget {

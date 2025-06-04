@@ -21,7 +21,7 @@ class ActivationAccount3 extends StatelessWidget {
             ReusableBackground(),
             Center(
                 child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    margin: EdgeInsets.only(top: 60),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -31,10 +31,12 @@ class ActivationAccount3 extends StatelessWidget {
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: Column(
                                 children: [
-                                  styles.getLogoImage(context),
-                                  SizedBox(
-                                    height: 20,
+                                  Image.asset(
+                                    "assets/images/reset_password_1.png",
+                                    width: 140,
+                                    height: 140,
                                   ),
+                                  SizedBox(height: 20),
                                   Text("Ubah Password",
                                       style: GoogleFonts.plusJakartaSans(
                                           fontSize: 16,

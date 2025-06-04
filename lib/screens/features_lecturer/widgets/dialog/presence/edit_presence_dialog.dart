@@ -72,9 +72,8 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
         TextButton(
           onPressed: () async {
             if (_controller.validateUpdate(widget.awal, widget.akhir) == true) {
-              final isConflictFree = await _controller.checkPresence(
-                      widget.presensisId) ==
-                  true;
+              final isConflictFree =
+                  await _controller.checkPresence(widget.presensisId) == true;
               if (isConflictFree) {
                 (await _controller.updatePresence(widget.presensisId));
               } else {
@@ -120,7 +119,7 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             decoration: BoxDecoration(
-              color: styles.getTextColor(context),
+              color: styles.getTextField(context),
               border: Border.all(color: Colors.blue),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -129,7 +128,8 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
               children: [
                 Text(
                   selectedTime?.format(context) ?? '',
-                  style: GoogleFonts.plusJakartaSans(),
+                  style: GoogleFonts.plusJakartaSans(
+                      color: styles.getTextColor(context)),
                 ),
                 const Icon(Icons.access_time, color: Colors.blue),
               ],

@@ -99,7 +99,7 @@ class DashboardController extends GetxController {
   }
 
   Future<void> fetchJadwal() async {
-    int mahasiswaId = _box.read("mahasiswa_id");
+    var mahasiswaId = _box.read("mahasiswa_id").toString();
     log.d(mahasiswaId);
     final result =
         await dashboardMahasiswaService.tampilJadwalHariIni(mahasiswaId);
