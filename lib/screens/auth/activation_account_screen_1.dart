@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/auth/activation_step1_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ActivationAccount1 extends StatelessWidget {
   ActivationAccount1({super.key});
@@ -12,24 +14,18 @@ class ActivationAccount1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             ReusableBackground(),
             Center(
                 child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    margin: const EdgeInsets.only(top: 60),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 140,
-                          height: 140,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        styles.getLogoImage(context),
                         Expanded(
                           child: SingleChildScrollView(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -37,21 +33,25 @@ class ActivationAccount1 extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     "assets/images/picture_book.png",
-                                    width: 178,
-                                    height: 178,
+                                    width: 193,
+                                    height: 193,
                                   ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text("Validasi Akun!",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 20, fontWeight: bold)),
-                                  const SizedBox(height: 10),
-                                  Text("Silahkan masukkan alamat email anda",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 16)),
                                   SizedBox(
                                     height: 20,
+                                  ),
+                                  Text("Validasi Akun!",
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: styles.getTextColor(context))),
+                                  const SizedBox(height: 10),
+                                  Text("Silahkan masukkan alamat email anda",
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: styles.getTextColor(context))),
+                                  SizedBox(
+                                    height: 30,
                                   ),
                                   Container(
                                     margin:
@@ -88,8 +88,7 @@ class ActivationAccount1 extends StatelessWidget {
                                                     color: blueColor)),
                                           ),
                                         ),
-                                        const SizedBox(height: 20),
-                                        const SizedBox(height: 20),
+                                        const SizedBox(height: 40),
                                       ],
                                     ),
                                   ),
@@ -142,8 +141,11 @@ class ActivationAccount1 extends StatelessWidget {
                                       text: TextSpan(children: [
                                     TextSpan(
                                         text: "Sudah validasi akun? ",
-                                        style: blackTextStyle.copyWith(
-                                            fontSize: 14)),
+                                        style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                            color:
+                                                styles.getTextColor(context))),
                                     WidgetSpan(
                                         alignment: PlaceholderAlignment.middle,
                                         child: GestureDetector(

@@ -37,12 +37,27 @@ dependencies:
   http_parser: ^4.1.2
   image_cropper: ^9.1.0
   open_filex: ^4.7.0
+  local_auth: ^2.3.0
+  flutter_secure_storage: ^9.2.4
+  firebase_messaging: ^15.2.6
+  firebase_core: ^3.13.1
+  flutter_local_notifications: ^19.2.1
+  permission_handler: ^12.0.0+1
+  flutter_launcher_icons: ^0.14.3
+  internet_connection_checker: ^3.0.1
+  connectivity_plus: ^6.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^5.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/stipres_launcher.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter:
   uses-material-design: true
@@ -51,6 +66,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/gif/
 
   # example:
   # fonts:

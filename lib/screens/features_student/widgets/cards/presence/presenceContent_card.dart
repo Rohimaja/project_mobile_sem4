@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/models/students/get_presence_model.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class MatkulDetailCard extends StatelessWidget {
   final GetPresenceApi data;
@@ -13,7 +14,7 @@ class MatkulDetailCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: styles.getTextField(context),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
@@ -22,28 +23,35 @@ class MatkulDetailCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDetailRow("ID Matkul", data.kodeMatkul!, bold: true),
+          _buildDetailRow(context, "ID Matkul", data.kodeMatkul!, bold: true),
           const SizedBox(height: 8),
-          _buildDetailRow("Nama Matkul", data.namaMatkul!, bold: true),
+          _buildDetailRow(context, "Nama Matkul", data.namaMatkul!, bold: true),
           const SizedBox(height: 8),
-          _buildDetailRow("Jam Matkul", data.durasiPresensi!, bold: true),
+          _buildDetailRow(context, "Jam Matkul", data.durasiPresensi!,
+              bold: true),
         ],
       ),
     );
   }
 
-  Widget _buildDetailRow(String title, String value, {bool bold = false}) {
+  Widget _buildDetailRow(BuildContext context, String title, String value,
+      {bool bold = false}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: Text(title)),
-        const Text(" : "),
+        Expanded(
+            child: Text(
+          title,
+          style: TextStyle(color: styles.getTextColor(context)),
+        )),
+        Text(" : ", style: TextStyle(color: styles.getTextColor(context))),
         Expanded(
           flex: 2,
           child: Text(
             value,
             style: GoogleFonts.plusJakartaSans(
               fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+              color: styles.getTextColor(context),
             ),
           ),
         ),
@@ -68,7 +76,7 @@ class JamChip extends StatelessWidget {
       child: Text(
         jam,
         style: GoogleFonts.plusJakartaSans(
-          color: Colors.white,
+          color: styles.getTextColor(context),
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),

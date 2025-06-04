@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/auth/activation_step3_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ActivationAccount3 extends StatelessWidget {
   ActivationAccount3({super.key});
@@ -12,6 +14,7 @@ class ActivationAccount3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
@@ -22,28 +25,27 @@ class ActivationAccount3 extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 130,
-                          height: 130,
-                        ),
+                        styles.getLogoImage(context),
                         Expanded(
                           child: SingleChildScrollView(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/picture_book.png",
-                                    width: 160,
-                                    height: 160,
+                                  styles.getLogoImage(context),
+                                  SizedBox(
+                                    height: 20,
                                   ),
                                   Text("Ubah Password",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 20, fontWeight: bold)),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: styles.getTextColor(context))),
                                   const SizedBox(height: 10),
                                   Text("Silahkan masukkan password baru",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 16)),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: styles.getTextColor(context))),
                                   const SizedBox(height: 40),
                                   Container(
                                     margin:

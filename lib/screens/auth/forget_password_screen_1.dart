@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/auth/forget_password_step1_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ForgetPassword1 extends StatelessWidget {
   ForgetPassword1({super.key});
@@ -13,6 +15,7 @@ class ForgetPassword1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
@@ -23,11 +26,7 @@ class ForgetPassword1 extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 140,
-                          height: 140,
-                        ),
+                        styles.getLogoImage(context),
                         Expanded(
                           child: SingleChildScrollView(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -42,12 +41,16 @@ class ForgetPassword1 extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Text("Perubahan Password",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 16, fontWeight: bold)),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: styles.getTextColor(context))),
                                   const SizedBox(height: 10),
                                   Text("Silahkan masukkan alamat email anda",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 14)),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: styles.getTextColor(context))),
                                   const SizedBox(height: 30),
                                   Container(
                                     width:
@@ -66,6 +69,9 @@ class ForgetPassword1 extends StatelessWidget {
                                             textAlign: TextAlign.left),
                                         const SizedBox(height: 7),
                                         TextField(
+                                            style: TextStyle(
+                                                color: styles
+                                                    .getTextColor(context)),
                                             controller: emailController,
                                             keyboardType:
                                                 TextInputType.visiblePassword,
@@ -82,16 +88,11 @@ class ForgetPassword1 extends StatelessWidget {
                                                   borderSide: BorderSide(
                                                       color: blueColor)),
                                             )),
-                                        const SizedBox(height: 20),
-                                        const SizedBox(height: 20),
+                                        const SizedBox(height: 40),
                                         Obx(
                                           () => ElevatedButton(
                                             onPressed: (forgetPass1C
-                                                        .isLoading.value ||
-                                                    forgetPass1C
-                                                        .isProcessing.value ||
-                                                    forgetPass1C
-                                                        .isSnackbarOpen.value)
+                                                    .isSnackbarOpen.value)
                                                 ? null
                                                 : () async {
                                                     await forgetPass1C.sendOtp(
@@ -123,8 +124,11 @@ class ForgetPassword1 extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text("Sudah memiliki akun? ",
-                                          style: blackTextStyle.copyWith(
-                                              fontSize: 14)),
+                                          style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.normal,
+                                              color: styles
+                                                  .getTextColor(context))),
                                       InkWell(
                                         onTap: () {
                                           Get.back();

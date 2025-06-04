@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart' as path;
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -9,23 +10,38 @@ import 'package:http/http.dart' as http;
 import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/models/students/get_presence_model.dart';
 import 'package:stipres/constants/api.dart';
+import 'package:stipres/services/token_service.dart';
 
 class PresenceContentService extends GetxService {
-  final String _baseURL = "${ApiConstants.globalUrl}activity/getTransaksi.php";
+  final String _baseURL = "${ApiConstants.globalUrl}activity/getTransaction";
   final global = ApiConstants.globalUrl;
-
+  final tokenService = Get.find<TokenService>();
+  final GetStorage _box = GetStorage();
   var log = Logger();
 
   Future<BaseResponse<GetPresenceApi>> getPresenceContent(
       int mahasiswaId, dynamic presensiId) async {
     try {
+      final token = await _box.read("auth_token");
+
       final url = Uri.parse(
           "$_baseURL?presensi_id=$presensiId&mahasiswa_id=$mahasiswaId");
       log.d(url);
-      final response = await http.get(url);
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
       log.e(url);
 
       final body = jsonDecode(response.body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await getPresenceContent(mahasiswaId, presensiId);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,
@@ -41,7 +57,9 @@ class PresenceContentService extends GetxService {
   Future<BasicResponse> uploadPresence(int mahasiswaId, var presensiId,
       int status, String waktuPresensi, String? alasan, File? bukti) async {
     try {
-      final url = Uri.parse("${global}activity/presensiActivity.php");
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("${global}activity/presenceActivity");
       log.d(url);
       log.d("Mahasiswa ID: $mahasiswaId, Presensi ID: $presensiId");
 
@@ -50,6 +68,11 @@ class PresenceContentService extends GetxService {
         ..fields['presensi_id'] = presensiId.toString()
         ..fields['status'] = status.toString()
         ..fields['waktu_presensi'] = waktuPresensi;
+
+      request.headers.addAll({
+        'Accept': 'application/json', // Header Accept
+        'Authorization': 'Bearer $token', // Header Authorization
+      });
 
       if (alasan != null && alasan.isNotEmpty) {
         request.fields['alasan'] = alasan;
@@ -75,6 +98,15 @@ class PresenceContentService extends GetxService {
       log.d(respStr.body);
 
       final body = jsonDecode(respStr.body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await uploadPresence(
+              mahasiswaId, presensiId, status, waktuPresensi, alasan, bukti);
+        }
+      }
 
       return BasicResponse.fromJson(
         body,

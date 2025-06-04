@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stipres/controllers/auth/forget_password_step2_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ForgetPassword2 extends StatelessWidget {
   ForgetPassword2({super.key});
@@ -14,6 +16,7 @@ class ForgetPassword2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
@@ -24,11 +27,7 @@ class ForgetPassword2 extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 140,
-                          height: 140,
-                        ),
+                        styles.getLogoImage(context),
                         Expanded(
                           child: SingleChildScrollView(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -39,9 +38,12 @@ class ForgetPassword2 extends StatelessWidget {
                                     width: 160,
                                     height: 160,
                                   ),
+                                  SizedBox(height: 20),
                                   Text("Perubahan Password",
-                                      style: blackTextStyle.copyWith(
-                                          fontSize: 20, fontWeight: bold)),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: styles.getTextColor(context))),
                                   const SizedBox(height: 10),
                                   Container(
                                     margin:
@@ -52,8 +54,11 @@ class ForgetPassword2 extends StatelessWidget {
                                           TextSpan(
                                             text:
                                                 "Silahkan masukkan nim dan kode OTP yang telah dikirimkan pada ",
-                                            style: blackTextStyle.copyWith(
-                                                fontSize: 14),
+                                            style: GoogleFonts.plusJakartaSans(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                                color: styles
+                                                    .getTextColor(context)),
                                           ),
                                           TextSpan(
                                             text: forgetPass2C.maskedEmail(),
@@ -83,6 +88,9 @@ class ForgetPassword2 extends StatelessWidget {
                                             textAlign: TextAlign.left),
                                         const SizedBox(height: 7),
                                         PinCodeTextField(
+                                          textStyle: TextStyle(
+                                              color:
+                                                  styles.getTextColor(context)),
                                           controller:
                                               forgetPass2C.otpController,
                                           appContext: context,
@@ -141,16 +149,13 @@ class ForgetPassword2 extends StatelessWidget {
                                         const SizedBox(height: 20),
                                         Obx(
                                           () => ElevatedButton(
-                                            onPressed:
-                                                (forgetPass2C.isLoading.value ||
-                                                        forgetPass2C
-                                                            .isSnackbarOpen
-                                                            .value)
-                                                    ? null
-                                                    : () async {
-                                                        await forgetPass2C
-                                                            .checkOtp();
-                                                      },
+                                            onPressed: (forgetPass2C
+                                                    .isSnackbarOpen.value)
+                                                ? null
+                                                : () async {
+                                                    await forgetPass2C
+                                                        .checkOtp();
+                                                  },
                                             style: ElevatedButton.styleFrom(
                                               elevation: 5,
                                               backgroundColor: blueColor,

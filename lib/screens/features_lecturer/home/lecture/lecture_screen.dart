@@ -5,6 +5,7 @@ import 'package:stipres/controllers/features_lecturer/home/lectures/lecture_cont
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
 import 'package:stipres/screens/features_lecturer/widgets/dialog/edit_lecture_dialog.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class LectureScreen extends StatefulWidget {
   const LectureScreen({super.key});
@@ -19,41 +20,6 @@ class _LectureScreenState extends State<LectureScreen>
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
   final _controller = Get.find<LectureController>();
-
-  // final List<PerkuliahanModel> perkuliahanHariIni = [
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Pemrograman Mobile',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Aldo Rayhan Radittyanuh S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Pemrograman Website',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Izzul Islam Ramadhan S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Logika Algoritma',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Bima Achmad Fiil A. S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  //   PerkuliahanModel(
-  //     semester: 3,
-  //     matkul: 'Machine Learning',
-  //     tanggal: 'Senin, 11 Maret 2025',
-  //     dosen: 'Edwin Kurniawan S.Kom,M.Kom',
-  //     jam: '08:00 - 10:00',
-  //     linkZoom: 'https://zoom.us/j/123456789',
-  //   ),
-  // ];
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -89,7 +55,7 @@ class _LectureScreenState extends State<LectureScreen>
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Obx(() {
           final filteredPerkuliahan =
               _controller.lectureList.where((perkuliahan) {
@@ -108,7 +74,7 @@ class _LectureScreenState extends State<LectureScreen>
                         width: width,
                         height: 110,
                         decoration: BoxDecoration(
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                           ),
@@ -236,7 +202,7 @@ class _LectureScreenState extends State<LectureScreen>
                         child: Container(
                           width: 40,
                           height: 44,
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                         ),
                       ),
                       Positioned(
@@ -246,7 +212,7 @@ class _LectureScreenState extends State<LectureScreen>
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: mainColor,
+                            color: styles.getMainColor(context),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                             ),
@@ -275,7 +241,7 @@ class _LectureScreenState extends State<LectureScreen>
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          Divider(height: 20, color: Color(0xFFDADADA)),
                           Expanded(
                             child: filteredPerkuliahan.isEmpty
                                 ? Container(
@@ -315,7 +281,7 @@ class _LectureScreenState extends State<LectureScreen>
 
                                       return Padding(
                                         padding:
-                                            const EdgeInsets.only(bottom: 12),
+                                            const EdgeInsets.only(bottom: 16),
                                         child: PerkuliahanCard(
                                           data: currentData,
                                           onEdit: (String currentLink,

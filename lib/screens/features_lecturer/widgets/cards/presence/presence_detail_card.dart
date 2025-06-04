@@ -15,7 +15,7 @@ class PresenceDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String iconPath = mahasiswa.jenisKelamin!.toLowerCase() == "perempuan"
+    String iconPath = mahasiswa.jenisKelamin!.toLowerCase() == "p"
         ? 'assets/icons/ic_mahasiswi2.png'
         : 'assets/icons/ic_mahasiswa2.png';
 

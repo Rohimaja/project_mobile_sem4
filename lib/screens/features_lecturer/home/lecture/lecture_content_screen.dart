@@ -5,6 +5,7 @@ import 'package:stipres/controllers/features_lecturer/home/lectures/lecture_cont
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class LectureContentScreen extends StatefulWidget {
   const LectureContentScreen({super.key});
@@ -28,12 +29,11 @@ class _LectureContentScreenState extends State<LectureContentScreen>
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: styles.getMainColor(context),
       body: Stack(
         children: [
           Column(
             children: [
-              // HEADER + Search Bar
               Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -44,7 +44,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                     child: Container(
                       width: 40,
                       height: 44,
-                      color: blueColor,
+                      color: styles.getBlueColor(context),
                     ),
                   ),
                   Positioned(
@@ -54,7 +54,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                       width: 45,
                       height: 45,
                       decoration: BoxDecoration(
-                        color: mainColor,
+                        color: styles.getMainColor(context),
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(40),
                         ),
@@ -82,7 +82,7 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      Divider(height: 20, color: Color(0xFFDADADA)),
                       Obx(() {
                         return Expanded(
                             child: _controller.lectureList.isEmpty

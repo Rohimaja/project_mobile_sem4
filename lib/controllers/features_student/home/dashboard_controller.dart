@@ -10,7 +10,13 @@ class DashboardController extends GetxController {
   final storedName = ''.obs;
   final storedNim = ''.obs;
   var storedProfile = ''.obs;
+  final storedKehadiran = 0.obs;
+  final storedPresensi = 0.obs;
+  final storedJadwal = 0.obs;
+  final storedKalender = 0.obs;
+  final storedPerkuliahanOnline = 0.obs;
   final url = ApiConstants.path;
+  final hasNotification = false.obs;
 
   final _box = GetStorage();
   final statusOffline = false.obs;
@@ -23,9 +29,12 @@ class DashboardController extends GetxController {
       DashboardMahasiswaService();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     loadHeader();
+    final mahasiswaId = _box.read("mahasiswa_id").toString();
+    await loadSummary(mahasiswaId);
+    loadNotif(mahasiswaId);
   }
 
   Future<void> loadHeader() async {
@@ -43,6 +52,38 @@ class DashboardController extends GetxController {
 
     log.f("fetch header");
     log.d("Profile: ${storedProfile.value}");
+  }
+
+  Future<void> loadSummary(String mahasiswaId) async {
+    try {
+      final result = await dashboardMahasiswaService.tampilSummary(mahasiswaId);
+
+      if (result.status == "success" && result.data != null) {
+        final summary = result.data;
+
+        storedKehadiran.value = summary!.totalKehadiran;
+        storedPresensi.value = summary.presensiBerlangsung;
+        storedJadwal.value = summary.jumlahJadwalAktif;
+        storedKalender.value = summary.jumlahKalenderAkademik;
+        storedPerkuliahanOnline.value = summary.jumlahPresensiOnline;
+      } else {
+        errorMessage.value = result.message;
+      }
+    } catch (e) {
+      log.f("Error: $e");
+    }
+  }
+
+  Future<void> loadNotif(String mahasiswaId) async {
+    try {
+      bool hasNotif = await dashboardMahasiswaService
+          .checkMahasiswaNotification(mahasiswaId);
+      hasNotification.value = hasNotif;
+      log.d("has ?? $hasNotif");
+      log.d("has ?? ${hasNotification.value}");
+    } catch (e) {
+      log.f("Error: $e");
+    }
   }
 
   String formatTanggal(String tanggal) {

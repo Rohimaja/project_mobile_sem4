@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/auth/login_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -12,6 +14,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
@@ -22,20 +25,21 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 200,
-                          height: 200,
-                        ),
+                        styles.getLogoImage2(context),
                         SizedBox(
                           height: 20,
                         ),
                         Text("Selamat Datang di STIPRES!",
-                            style: blackTextStyle.copyWith(
-                                fontSize: 16, fontWeight: bold)),
+                            style: GoogleFonts.plusJakartaSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: styles.getTextColor(context))),
                         const SizedBox(height: 7),
                         Text("Silahkan login terlebih dahulu",
-                            style: blackTextStyle.copyWith(fontSize: 14)),
+                            style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: styles.getTextColor(context))),
                         const SizedBox(height: 15),
                         Expanded(
                             child: SingleChildScrollView(
@@ -59,8 +63,10 @@ class LoginScreen extends StatelessWidget {
                                           0.8,
                                       height: 40,
                                       child: TextField(
+                                        style: TextStyle(
+                                            color:
+                                                styles.getTextColor(context)),
                                         controller: loginC.usernameController,
-                                        style: TextStyle(fontSize: 18),
                                         cursorHeight: 18,
                                         decoration: InputDecoration(
                                           contentPadding:
@@ -92,9 +98,11 @@ class LoginScreen extends StatelessWidget {
                                         height: 40,
                                         child: Obx(
                                           () => TextField(
+                                            style: TextStyle(
+                                                color: styles
+                                                    .getTextColor(context)),
                                             controller:
                                                 loginC.passwordController,
-                                            style: TextStyle(fontSize: 18),
                                             cursorHeight: 18,
                                             obscureText:
                                                 !loginC.isPasswordVisible.value,
@@ -178,7 +186,9 @@ class LoginScreen extends StatelessWidget {
                                           textStyle: whiteTextStyle.copyWith(
                                               fontSize: 17, fontWeight: bold),
                                           onPressed: () {
-                                            loginC.login();
+                                            (!loginC.isSnackbarOpen.value)
+                                                ? loginC.login()
+                                                : null;
                                           })),
                                   SizedBox(
                                     height: 10,
@@ -231,7 +241,9 @@ class LoginScreen extends StatelessWidget {
                                               minimumSize: const Size(
                                                   double.infinity, 50),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              loginC.loginWithBiometric();
+                                            },
                                             label: Text(
                                               "Login",
                                               style: whiteTextStyle.copyWith(
@@ -250,9 +262,11 @@ class LoginScreen extends StatelessWidget {
                                     children: [
                                       TextSpan(
                                           text: "Belum aktivasi akun? ",
-                                          style: blackTextStyle.copyWith(
-                                            fontSize: 14,
-                                          )),
+                                          style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.normal,
+                                              color: styles
+                                                  .getTextColor(context))),
                                       WidgetSpan(
                                           alignment:
                                               PlaceholderAlignment.middle,

@@ -5,6 +5,7 @@ import 'package:stipres/screens/features_student/account/kebijakan_privasi.dart'
 import 'package:stipres/screens/features_student/account/ketentuan_layanan.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class Bantuan extends StatelessWidget {
   Bantuan({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class Bantuan extends StatelessWidget {
         .size
         .width; // Pastikan variabel width terdefinisi
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 237, 235, 251),
+      backgroundColor: styles.getMainColor(context),
       body: Stack(
         children: [
           Column(
@@ -55,9 +56,9 @@ class Bantuan extends StatelessWidget {
                                     child: Text(
                                       "Ketentuan Layanan",
                                       style: blackTextStyle.copyWith(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w800,
-                                      ),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800,
+                                          color: styles.getTextColor(context)),
                                       textAlign: TextAlign.start,
                                     ),
                                   ),
@@ -89,9 +90,9 @@ class Bantuan extends StatelessWidget {
                                     child: Text(
                                       "Kebijakan Privasi",
                                       style: blackTextStyle.copyWith(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w800,
-                                      ),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800,
+                                          color: styles.getTextColor(context)),
                                       textAlign: TextAlign.start,
                                     ),
                                   ),

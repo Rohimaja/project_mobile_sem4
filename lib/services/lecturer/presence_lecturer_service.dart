@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:stipres/constants/api.dart';
@@ -8,24 +9,37 @@ import 'package:stipres/models/base_response.dart';
 import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/models/lecturers/check_presence_model.dart';
 import 'package:stipres/models/lecturers/presence_model.dart';
+import 'package:stipres/services/token_service.dart';
 
 class PresenceLecturerService extends GetxService {
-  final String _baseUrl =
-      "${ApiConstants.globalUrl}listview/getPresenceLecturer.php";
+  final String _baseUrl = "${ApiConstants.globalUrl}listview";
   final global = ApiConstants.globalUrl;
-
+  final GetStorage _box = GetStorage();
+  final tokenService = Get.find<TokenService>();
   var log = Logger();
 
   Future<BaseResponse<List<PresensiDosenModel>>> fetchPresence(
       String dosenId) async {
     try {
-      const action = "presensi";
-      final url = Uri.parse("$_baseUrl?dosen_id=$dosenId&action=$action");
-      final response = await http.get(url);
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("$_baseUrl/getPresenceLecturer?dosen_id=$dosenId");
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await fetchPresence(dosenId);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,
@@ -41,20 +55,32 @@ class PresenceLecturerService extends GetxService {
   }
 
   Future<BasicResponse> updatePresence(
-      String presensisId, String jamAwal, String jamAkhir) async {
+      String dosenId, String presensisId, String jamAwal, String jamAkhir) async {
     try {
-      const action = "updatePresensi";
-      final url = Uri.parse(_baseUrl);
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("$_baseUrl/updatePresence");
       final response = await http.post(url, body: {
-        'action': action,
+        'dosen_id': dosenId,
         'presensis_id': presensisId,
         'jam_awal': jamAwal,
         'jam_akhir': jamAkhir
+      }, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
       });
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await updatePresence(dosenId, presensisId, jamAwal, jamAkhir);
+        }
+      }
 
       return BasicResponse.fromJson(body);
     } catch (e) {
@@ -63,21 +89,33 @@ class PresenceLecturerService extends GetxService {
     }
   }
 
-  Future<BaseResponse<CheckPresenceModel>> checkPresence(
+  Future<BaseResponse<CheckPresenceModel>> checkPresence(String dosenId,
       String presensisId, String jamAwal, String jamAkhir) async {
     try {
-      const action = "presensiD";
-      final url = Uri.parse("$global/activityLecturer/checkPresensi.php");
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("${global}activityLecturer/presence/check-edit");
       log.d(url);
       final response = await http.post(url, body: {
-        "action": action,
         "jam_awal": jamAwal,
+        "dosen_id": dosenId,
         "jam_akhir": jamAkhir,
         "presensis_id": presensisId
+      }, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
       });
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await checkPresence(dosenId, presensisId, jamAwal, jamAkhir);
+        }
+      }
 
       return BaseResponse.fromJson(
           body,
@@ -92,16 +130,27 @@ class PresenceLecturerService extends GetxService {
 
   Future<BasicResponse> deletePresence(String presensisId) async {
     try {
-      const action = "deletePresensi";
-      final url = Uri.parse(_baseUrl);
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse("$_baseUrl/deletePresence");
       final response = await http.post(url, body: {
-        'action': action,
         'presensis_id': presensisId,
+      }, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
       });
       log.d(url);
 
       final body = jsonDecode(response.body);
       log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await deletePresence(presensisId);
+        }
+      }
 
       return BasicResponse.fromJson(body);
     } catch (e) {

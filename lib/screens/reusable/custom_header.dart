@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class CustomHeader extends StatelessWidget {
   final String title;
@@ -19,7 +20,7 @@ class CustomHeader extends StatelessWidget {
           width: width,
           height: 110,
           decoration: BoxDecoration(
-            color: blueColor,
+            color: styles.getBlueColor(context),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(30),
             ),
@@ -69,7 +70,7 @@ class CustomHeader extends StatelessWidget {
           child: Container(
             width: 40,
             height: 44,
-            color: blueColor,
+            color: styles.getBlueColor(context),
           ),
         ),
         Positioned(
@@ -79,7 +80,7 @@ class CustomHeader extends StatelessWidget {
             width: 45,
             height: 45,
             decoration: BoxDecoration(
-              color: mainColor,
+              color: styles.getMainColor(context),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(40),
               ),

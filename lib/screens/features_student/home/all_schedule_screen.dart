@@ -5,6 +5,7 @@ import 'package:stipres/controllers/features_student/home/all_schedule_controlle
 import 'package:stipres/models/students/all_schedule_model.dart';
 import 'package:stipres/screens/features_student/widgets/cards/allSchedule_card.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class AllScheduleScreen extends StatefulWidget {
   const AllScheduleScreen({super.key});
@@ -53,7 +54,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Obx(() {
           final filteredSchedule = _controller.scheduleList.where((jadwal) {
             final query = _searchController.text.toLowerCase();
@@ -95,7 +96,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                         width: width,
                         height: 110,
                         decoration: BoxDecoration(
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(30),
                           ),
@@ -224,7 +225,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                         child: Container(
                           width: 40,
                           height: 44,
-                          color: blueColor,
+                          color: styles.getBlueColor(context),
                         ),
                       ),
                       Positioned(
@@ -234,7 +235,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: mainColor,
+                            color: styles.getMainColor(context),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                             ),
@@ -268,23 +269,34 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 filteredSchedule.isEmpty
-                                    ? Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/ic_noData.png',
-                                              height: 120,
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Text(
-                                              "Tidak ada mata kuliah ditemukan.",
-                                              style: TextStyle(
-                                                color: greyColor,
-                                                fontStyle: FontStyle.italic,
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.5,
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize
+                                                .min, // agar tidak memaksa full height
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/ic_noData.png',
+                                                height: 120,
                                               ),
-                                            ),
-                                          ],
+                                              const SizedBox(height: 16),
+                                              Text(
+                                                "Tidak ada mata kuliah ditemukan.",
+                                                style: TextStyle(
+                                                  color: greyColor,
+                                                  fontStyle: FontStyle.italic,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       )
                                     : Column(

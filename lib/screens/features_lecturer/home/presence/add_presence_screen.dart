@@ -7,6 +7,7 @@ import 'package:stipres/models/lecturers/data_prodi_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class AddPresenceScreen extends StatefulWidget {
   const AddPresenceScreen({super.key});
@@ -30,7 +31,9 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
       children: [
         Text(label,
             style: GoogleFonts.plusJakartaSans(
-                fontWeight: FontWeight.w600, fontSize: 14)),
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: styles.getTextColor(context))),
         const SizedBox(height: 6),
         DropdownButtonFormField<String>(
           value: value,
@@ -42,14 +45,15 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
+            hintStyle: TextStyle(color: Colors.grey),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: whiteColor,
             border: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: const Color.fromARGB(255, 79, 176, 255)),
+              borderSide: BorderSide(color: styles.getOutlined(context)),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue), // tambahkan ini
+              borderSide: BorderSide(
+                  color: styles.getOutlined(context)), // tambahkan ini
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
@@ -72,16 +76,19 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
       children: [
         Text(label,
             style: GoogleFonts.plusJakartaSans(
-                fontWeight: FontWeight.w600, fontSize: 14)),
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: styles.getTextColor(context))),
         const SizedBox(height: 6),
         TextFormField(
           controller: controller,
           onChanged: onChanged,
+          maxLength: 254,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: whiteColor,
             border: OutlineInputBorder(
               borderSide:
                   BorderSide(color: const Color.fromARGB(255, 79, 176, 255)),
@@ -110,11 +117,13 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
       children: [
         Text(label,
             style: GoogleFonts.plusJakartaSans(
-                fontWeight: FontWeight.w600, fontSize: 14)),
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: styles.getTextColor(context))),
         const SizedBox(height: 6),
         TextFormField(
           style: TextStyle(
-            color: enabled ? Colors.black : Colors.grey[600],
+            color: enabled ? styles.getTextColor(context) : Colors.grey[600],
           ),
           decoration: InputDecoration(
             labelText: text,
@@ -143,7 +152,9 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
       children: [
         Text('Tanggal Presensi',
             style: GoogleFonts.plusJakartaSans(
-                fontWeight: FontWeight.w600, fontSize: 14)),
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: styles.getTextColor(context))),
         const SizedBox(height: 6),
         Obx(() {
           return GestureDetector(
@@ -159,7 +170,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: whiteColor,
                 border: Border.all(color: Colors.blue),
                 borderRadius: BorderRadius.circular(4),
               ),
@@ -229,7 +240,9 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label,
-            style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w600)),
+            style: GoogleFonts.plusJakartaSans(
+                fontWeight: FontWeight.w600,
+                color: styles.getTextColor(context))),
         const SizedBox(height: 6),
         GestureDetector(
           onTap: onTap,
@@ -261,7 +274,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
     var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: styles.getMainColor(context),
       body: Stack(
         children: [
           Column(
@@ -285,9 +298,9 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                       Text(
                         "Mohon isi data dibawah ini",
                         style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            color: styles.getTextColor(context)),
                       ),
                       Divider(
                         color: Color(0xFFDADADA),

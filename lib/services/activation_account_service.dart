@@ -8,8 +8,7 @@ import 'package:stipres/constants/api.dart';
 import 'package:stipres/models/basic_response.dart';
 
 class ActivationAccountService extends GetxService {
-  final String _baseURL =
-      "${ApiConstants.globalUrl}auth/validateAccountOtp.php";
+  final String _baseURL = "${ApiConstants.globalUrl}auth/activationAccount";
   final GetStorage _box = GetStorage();
   final global = ApiConstants.globalUrl;
 
@@ -18,8 +17,8 @@ class ActivationAccountService extends GetxService {
   Future<BasicResponse> sendOtpActivate(String email) async {
     try {
       log.d("sendservice");
-      final response =
-          await http.post(Uri.parse(_baseURL), body: {'email': email});
+      final response = await http.post(Uri.parse("$_baseURL/otp/send"),
+          body: {'email': email}, headers: {"Accept": "application/json"});
       log.d(_baseURL);
 
       if (response.statusCode == 200) {
@@ -35,19 +34,21 @@ class ActivationAccountService extends GetxService {
           return BasicResponse(
               status: body['status'], message: body['message']);
         }
+      } else {
+        final body = jsonDecode(response.body);
+        return BasicResponse(status: body['status'], message: body['message']);
       }
     } catch (e) {
       log.e("Error during sending OTP: $e");
       throw Exception("Failed to send OTP: $e");
     }
-
-    return BasicResponse(status: "error", message: "Gagal mengirim OTP");
   }
 
   Future<BasicResponse> checkOtp(String email, String nim, String otp) async {
     try {
-      final response = await http.post(Uri.parse(_baseURL),
-          body: {'email': email, 'nim': nim, 'otp': otp, 'action': 'checkOTP'});
+      final response = await http.post(Uri.parse("$_baseURL/otp/check"),
+          body: {'email': email, 'nim': nim, 'otp': otp, 'action': 'checkOTP'},
+          headers: {"Accept": "application/json"});
       log.d(_baseURL);
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
@@ -61,6 +62,9 @@ class ActivationAccountService extends GetxService {
           return BasicResponse(
               status: body['status'], message: body['message']);
         }
+      } else {
+        final body = jsonDecode(response.body);
+        return BasicResponse(status: body['status'], message: body['message']);
       }
     } catch (e) {
       log.f("Error during checking OTP: $e");
@@ -71,9 +75,9 @@ class ActivationAccountService extends GetxService {
 
   Future<BasicResponse> activateAccount(String password, String nim) async {
     try {
-      final response = await http.post(
-          Uri.parse("${global}auth/validateAccount.php"),
-          body: {'password': password, 'nim': nim});
+      final response = await http.post(Uri.parse("$_baseURL/validate"),
+          body: {'password': password, 'nim': nim},
+          headers: {"Accept": "application/json"});
       log.d(_baseURL);
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
@@ -86,6 +90,9 @@ class ActivationAccountService extends GetxService {
           return BasicResponse(
               status: body['status'], message: body['message']);
         }
+      } else {
+        final body = jsonDecode(response.body);
+        return BasicResponse(status: body['status'], message: body['message']);
       }
     } catch (e) {
       log.f("Error during activation: $e");

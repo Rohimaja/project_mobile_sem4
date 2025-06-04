@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+import 'dart:ui';
 
 class StudentBiodataCard extends StatelessWidget {
   final String nama;
@@ -46,50 +48,105 @@ class StudentBiodataCard extends StatelessWidget {
               left: 20,
               right: 20,
               child: Container(
+                height: 230,
                 padding: const EdgeInsets.only(
                     top: 60, left: 12, right: 12, bottom: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min, // <--- ini penting
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildRowInfo('Nama', nama),
-                    const SizedBox(height: 8),
-                    _buildRowInfo('NIM', nim),
-                    const SizedBox(height: 8),
-                    _buildRowInfo('Semester', semester),
-                    const SizedBox(height: 8),
-                    _buildRowInfo('Program Studi', prodi),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildRowInfo('Nama', nama),
+                      SizedBox(height: 12),
+                      _buildRowInfo('NIM', nim),
+                      SizedBox(height: 12),
+                      _buildRowInfo('Semester', semester),
+                      SizedBox(height: 12),
+                      _buildRowInfo('Program Studi', prodi),
+                    ],
+                  ),
                 ),
               ),
             ),
 
             // Foto profil (di atas container putih)
             Positioned(
-              top: 60,
-              child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.white,
-                  child: ClipOval(
-                    child: SizedBox(
-                      width: 92,
-                      height: 92,
-                      child: FadeInImage.assetNetwork(
-                        placeholder: "assets/icons/ic_profile.jpeg",
-                        image: fotoAssetPath,
-                        fit: BoxFit.cover,
-                        imageErrorBuilder: (context, url, error) => Image.asset(
-                          "assets/icons/ic_profile.jpeg",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  )),
+  top: 60,
+  child: GestureDetector(
+  onTap: () {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: true,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.zero,
+        // ✅ beri jarak agar tidak full fullscreen
+        child: Stack(
+          children: [
+            // Background blur
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                color: Colors.black.withOpacity(0.5),
+              ),
             ),
+            // Centered Image bulat & diperbesar
+            Padding(
+              padding: const EdgeInsets.only(left: 40, right: 40),
+              child: Center(
+                child: ClipOval(
+                  child: Image.asset(
+                    "assets/images/foto_izzul.jpg",
+                    width: 300,  
+                    height: 300, 
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            // Close button
+            Positioned(
+              top: 20,
+              right: 20,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  },
+  child: CircleAvatar(
+    radius: 50,
+    backgroundColor: Colors.white,
+    child: ClipOval(
+      child: SizedBox(
+        width: 92,
+        height: 92,
+        child: 
+        // FadeInImage.assetNetwork(
+        //   placeholder: "assets/icons/ic_profile.jpeg",
+        //   image: fotoAssetPath,
+        //   fit: BoxFit.cover,
+        //   imageErrorBuilder: (context, url, error) => 
+          Image.asset(
+            "assets/images/foto_izzul.jpg",
+            fit: BoxFit.cover,
+          ),
+      ),
+    ),
+  ),
+),
+
+),
+
+          
 
             // Judul
             const Positioned(
@@ -97,7 +154,7 @@ class StudentBiodataCard extends StatelessWidget {
               child: Text(
                 "Biodata Mahasiswa",
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue,
                 ),

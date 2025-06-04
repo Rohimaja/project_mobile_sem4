@@ -4,7 +4,7 @@ class PresensiDosenModel {
   final String jamAwal;
   final String jamAkhir;
   final String namaMatkul;
-  String? namaRuangan;
+  final String kodeMatkul;
   String? durasiPresensi;
   final String durasiMatkul;
 
@@ -14,19 +14,19 @@ class PresensiDosenModel {
     required this.jamAwal,
     required this.jamAkhir,
     required this.namaMatkul,
-    required this.namaRuangan,
+    required this.kodeMatkul,
     required this.durasiMatkul,
     this.durasiPresensi,
   });
 
   factory PresensiDosenModel.fromJson(Map<String, dynamic> json) {
     return PresensiDosenModel(
-      semester: json["semester"],
+      semester: int.parse(json["semester"]),
       presensisId: json["presensis_id"],
       jamAwal: json["jam_awal"],
       jamAkhir: json["jam_akhir"],
       namaMatkul: json["nama_matkul"],
-      namaRuangan: json["nama_ruangan"],
+      kodeMatkul: json["kode_matkul"],
       durasiMatkul: json["durasi_matkul"],
     );
   }

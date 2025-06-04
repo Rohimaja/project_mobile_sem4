@@ -49,7 +49,7 @@ class StudentViewProfileController extends GetxController {
   }
 
   Future<void> loadHeader() async {
-    String profile = _box.read('foto');
+    String profile = _box.read('foto') ?? '';
     final profileUrl =
         "$url${profile}?v=${DateTime.now().millisecondsSinceEpoch}";
     storedProfile.value = profileUrl;
@@ -113,12 +113,15 @@ class StudentViewProfileController extends GetxController {
     if (result.status == "success" && result.data != null) {
       final profile = result.data!;
 
-      log.d(profile.agama);
+      if (profile.jenisKelamin == "L") {
+        storedJenisKelamin.value = "Laki-laki";
+      } else {
+        storedJenisKelamin.value = "Perempuan";
+      }
 
       storedFullName.value = profile.nama;
       storedNim.value = profile.nim;
       storedEmail.value = profile.email;
-      storedJenisKelamin.value = profile.jenisKelamin;
       storedAgama.value = profile.agama;
       storedTempatTglLahir.value =
           "${profile.tempatLahir}, ${formatTanggal(profile.tglLahir)}";

@@ -10,7 +10,7 @@ class MahasiswaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String iconPath = mahasiswa.jenisKelamin.toLowerCase() == "perempuan"
+    String iconPath = mahasiswa.jenisKelamin.toLowerCase() == "p"
         ? 'assets/icons/ic_mahasiswi.png'
         : 'assets/icons/ic_mahasiswa.png';
 

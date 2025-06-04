@@ -21,7 +21,7 @@ class LectureModelApi {
     return LectureModelApi(
       namaMatkul: json["nama_matkul"],
       presensisId: json["presensis_id"],
-      semester: json["semester"],
+      semester: int.parse(json["semester"]),
       durasiPresensi: json["durasi_presensi"],
       namaDosen: json["nama_dosen"],
       linkZoom: json["link_zoom"],

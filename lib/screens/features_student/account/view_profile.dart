@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:ui';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/account/view_profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ViewProfilePage extends StatelessWidget {
   ViewProfilePage({Key? key}) : super(key: key);
@@ -13,23 +15,24 @@ class ViewProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: [
-        Column(
-          children: [
-            _buildHeader(context),
-            Obx(
-              () => _buildProfileForm(),
-            )
-          ],
-        ),
-        Positioned(
-            top: 110, // atur posisi agar setengah berada di header
-            left: 0,
-            right: 0,
-            child: _buildProfilePicture())
-      ]),
-    );
+    return Obx(() => Scaffold(
+          backgroundColor: styles.getMainColor(context),
+          body: Stack(children: [
+            Column(
+              children: [
+                _buildHeader(context),
+                Obx(() {
+                  return _buildProfileForm(context);
+                })
+              ],
+            ),
+            Positioned(
+                top: 110, // atur posisi agar setengah berada di header
+                left: 0,
+                right: 0,
+                child: _buildProfilePicture(context)),
+          ]),
+        ));
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -42,7 +45,7 @@ class ViewProfilePage extends StatelessWidget {
           width: width,
           height: 170,
           decoration: BoxDecoration(
-            color: blueColor,
+            color: styles.getBlueColor(context),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(40),
             ),
@@ -60,7 +63,7 @@ class ViewProfilePage extends StatelessWidget {
                 color: Colors.transparent, // supaya ripple doang yang keliatan
                 child: InkWell(
                   onTap: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                   borderRadius: BorderRadius.circular(100),
                   customBorder: const CircleBorder(),
@@ -97,7 +100,7 @@ class ViewProfilePage extends StatelessWidget {
             width: 40,
             height: 44,
             decoration: BoxDecoration(
-              color: blueColor,
+              color: styles.getBlueColor(context),
             ),
           ),
         ),
@@ -107,9 +110,9 @@ class ViewProfilePage extends StatelessWidget {
           child: Container(
             width: 45,
             height: 45,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 254, 247, 255),
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: styles.getMainColor(context),
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(40),
               ),
             ),
@@ -119,59 +122,126 @@ class ViewProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfilePicture() {
+  Widget _buildProfilePicture(BuildContext context) {
     return Center(
       child: Stack(
         children: [
           Container(
             padding: const EdgeInsets.all(2),
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 237, 235, 251),
+            decoration: BoxDecoration(
+              color: styles.getCircleColor(context),
               shape: BoxShape.circle,
             ),
-            child: ClipOval(child: Obx(() {
-              final imageUrl = _controller.storedProfile.value;
-              return (imageUrl.isNotEmpty)
-                  ? FadeInImage.assetNetwork(
-                      placeholder: "assets/icons/ic_profile.jpeg",
-                      image: imageUrl,
-                      height: 110,
-                      width: 110,
-                      fit: BoxFit.cover,
-                      imageErrorBuilder: (context, url, error) => Image.asset(
+            child: ClipOval(
+              child: GestureDetector(onTap: () {
+                showDialog(
+                  context: Get.context!,
+                  barrierDismissible: true,
+                  builder: (context) => Dialog(
+                    backgroundColor: Colors.transparent,
+                    insetPadding: EdgeInsets.zero,
+                    child: Stack(
+                      children: [
+                        // Background blur
+                        BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ),
+                        // Centered Image
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40),
+                          child: Center(
+                            child: ClipOval(child: Obx(() {
+                              final imageUrl = _controller.storedProfile.value;
+                              return (imageUrl.isNotEmpty)
+                                  ? FadeInImage.assetNetwork(
+                                      placeholder:
+                                          "assets/icons/ic_profile.jpeg",
+                                      image: imageUrl,
+                                      height: 300,
+                                      width: 300,
+                                      fit: BoxFit.cover,
+                                      imageErrorBuilder:
+                                          (context, url, error) => Image.asset(
+                                        "assets/icons/ic_profile.jpeg",
+                                        height: 300,
+                                        width: 300,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Image.asset(
+                                      "assets/icons/ic_profile.jpeg",
+                                      height: 300,
+                                      width: 300,
+                                      fit: BoxFit.cover,
+                                    );
+                            })),
+                          ),
+                        ),
+                        // Close button
+                        Positioned(
+                          top: 40,
+                          right: 20,
+                          child: IconButton(
+                              icon: const Icon(Icons.close,
+                                  color: Colors.white, size: 30),
+                              onPressed: () => Get.back()),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }, child: Obx(() {
+                final imageUrl = _controller.storedProfile.value;
+                return (imageUrl.isNotEmpty)
+                    ? FadeInImage.assetNetwork(
+                        placeholder: "assets/icons/ic_profile.jpeg",
+                        image: imageUrl,
+                        height: 110,
+                        width: 110,
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (context, url, error) => Image.asset(
+                          "assets/icons/ic_profile.jpeg",
+                          height: 110,
+                          width: 110,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Image.asset(
                         "assets/icons/ic_profile.jpeg",
                         height: 110,
                         width: 110,
                         fit: BoxFit.cover,
-                      ),
-                    )
-                  : Image.asset(
-                      "assets/icons/ic_profile.jpeg",
-                      height: 110,
-                      width: 110,
-                      fit: BoxFit.cover,
-                    );
-            })),
+                      );
+              })),
+            ),
           ),
           Positioned(
-            bottom: 0,
+            bottom: 10,
             right: 0,
-            child: GestureDetector(
-              onTap: () {
-                _controller.showFileOptions();
-              },
-              child: Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: blueColor,
-                  shape: BoxShape.circle,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Image(
-                    image: AssetImage("assets/icons/ic_addpicture.png"),
-                    fit: BoxFit.contain,
+            child: Material(
+              color: Colors.transparent,
+              shape: const CircleBorder(),
+              child: InkWell(
+                customBorder: const CircleBorder(),
+                onTap: () {
+                  _controller.showFileOptions();
+                },
+                child: Ink(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: styles.getBlueColor(context),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Image(
+                      image: AssetImage("assets/icons/ic_addpicture.png"),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
@@ -182,39 +252,106 @@ class ViewProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileForm() {
+  // Widget _buildProfilePicture() {
+  //   return Center(
+  //     child: Stack(
+  //       children: [
+  //         Container(
+  //           padding: const EdgeInsets.all(2),
+  //           decoration: const BoxDecoration(
+  //             color: Color.fromARGB(255, 237, 235, 251),
+  //             shape: BoxShape.circle,
+  //           ),
+  //           child: ClipOval(child: Obx(() {
+  //             final imageUrl = _controller.storedProfile.value;
+  //             return (imageUrl.isNotEmpty)
+  //                 ? FadeInImage.assetNetwork(
+  //                     placeholder: "assets/icons/ic_profile.jpeg",
+  //                     image: imageUrl,
+  //                     height: 110,
+  //                     width: 110,
+  //                     fit: BoxFit.cover,
+  //                     imageErrorBuilder: (context, url, error) => Image.asset(
+  //                       "assets/icons/ic_profile.jpeg",
+  //                       height: 110,
+  //                       width: 110,
+  //                       fit: BoxFit.cover,
+  //                     ),
+  //                   )
+  //                 : Image.asset(
+  //                     "assets/icons/ic_profile.jpeg",
+  //                     height: 110,
+  //                     width: 110,
+  //                     fit: BoxFit.cover,
+  //                   );
+  //           })),
+  //         ),
+  //         Positioned(
+  //           bottom: 0,
+  //           right: 0,
+  //           child: GestureDetector(
+  //             onTap: () {
+  //               _controller.showFileOptions();
+  //             },
+  //             child: Container(
+  //               width: 32,
+  //               height: 32,
+  //               decoration: BoxDecoration(
+  //                 color: blueColor,
+  //                 shape: BoxShape.circle,
+  //               ),
+  //               child: const Padding(
+  //                 padding: EdgeInsets.all(8),
+  //                 child: Image(
+  //                   image: AssetImage("assets/icons/ic_addpicture.png"),
+  //                   fit: BoxFit.contain,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget _buildProfileForm(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 80.0, left: 30.0, right: 30.0),
       child: Column(
         children: [
-          _buildProfileItem("Full Name", _controller.storedFullName.value),
+          _buildProfileItem(
+              context, "Nama Lengkap", _controller.storedFullName.value),
           _buildDivider(),
-          _buildProfileItem("NIM", _controller.storedNim.value),
+          _buildProfileItem(context, "NIM", _controller.storedNim.value),
           _buildDivider(),
-          _buildProfileItem("Email", _controller.storedEmail.value),
+          _buildProfileItem(context, "Email", _controller.storedEmail.value),
           _buildDivider(),
           _buildProfileItem(
-              "Jenis Kelamin", _controller.storedJenisKelamin.value),
+              context, "Jenis Kelamin", _controller.storedJenisKelamin.value),
           _buildDivider(),
-          _buildProfileItem("Agama", _controller.storedAgama.value),
+          _buildProfileItem(context, "Agama", _controller.storedAgama.value),
+          _buildDivider(),
+          _buildProfileItem(context, "Tempat, Tanggal Lahir",
+              _controller.storedTempatTglLahir.value),
+          _buildDivider(),
+          _buildProfileItem(context, "Alamat", _controller.storedAlamat.value),
           _buildDivider(),
           _buildProfileItem(
-              "Tempat, Tanggal Lahir", _controller.storedTempatTglLahir.value),
+              context, "Semester", _controller.storedSemester.value),
           _buildDivider(),
-          _buildProfileItem("Alamat", _controller.storedAlamat.value),
+          _buildProfileItem(
+              context, "Program Studi", _controller.storedProdi.value),
           _buildDivider(),
-          _buildProfileItem("Semester", _controller.storedSemester.value),
+          _buildProfileItem(
+              context, "No. Telp", _controller.storedNoTelp.value),
           _buildDivider(),
-          _buildProfileItem("Program Studi", _controller.storedProdi.value),
-          _buildDivider(),
-          _buildProfileItem("No. Telp", _controller.storedNoTelp.value),
         ],
       ),
     );
   }
 
-  // Widget untuk menampilkan label dan nilai.
-  Widget _buildProfileItem(String label, String value) {
+  Widget _buildProfileItem(BuildContext context, String label, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -226,19 +363,22 @@ class ViewProfilePage extends StatelessWidget {
               width: 150,
               child: Text(
                 label,
-                style: GoogleFonts.plusJakartaSans(
-                  color: Colors.black,
+                style: TextStyle(
+                  color: styles.getTextColor(context),
                   fontWeight: FontWeight.w600,
-                ), // Tetap ada untuk label jika terlalu panjang
+                  fontSize: 14,
+                ),
+                overflow: TextOverflow
+                    .ellipsis, // Tetap ada untuk label jika terlalu panjang
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
                 value,
-                style: GoogleFonts.plusJakartaSans(
+                style: const TextStyle(
                   color: Color.fromARGB(255, 30, 136, 228),
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                 ),
                 // overflow: TextOverflow.ellipsis, // Dihapus agar teks bisa wrap
               ),

@@ -56,7 +56,7 @@ class PresenceInformationCard extends StatelessWidget {
                 child: Text(
                   "Detail Presensi Mahasiswa",
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                   ),
@@ -103,7 +103,7 @@ class PresenceInformationCard extends StatelessWidget {
                               color: const Color(0xFF005095),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 4),
                           buktiFilePath != null && buktiFilePath!.isNotEmpty
                               ? Align(
                                   alignment: Alignment.centerLeft,
@@ -148,7 +148,7 @@ class PresenceInformationCard extends StatelessWidget {
                                   "-",
                                   style: GoogleFonts.plusJakartaSans(
                                     fontSize: 15,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.bold,
                                     color: const Color(0xFF005095),
                                   ),
                                 ),
@@ -182,7 +182,7 @@ class PresenceInformationCard extends StatelessWidget {
             ),
           ),
         ),
-        const Text(": "),
+        Text(": "),
         Expanded(
           child: Text(
             value,
@@ -198,7 +198,7 @@ class PresenceInformationCard extends StatelessWidget {
   }
 
   Widget _buildExpandableAlasan(String label, String value) {
-    final maxLines = 4;
+    final maxLines = 5;
     final textStyle = GoogleFonts.plusJakartaSans(
       fontSize: 14,
       fontWeight: FontWeight.bold,
@@ -212,6 +212,7 @@ class PresenceInformationCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
+              height: 100,
               width: 110,
               child: Text(
                 label,
@@ -226,7 +227,7 @@ class PresenceInformationCard extends StatelessWidget {
             Expanded(child: Obx(() {
               return isExpanded.value
                   ? SizedBox(
-                      height: 110,
+                      height: 130,
                       child: SingleChildScrollView(
                         child: Text(
                           value,

@@ -8,7 +8,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/students/get_presence_model.dart';
+import 'package:stipres/screens/reusable/failed_dialog.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
+import 'package:stipres/screens/reusable/success_dialog.dart';
+import 'package:stipres/screens/reusable/upload_data_dialog.dart';
 import 'package:stipres/services/student/presence_content_service.dart';
 
 import 'package:timezone/timezone.dart' as tz;
@@ -21,7 +24,8 @@ class PresenceContentController extends GetxController {
 
   final alasanController = TextEditingController();
   var jumlahKarakter = 0.obs;
-  final int maksKarakter = 200;
+  final int maksKarakter = 250;
+  final isSnackbarOpen = false.obs;
 
   final statusAbsen = 0.obs;
 
@@ -57,7 +61,7 @@ class PresenceContentController extends GetxController {
     super.onReady();
     if (presensiId.value.isNotEmpty) {
       checkAttendanceTime();
-    } else {}
+    }
   }
 
   @override
@@ -80,19 +84,37 @@ class PresenceContentController extends GetxController {
 
   bool validate() {
     if (status.value == null) {
-      showError("Silakan pilih status presensi terlebih dahulu.");
+      Get.dialog(
+          UploadDialog(
+            title: "Validasi!",
+            subtitle: "Silakan pilih status presensi terlebih dahulu",
+            gifAssetPath: "assets/gif/upload_data_animation.gif",
+          ),
+          barrierDismissible: false);
       return false;
     }
     if ((status.value == StatusPresensi.ijin ||
             status.value == StatusPresensi.sakit) &&
         alasanController.text.trim().isEmpty) {
-      showError("Silakan isi alasan ketidakhadiran.");
+      Get.dialog(
+          UploadDialog(
+            title: "Validasi!",
+            subtitle: "Silakan isi alasan ketidakhadiran",
+            gifAssetPath: "assets/gif/upload_data_animation.gif",
+          ),
+          barrierDismissible: false);
       return false;
     }
     if ((status.value == StatusPresensi.ijin ||
             status.value == StatusPresensi.sakit) &&
         bukti() == null) {
-      showError("Silakan upload bukti ketidakhadiran.");
+      Get.dialog(
+          UploadDialog(
+            title: "Validasi!",
+            subtitle: "Silakan upload bukti ketidakhadiran",
+            gifAssetPath: "assets/gif/upload_data_animation.gif",
+          ),
+          barrierDismissible: false);
       return false;
     }
 
@@ -103,12 +125,39 @@ class PresenceContentController extends GetxController {
     if (!validate()) return;
 
     showLoading();
-    await uploadPresence();
+    await uploadPresence().timeout(Duration(seconds: 10), onTimeout: () {
+      Get.back();
+      Get.snackbar("Timeout", "Operasi terlalu lama, coba lagi.",
+          duration: const Duration(seconds: 2));
+      return null;
+    });
   }
 
   Future<void> uploadPresence() async {
     try {
       var mahasiswaId = _box.read("mahasiswa_id");
+
+      // Validasi waktu presensi sebelum upload
+      if (presence.value.tglPresensi != null &&
+          presence.value.durasiPresensi != null) {
+        final isOnSchedule = await checkPresenceTime(
+            presence.value.tglPresensi!, presence.value.durasiPresensi!);
+
+        if (!isOnSchedule) {
+          Get.back();
+          isSnackbarOpen.value = true;
+          Get.snackbar("Waktu Presensi Habis",
+              "Anda tidak dapat melakukan presensi di luar jadwal yang ditentukan",
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+              duration: Duration(seconds: 3));
+          Future.delayed(
+            Duration(seconds: 4),
+            () => isSnackbarOpen.value = false,
+          );
+          return;
+        }
+      }
 
       if (status.value == StatusPresensi.hadir) {
         statusAbsen.value = 1;
@@ -128,7 +177,7 @@ class PresenceContentController extends GetxController {
       log.d(alasanController.text);
 
       final alasan =
-          alasanController.text.isEmpty ? null : alasanController.text;
+          alasanController.text.isEmpty ? null : alasanController.text.trim();
 
       final buktiFinal = bukti() == null ? null : bukti.value;
 
@@ -140,10 +189,20 @@ class PresenceContentController extends GetxController {
       if (result.status == "success") {
         Get.back();
         Get.back();
-        Get.snackbar("Berhasil", result.message,
-            duration: Duration(seconds: 1));
+        Get.dialog(
+          SuccessDialog(
+            title: 'Presensi berhasil diunggah!',
+            subtitle: 'Data presensi berhasil ditambahkan',
+            gifAssetPath: 'assets/gif/success_animation.gif',
+            onDetailPressed: () => Get.toNamed("/student/notification-screen"),
+          ),
+          barrierDismissible: false,
+        );
       } else {
-        showError(result.message);
+        Get.dialog(FailedDialog(
+            title: "Presensi gagal diunggah!",
+            subtitle: "Data presensi gagal ditambahkan",
+            gifAssetPath: "assets/gif/success_animation.gif"));
       }
     } catch (e) {
       log.d("Error: $e");
@@ -258,7 +317,13 @@ class PresenceContentController extends GetxController {
       int fileSize = await file.length();
 
       if (fileSize > maxSizeInBytes) {
-        Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+        isSnackbarOpen.value = true;
+        Get.snackbar("Error", "Ukuran gambar melebihi 5MB",
+            duration: Duration(seconds: 2));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isSnackbarOpen.value = false,
+        );
         return;
       }
       bukti.value = File(image.path);
@@ -274,14 +339,26 @@ class PresenceContentController extends GetxController {
         int fileSize = await file.length();
 
         if (fileSize > maxSizeInBytes) {
-          Get.snackbar("Error", "Ukuran gambar melebihi 5MB");
+          isSnackbarOpen.value = true;
+          Get.snackbar("Error", "Ukuran gambar melebihi 5MB",
+              duration: Duration(seconds: 2));
+          Future.delayed(
+            Duration(seconds: 3),
+            () => isSnackbarOpen.value = false,
+          );
           return;
         }
 
         bukti.value = File(image.path);
       }
     } catch (e) {
-      Get.snackbar("Gagal", "Kamera tidak tersedia: $e");
+      isSnackbarOpen.value = true;
+      Get.snackbar("Gagal", "Kamera tidak tersedia: $e",
+          duration: Duration(seconds: 2));
+      Future.delayed(
+        Duration(seconds: 3),
+        () => isSnackbarOpen.value = false,
+      );
     }
   }
 
@@ -297,12 +374,24 @@ class PresenceContentController extends GetxController {
 
       if (extension == null ||
           !['pdf', 'png', 'jpg', 'jpeg', 'docx'].contains(extension)) {
-        Get.snackbar("Error", "Formal file tidak diizinkan");
+        isSnackbarOpen.value = true;
+        Get.snackbar("Error", "Formal file tidak diizinkan",
+            duration: Duration(seconds: 2));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isSnackbarOpen.value = false,
+        );
         return;
       }
 
       if (fileSize > maxSizeInBytes) {
-        Get.snackbar("Error", "Ukuran file melebihi 5MB");
+        isSnackbarOpen.value = true;
+        Get.snackbar("Error", "Ukuran file melebihi 5MB",
+            duration: Duration(seconds: 2));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isSnackbarOpen.value = false,
+        );
         return;
       }
 
@@ -353,17 +442,6 @@ class PresenceContentController extends GetxController {
       barrierDismissible: false,
       // ignore: deprecated_member_use
       barrierColor: Colors.black.withOpacity(0.3),
-    );
-  }
-
-  void showError(String message) {
-    Get.defaultDialog(
-      title: "Validasi",
-      middleText: message,
-      textConfirm: "OK",
-      onConfirm: () {
-        Get.back();
-      },
     );
   }
 }

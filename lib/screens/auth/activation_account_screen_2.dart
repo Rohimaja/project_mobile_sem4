@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stipres/controllers/auth/activation_step2_controller.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ActivationAccount2 extends StatelessWidget {
   ActivationAccount2({super.key});
@@ -14,6 +16,7 @@ class ActivationAccount2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: styles.getMainColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
@@ -24,27 +27,30 @@ class ActivationAccount2 extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo_STIPRES.png",
-                          width: 140,
-                          height: 140,
-                        ),
+                        styles.getLogoImage(context),
                         SizedBox(
                           height: 10,
                         ),
                         Image.asset(
                           "assets/images/picture_book.png",
-                          width: 178,
-                          height: 178,
+                          width: 193,
+                          height: 193,
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Text("Perubahan Password",
-                            style: blackTextStyle.copyWith(
-                                fontSize: 18, fontWeight: bold)),
+                            style: GoogleFonts.plusJakartaSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: styles.getTextColor(context))),
                         const SizedBox(height: 10),
                         Text(
                           "Silahkan masukkan nim dan kode OTP yang dikirim pada",
-                          style: blackTextStyle.copyWith(fontSize: 16),
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                              color: styles.getTextColor(context)),
                           textAlign: TextAlign.center,
                         ),
                         Text(
@@ -118,8 +124,10 @@ class ActivationAccount2 extends StatelessWidget {
                                 return RichText(
                                   text: TextSpan(
                                     text: "Belum menerima kode? ",
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 15),
+                                    style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        color: styles.getTextColor(context)),
                                     children: [
                                       WidgetSpan(
                                         alignment: PlaceholderAlignment.middle,
@@ -150,25 +158,27 @@ class ActivationAccount2 extends StatelessWidget {
                             SizedBox(
                                 height: 40,
                                 width: MediaQuery.of(context).size.width * 0.7,
-                                child: ReusableButton(
-                                    label: "Berikutnya",
-                                    buttonStyle: ElevatedButton.styleFrom(
-                                        elevation: 5,
-                                        backgroundColor: blueColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        minimumSize:
-                                            const Size(double.infinity, 50)),
-                                    textStyle: whiteTextStyle.copyWith(
-                                        fontSize: 17, fontWeight: bold),
-                                    onPressed:
-                                        (_controller.isSnackbarOpen.value)
-                                            ? null
-                                            : () async {
-                                                await _controller.checkOtp();
-                                              })),
+                                child: Obx(() {
+                                  return ReusableButton(
+                                      label: "Berikutnya",
+                                      buttonStyle: ElevatedButton.styleFrom(
+                                          elevation: 5,
+                                          backgroundColor: blueColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          minimumSize:
+                                              const Size(double.infinity, 50)),
+                                      textStyle: whiteTextStyle.copyWith(
+                                          fontSize: 17, fontWeight: bold),
+                                      onPressed:
+                                          (_controller.isSnackbarOpen.value)
+                                              ? null
+                                              : () async {
+                                                  await _controller.checkOtp();
+                                                });
+                                })),
                           ],
                         )
                       ],

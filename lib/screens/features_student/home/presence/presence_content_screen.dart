@@ -6,6 +6,7 @@ import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/controllers/features_student/home/presence_content_controller.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class PresenceContentScreen extends StatefulWidget {
   PresenceContentScreen({super.key});
@@ -25,7 +26,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: styles.getMainColor(context),
         body: Obx(() {
           return Stack(
             children: [
@@ -39,8 +40,10 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                       Positioned(
                         bottom: -44,
                         right: 0,
-                        child:
-                            Container(width: 40, height: 44, color: blueColor),
+                        child: Container(
+                            width: 40,
+                            height: 44,
+                            color: styles.getBlueColor(context)),
                       ),
                       Positioned(
                         bottom: -45,
@@ -49,7 +52,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                           width: 45,
                           height: 45,
                           decoration: BoxDecoration(
-                            color: mainColor,
+                            color: styles.getMainColor(context),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                             ),
@@ -109,7 +112,9 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
 
                                 // Status Presensi
                                 RadioListTile<StatusPresensi>(
-                                  title: const Text("Hadir"),
+                                  title: Text("Hadir",
+                                      style: TextStyle(
+                                          color: styles.getTextColor(context))),
                                   value: StatusPresensi.hadir,
                                   groupValue: _controller.status.value,
                                   onChanged: (value) {
@@ -120,7 +125,9 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   activeColor: blueColor,
                                 ),
                                 RadioListTile<StatusPresensi>(
-                                  title: const Text("Izin"),
+                                  title: Text("Izin",
+                                      style: TextStyle(
+                                          color: styles.getTextColor(context))),
                                   value: StatusPresensi.ijin,
                                   groupValue: _controller.status.value,
                                   onChanged: (value) {
@@ -131,7 +138,9 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   activeColor: blueColor,
                                 ),
                                 RadioListTile<StatusPresensi>(
-                                  title: const Text("Sakit"),
+                                  title: Text("Sakit",
+                                      style: TextStyle(
+                                          color: styles.getTextColor(context))),
                                   value: StatusPresensi.sakit,
                                   groupValue: _controller.status.value,
                                   onChanged: (value) {
@@ -151,16 +160,17 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                     text: TextSpan(
                                       text: "Alasan ",
                                       style: GoogleFonts.plusJakartaSans(
-                                        color: Colors.black,
+                                        color: styles.getTextColor(context),
                                         fontSize: 15,
                                       ),
                                       children: [
                                         TextSpan(
                                           text: "(Jika Tidak Hadir)",
                                           style: GoogleFonts.plusJakartaSans(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                          ),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color:
+                                                  styles.getTextColor(context)),
                                         ),
                                         TextSpan(text: " :"),
                                       ],
@@ -170,7 +180,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   Container(
                                     height: 200,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: styles.getTextField(context),
                                       borderRadius: BorderRadius.circular(12),
                                       boxShadow: [
                                         BoxShadow(
@@ -183,10 +193,17 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                     child: TextField(
                                       controller: _controller.alasanController,
                                       maxLines: 4,
+                                      style: GoogleFonts.plusJakartaSans(
+                                        color: styles.getTextColor(
+                                            context), // Atau styles.getTextColor(context) jika sudah disesuaikan
+                                        fontSize: 14,
+                                      ),
                                       decoration: InputDecoration(
                                         hintText: "*Alasan ketidakhadiran",
                                         hintStyle: GoogleFonts.plusJakartaSans(
-                                          color: Colors.grey,
+                                          color: styles
+                                              .getTextColor(context)
+                                              .withOpacity(0.5),
                                           fontSize: 14,
                                         ),
                                         contentPadding:
@@ -270,7 +287,9 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      _controller.submitPresence();
+                                      (!_controller.isSnackbarOpen.value)
+                                          ? _controller.submitPresence()
+                                          : null;
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: blueColor,

@@ -3,23 +3,31 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_student/account/profile_controller.dart';
-import 'package:stipres/screens/features_student/home/notification_screen.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/controllers/features_student/home/dashboard_controller.dart';
+import 'package:stipres/screens/features_student/home/notifications/notification_screen.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   var height, width;
 
   final profileC = Get.find<ProfileController>();
+  final conDash = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromARGB(
-          255, 237, 235, 251), // Set background putih ke seluruh layar
+      backgroundColor:
+          styles.getMainColor(context), // Set background putih ke seluruh layar
       body: Stack(
         children: [
           Column(
@@ -32,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                     width: width,
                     height: 150,
                     decoration: BoxDecoration(
-                      color: blueColor,
+                      color: styles.getBlueColor(context),
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(40),
                       ),
@@ -65,33 +73,43 @@ class ProfileScreen extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Material(
-                          color:
-                              Colors.transparent, // biar background transparan
-                          shape: const CircleBorder(), // biar ripple bulat
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationScreen()),
-                              );
-                            },
-                            borderRadius: BorderRadius.circular(100),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.3),
-                                shape: BoxShape.circle,
-                              ),
-                              padding: const EdgeInsets.only(
-                                  top: 3, bottom: 6, left: 6, right: 6),
-                              child: const Icon(
-                                Icons.notifications_none,
-                                color: Colors.white,
-                                size: 26,
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              shape: const CircleBorder(),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.toNamed("/student/notification-screen");
+                                },
+                                borderRadius: BorderRadius.circular(100),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.3),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: const EdgeInsets.all(6),
+                                  child: Icon(
+                                    conDash.hasNotification.value
+                                        ? Icons.notifications
+                                        : Icons.notifications_none,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            if (conDash.hasNotification.value)
+                              const Positioned(
+                                top: 2,
+                                right: 2,
+                                child: CircleAvatar(
+                                  radius: 5,
+                                  backgroundColor: Colors.red,
+                                ),
+                              ),
+                          ],
                         )
                       ],
                     ),
@@ -104,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                       width: 40,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: blueColor, // warna ungu muda
+                        color: styles.getBlueColor(context), // warna ungu muda
                       ),
                     ),
                   ),
@@ -116,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
                       width: 45,
                       height: 45,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 237, 235, 251),
+                          color: styles.getMainColor(context),
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(40),
                           ) // warna ungu muda
@@ -135,9 +153,9 @@ class ProfileScreen extends StatelessWidget {
                         Stack(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 237, 235, 251),
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: styles.getCircleColor(context),
                                 shape: BoxShape.circle,
                               ),
                               child: ClipOval(child: Obx(() {
@@ -183,8 +201,8 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Container(
                       width: width,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 237, 235, 251),
+                      decoration: BoxDecoration(
+                        color: styles.getMainColor(context),
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(40),
                         ),
@@ -195,17 +213,17 @@ class ProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Nama Lengkap",
-                              style: blackTextStyle.copyWith(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: styles.getTextColor(context)),
                               textAlign: TextAlign.start),
                           const SizedBox(height: 7),
                           Container(
                             height: 50,
                             width: width,
                             decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: styles.getTextField(context),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -228,23 +246,25 @@ class ProfileScreen extends StatelessWidget {
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
                                       ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     )),
                               ),
                             ),
                           ),
                           const SizedBox(height: 9),
                           Text("NIM",
-                              style: blackTextStyle.copyWith(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: styles.getTextColor(context)),
                               textAlign: TextAlign.start),
                           const SizedBox(height: 7),
                           Container(
                             height: 50,
                             width: width,
                             decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: styles.getTextField(context),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -273,17 +293,17 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 9),
                           Text("Email",
-                              style: blackTextStyle.copyWith(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: styles.getTextColor(context)),
                               textAlign: TextAlign.start),
                           const SizedBox(height: 7),
                           Container(
                             height: 50,
                             width: width,
                             decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: styles.getTextField(context),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -312,17 +332,17 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 9),
                           Text("Program Studi",
-                              style: blackTextStyle.copyWith(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: styles.getTextColor(context)),
                               textAlign: TextAlign.start),
                           const SizedBox(height: 7),
                           Container(
                             height: 50,
                             width: width,
                             decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: styles.getTextField(context),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -388,7 +408,7 @@ class ProfileScreen extends StatelessWidget {
                               width: width,
                               padding: EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: whiteColor,
+                                color: styles.getTextField(context),
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
@@ -417,10 +437,11 @@ class ProfileScreen extends StatelessWidget {
                                             width: 30),
                                         SizedBox(width: 16),
                                         Text("Pengaturan",
-                                            style: blackTextStyle.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                                            style: GoogleFonts.plusJakartaSans(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: styles
+                                                    .getTextColor(context)),
                                             textAlign: TextAlign.center),
                                       ],
                                     ),
@@ -428,8 +449,7 @@ class ProfileScreen extends StatelessWidget {
                                   SizedBox(height: 20), // Jarak antar item
                                   InkWell(
                                     onTap: () {
-                                      Get.toNamed(
-                                          "/auth/forget-password/step3");
+                                      profileC.changePassword();
                                     },
                                     child: Row(
                                       mainAxisAlignment:
@@ -443,10 +463,11 @@ class ProfileScreen extends StatelessWidget {
                                             width: 30),
                                         SizedBox(width: 16),
                                         Text("Ganti Password",
-                                            style: blackTextStyle.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                                            style: GoogleFonts.plusJakartaSans(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: styles
+                                                    .getTextColor(context)),
                                             textAlign: TextAlign.center),
                                       ],
                                     ),
@@ -459,8 +480,9 @@ class ProfileScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ElevatedButton(
-                                  onPressed: () {
-                                    profileC.logout();
+                                  onPressed: () async {
+                                    await profileC.checkBiometric();
+                                    _showLogoutDialog(context);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: redColor,
@@ -499,4 +521,120 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showLogoutDialog(BuildContext context) {
+  final _controller = Get.find<ProfileController>();
+  _controller.checkBiometric();
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        contentPadding: const EdgeInsets.all(20),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                'KONFIRMASI LOGOUT',
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Center(
+              child: Text(
+                'Apakah anda yakin ingin keluar?',
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            Obx(() {
+              final showBiometric = _controller.isBiometricAvailable.value &&
+                  _controller.isBiometricEnabled.value;
+
+              return showBiometric
+                  ? Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Simpan informasi login anda',
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 14, fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            Checkbox(
+                              value: _controller.saveLoginInfo.value,
+                              activeColor: Colors.blue,
+                              checkColor: Colors.white,
+                              onChanged: (bool? value) {
+                                _controller.saveLoginInfo.value = value ?? true;
+                                print(_controller.saveLoginInfo.value);
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+                  : SizedBox.shrink();
+            }),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.blue),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle logout action
+                      _controller.logout();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

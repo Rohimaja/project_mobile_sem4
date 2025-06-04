@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/main.dart';
 import 'package:stipres/screens/reusable/reusable_widget.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/theme/theme_helper.dart' as styles;
 
 class ChangePassword extends StatelessWidget {
   @override
@@ -11,7 +12,6 @@ class ChangePassword extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            ReusableBackground(),
             Positioned(
               top: 50,
               left: 20,
@@ -46,6 +46,7 @@ class ChangePassword extends StatelessWidget {
                 ],
               ),
             ),
+            ReusableBackground(),
             Align(
               alignment: Alignment.center,
               child: SingleChildScrollView(
@@ -54,11 +55,7 @@ class ChangePassword extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            "assets/Logo_STIPRES.png",
-                            width: 140,
-                            height: 140,
-                          ),
+                          styles.getLogoImage(context),
                           Image.asset(
                             "assets/reset_password_1.png",
                             width: 160,
