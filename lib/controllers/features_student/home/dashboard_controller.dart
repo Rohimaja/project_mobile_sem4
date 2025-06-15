@@ -52,6 +52,7 @@ class DashboardController extends GetxController {
 
     log.f("fetch header");
     log.d("Profile: ${storedProfile.value}");
+    log.d("avalaible?: ${_box.read("isBiometricAvailable")}");
   }
 
   Future<void> loadSummary(String mahasiswaId) async {

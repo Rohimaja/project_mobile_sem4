@@ -8,7 +8,6 @@ import 'package:stipres/bindings/auth/auth_binding.dart';
 import 'package:stipres/controllers/network_controller.dart';
 import 'package:stipres/services/notification_service.dart';
 import 'package:stipres/routes/app_screens.dart';
-import 'package:stipres/screens/auth/login_screen.dart';
 import 'package:stipres/theme/theme_controller.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: navigatorKey,
           themeMode: themeController.themeMode.value,
           getPages: AppScreens.screens,
-          home: LoginScreen(),
+          initialRoute: "/",
         ));
   }
 }

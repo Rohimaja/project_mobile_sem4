@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart' show Logger;
 import 'package:stipres/constants/api.dart';
+import 'package:stipres/controllers/auth/login_controller.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
 import 'package:stipres/services/fcm_service.dart';
 
@@ -69,6 +70,7 @@ class ProfileController extends GetxController {
     log.d(tokenfcm);
     await fcmService.deleteFcmToken(tokenfcm!);
     await _box.erase();
+    Get.delete<LoginController>();
     Get.offAllNamed("/");
     if (saveLoginInfo.value) {
       Get.back();

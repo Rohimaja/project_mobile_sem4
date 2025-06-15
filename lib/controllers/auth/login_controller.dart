@@ -48,6 +48,9 @@ class LoginController extends GetxController {
 
     if (!isAvailable) {
       _box.write("isBiometricAvailable", false);
+      log.d("is? : $isAvailable");
+      final iss = _box.read("isBiometricAvailable");
+      log.d("iss? : $iss");
     }
   }
 
