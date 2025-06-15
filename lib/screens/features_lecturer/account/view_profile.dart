@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:path/path.dart';
 import 'package:stipres/controllers/features_lecturer/account/view_profile_controller.dart';
 import 'package:stipres/constants/styles.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
