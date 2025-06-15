@@ -90,12 +90,12 @@ class AllScheduleCard extends StatelessWidget {
                     Row(
                       children: [
                         Image.asset(
-                          'assets/icons/ic_duration.png',
+                          'assets/icons/ic_jumlahSKS.png',
                           height: 16,
                           width: 16,
                         ),
                         const SizedBox(width: 4),
-                        Text("${jadwal.durasi!} Jam"),
+                        Text("${jadwal.durasi!} SKS"),
                       ],
                     ),
                     const SizedBox(height: 10),
