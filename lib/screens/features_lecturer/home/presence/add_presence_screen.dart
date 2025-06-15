@@ -45,7 +45,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
             filled: true,
             fillColor: whiteColor,
             border: OutlineInputBorder(
@@ -271,9 +271,9 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+
       backgroundColor: styles.getMainColor(context),
       body: Stack(
         children: [
@@ -310,6 +310,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                       const SizedBox(height: 4),
                       Expanded(
                         child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

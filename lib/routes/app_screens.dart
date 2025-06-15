@@ -5,6 +5,7 @@ import 'package:stipres/bindings/auth/activation_step3_binding.dart';
 import 'package:stipres/bindings/auth/forget_password_step1_binding.dart';
 import 'package:stipres/bindings/auth/forget_password_step2_binding.dart';
 import 'package:stipres/bindings/auth/forget_password_step3_binding.dart';
+import 'package:stipres/bindings/auth/login_binding.dart';
 import 'package:stipres/bindings/features_lecturer/add_presence_binding.dart';
 import 'package:stipres/bindings/features_lecturer/all_schedule_binding.dart';
 import 'package:stipres/bindings/features_lecturer/attendance_binding.dart';
@@ -83,7 +84,7 @@ import 'package:stipres/screens/features_lecturer/home/presence/presence_screen.
 
 class AppScreens {
   static final screens = [
-    GetPage(name: "/", page: () => LoginScreen()),
+    GetPage(name: "/", page: () => LoginScreen(), binding: LoginBinding()),
     GetPage(
         name: "/auth/forget-password/step1",
         page: () => ForgetPassword1(),

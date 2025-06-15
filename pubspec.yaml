@@ -57,7 +57,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/stipres_launcher.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 28 # android min sdk min:16, default 21
 
 flutter:
   uses-material-design: true

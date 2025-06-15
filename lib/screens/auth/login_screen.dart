@@ -9,7 +9,7 @@ import 'package:stipres/theme/theme_helper.dart' as styles;
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final loginC = Get.put(LoginController());
+  final loginC = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
