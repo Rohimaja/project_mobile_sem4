@@ -22,7 +22,7 @@ class AllScheduleCard extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Text(
-              "${jadwal.durasiPerkuliahan!} WIB",
+              "${jadwal.durasiPerkuliahan!} - Selesai",
               style: GoogleFonts.plusJakartaSans(
                   fontWeight: FontWeight.w600,
                   color: styles.getTextColor(context)),

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:stipres/models/lecturers/all_schedule_model.dart';
 import 'package:stipres/services/lecturer/all_schedules_service.dart';
@@ -29,8 +30,9 @@ class LecturerAllScheduleController extends GetxController {
       if (result.status == "success" && result.data != null) {
         final List<LecturerAllScheduleModel> updatedList =
             result.data!.map((schedule) {
-          schedule.durasiPerkuliahan = formatDurasiPerkuliahan(
-              schedule.jam!, int.parse(schedule.durasi!));
+          final jamMenit = DateFormat('HH:mm')
+              .format(DateTime.parse("2023-01-01 ${schedule.jam}"));
+          schedule.durasiPerkuliahan = jamMenit;
           return schedule;
         }).toList();
         scheduleList.assignAll(updatedList);
@@ -40,21 +42,5 @@ class LecturerAllScheduleController extends GetxController {
     } catch (e) {
       log.d("Error : $e");
     }
-  }
-
-    String formatDurasiPerkuliahan(String jamMulaiStr, int durasiJam) {
-    final bagianJam = jamMulaiStr.split(":");
-    final jam = int.parse(bagianJam[0]);
-    final menit = int.parse(bagianJam[1]);
-
-    final mulai = DateTime(0, 1, 1, jam, menit);
-    final akhir = mulai.add(Duration(hours: durasiJam));
-
-    final jamAwal =
-        "${mulai.hour.toString().padLeft(2, '0')}:${mulai.minute.toString().padLeft(2, '0')}";
-    final jamAkhir =
-        "${akhir.hour.toString().padLeft(2, '0')}:${akhir.minute.toString().padLeft(2, '0')}";
-
-    return "$jamAwal - $jamAkhir";
   }
 }
