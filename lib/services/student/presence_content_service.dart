@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get_storage/get_storage.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as path;
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -54,8 +55,14 @@ class PresenceContentService extends GetxService {
     }
   }
 
-  Future<BasicResponse> uploadPresence(var mahasiswaId, var presensiId,
-      int status, String waktuPresensi, String? alasan, File? bukti) async {
+  Future<BasicResponse> uploadPresence(
+      var mahasiswaId,
+      var presensiId,
+      int status,
+      String waktuPresensi,
+      String? alasan,
+      File? bukti,
+      String? ext) async {
     try {
       final token = await _box.read("auth_token");
 
@@ -78,15 +85,11 @@ class PresenceContentService extends GetxService {
         request.fields['alasan'] = alasan;
       }
 
-      if (bukti != null) {
-        var stream = http.ByteStream(bukti.openRead());
-        var length = await bukti.length();
-        var multipartFile = http.MultipartFile(
-          'bukti',
-          stream,
-          length,
-          filename: path.basename(bukti.path),
-        );
+      if (bukti != null && ext != null && ext.isNotEmpty) {
+        final contentType = getContentTypeFromExtension(ext);
+        var multipartFile = await http.MultipartFile.fromPath(
+            'bukti', bukti.path,
+            filename: path.basename(bukti.path), contentType: contentType);
         request.files.add(multipartFile);
       }
 
@@ -103,8 +106,8 @@ class PresenceContentService extends GetxService {
         log.f("Response 401");
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
-          return await uploadPresence(
-              mahasiswaId, presensiId, status, waktuPresensi, alasan, bukti);
+          return await uploadPresence(mahasiswaId, presensiId, status,
+              waktuPresensi, alasan, bukti, ext);
         }
       }
 
@@ -114,6 +117,23 @@ class PresenceContentService extends GetxService {
     } catch (e) {
       log.d("Error: $e");
       return BasicResponse(status: "error", message: "Terjadi kesalahan: $e");
+    }
+  }
+
+  MediaType? getContentTypeFromExtension(String ext) {
+    switch (ext.toLowerCase()) {
+      case 'jpg':
+      case 'jpeg':
+        return MediaType('image', 'jpeg');
+      case 'png':
+        return MediaType('image', 'png');
+      case 'pdf':
+        return MediaType('application', 'pdf');
+      case 'docx':
+        return MediaType('application',
+            'vnd.openxmlformats-officedocument.wordprocessingml.document');
+      default:
+        return null;
     }
   }
 }

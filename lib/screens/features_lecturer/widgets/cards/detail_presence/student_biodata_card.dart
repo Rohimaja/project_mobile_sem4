@@ -100,7 +100,7 @@ class StudentBiodataCard extends StatelessWidget {
                                   const EdgeInsets.only(left: 40, right: 40),
                               child: Center(
                                   child: ClipOval(
-                                      child: (fotoAssetPath.isEmpty)
+                                      child: (fotoAssetPath.isNotEmpty)
                                           ? FadeInImage.assetNetwork(
                                               placeholder:
                                                   "assets/icons/ic_profile.jpeg",

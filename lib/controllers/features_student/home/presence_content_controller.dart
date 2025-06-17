@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:path/path.dart' as p;
 import 'package:stipres/models/students/get_presence_model.dart';
 import 'package:stipres/screens/reusable/failed_dialog.dart';
 import 'package:stipres/screens/reusable/loading_screen.dart';
@@ -43,6 +44,7 @@ class PresenceContentController extends GetxController {
   final ImagePicker pickedImage = ImagePicker();
 
   final bukti = Rxn<File>();
+  final buktiExtension = RxString('');
 
   var statusData = false.obs;
 
@@ -125,12 +127,7 @@ class PresenceContentController extends GetxController {
     if (!validate()) return;
 
     showLoading();
-    await uploadPresence().timeout(Duration(seconds: 10), onTimeout: () {
-      Get.back();
-      Get.snackbar("Timeout", "Operasi terlalu lama, coba lagi.",
-          duration: const Duration(seconds: 2));
-      return null;
-    });
+    await uploadPresence();
   }
 
   Future<void> uploadPresence() async {
@@ -182,9 +179,16 @@ class PresenceContentController extends GetxController {
       final buktiFinal = bukti() == null ? null : bukti.value;
 
       log.d(bukti.value);
+      log.d("Cek ext: ${buktiExtension.value}");
 
-      final result = await presenceContentService.uploadPresence(mahasiswaId,
-          presensisId, statusAbsen.value, waktuPresensi, alasan, buktiFinal);
+      final result = await presenceContentService.uploadPresence(
+          mahasiswaId,
+          presensisId,
+          statusAbsen.value,
+          waktuPresensi,
+          alasan,
+          buktiFinal,
+          buktiExtension.value);
 
       if (result.status == "success") {
         Get.back();
@@ -199,12 +203,14 @@ class PresenceContentController extends GetxController {
           barrierDismissible: false,
         );
       } else {
+        Get.back();
         Get.dialog(FailedDialog(
             title: "Presensi gagal diunggah!",
             subtitle: "Data presensi gagal ditambahkan",
-            gifAssetPath: "assets/gif/success_animation.gif"));
+            gifAssetPath: "assets/gif/failed_animation.gif"));
       }
     } catch (e) {
+      Get.back();
       log.d("Error: $e");
     }
   }
@@ -327,6 +333,7 @@ class PresenceContentController extends GetxController {
         return;
       }
       bukti.value = File(image.path);
+      buktiExtension.value = p.extension(image.path).replaceFirst('.', '');
     }
   }
 
@@ -350,6 +357,7 @@ class PresenceContentController extends GetxController {
         }
 
         bukti.value = File(image.path);
+        buktiExtension.value = p.extension(image.path).replaceFirst('.', '');
       }
     } catch (e) {
       isSnackbarOpen.value = true;
@@ -396,6 +404,7 @@ class PresenceContentController extends GetxController {
       }
 
       bukti.value = file;
+      buktiExtension.value = extension;
     }
   }
 

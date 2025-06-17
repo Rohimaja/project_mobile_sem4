@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class PresenceDetailController extends GetxController {
   final errorMessage = ''.obs;
   final storedProdi = ''.obs;
   final storedMatkul = ''.obs;
+  int? presensisId;
   final storedDurasiPresensi = ''.obs;
   final isButtonEnabled = true.obs;
 
@@ -33,7 +35,7 @@ class PresenceDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    int presensisId = Get.arguments;
+    presensisId = Get.arguments;
     fetchCourseDetail(presensisId.toString());
     fetchListStudent(presensisId.toString());
   }
@@ -114,8 +116,8 @@ class PresenceDetailController extends GetxController {
     try {
       showLoading();
       detail.value = null;
-      final result =
-          await presenceDetailLecturerService.fetchDetailStudent(nim);
+      final result = await presenceDetailLecturerService.fetchDetailStudent(
+          nim, presensisId.toString());
 
       if (result.status == "success" && result.data != null) {
         final data = result.data;
@@ -158,6 +160,8 @@ class PresenceDetailController extends GetxController {
     log.d(buktiPath);
     final ext = buktiPath.toLowerCase();
     if (ext.endsWith('.png') || ext.endsWith('.jpg') || ext.endsWith('.jpeg')) {
+      final buktiUrl = "${ApiConstants.path}$buktiPath";
+      openBuktiByImage(buktiUrl);
     } else if (ext.endsWith('.pdf')) {
       final jenis = "pdf";
       final buktiUrl = "${ApiConstants.path}$buktiPath";
@@ -171,8 +175,92 @@ class PresenceDetailController extends GetxController {
     }
   }
 
+  void openBuktiByImage(String buktiUrl) async {
+    try {
+      log.d("open bukti image");
+      showLoading();
+
+      final fileName = Uri.parse(buktiUrl).pathSegments.last;
+      final tempDir = await getTemporaryDirectory();
+      final filePath = "${tempDir.path}/$fileName";
+
+      final file = File(filePath);
+
+      if (!await file.exists()) {
+        final response = await http.get(Uri.parse(buktiUrl));
+        if (response.statusCode == 200) {
+          await file.writeAsBytes(response.bodyBytes);
+        } else {
+          Get.back();
+          isButtonEnabled.value = false;
+          Get.snackbar("Gagal", "Tidak bisa mengunduh gambar",
+              duration: Duration(seconds: 1));
+          Future.delayed(
+            Duration(seconds: 2),
+            () => isButtonEnabled.value = true,
+          );
+          return;
+        }
+      }
+
+      Get.back();
+
+      // ✅ Tampilkan gambar dalam dialog transparan fullscreen
+      showDialog(
+        context: Get.context!,
+        barrierDismissible: true,
+        builder: (context) => Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: Stack(
+            children: [
+              // Blur background
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              ),
+              // Image di tengah layar (tanpa rounded)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Center(
+                  child: Image.file(
+                    file,
+                    height: 400,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              // Tombol close
+              Positioned(
+                top: 20,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                  onPressed: () => Get.back(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } catch (e) {
+      log.f("Error buka gambar: $e");
+      Get.back();
+      isButtonEnabled.value = false;
+      Get.snackbar("Gagal", "Terjadi kesalahan $e",
+          duration: Duration(seconds: 1));
+      Future.delayed(
+        Duration(seconds: 2),
+        () => isButtonEnabled.value = true,
+      );
+    }
+  }
+
   void openBuktiFile(String buktiUrl, String jenis) async {
     try {
+      log.d("open bukti");
       showLoading();
 
       final fileName = Uri.parse(buktiUrl).pathSegments.last;
