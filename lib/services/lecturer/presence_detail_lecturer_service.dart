@@ -123,11 +123,12 @@ class PresenceDetailLecturerService extends GetxService {
   }
 
   Future<BaseResponse<DetailMahasiswaPresensi>> fetchDetailStudent(
-      String nim) async {
+      String nim, String presensisId) async {
     try {
       final token = await _box.read("auth_token");
 
-      final url = Uri.parse("$_baseUrl/student/detail?nim=$nim");
+      final url = Uri.parse(
+          "$_baseUrl/student/detail?nim=$nim&presensis_id=$presensisId");
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
@@ -141,7 +142,7 @@ class PresenceDetailLecturerService extends GetxService {
         log.f("Response 401");
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
-          return await fetchDetailStudent(nim);
+          return await fetchDetailStudent(nim, presensisId);
         }
       }
 

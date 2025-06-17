@@ -54,7 +54,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: "ic_launcher"
   ios: true
   image_path: "assets/stipres_launcher.png"
   min_sdk_android: 28 # android min sdk min:16, default 21

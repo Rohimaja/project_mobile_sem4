@@ -22,7 +22,7 @@ class AllScheduleCard extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Text(
-              "${jadwal.durasiPerkuliahan!} WIB",
+              "${jadwal.durasiPerkuliahan!} - Selesai",
               style: GoogleFonts.plusJakartaSans(
                   fontWeight: FontWeight.w600,
                   color: styles.getTextColor(context)),
@@ -112,12 +112,12 @@ class AllScheduleCard extends StatelessWidget {
                         Row(
                           children: [
                             Image.asset(
-                              'assets/icons/ic_duration.png',
+                              'assets/icons/ic_jumlahSKS.png',
                               height: 16,
                               width: 16,
                             ),
                             const SizedBox(width: 6),
-                            Text("${jadwal.durasi!} Jam",
+                            Text("${jadwal.durasi!} SKS",
                                 style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,

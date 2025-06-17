@@ -25,7 +25,7 @@ class _LoadingPopupState extends State<LoadingPopup>
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 800));
 
-    _timeoutTimer = Timer(const Duration(seconds: 12), () {
+    _timeoutTimer = Timer(const Duration(seconds: 20), () {
       if (mounted && (Get.isDialogOpen ?? false)) {
         Get.back();
         Get.back();

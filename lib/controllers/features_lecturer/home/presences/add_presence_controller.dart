@@ -244,13 +244,7 @@ class AddPresenceController extends GetxController {
       if (isConflictFree) {
         final presensiId = await getPresensiId();
         log.d("Presensi Id : $presensiId");
-        await uploadPresence(presensiId).timeout(Duration(seconds: 10),
-            onTimeout: () {
-          Get.back();
-          Get.snackbar("Timeout", "Operasi terlalu lama, coba lagi.",
-              duration: const Duration(seconds: 2));
-          return null;
-        });
+        await uploadPresence(presensiId);
       }
     }
   }

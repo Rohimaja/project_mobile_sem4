@@ -115,6 +115,7 @@ class PresenceInformationCard extends StatelessWidget {
                                               .isButtonEnabled.value)
                                           ? null
                                           : () {
+                                              print("BUKTI DITEKAN");
                                               _controller
                                                   .openBukti(buktiFilePath!);
                                             },

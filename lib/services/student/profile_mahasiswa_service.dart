@@ -34,6 +34,8 @@ class ProfileMahasiswaService extends GetxService {
 
       final body = jsonDecode(response.body);
 
+      log.d(body);
+
       if (response.statusCode == 401) {
         log.f("Response 401");
         final refreshSuccess = await tokenService.refreshToken();
