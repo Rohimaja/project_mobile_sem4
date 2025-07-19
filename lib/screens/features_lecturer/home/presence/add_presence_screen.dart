@@ -18,6 +18,12 @@ class AddPresenceScreen extends StatefulWidget {
 
 class _AddPresenceScreenState extends State<AddPresenceScreen> {
   final _controller = Get.find<AddPresenceController>();
+  String? selectedPertemuan;
+  String? selectedStatus;
+  final List<int> pertemuanTerpakai = [14, 15];
+
+  final List<String> semuaPertemuan =
+      List.generate(16, (i) => (i + 1).toString());
 
   Widget _buildDropdownField({
     required String label,
@@ -271,9 +277,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: styles.getMainColor(context),
       body: Stack(
         children: [
@@ -449,6 +453,68 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                                 ],
                               ),
                               const SizedBox(height: 12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Pertemuan Ke-",
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: styles.getTextColor(context),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  DropdownButtonFormField<String>(
+                                    decoration: InputDecoration(
+                                      hintText: "Silahkan pilih pertemuan",
+                                      hintStyle:
+                                          const TextStyle(color: Colors.grey),
+                                      filled: true,
+                                      fillColor: whiteColor,
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: styles.getOutlined(context)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: styles.getOutlined(context)),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color:
+                                                Color.fromARGB(255, 0, 80, 145),
+                                            width: 1),
+                                      ),
+                                    ),
+                                    value: selectedPertemuan,
+                                    items: semuaPertemuan.map((pertemuan) {
+                                      final isDisabled = pertemuanTerpakai
+                                          .contains(int.parse(pertemuan));
+                                      return DropdownMenuItem<String>(
+                                        value: isDisabled ? null : pertemuan,
+                                        enabled: !isDisabled,
+                                        child: Text(
+                                          "Pertemuan $pertemuan",
+                                          style: TextStyle(
+                                            color: isDisabled
+                                                ? Colors.grey
+                                                : Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        setState(() {
+                                          selectedPertemuan = value;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
 
                               // Tanggal Presensi
                               _buildDatePicker(context),
@@ -456,6 +522,16 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
 
                               // Jam Awal & Akhir
                               _buildTimePickers(context),
+                              const SizedBox(height: 12),
+
+                              _buildDropdownField(
+                                label: "Status Presensi",
+                                value: selectedStatus,
+                                hint: "Silahkan pilih status",
+                                items: ['Aktif', 'Libur', 'UTS', 'UAS'],
+                                onChanged: (val) =>
+                                    setState(() => selectedStatus = val),
+                              ),
                               const SizedBox(height: 12),
 
                               // Link Zoom
