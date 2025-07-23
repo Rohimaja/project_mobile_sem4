@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:stipres/screens/reusable/failed_dialog.dart';
 import 'package:stipres/screens/reusable/upload_data_dialog.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
