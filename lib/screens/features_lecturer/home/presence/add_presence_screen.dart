@@ -16,7 +16,8 @@ class AddPresenceScreen extends StatefulWidget {
   State<AddPresenceScreen> createState() => _AddPresenceScreenState();
 }
 
-class _AddPresenceScreenState extends State<AddPresenceScreen> {
+class _AddPresenceScreenState extends State<AddPresenceScreen>
+    with SingleTickerProviderStateMixin {
   final _controller = Get.find<AddPresenceController>();
   String? selectedPertemuan;
   String? selectedStatus;
@@ -277,6 +278,8 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isAktif = selectedStatus == 'Aktif';
+
     return Scaffold(
       backgroundColor: styles.getMainColor(context),
       body: Stack(
@@ -520,27 +523,44 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                               _buildDatePicker(context),
                               const SizedBox(height: 12),
 
-                              // Jam Awal & Akhir
-                              _buildTimePickers(context),
-                              const SizedBox(height: 12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildDropdownField(
+                                    label: "Status Presensi",
+                                    value: selectedStatus,
+                                    hint: "Silahkan pilih status",
+                                    items: ['Aktif', 'Libur', 'UTS', 'UAS'],
+                                    onChanged: (val) =>
+                                        setState(() => selectedStatus = val),
+                                  ),
+                                  const SizedBox(height: 12),
 
-                              _buildDropdownField(
-                                label: "Status Presensi",
-                                value: selectedStatus,
-                                hint: "Silahkan pilih status",
-                                items: ['Aktif', 'Libur', 'UTS', 'UAS'],
-                                onChanged: (val) =>
-                                    setState(() => selectedStatus = val),
+                                  // Slide down/up animation for jam awal, akhir, dan link zoom
+                                  ClipRect(
+                                    child: AnimatedSize(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                      child: isAktif
+                                          ? Column(
+                                              children: [
+                                                _buildTimePickers(context),
+                                                const SizedBox(height: 12),
+                                                _buildTextField(
+                                                  label: "Link Zoom",
+                                                  hint: "Masukkan link zoom",
+                                                  controller: _controller
+                                                      .linkZoomController,
+                                                ),
+                                                const SizedBox(height: 30),
+                                              ],
+                                            )
+                                          : const SizedBox(),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 12),
-
-                              // Link Zoom
-                              _buildTextField(
-                                label: "Link Zoom",
-                                hint: "Masukkan link zoom",
-                                controller: _controller.linkZoomController,
-                              ),
-                              const SizedBox(height: 30),
                               SizedBox(
                                   width: double.infinity,
                                   child: Obx(() {

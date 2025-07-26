@@ -231,7 +231,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
                             'Rekap Kehadiran Semester Ini',
-                            style: TextStyle(
+                            style: GoogleFonts.plusJakartaSans(
                               fontSize: 16,
                               color: blueColor,
                               fontWeight: FontWeight.w400,
