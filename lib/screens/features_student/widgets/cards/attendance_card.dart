@@ -28,12 +28,11 @@ class KehadiranCard extends StatelessWidget {
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Kotak Semester
           Container(
             width: 70,
-            height: 105,
+            height: 110,
             decoration: BoxDecoration(
               color: Colors.blue,
               borderRadius: BorderRadius.circular(12),
@@ -50,7 +49,7 @@ class KehadiranCard extends StatelessWidget {
                 ),
                 Text(
                   rekap.semester.toString(),
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                     color: Colors.white,
                     fontSize: 36,
                     fontWeight: FontWeight.bold,

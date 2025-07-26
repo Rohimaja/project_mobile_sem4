@@ -98,7 +98,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                               children: [
                                 Text(
                                   'Form Presensi',
-                                  style: TextStyle(
+                                  style: GoogleFonts.plusJakartaSans(
                                     fontSize: 16,
                                     color: blueColor,
                                     fontWeight: FontWeight.w400,
