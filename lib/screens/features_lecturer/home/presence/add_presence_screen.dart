@@ -19,9 +19,6 @@ class AddPresenceScreen extends StatefulWidget {
 class _AddPresenceScreenState extends State<AddPresenceScreen>
     with SingleTickerProviderStateMixin {
   final _controller = Get.find<AddPresenceController>();
-  String? selectedPertemuan;
-  String? selectedStatus;
-  final List<int> pertemuanTerpakai = [14, 15];
 
   final List<String> semuaPertemuan =
       List.generate(16, (i) => (i + 1).toString());
@@ -278,7 +275,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
 
   @override
   Widget build(BuildContext context) {
-    final bool isAktif = selectedStatus == 'Aktif';
+    // final bool isAktif = _controller.selectedStatus.value == 'Aktif';
 
     return Scaffold(
       backgroundColor: styles.getMainColor(context),
@@ -456,111 +453,132 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                 ],
                               ),
                               const SizedBox(height: 12),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Pertemuan Ke-",
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                      color: styles.getTextColor(context),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
-                                      hintText: "Silahkan pilih pertemuan",
-                                      hintStyle:
-                                          const TextStyle(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: whiteColor,
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: styles.getOutlined(context)),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: styles.getOutlined(context)),
-                                      ),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color:
-                                                Color.fromARGB(255, 0, 80, 145),
-                                            width: 1),
+                              Obx(() {
+                                final selected = semuaPertemuan.contains(
+                                        _controller.selectedPertemuan.value)
+                                    ? _controller.selectedPertemuan.value
+                                    : null;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Pertemuan Ke-",
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        color: styles.getTextColor(context),
                                       ),
                                     ),
-                                    value: selectedPertemuan,
-                                    items: semuaPertemuan.map((pertemuan) {
-                                      final isDisabled = pertemuanTerpakai
-                                          .contains(int.parse(pertemuan));
-                                      return DropdownMenuItem<String>(
-                                        value: isDisabled ? null : pertemuan,
-                                        enabled: !isDisabled,
-                                        child: Text(
-                                          "Pertemuan $pertemuan",
-                                          style: TextStyle(
-                                            color: isDisabled
-                                                ? Colors.grey
-                                                : Colors.black,
-                                          ),
+                                    const SizedBox(height: 6),
+                                    DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        hintText: "Silahkan pilih pertemuan",
+                                        hintStyle:
+                                            const TextStyle(color: Colors.grey),
+                                        filled: true,
+                                        fillColor: whiteColor,
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  styles.getOutlined(context)),
                                         ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                      if (value != null) {
-                                        setState(() {
-                                          selectedPertemuan = value;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  styles.getOutlined(context)),
+                                        ),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 0, 80, 145),
+                                              width: 1),
+                                        ),
+                                      ),
+                                      value: selected,
+                                      items: semuaPertemuan.map((pertemuan) {
+                                        // final isDisabled = _controller
+                                        //     .pertemuanTerpakai
+                                        // .contains(int.parse(pertemuan));
+                                        return DropdownMenuItem<String>(
+                                          value: pertemuan,
+                                          // enabled: !isDisabled,
+                                          child: Text(
+                                            "Pertemuan $pertemuan",
+                                            style: TextStyle(
+                                              color:
+                                                  // isDisabled
+                                                  //     ? Colors.grey
+                                                  // :
+                                                  Colors.black,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          _controller.selectedPertemuan.value =
+                                              value;
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }),
 
+                              const SizedBox(height: 12),
                               // Tanggal Presensi
                               _buildDatePicker(context),
                               const SizedBox(height: 12),
+                              Obx(() {
+                                final statusList =
+                                    _controller.listStatus.toList();
+                                final selected = statusList.contains(
+                                        _controller.selectedStatus.value)
+                                    ? _controller.selectedStatus.value
+                                    : null;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _buildDropdownField(
+                                        label: "Status Presensi",
+                                        value: selected,
+                                        hint: "Silahkan pilih status",
+                                        items: statusList,
+                                        onChanged: (val) {
+                                          _controller.selectedStatus.value =
+                                              val ?? "";
+                                        }),
 
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildDropdownField(
-                                    label: "Status Presensi",
-                                    value: selectedStatus,
-                                    hint: "Silahkan pilih status",
-                                    items: ['Aktif', 'Libur', 'UTS', 'UAS'],
-                                    onChanged: (val) =>
-                                        setState(() => selectedStatus = val),
-                                  ),
-                                  const SizedBox(height: 12),
+                                    const SizedBox(height: 12),
 
-                                  // Slide down/up animation for jam awal, akhir, dan link zoom
-                                  ClipRect(
-                                    child: AnimatedSize(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.easeInOut,
-                                      child: isAktif
-                                          ? Column(
-                                              children: [
-                                                _buildTimePickers(context),
-                                                const SizedBox(height: 12),
-                                                _buildTextField(
-                                                  label: "Link Zoom",
-                                                  hint: "Masukkan link zoom",
-                                                  controller: _controller
-                                                      .linkZoomController,
-                                                ),
-                                                const SizedBox(height: 30),
-                                              ],
-                                            )
-                                          : const SizedBox(),
+                                    // Slide down/up animation for jam awal, akhir, dan link zoom
+                                    ClipRect(
+                                      child: AnimatedSize(
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut,
+                                        child: _controller
+                                                    .selectedStatus.value ==
+                                                "Aktif"
+                                            ? Column(
+                                                children: [
+                                                  _buildTimePickers(context),
+                                                  const SizedBox(height: 12),
+                                                  _buildTextField(
+                                                    label: "Link Zoom",
+                                                    hint: "Masukkan link zoom",
+                                                    controller: _controller
+                                                        .linkZoomController,
+                                                  ),
+                                                  const SizedBox(height: 30),
+                                                ],
+                                              )
+                                            : const SizedBox(),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                );
+                              }),
                               SizedBox(
                                   width: double.infinity,
                                   child: Obx(() {

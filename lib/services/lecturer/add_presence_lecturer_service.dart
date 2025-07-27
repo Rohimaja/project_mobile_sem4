@@ -131,7 +131,10 @@ class AddPresenceLecturerService extends GetxService {
       int semester,
       String jamAwal,
       String jamAkhir,
-      String tglPresensi) async {
+      String tglPresensi,
+      int pertemuan,
+      String status,
+      int matkulId) async {
     try {
       final token = await _box.read("auth_token");
       log.d("Param : $prodiId");
@@ -139,6 +142,9 @@ class AddPresenceLecturerService extends GetxService {
       log.d("Param : $jamAwal");
       log.d("Param : $jamAkhir");
       log.d("Param : $tglPresensi");
+      log.d("Param : $pertemuan");
+      log.d("Param : $status");
+      log.d("Param : $matkulId");
       final url = Uri.parse("$_baseUrl/presence/check-upload");
       log.d(url);
       final response = await http.post(url, body: {
@@ -148,6 +154,9 @@ class AddPresenceLecturerService extends GetxService {
         "tgl_presensi": tglPresensi,
         "prodi_id": prodiId.toString(),
         "semester": semester.toString(),
+        "pertemuan_ke": pertemuan.toString(),
+        "status": status.toLowerCase(),
+        "matkul_id": matkulId.toString()
       }, headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
@@ -160,8 +169,8 @@ class AddPresenceLecturerService extends GetxService {
         log.f("Response 401");
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
-          return await checkPresence(
-              dosenId, prodiId, semester, jamAwal, jamAkhir, tglPresensi);
+          return await checkPresence(dosenId, prodiId, semester, jamAwal,
+              jamAkhir, tglPresensi, pertemuan, status, matkulId);
         }
       }
 
