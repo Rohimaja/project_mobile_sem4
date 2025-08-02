@@ -19,9 +19,10 @@ class AddPresenceScreen extends StatefulWidget {
 class _AddPresenceScreenState extends State<AddPresenceScreen>
     with SingleTickerProviderStateMixin {
   final _controller = Get.find<AddPresenceController>();
+  final jenisPertemuan = ['Teori', 'Praktik'];
 
   final List<String> semuaPertemuan =
-      List.generate(16, (i) => (i + 1).toString());
+      List.generate(32, (i) => (i + 1).toString());
 
   Widget _buildDropdownField({
     required String label,
@@ -388,7 +389,6 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                 );
                               }),
                               const SizedBox(height: 12),
-
                               Row(
                                 children: [
                                   Expanded(
@@ -496,20 +496,18 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                       ),
                                       value: selected,
                                       items: semuaPertemuan.map((pertemuan) {
-                                        // final isDisabled = _controller
-                                        //     .pertemuanTerpakai
-                                        // .contains(int.parse(pertemuan));
+                                        final isDisabled = _controller
+                                            .pertemuanTerpakai
+                                            .contains(int.parse(pertemuan));
                                         return DropdownMenuItem<String>(
                                           value: pertemuan,
-                                          // enabled: !isDisabled,
+                                          enabled: !isDisabled,
                                           child: Text(
                                             "Pertemuan $pertemuan",
                                             style: TextStyle(
-                                              color:
-                                                  // isDisabled
-                                                  //     ? Colors.grey
-                                                  // :
-                                                  Colors.black,
+                                              color: isDisabled
+                                                  ? Colors.grey
+                                                  : Colors.black,
                                             ),
                                           ),
                                         );
@@ -524,7 +522,6 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                   ],
                                 );
                               }),
-
                               const SizedBox(height: 12),
                               // Tanggal Presensi
                               _buildDatePicker(context),
@@ -548,9 +545,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                           _controller.selectedStatus.value =
                                               val ?? "";
                                         }),
-
                                     const SizedBox(height: 12),
-
                                     // Slide down/up animation for jam awal, akhir, dan link zoom
                                     ClipRect(
                                       child: AnimatedSize(
@@ -562,6 +557,31 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                                 "Aktif"
                                             ? Column(
                                                 children: [
+                                                  Obx(() {
+                                                    final selected = jenisPertemuan
+                                                            .toList()
+                                                            .contains(_controller
+                                                                .selectedJenis
+                                                                .value)
+                                                        ? _controller
+                                                            .selectedJenis.value
+                                                        : null;
+                                                    return _buildDropdownField(
+                                                        label:
+                                                            "Jenis Pertemuan",
+                                                        value: selected,
+                                                        hint:
+                                                            "Silahkan pilih jenis pertemuan",
+                                                        items: jenisPertemuan
+                                                            .toList(),
+                                                        onChanged: (val) {
+                                                          _controller
+                                                                  .selectedJenis
+                                                                  .value =
+                                                              val ?? "";
+                                                        });
+                                                  }),
+                                                  const SizedBox(height: 12),
                                                   _buildTimePickers(context),
                                                   const SizedBox(height: 12),
                                                   _buildTextField(

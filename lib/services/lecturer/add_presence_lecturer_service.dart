@@ -10,6 +10,7 @@ import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/check_presence_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
+import 'package:stipres/models/lecturers/disabled_pertemuan_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
 import 'package:stipres/models/lecturers/presence_id_model.dart';
 import 'package:stipres/models/lecturers/presence_request_model.dart';
@@ -118,6 +119,43 @@ class AddPresenceLecturerService extends GetxService {
           body,
           (dataJson) =>
               TahunAjaranAktif.fromJson(dataJson as Map<String, dynamic>));
+    } catch (e) {
+      log.f("Error: $e");
+      return BaseResponse(
+          status: "Error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
+
+  Future<BaseResponse<DisabledPertemuansModel>> fetchDisabledPertemuans(
+      String prodiId, int semester, int matkulId, int tahunAjaranId) async {
+    try {
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse(
+          "$_baseUrl/presence/disabledPertemuans?prodi_id=$prodiId&semester=$semester&matkul_id=$matkulId&tahun_ajaran_id=$tahunAjaranId");
+      log.d(url);
+
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+
+      final body = jsonDecode(response.body);
+      log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await fetchDisabledPertemuans(
+              prodiId, semester, matkulId, tahunAjaranId);
+        }
+      }
+
+      return BaseResponse.fromJson(
+          body,
+          (dataJson) => DisabledPertemuansModel.fromJson(
+              dataJson as Map<String, dynamic>));
     } catch (e) {
       log.f("Error: $e");
       return BaseResponse(

@@ -32,7 +32,8 @@ class AddPresenceController extends GetxController {
 
   final selectedMatkul = ''.obs;
   final selectedPertemuan = ''.obs;
-  // final List<int> pertemuanTerpakai = [14, 15];
+  final selectedJenis = ''.obs;
+  final List<int> pertemuanTerpakai = [14, 15];
   final listMatkul = <MatkulModel>[].obs;
   final selectedStatus = ''.obs;
   final listStatus = [
@@ -135,6 +136,20 @@ class AddPresenceController extends GetxController {
     }
   }
 
+  void fetchDisabledPertemuans() async {
+    try {
+      final prodiId = selectedProdiMap['id'];
+      final semester = selectedSemester.value;
+      final matkulId = selectedMatkulMap['id'];
+      final tahunAjaranIdd = tahunAjaranId.value;
+      final result = await addPresenceLecturerService.fetchDisabledPertemuans(
+          int.parse(prodiId), 
+          prodiId, semester, matkulId, tahunAjaranIdd);
+    } catch (e) {
+      log.f("Error: $e");
+    }
+  }
+
   Future<String> getPresensiId() async {
     try {
       final result = await addPresenceLecturerService.getPresensiId();
@@ -231,6 +246,7 @@ class AddPresenceController extends GetxController {
         tahunAjaranId: tahunAjaranId.value,
         linkZoom: linkZoomController.text.trim(),
         pertemuanKe: int.parse(selectedPertemuan.value),
+        jenisPertemuan: int.parse(selectedJenis.value),
         status: selectedStatus.value,
       ));
 
@@ -396,6 +412,7 @@ class AddPresenceController extends GetxController {
     log.d("SelectedProdi id: ${selectedProdiMap['id']}");
     log.d("SelectedMatkul id: ${selectedMatkulMap['id']}");
     log.d("SelectedPertemuan ke ${selectedPertemuan.value}");
+    log.d("SelectedJenisPertemuan: ${selectedJenis.value}");
     log.d("SelectedStatus: ${selectedStatus.value}");
     log.d("semester: ${selectedSemester.value}");
     log.d("TahunAjar Id: ${tahunAjaranId.value}");
@@ -467,6 +484,10 @@ class AddPresenceController extends GetxController {
 
     if (selectedStatus.value == "Aktif" && linkZoomController.text.isEmpty) {
       showValidationDialog("Silahkan isi link zoom terlebih dahulu");
+      return false;
+    }
+    if (selectedStatus.value == "Aktif" && selectedJenis.isEmpty) {
+      showValidationDialog("Silahkan isi jenis pertemuan terlebih dahulu");
       return false;
     }
 

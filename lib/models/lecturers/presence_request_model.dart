@@ -11,6 +11,7 @@ class PresenceRequest {
   final String linkZoom;
   final String status;
   final int pertemuanKe;
+  final int jenisPertemuan;
 
   PresenceRequest({
     required this.presensiId,
@@ -25,6 +26,7 @@ class PresenceRequest {
     required this.linkZoom,
     required this.status,
     required this.pertemuanKe,
+    required this.jenisPertemuan,
   });
 
   Map<String, dynamic> toJson() {
@@ -42,6 +44,7 @@ class PresenceRequest {
       'link_zoom': linkZoom,
       'status': status.toLowerCase(),
       'pertemuan_ke': pertemuanKe.toString(),
+      'jenis_pertemuan': jenisPertemuan.toString(),
     };
   }
 }
