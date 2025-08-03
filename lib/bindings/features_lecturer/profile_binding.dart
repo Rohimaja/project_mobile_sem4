@@ -4,6 +4,7 @@ import 'package:stipres/controllers/features_lecturer/account/profile_controller
 class LecturerProfileBinding extends Bindings {
   @override
   void dependencies() {
+    print("🔧 LecturerProfileBinding dipanggil");
     Get.put(ProfileController());
   }
 }

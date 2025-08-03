@@ -126,8 +126,8 @@ class AddPresenceLecturerService extends GetxService {
     }
   }
 
-  Future<BaseResponse<DisabledPertemuansModel>> fetchDisabledPertemuans(
-      String prodiId, int semester, int matkulId, int tahunAjaranId) async {
+  Future<BaseResponse<List<DisabledPertemuansModel>>> fetchDisabledPertemuans(
+      int prodiId, int semester, int matkulId, int tahunAjaranId) async {
     try {
       final token = await _box.read("auth_token");
 
@@ -154,8 +154,10 @@ class AddPresenceLecturerService extends GetxService {
 
       return BaseResponse.fromJson(
           body,
-          (dataJson) => DisabledPertemuansModel.fromJson(
-              dataJson as Map<String, dynamic>));
+          (dataJson) => (dataJson as List)
+              .map((e) =>
+                  DisabledPertemuansModel.fromJson(e as Map<String, dynamic>))
+              .toList());
     } catch (e) {
       log.f("Error: $e");
       return BaseResponse(
@@ -172,7 +174,9 @@ class AddPresenceLecturerService extends GetxService {
       String tglPresensi,
       int pertemuan,
       String status,
-      int matkulId) async {
+      int matkulId,
+      int tahunAjaran
+      ) async {
     try {
       final token = await _box.read("auth_token");
       log.d("Param : $prodiId");
@@ -183,6 +187,7 @@ class AddPresenceLecturerService extends GetxService {
       log.d("Param : $pertemuan");
       log.d("Param : $status");
       log.d("Param : $matkulId");
+      log.d("Param : $tahunAjaran");
       final url = Uri.parse("$_baseUrl/presence/check-upload");
       log.d(url);
       final response = await http.post(url, body: {
@@ -194,7 +199,8 @@ class AddPresenceLecturerService extends GetxService {
         "semester": semester.toString(),
         "pertemuan_ke": pertemuan.toString(),
         "status": status.toLowerCase(),
-        "matkul_id": matkulId.toString()
+        "matkul_id": matkulId.toString(),
+        "tahun_ajaran_id": tahunAjaran.toString()
       }, headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
@@ -208,7 +214,7 @@ class AddPresenceLecturerService extends GetxService {
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
           return await checkPresence(dosenId, prodiId, semester, jamAwal,
-              jamAkhir, tglPresensi, pertemuan, status, matkulId);
+              jamAkhir, tglPresensi, pertemuan, status, matkulId, tahunAjaran);
         }
       }
 

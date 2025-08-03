@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
+import 'package:stipres/models/lecturers/disabled_pertemuan_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
 import 'package:stipres/models/lecturers/presence_request_model.dart';
 import 'package:stipres/screens/reusable/failed_dialog.dart';
@@ -33,8 +35,9 @@ class AddPresenceController extends GetxController {
   final selectedMatkul = ''.obs;
   final selectedPertemuan = ''.obs;
   final selectedJenis = ''.obs;
-  final List<int> pertemuanTerpakai = [14, 15];
+  final pertemuanTerpakai = <int>[].obs;
   final listMatkul = <MatkulModel>[].obs;
+  final listPertemuan = <DisabledPertemuansModel>[].obs;
   final selectedStatus = ''.obs;
   final listStatus = [
     'Aktif',
@@ -65,6 +68,22 @@ class AddPresenceController extends GetxController {
     final semester = selectedSemester.value;
     if (semester.isNotEmpty && idProdi != null) {
       fetchMatkul(idProdi, semester);
+    } else {
+      null;
+    }
+  }
+
+  void validateDisabledPertemuans() async {
+    final prodiId = selectedProdiMap['id'];
+    final semester = selectedSemester.value;
+    final matkulId = selectedMatkulMap['id'];
+    final tahunAjaranIdd = tahunAjaranId.value;
+    if (prodiId != null &&
+        semester.isNotEmpty &&
+        matkulId != null &&
+        tahunAjaranIdd != 0) {
+      fetchDisabledPertemuans(
+          prodiId, semester, matkulId, tahunAjaranIdd.toString());
     } else {
       null;
     }
@@ -136,15 +155,37 @@ class AddPresenceController extends GetxController {
     }
   }
 
-  void fetchDisabledPertemuans() async {
+  void fetchDisabledPertemuans(String prodiId, String semester, String matkulId,
+      String tahunAjaranIdd) async {
     try {
-      final prodiId = selectedProdiMap['id'];
-      final semester = selectedSemester.value;
-      final matkulId = selectedMatkulMap['id'];
-      final tahunAjaranIdd = tahunAjaranId.value;
       final result = await addPresenceLecturerService.fetchDisabledPertemuans(
-          int.parse(prodiId), 
-          prodiId, semester, matkulId, tahunAjaranIdd);
+          int.parse(prodiId),
+          int.parse(semester),
+          int.parse(matkulId),
+          int.parse(tahunAjaranIdd));
+
+      if (result.status == "success") {
+        final pertemuanList =
+            result.data!.whereType<DisabledPertemuansModel>().toList();
+        listPertemuan.assignAll(pertemuanList);
+        pertemuanTerpakai.assignAll(
+          pertemuanList.map((e) => e.pertemuanKe).whereType<int>().toList(),
+        );
+
+        if (selectedPertemuan.value.isNotEmpty) {
+          final selectedInt = int.tryParse(selectedPertemuan.value);
+
+          final isInPertemuanTerpakai = pertemuanTerpakai.contains(selectedInt);
+
+          if (isInPertemuanTerpakai) {
+            selectedPertemuan.value = "";
+          }
+        }
+      } else {
+        log.e(result.message);
+        listMatkul.clear;
+        selectedPertemuan.value = "";
+      }
     } catch (e) {
       log.f("Error: $e");
     }
@@ -177,7 +218,8 @@ class AddPresenceController extends GetxController {
       String tglPresensi,
       int pertemuan,
       String status,
-      int matkulId) async {
+      int matkulId,
+      int tahunAjaranId) async {
     try {
       showLoading();
       final result = await addPresenceLecturerService.checkPresence(
@@ -189,7 +231,8 @@ class AddPresenceController extends GetxController {
           tglPresensi,
           pertemuan,
           status,
-          matkulId);
+          matkulId,
+          tahunAjaranId);
 
       if (result.status == "conflict") {
         Get.back();
@@ -246,13 +289,13 @@ class AddPresenceController extends GetxController {
         tahunAjaranId: tahunAjaranId.value,
         linkZoom: linkZoomController.text.trim(),
         pertemuanKe: int.parse(selectedPertemuan.value),
-        jenisPertemuan: int.parse(selectedJenis.value),
+        jenisPertemuan: selectedJenis.value,
         status: selectedStatus.value,
       ));
 
       if (result.status == "success") {
         Get.back();
-        Get.back();
+        Get.offAllNamed("/");
         isEnabled.value = false;
         Get.dialog(
           SuccessDialog(
@@ -297,7 +340,8 @@ class AddPresenceController extends GetxController {
           selectedDate.value!.toString(),
           int.parse(selectedPertemuan.value),
           selectedStatus.value,
-          int.parse(selectedMatkulMap['id']!));
+          int.parse(selectedMatkulMap['id']!),
+          tahunAjaranId.value);
 
       if (isConflictFree) {
         final presensiId = await getPresensiId();

@@ -192,7 +192,7 @@ class PresenceContentController extends GetxController {
 
       if (result.status == "success") {
         Get.back();
-        Get.back();
+        Get.offAllNamed("/");
         Get.dialog(
           SuccessDialog(
             title: 'Presensi berhasil diunggah!',

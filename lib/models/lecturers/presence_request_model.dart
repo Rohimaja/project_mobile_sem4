@@ -11,7 +11,7 @@ class PresenceRequest {
   final String linkZoom;
   final String status;
   final int pertemuanKe;
-  final int jenisPertemuan;
+  final String jenisPertemuan;
 
   PresenceRequest({
     required this.presensiId,
@@ -44,7 +44,7 @@ class PresenceRequest {
       'link_zoom': linkZoom,
       'status': status.toLowerCase(),
       'pertemuan_ke': pertemuanKe.toString(),
-      'jenis_pertemuan': jenisPertemuan.toString(),
+      'jenis_pertemuan': jenisPertemuan.toLowerCase(),
     };
   }
 }

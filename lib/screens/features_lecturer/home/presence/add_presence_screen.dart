@@ -351,6 +351,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                       };
 
                                       _controller.validateMatkul();
+                                      _controller.validateDisabledPertemuans();
                                     });
                               }),
                               const SizedBox(height: 12),
@@ -375,6 +376,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                     onChanged: (val) {
                                       _controller.selectedSemester.value = val!;
                                       _controller.validateMatkul();
+                                      _controller.validateDisabledPertemuans();
                                     });
                               }),
                               const SizedBox(height: 12),
@@ -428,6 +430,8 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                                 'kode_matkul':
                                                     selected.kodeMatkul!,
                                               };
+                                              _controller
+                                                  .validateDisabledPertemuans();
                                             });
                                       })),
                                   const Padding(
@@ -503,7 +507,9 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                           value: pertemuan,
                                           enabled: !isDisabled,
                                           child: Text(
-                                            "Pertemuan $pertemuan",
+                                            !isDisabled
+                                                ? "Pertemuan $pertemuan"
+                                                : "Pertemuan $pertemuan telah digunakan",
                                             style: TextStyle(
                                               color: isDisabled
                                                   ? Colors.grey

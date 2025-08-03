@@ -52,7 +52,6 @@ class _PresenceScreenState extends State<PresenceScreen>
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     bool _isPressed = false;
-    _controller.fetchPresence();
 
     return Scaffold(
         backgroundColor: styles.getMainColor(context),

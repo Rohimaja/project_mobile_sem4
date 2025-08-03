@@ -25,11 +25,12 @@ class PresenceController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    log.d("PresenceLecturerController ONINIT");
     dosenId.value = _box.read("dosen_id").toString();
-    fetchPresence();
+    fetchPresencee();
   }
 
-  Future<void> fetchPresence() async {
+  Future<void> fetchPresencee() async {
     try {
       final result = await presenceLecturerService.fetchPresence(dosenId.value);
       log.d(result.data);
@@ -77,8 +78,8 @@ class PresenceController extends GetxController {
       log.d("Log Debug dosen id ${dosenId.value}");
       final awal = timeOfDayToString(jamAwal.value!);
       final akhir = timeOfDayToString(jamAkhir.value!);
-      final result =
-          await presenceLecturerService.checkPresence(dosenId.value, presensisId, awal, akhir);
+      final result = await presenceLecturerService.checkPresence(
+          dosenId.value, presensisId, awal, akhir);
 
       log.d("hasil conflict: ${result.status}");
       log.d("Data: $awal");
@@ -108,12 +109,12 @@ class PresenceController extends GetxController {
       log.d(akhir);
 
       showLoading();
-      final result = await presenceLecturerService.updatePresence(dosenId.value, 
-          presensisId, awal, akhir);
+      final result = await presenceLecturerService.updatePresence(
+          dosenId.value, presensisId, awal, akhir);
       if (result.status == "success") {
         Get.back();
         Get.back();
-        fetchPresence();
+        fetchPresencee();
         Get.dialog(
           SuccessDialog(
             title: 'Presensi berhasil diubah!',
@@ -141,7 +142,7 @@ class PresenceController extends GetxController {
       final result = await presenceLecturerService.deletePresence(presensisId);
       if (result.status == "success") {
         Get.back();
-        fetchPresence();
+        fetchPresencee();
         Get.snackbar("Berhasil", "Presensi berhasil dihapus",
             duration: Duration(seconds: 1));
       } else {
@@ -179,10 +180,7 @@ class PresenceController extends GetxController {
   }
 
   void showLoading() {
-    Get.dialog(
-      const LoadingPopup(),
-      barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.3)
-    );
+    Get.dialog(const LoadingPopup(),
+        barrierDismissible: false, barrierColor: Colors.black.withOpacity(0.3));
   }
 }
