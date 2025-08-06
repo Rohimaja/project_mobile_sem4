@@ -98,7 +98,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                               children: [
                                 Text(
                                   'Form Presensi',
-                                  style: TextStyle(
+                                  style: GoogleFonts.plusJakartaSans(
                                     fontSize: 16,
                                     color: blueColor,
                                     fontWeight: FontWeight.w400,
@@ -109,7 +109,6 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                 MatkulDetailCard(
                                     data: _controller.presence.value),
                                 const SizedBox(height: 15),
-
                                 // Status Presensi
                                 RadioListTile<StatusPresensi>(
                                   title: Text("Hadir",
@@ -150,9 +149,7 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   },
                                   activeColor: blueColor,
                                 ),
-
                                 const SizedBox(height: 15),
-
                                 if (_controller.status == StatusPresensi.ijin ||
                                     _controller.status.value ==
                                         StatusPresensi.sakit) ...[
@@ -281,7 +278,6 @@ class _PresenceContentScreenState extends State<PresenceContentScreen> {
                                   ),
                                   const SizedBox(height: 40),
                                 ],
-
                                 // Submit Button
                                 SizedBox(
                                   width: double.infinity,

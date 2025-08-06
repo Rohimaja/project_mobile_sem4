@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
+import 'package:stipres/models/lecturers/disabled_pertemuan_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
 import 'package:stipres/models/lecturers/presence_request_model.dart';
 import 'package:stipres/screens/reusable/failed_dialog.dart';
@@ -31,7 +33,18 @@ class AddPresenceController extends GetxController {
   final selectedProdiMap = <String, String>{}.obs;
 
   final selectedMatkul = ''.obs;
+  final selectedPertemuan = ''.obs;
+  final selectedJenis = ''.obs;
+  final pertemuanTerpakai = <int>[].obs;
   final listMatkul = <MatkulModel>[].obs;
+  final listPertemuan = <DisabledPertemuansModel>[].obs;
+  final selectedStatus = ''.obs;
+  final listStatus = [
+    'Aktif',
+    'Libur',
+    'UTS',
+    'UAS',
+  ];
   final selectedMatkulMap = <String, String>{}.obs;
 
   final tahunAjar = <TahunAjaranAktif>{}.obs;
@@ -55,6 +68,22 @@ class AddPresenceController extends GetxController {
     final semester = selectedSemester.value;
     if (semester.isNotEmpty && idProdi != null) {
       fetchMatkul(idProdi, semester);
+    } else {
+      null;
+    }
+  }
+
+  void validateDisabledPertemuans() async {
+    final prodiId = selectedProdiMap['id'];
+    final semester = selectedSemester.value;
+    final matkulId = selectedMatkulMap['id'];
+    final tahunAjaranIdd = tahunAjaranId.value;
+    if (prodiId != null &&
+        semester.isNotEmpty &&
+        matkulId != null &&
+        tahunAjaranIdd != 0) {
+      fetchDisabledPertemuans(
+          prodiId, semester, matkulId, tahunAjaranIdd.toString());
     } else {
       null;
     }
@@ -126,6 +155,42 @@ class AddPresenceController extends GetxController {
     }
   }
 
+  void fetchDisabledPertemuans(String prodiId, String semester, String matkulId,
+      String tahunAjaranIdd) async {
+    try {
+      final result = await addPresenceLecturerService.fetchDisabledPertemuans(
+          int.parse(prodiId),
+          int.parse(semester),
+          int.parse(matkulId),
+          int.parse(tahunAjaranIdd));
+
+      if (result.status == "success") {
+        final pertemuanList =
+            result.data!.whereType<DisabledPertemuansModel>().toList();
+        listPertemuan.assignAll(pertemuanList);
+        pertemuanTerpakai.assignAll(
+          pertemuanList.map((e) => e.pertemuanKe).whereType<int>().toList(),
+        );
+
+        if (selectedPertemuan.value.isNotEmpty) {
+          final selectedInt = int.tryParse(selectedPertemuan.value);
+
+          final isInPertemuanTerpakai = pertemuanTerpakai.contains(selectedInt);
+
+          if (isInPertemuanTerpakai) {
+            selectedPertemuan.value = "";
+          }
+        }
+      } else {
+        log.e(result.message);
+        listMatkul.clear;
+        selectedPertemuan.value = "";
+      }
+    } catch (e) {
+      log.f("Error: $e");
+    }
+  }
+
   Future<String> getPresensiId() async {
     try {
       final result = await addPresenceLecturerService.getPresensiId();
@@ -145,8 +210,16 @@ class AddPresenceController extends GetxController {
     }
   }
 
-  Future<bool> checkPresence(int prodiId, int semester, String jamAwal,
-      String jamAkhir, String tglPresensi) async {
+  Future<bool> checkPresence(
+      int prodiId,
+      int semester,
+      String jamAwal,
+      String jamAkhir,
+      String tglPresensi,
+      int pertemuan,
+      String status,
+      int matkulId,
+      int tahunAjaranId) async {
     try {
       showLoading();
       final result = await addPresenceLecturerService.checkPresence(
@@ -155,7 +228,11 @@ class AddPresenceController extends GetxController {
           semester,
           jamAwal,
           jamAkhir,
-          tglPresensi);
+          tglPresensi,
+          pertemuan,
+          status,
+          matkulId,
+          tahunAjaranId);
 
       if (result.status == "conflict") {
         Get.back();
@@ -177,6 +254,17 @@ class AddPresenceController extends GetxController {
         return true;
       } else {
         Get.back();
+        isEnabled.value = false;
+        Get.dialog(FailedDialog(
+            title: "Presensi gagal diunggah",
+            subtitle: "Data presensi gagal ditambahkan",
+            gifAssetPath: "assets/gif/failed_animation.gif",
+            onDetailPressed: () =>
+                Get.toNamed("/lecturer/notification-screen")));
+        Future.delayed(
+          Duration(seconds: 3),
+          () => isEnabled.value = true,
+        );
         return false;
       }
     } catch (e) {
@@ -188,22 +276,26 @@ class AddPresenceController extends GetxController {
 
   Future<void> uploadPresence(String presensiId) async {
     try {
-      final result = await addPresenceLecturerService.uploadPresensi(
-          PresenceRequest(
-              presensiId: presensiId,
-              tglPresensi: selectedDate.value!.toString(),
-              jamAwal: jamAwalStr.value,
-              jamAkhir: jamAkhirStr.value,
-              dosenId: dosenId.value,
-              prodiId: int.parse(selectedProdiMap['id']!),
-              semester: int.parse(selectedSemester.value),
-              matkulId: int.parse(selectedMatkulMap['id']!),
-              tahunAjaranId: tahunAjaranId.value,
-              linkZoom: linkZoomController.text.trim()));
+      final result =
+          await addPresenceLecturerService.uploadPresensi(PresenceRequest(
+        presensiId: presensiId,
+        tglPresensi: selectedDate.value!.toString(),
+        jamAwal: jamAwalStr.value,
+        jamAkhir: jamAkhirStr.value,
+        dosenId: dosenId.value,
+        prodiId: int.parse(selectedProdiMap['id']!),
+        semester: int.parse(selectedSemester.value),
+        matkulId: int.parse(selectedMatkulMap['id']!),
+        tahunAjaranId: tahunAjaranId.value,
+        linkZoom: linkZoomController.text.trim(),
+        pertemuanKe: int.parse(selectedPertemuan.value),
+        jenisPertemuan: selectedJenis.value,
+        status: selectedStatus.value,
+      ));
 
       if (result.status == "success") {
         Get.back();
-        Get.back();
+        Get.offAllNamed("/");
         isEnabled.value = false;
         Get.dialog(
           SuccessDialog(
@@ -221,7 +313,12 @@ class AddPresenceController extends GetxController {
       } else {
         Get.back();
         isEnabled.value = false;
-        Get.snackbar("Gagal", result.message);
+        Get.dialog(FailedDialog(
+            title: "Presensi gagal diunggah",
+            subtitle: "Data presensi gagal ditambahkan",
+            gifAssetPath: "assets/gif/failed_animation.gif",
+            onDetailPressed: () =>
+                Get.toNamed("/lecturer/notification-screen")));
         Future.delayed(
           Duration(seconds: 3),
           () => isEnabled.value = true,
@@ -233,13 +330,18 @@ class AddPresenceController extends GetxController {
   }
 
   void submitPresence() async {
+    log.d("Pertemuan ke ${selectedPertemuan.value}");
     if (validatePresence() == true) {
       final isConflictFree = await checkPresence(
           int.parse(selectedProdiMap['id']!),
           int.parse(selectedSemester.value),
           jamAwalStr.value,
           jamAkhirStr.value,
-          selectedDate.value!.toString());
+          selectedDate.value!.toString(),
+          int.parse(selectedPertemuan.value),
+          selectedStatus.value,
+          int.parse(selectedMatkulMap['id']!),
+          tahunAjaranId.value);
 
       if (isConflictFree) {
         final presensiId = await getPresensiId();
@@ -249,42 +351,113 @@ class AddPresenceController extends GetxController {
     }
   }
 
+  // bool validatePresence() {
+  //   if (jamAwal.value == null || jamAkhir.value == null) {
+  //     Get.dialog(UploadDialog(
+  //         title: "Validasi!",
+  //         subtitle: "Silahkan isi data terlebih dahulu",
+  //         gifAssetPath: "assets/gif/upload_data_animation.gif"));
+  //     return false;
+  //   }
+
+  //   final now = DateTime.now();
+  //   final selected = selectedDate.value;
+
+  //   if (selected != null &&
+  //       DateTime(selected.year, selected.month, selected.day)
+  //           .isBefore(DateTime(now.year, now.month, now.day))) {
+  //     isEnabled.value = false;
+  //     Get.dialog(UploadDialog(
+  //       title: "Validasi!",
+  //       subtitle: "Tanggal tidak boleh kurang dari hari ini.",
+  //       gifAssetPath: "assets/gif/upload_data_animation.gif",
+  //     ));
+  //     Future.delayed(
+  //       const Duration(seconds: 3),
+  //       () => isEnabled.value = true,
+  //     );
+  //     return false;
+  //   }
+
+  //   jamAwalStr.value = timeOfDayToString(jamAwal.value!);
+  //   jamAkhirStr.value = timeOfDayToString(jamAkhir.value!);
+  //   final awal = timeOfDayToString(jamAwal.value!);
+  //   final akhir = timeOfDayToString(jamAkhir.value!);
+
+  //   log.d("Dosen ID:  ${dosenId.value}");
+  //   log.d("SelectedProdi id: ${selectedProdiMap['id']}");
+  //   log.d("SelectedMatkul id: ${selectedMatkulMap['id']}");
+  //   log.d("SelectedPertemuan ke ${selectedPertemuan.value}");
+  //   log.d("SelectedStatus: ${selectedStatus.value}");
+  //   log.d("semester: ${selectedSemester.value}");
+  //   log.d("TahunAjar Id: ${tahunAjaranId.value}");
+  //   log.d("selectedDate : ${selectedDate.value}");
+  //   log.d("Jam Awal : ${jamAwal.value}");
+  //   log.d("Jam Akhir : ${jamAkhir.value}");
+  //   log.d("Jam Awal Str : ${jamAwalStr.value}");
+  //   log.d("Jam Akhir Str: ${jamAkhirStr.value}");
+  //   log.d("LinkZoom : ${linkZoomController.text}");
+  //   if (!selectedProdiMap.containsKey('id') ||
+  //       selectedProdiMap['id'] == null ||
+  //       selectedProdiMap['id']!.isEmpty ||
+  //       selectedSemester.isEmpty ||
+  //       selectedPertemuan.isEmpty ||
+  //       selectedStatus.isEmpty ||
+  //       !selectedMatkulMap.containsKey('id') ||
+  //       selectedMatkulMap['id'] == null ||
+  //       selectedMatkulMap['id']!.isEmpty ||
+  //       tahunAjaranId.value == 0 ||
+  //       selectedDate.value == null ||
+  //       jamAwal.value == null ||
+  //       jamAkhir.value == null ||
+  //       jamAwalStr.value.isEmpty ||
+  //       jamAkhirStr.value.isEmpty ||
+  //       linkZoomController.text.isEmpty && selectedStatus.value == "Aktif") {
+  //     isEnabled.value = false;
+  //     Get.dialog(UploadDialog(
+  //         title: "Validasi!",
+  //         subtitle: "Silahkan isi data terlebih dahulu",
+  //         gifAssetPath: "assets/gif/upload_data_animation.gif"));
+  //     Future.delayed(
+  //       Duration(seconds: 3),
+  //       () => isEnabled.value = true,
+  //     );
+  //     return false;
+  //   } else if (!selectedProdiMap.containsKey('id') ||
+  //       selectedProdiMap['id'] == null ||
+  //       selectedProdiMap['id']!.isEmpty ||
+  //       selectedSemester.isEmpty ||
+  //       selectedPertemuan.isEmpty ||
+  //       selectedStatus.isEmpty ||
+  //       !selectedMatkulMap.containsKey('id') ||
+  //       selectedMatkulMap['id'] == null ||
+  //       selectedMatkulMap['id']!.isEmpty ||
+  //       tahunAjaranId.value == 0 ||
+  //       selectedDate.value == null && selectedStatus.value != "Aktif") {
+  //     "";
+  //   } else if (!isAfter(jamAkhir.value!, jamAwal.value!) || awal == akhir) {
+  //     isEnabled.value = false;
+  //     Get.dialog(UploadDialog(
+  //         title: "Validasi!",
+  //         subtitle: "Jam akhir harus setelah jam awal",
+  //         gifAssetPath: "assets/gif/upload_data_animation.gif"));
+  //     Future.delayed(
+  //       Duration(seconds: 3),
+  //       () => isEnabled.value = true,
+  //     );
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
+
   bool validatePresence() {
-    if (jamAwal.value == null || jamAkhir.value == null) {
-      Get.dialog(UploadDialog(
-          title: "Validasi!",
-          subtitle: "Silahkan isi data terlebih dahulu",
-          gifAssetPath: "assets/gif/upload_data_animation.gif"));
-      return false;
-    }
-
-    final now = DateTime.now();
-    final selected = selectedDate.value;
-
-    if (selected != null &&
-        DateTime(selected.year, selected.month, selected.day)
-            .isBefore(DateTime(now.year, now.month, now.day))) {
-      isEnabled.value = false;
-      Get.dialog(UploadDialog(
-        title: "Validasi!",
-        subtitle: "Tanggal tidak boleh kurang dari hari ini.",
-        gifAssetPath: "assets/gif/upload_data_animation.gif",
-      ));
-      Future.delayed(
-        const Duration(seconds: 3),
-        () => isEnabled.value = true,
-      );
-      return false;
-    }
-
-    jamAwalStr.value = timeOfDayToString(jamAwal.value!);
-    jamAkhirStr.value = timeOfDayToString(jamAkhir.value!);
-    final awal = timeOfDayToString(jamAwal.value!);
-    final akhir = timeOfDayToString(jamAkhir.value!);
-
     log.d("Dosen ID:  ${dosenId.value}");
     log.d("SelectedProdi id: ${selectedProdiMap['id']}");
     log.d("SelectedMatkul id: ${selectedMatkulMap['id']}");
+    log.d("SelectedPertemuan ke ${selectedPertemuan.value}");
+    log.d("SelectedJenisPertemuan: ${selectedJenis.value}");
+    log.d("SelectedStatus: ${selectedStatus.value}");
     log.d("semester: ${selectedSemester.value}");
     log.d("TahunAjar Id: ${tahunAjaranId.value}");
     log.d("selectedDate : ${selectedDate.value}");
@@ -293,44 +466,76 @@ class AddPresenceController extends GetxController {
     log.d("Jam Awal Str : ${jamAwalStr.value}");
     log.d("Jam Akhir Str: ${jamAkhirStr.value}");
     log.d("LinkZoom : ${linkZoomController.text}");
-    if (!selectedProdiMap.containsKey('id') ||
-        selectedProdiMap['id'] == null ||
-        selectedProdiMap['id']!.isEmpty ||
-        selectedSemester.isEmpty ||
-        !selectedMatkulMap.containsKey('id') ||
-        selectedMatkulMap['id'] == null ||
-        selectedMatkulMap['id']!.isEmpty ||
-        tahunAjaranId.value == 0 ||
-        selectedDate.value == null ||
-        jamAwal.value == null ||
-        jamAkhir.value == null ||
-        jamAwalStr.value.isEmpty ||
-        jamAkhirStr.value.isEmpty ||
+
+    void showValidationDialog(String message) {
+      isEnabled.value = false;
+      Get.dialog(UploadDialog(
+          title: "Validasi!",
+          subtitle: message,
+          gifAssetPath: "assets/gif/upload_data_animation.gif"));
+      Future.delayed(const Duration(seconds: 3), () => isEnabled.value = true);
+    }
+
+    final requiredFields = [
+      selectedProdiMap['id'],
+      selectedSemester.value,
+      selectedPertemuan.value,
+      selectedStatus.value,
+      selectedMatkulMap['id'],
+      tahunAjaranId.value.toString(),
+      selectedDate.value
+    ];
+
+    if (requiredFields.any((e) => e == null || e.toString().isEmpty)) {
+      showValidationDialog("Silahkan isi data terlebih dahulu");
+      return false;
+    }
+
+    if ((selectedStatus.value == "Aktif" || selectedStatus.value.isEmpty) &&
+        (jamAwal.value == null || jamAkhir.value == null)) {
+      showValidationDialog(
+          "Silahkan isi jam awal dan jam akhir terlebih dahulu");
+      return false;
+    }
+
+    final selected = selectedDate.value;
+    final today = DateTime.now();
+    final todayOnly = DateTime(today.year, today.month, today.day);
+    if (selected != null &&
+        DateTime(selected.year, selected.month, selected.day)
+            .isBefore(todayOnly)) {
+      showValidationDialog("Tanggal tidak boleh kurang dari hari ini");
+      return false;
+    }
+
+    if (selectedStatus.value != "Aktif" &&
+        jamAwal.value == null &&
+        jamAkhir.value == null &&
         linkZoomController.text.isEmpty) {
-      isEnabled.value = false;
-      Get.dialog(UploadDialog(
-          title: "Validasi!",
-          subtitle: "Silahkan isi data terlebih dahulu",
-          gifAssetPath: "assets/gif/upload_data_animation.gif"));
-      Future.delayed(
-        Duration(seconds: 3),
-        () => isEnabled.value = true,
-      );
-      return false;
-    } else if (!isAfter(jamAkhir.value!, jamAwal.value!) || awal == akhir) {
-      isEnabled.value = false;
-      Get.dialog(UploadDialog(
-          title: "Validasi!",
-          subtitle: "Jam akhir harus setelah jam awal",
-          gifAssetPath: "assets/gif/upload_data_animation.gif"));
-      Future.delayed(
-        Duration(seconds: 3),
-        () => isEnabled.value = true,
-      );
-      return false;
-    } else {
       return true;
     }
+
+    jamAwalStr.value = timeOfDayToString(jamAwal.value!);
+    jamAkhirStr.value = timeOfDayToString(jamAkhir.value!);
+
+    final awal = jamAwalStr.value;
+    final akhir = jamAkhirStr.value;
+
+    if (!isAfter(jamAkhir.value!, jamAwal.value!) || awal == akhir) {
+      showValidationDialog("Jam akhir harus setelah jam awal");
+      return false;
+    }
+
+    if (selectedStatus.value == "Aktif" && linkZoomController.text.isEmpty) {
+      showValidationDialog("Silahkan isi link zoom terlebih dahulu");
+      return false;
+    }
+    if (selectedStatus.value == "Aktif" && selectedJenis.isEmpty) {
+      showValidationDialog("Silahkan isi jenis pertemuan terlebih dahulu");
+      return false;
+    }
+
+    return true;
   }
 
   bool isAfter(TimeOfDay a, TimeOfDay b) {

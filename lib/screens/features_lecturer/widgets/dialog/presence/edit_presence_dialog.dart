@@ -79,7 +79,7 @@ class _EditPresensiDialogState extends State<EditPresensiDialog> {
               } else {
                 showFailedDialog(
                   context: context,
-                  title: "Presensi gagal diunggah!",
+                  title: "Presensi gagal diubah!",
                   subtitle: "Terjadi kesalahan saat mengunggah data",
                   gifAssetPath: 'assets/gif/failed_animation.gif',
                   onDetailPressed: () =>

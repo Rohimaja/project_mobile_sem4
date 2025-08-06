@@ -76,6 +76,7 @@ class KehadiranCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Wrap(
                   spacing: 6,
+                  runSpacing: 6,
                   children: [
                     KehadiranChip(
                       label: 'Hadir',
@@ -130,35 +131,34 @@ class KehadiranChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 55, // <- SET UKURAN SAMA
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              jumlah.toString(),
-              style: GoogleFonts.plusJakartaSans(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+    return Container(
+      width: 60, // Optional: width tetap untuk keseimbangan
+      height: 60,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // Vertikal center
+        crossAxisAlignment: CrossAxisAlignment.center, // Horizontal center
+        children: [
+          Text(
+            jumlah.toString(),
+            style: GoogleFonts.plusJakartaSans(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-            Text(
-              label,
-              style: GoogleFonts.plusJakartaSans(
-                color: Colors.white,
-                fontSize: 12,
-              ),
-              textAlign: TextAlign.center,
+          ),
+          Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              color: Colors.white,
+              fontSize: 12,
             ),
-          ],
-        ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

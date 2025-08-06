@@ -130,7 +130,7 @@ class DashboardController extends GetxController {
         errorMessage.value = result.message;
       }
     } catch (e) {
-      log.e("Error: $e");
+      log.e("Erroreee: $e");
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stipres/controllers/features_lecturer/home/lectures/lecture_controller.dart';
 import 'package:stipres/screens/features_lecturer/widgets/cards/lecture_card.dart';
 import 'package:stipres/constants/styles.dart';
+import 'package:stipres/screens/features_lecturer/widgets/dialog/edit_lecture_dialog.dart';
 import 'package:stipres/screens/reusable/custom_header.dart';
 import 'package:stipres/theme/theme_helper.dart' as styles;
 
@@ -121,8 +122,22 @@ class _LectureContentScreenState extends State<LectureContentScreen>
                                         padding:
                                             const EdgeInsets.only(bottom: 12),
                                         child: PerkuliahanCard(
-                                          data: _controller.lectureList[index],
-                                        ),
+                                            data:
+                                                _controller.lectureList[index],
+                                            onEdit: (String currentLink,
+                                                int presensisId) {
+                                              showEditLinkDialog(
+                                                  context, currentLink,
+                                                  (String newLink) {
+                                                // ✅ Tangani perubahan di sini
+                                                _controller.submitUpdateLecture(
+                                                    presensisId,
+                                                    newLink,
+                                                    currentLink,
+                                                    _controller
+                                                        .lectureList[index]);
+                                              });
+                                            }),
                                       );
                                     },
                                   ));

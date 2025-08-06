@@ -6,17 +6,17 @@ import 'package:stipres/screens/features_lecturer/widgets/cards/attendance/atten
 class KehadiranCard extends StatelessWidget {
   final RekapModelApi rekap;
 
-  KehadiranCard({Key? key, required this.rekap}) : super(key: key);
+  const KehadiranCard({Key? key, required this.rekap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Color(0xFFCFE9FF), // background terang
+        color: const Color(0xFFCFE9FF),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Color(0xFFC8C8C8),
+          color: const Color(0xFFC8C8C8),
           width: 0.5,
         ),
         boxShadow: const [
@@ -28,11 +28,11 @@ class KehadiranCard extends StatelessWidget {
         ],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Box Semester
           Container(
             width: 70,
-            height: 105,
+            height: 110,
             decoration: BoxDecoration(
               color: Colors.blue,
               borderRadius: BorderRadius.circular(12),
@@ -43,11 +43,13 @@ class KehadiranCard extends StatelessWidget {
                 Text(
                   'Semester',
                   style: GoogleFonts.plusJakartaSans(
-                      color: Colors.white, fontSize: 12),
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
                 Text(
                   rekap.semester.toString(),
-                  style: const TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                     color: Colors.white,
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
@@ -57,7 +59,8 @@ class KehadiranCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          // Konten Mata Kuliah & Persentase
+
+          // Konten Matkul & Kehadiran
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,34 +75,50 @@ class KehadiranCard extends StatelessWidget {
                 Text(
                   'Persentase Kehadiran (${rekap.persentase}%)',
                   style: GoogleFonts.plusJakartaSans(
-                      fontSize: 13, color: Color.fromARGB(255, 21, 92, 151)),
+                    fontSize: 13,
+                    color: Color.fromARGB(255, 21, 92, 151),
+                  ),
                 ),
                 const SizedBox(height: 8),
-                Wrap(
-                  spacing: 6,
+
+                // Diganti dari Wrap ke Row agar dalam 1 baris
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    KehadiranChip(
-                      label: 'Hadir',
-                      jumlah: rekap.hadir,
-                      color: Colors.green,
+                    Flexible(
+                      child: KehadiranChip(
+                        label: 'Hadir',
+                        jumlah: rekap.hadir,
+                        color: Colors.green,
+                      ),
                     ),
-                    KehadiranChip(
-                      label: 'Sakit',
-                      jumlah: rekap.sakit,
-                      color: Colors.yellow.shade700,
+                    SizedBox(width: 4),
+                    Flexible(
+                      child: KehadiranChip(
+                        label: 'Sakit',
+                        jumlah: rekap.sakit,
+                        color: Colors.yellow.shade700,
+                      ),
                     ),
-                    KehadiranChip(
-                      label: 'Izin',
-                      jumlah: rekap.izin,
-                      color: Colors.blue,
+                    SizedBox(width: 4),
+                    Flexible(
+                      child: KehadiranChip(
+                        label: 'Izin',
+                        jumlah: rekap.izin,
+                        color: Colors.blue,
+                      ),
                     ),
-                    KehadiranChip(
-                      label: 'Alpa',
-                      jumlah: rekap.alpa,
-                      color: Colors.red,
+                    SizedBox(width: 4),
+                    Flexible(
+                      child: KehadiranChip(
+                        label: 'Alpa',
+                        jumlah: rekap.alpa,
+                        color: Colors.red,
+                      ),
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),
@@ -107,12 +126,4 @@ class KehadiranCard extends StatelessWidget {
       ),
     );
   }
-
-  // int _getJumlahKehadiran(String label) {
-  //   final item = rekap..firstWhere(
-  //     (e) => e.label.toLowerCase() == label.toLowerCase(),
-  //     orElse: () => KehadiranItem(label: label, jumlah: 0),
-  //   );
-  //   return item.jumlah;
-  // }
 }

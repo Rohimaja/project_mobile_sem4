@@ -22,7 +22,6 @@ class PresenceLecturerService extends GetxService {
       String dosenId) async {
     try {
       final token = await _box.read("auth_token");
-
       final url = Uri.parse("$_baseUrl/getPresenceLecturer?dosen_id=$dosenId");
       final response = await http.get(url, headers: {
         'Accept': 'application/json',

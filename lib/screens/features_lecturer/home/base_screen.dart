@@ -16,15 +16,15 @@ class BaseScreenLecturer extends StatefulWidget {
 class _BaseScreenLecturerState extends State<BaseScreenLecturer> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    DashboardScreenLecturer(),
-    ProfileScreenLecturer(),
+  static final List<Widget Function()> _widgetOptions = <Widget Function()>[
+    () => DashboardScreenLecturer(),
+    () => ProfileScreenLecturer(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions[_selectedIndex](),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

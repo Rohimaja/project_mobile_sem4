@@ -16,8 +16,13 @@ class AddPresenceScreen extends StatefulWidget {
   State<AddPresenceScreen> createState() => _AddPresenceScreenState();
 }
 
-class _AddPresenceScreenState extends State<AddPresenceScreen> {
+class _AddPresenceScreenState extends State<AddPresenceScreen>
+    with SingleTickerProviderStateMixin {
   final _controller = Get.find<AddPresenceController>();
+  final jenisPertemuan = ['Teori', 'Praktik'];
+
+  final List<String> semuaPertemuan =
+      List.generate(32, (i) => (i + 1).toString());
 
   Widget _buildDropdownField({
     required String label,
@@ -271,9 +276,9 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final bool isAktif = _controller.selectedStatus.value == 'Aktif';
 
     return Scaffold(
-
       backgroundColor: styles.getMainColor(context),
       body: Stack(
         children: [
@@ -346,6 +351,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                                       };
 
                                       _controller.validateMatkul();
+                                      _controller.validateDisabledPertemuans();
                                     });
                               }),
                               const SizedBox(height: 12),
@@ -370,6 +376,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                                     onChanged: (val) {
                                       _controller.selectedSemester.value = val!;
                                       _controller.validateMatkul();
+                                      _controller.validateDisabledPertemuans();
                                     });
                               }),
                               const SizedBox(height: 12),
@@ -384,7 +391,6 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                                 );
                               }),
                               const SizedBox(height: 12),
-
                               Row(
                                 children: [
                                   Expanded(
@@ -424,6 +430,8 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                                                 'kode_matkul':
                                                     selected.kodeMatkul!,
                                               };
+                                              _controller
+                                                  .validateDisabledPertemuans();
                                             });
                                       })),
                                   const Padding(
@@ -449,22 +457,154 @@ class _AddPresenceScreenState extends State<AddPresenceScreen> {
                                 ],
                               ),
                               const SizedBox(height: 12),
-
+                              Obx(() {
+                                final selected = semuaPertemuan.contains(
+                                        _controller.selectedPertemuan.value)
+                                    ? _controller.selectedPertemuan.value
+                                    : null;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Pertemuan Ke-",
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        color: styles.getTextColor(context),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        hintText: "Silahkan pilih pertemuan",
+                                        hintStyle:
+                                            const TextStyle(color: Colors.grey),
+                                        filled: true,
+                                        fillColor: whiteColor,
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  styles.getOutlined(context)),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  styles.getOutlined(context)),
+                                        ),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 0, 80, 145),
+                                              width: 1),
+                                        ),
+                                      ),
+                                      value: selected,
+                                      items: semuaPertemuan.map((pertemuan) {
+                                        final isDisabled = _controller
+                                            .pertemuanTerpakai
+                                            .contains(int.parse(pertemuan));
+                                        return DropdownMenuItem<String>(
+                                          value: pertemuan,
+                                          enabled: !isDisabled,
+                                          child: Text(
+                                            !isDisabled
+                                                ? "Pertemuan $pertemuan"
+                                                : "Pertemuan $pertemuan telah digunakan",
+                                            style: TextStyle(
+                                              color: isDisabled
+                                                  ? Colors.grey
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          _controller.selectedPertemuan.value =
+                                              value;
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }),
+                              const SizedBox(height: 12),
                               // Tanggal Presensi
                               _buildDatePicker(context),
                               const SizedBox(height: 12),
-
-                              // Jam Awal & Akhir
-                              _buildTimePickers(context),
-                              const SizedBox(height: 12),
-
-                              // Link Zoom
-                              _buildTextField(
-                                label: "Link Zoom",
-                                hint: "Masukkan link zoom",
-                                controller: _controller.linkZoomController,
-                              ),
-                              const SizedBox(height: 30),
+                              Obx(() {
+                                final statusList =
+                                    _controller.listStatus.toList();
+                                final selected = statusList.contains(
+                                        _controller.selectedStatus.value)
+                                    ? _controller.selectedStatus.value
+                                    : null;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _buildDropdownField(
+                                        label: "Status Presensi",
+                                        value: selected,
+                                        hint: "Silahkan pilih status",
+                                        items: statusList,
+                                        onChanged: (val) {
+                                          _controller.selectedStatus.value =
+                                              val ?? "";
+                                        }),
+                                    const SizedBox(height: 12),
+                                    // Slide down/up animation for jam awal, akhir, dan link zoom
+                                    ClipRect(
+                                      child: AnimatedSize(
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut,
+                                        child: _controller
+                                                    .selectedStatus.value ==
+                                                "Aktif"
+                                            ? Column(
+                                                children: [
+                                                  Obx(() {
+                                                    final selected = jenisPertemuan
+                                                            .toList()
+                                                            .contains(_controller
+                                                                .selectedJenis
+                                                                .value)
+                                                        ? _controller
+                                                            .selectedJenis.value
+                                                        : null;
+                                                    return _buildDropdownField(
+                                                        label:
+                                                            "Jenis Pertemuan",
+                                                        value: selected,
+                                                        hint:
+                                                            "Silahkan pilih jenis pertemuan",
+                                                        items: jenisPertemuan
+                                                            .toList(),
+                                                        onChanged: (val) {
+                                                          _controller
+                                                                  .selectedJenis
+                                                                  .value =
+                                                              val ?? "";
+                                                        });
+                                                  }),
+                                                  const SizedBox(height: 12),
+                                                  _buildTimePickers(context),
+                                                  const SizedBox(height: 12),
+                                                  _buildTextField(
+                                                    label: "Link Zoom",
+                                                    hint: "Masukkan link zoom",
+                                                    controller: _controller
+                                                        .linkZoomController,
+                                                  ),
+                                                  const SizedBox(height: 30),
+                                                ],
+                                              )
+                                            : const SizedBox(),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
                               SizedBox(
                                   width: double.infinity,
                                   child: Obx(() {

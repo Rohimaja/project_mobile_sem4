@@ -10,6 +10,7 @@ import 'package:stipres/models/basic_response.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/check_presence_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
+import 'package:stipres/models/lecturers/disabled_pertemuan_model.dart';
 import 'package:stipres/models/lecturers/matkul_model.dart';
 import 'package:stipres/models/lecturers/presence_id_model.dart';
 import 'package:stipres/models/lecturers/presence_request_model.dart';
@@ -125,13 +126,57 @@ class AddPresenceLecturerService extends GetxService {
     }
   }
 
+  Future<BaseResponse<List<DisabledPertemuansModel>>> fetchDisabledPertemuans(
+      int prodiId, int semester, int matkulId, int tahunAjaranId) async {
+    try {
+      final token = await _box.read("auth_token");
+
+      final url = Uri.parse(
+          "$_baseUrl/presence/disabledPertemuans?prodi_id=$prodiId&semester=$semester&matkul_id=$matkulId&tahun_ajaran_id=$tahunAjaranId");
+      log.d(url);
+
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+
+      final body = jsonDecode(response.body);
+      log.d(body);
+
+      if (response.statusCode == 401) {
+        log.f("Response 401");
+        final refreshSuccess = await tokenService.refreshToken();
+        if (refreshSuccess) {
+          return await fetchDisabledPertemuans(
+              prodiId, semester, matkulId, tahunAjaranId);
+        }
+      }
+
+      return BaseResponse.fromJson(
+          body,
+          (dataJson) => (dataJson as List)
+              .map((e) =>
+                  DisabledPertemuansModel.fromJson(e as Map<String, dynamic>))
+              .toList());
+    } catch (e) {
+      log.f("Error: $e");
+      return BaseResponse(
+          status: "Error", message: "Terjadi kesalahan $e", data: null);
+    }
+  }
+
   Future<BaseResponse<CheckPresenceModel>> checkPresence(
       String dosenId,
       int prodiId,
       int semester,
       String jamAwal,
       String jamAkhir,
-      String tglPresensi) async {
+      String tglPresensi,
+      int pertemuan,
+      String status,
+      int matkulId,
+      int tahunAjaran
+      ) async {
     try {
       final token = await _box.read("auth_token");
       log.d("Param : $prodiId");
@@ -139,6 +184,10 @@ class AddPresenceLecturerService extends GetxService {
       log.d("Param : $jamAwal");
       log.d("Param : $jamAkhir");
       log.d("Param : $tglPresensi");
+      log.d("Param : $pertemuan");
+      log.d("Param : $status");
+      log.d("Param : $matkulId");
+      log.d("Param : $tahunAjaran");
       final url = Uri.parse("$_baseUrl/presence/check-upload");
       log.d(url);
       final response = await http.post(url, body: {
@@ -148,6 +197,10 @@ class AddPresenceLecturerService extends GetxService {
         "tgl_presensi": tglPresensi,
         "prodi_id": prodiId.toString(),
         "semester": semester.toString(),
+        "pertemuan_ke": pertemuan.toString(),
+        "status": status.toLowerCase(),
+        "matkul_id": matkulId.toString(),
+        "tahun_ajaran_id": tahunAjaran.toString()
       }, headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
@@ -160,8 +213,8 @@ class AddPresenceLecturerService extends GetxService {
         log.f("Response 401");
         final refreshSuccess = await tokenService.refreshToken();
         if (refreshSuccess) {
-          return await checkPresence(
-              dosenId, prodiId, semester, jamAwal, jamAkhir, tglPresensi);
+          return await checkPresence(dosenId, prodiId, semester, jamAwal,
+              jamAkhir, tglPresensi, pertemuan, status, matkulId, tahunAjaran);
         }
       }
 

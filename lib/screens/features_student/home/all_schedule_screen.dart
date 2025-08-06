@@ -254,7 +254,7 @@ class _AllScheduleScreenState extends State<AllScheduleScreen>
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
                             'Jadwal Perkuliahan Semester Ini',
-                            style: TextStyle(
+                            style: GoogleFonts.plusJakartaSans(
                               fontSize: 16,
                               color: blueColor,
                               fontWeight: FontWeight.w400,
