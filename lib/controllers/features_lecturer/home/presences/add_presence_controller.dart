@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:stipres/controllers/features_lecturer/home/presences/presence_controller.dart';
 import 'package:stipres/models/lecturers/active_school_year_model.dart';
 import 'package:stipres/models/lecturers/data_prodi_model.dart';
 import 'package:stipres/models/lecturers/disabled_pertemuan_model.dart';
@@ -45,6 +44,7 @@ class AddPresenceController extends GetxController {
     'UTS',
     'UAS',
   ];
+  final statusDisabled = ['UTS', 'UAS'];
   final selectedMatkulMap = <String, String>{}.obs;
 
   final tahunAjar = <TahunAjaranAktif>{}.obs;

@@ -25,9 +25,16 @@ class LoginService extends GetxService {
 
   Future<Mahasiswa> loginMahasiswa(String nim, String password) async {
     try {
-      final response = await http.post(
-        Uri.parse(_baseURL),
-        body: {'nim': nim, 'password': password, 'role': "mahasiswa"},
+      final response = await http.post(Uri.parse(_baseURL), body: {
+        'nim': nim,
+        'password': password,
+        'role': "mahasiswa"
+      }
+      // , headers: {
+      //   'Accept': 'application/json',
+      //   'User-Agent':
+      //       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115.0.0.0 Safari/537.36',
+      // }
       );
       logger.d(_baseURL);
 

@@ -28,6 +28,7 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
     required String label,
     required String? value,
     required String hint,
+    bool? enabledItem,
     required List<String?> items,
     required ValueChanged<String?> onChanged,
   }) {
@@ -44,8 +45,10 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
           value: value,
           hint: Text(hint),
           items: items
-              .map(
-                  (e) => DropdownMenuItem(value: e ?? '', child: Text(e ?? '')))
+              .map((e) => DropdownMenuItem(
+                  value: e ?? '',
+                  enabled: (enabledItem != null) ? enabledItem : true,
+                  child: Text(e ?? '')))
               .toList(),
           onChanged: onChanged,
           decoration: InputDecoration(
@@ -417,10 +420,8 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                                     kodeMatkul: '',
                                                     namaMatkul: ''),
                                               );
-
                                               _controller.selectedMatkul.value =
                                                   val ?? "";
-
                                               _controller
                                                   .selectedMatkulMap.value = {
                                                 'id': selected.idMatkul
@@ -542,15 +543,64 @@ class _AddPresenceScreenState extends State<AddPresenceScreen>
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    _buildDropdownField(
-                                        label: "Status Presensi",
-                                        value: selected,
-                                        hint: "Silahkan pilih status",
-                                        items: statusList,
-                                        onChanged: (val) {
+                                    Text(
+                                      "Status Presensi",
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        color: styles.getTextColor(context),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        hintText: "Silahkan pilih status",
+                                        hintStyle:
+                                            const TextStyle(color: Colors.grey),
+                                        filled: true,
+                                        fillColor: whiteColor,
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  styles.getOutlined(context)),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color:
+                                                  styles.getOutlined(context)),
+                                        ),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 0, 80, 145),
+                                              width: 1),
+                                        ),
+                                      ),
+                                      value: selected,
+                                      items: statusList.map((status) {
+                                        final isDisabled = _controller
+                                            .statusDisabled
+                                            .contains(status);
+                                        return DropdownMenuItem<String>(
+                                          value: status,
+                                          enabled: !isDisabled,
+                                          child: Text(
+                                            status,
+                                            style: TextStyle(
+                                              color: isDisabled
+                                                  ? Colors.grey
+                                                  : Colors.black,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        if (value != null) {
                                           _controller.selectedStatus.value =
-                                              val ?? "";
-                                        }),
+                                              value;
+                                        }
+                                      },
+                                    ),
                                     const SizedBox(height: 12),
                                     // Slide down/up animation for jam awal, akhir, dan link zoom
                                     ClipRect(
